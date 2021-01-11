@@ -8,8 +8,9 @@ export default function App() {
       <header className="App-header">
         <img src={ logo } className="App-logo" alt="logo" />
         <p>
-          SUA VEZ
+          vamos lá
         </p>
+        <h1>teste </h1>
       </header>
     </div>
   );
