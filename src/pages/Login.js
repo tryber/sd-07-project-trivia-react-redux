@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { fetchTokenAction, playerLoginAction } from '../actions';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { fetchTokenAction, playerLoginAction } from '../actions';
 
 class Login extends Component {
   constructor(props) {
@@ -90,5 +90,5 @@ export default connect(null, mapDispatchToProps)(Login);
 
 Login.propTypes = {
   login: PropTypes.func.isRequired,
-  createToken: PropTypes.func.isRequired,
+  idToken: PropTypes.func.isRequired,
 };

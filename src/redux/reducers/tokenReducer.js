@@ -1,4 +1,4 @@
-import { ADD_TOKEN } from '../actions/tokenAction';
+import { ADD_TOKEN } from '../../actions/tokenAction';
 
 const INITIAL_STATE = { token: '', date: '' };
 

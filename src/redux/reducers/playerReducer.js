@@ -1,4 +1,4 @@
-import { LOGIN, ADD_SCORE } from '../actions/playerAction';
+import { LOGIN, ADD_SCORE } from '../../actions/playerAction';
 
 const INITIAL_STATE = {
   name: 'user',
