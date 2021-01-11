@@ -49,7 +49,7 @@ class Login extends Component {
           type="button"
           data-testid="btn-play"
         >
-          JOGAR!
+          Jogar!
         </button>
       </div>);
   }
