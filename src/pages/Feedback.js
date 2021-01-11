@@ -5,18 +5,18 @@ class FeedBack extends React.Component {
   render() {
     return (
       <div>
-      <Header />
-      <main>
-        <h1>Poia ser melhor....</h1>
+        <Header />
+        <main>
+          <h1 data-testid="feedback-text">Poia ser melhor....</h1>
 
-        <h2>Você acertou ... questões!</h2>
-        <h2>Um total de ... pontos</h2>
+          <h2 data-testid="feedback-total-question">Você acertou ... questões!</h2>
+          <h2 data-testid="feedback-total-score">Um total de ... pontos</h2>
 
-        <button type="button">Ver ranking</button>
-        <button type="button">Jogar novamente</button>
-      </main>
+          <button data-testid="btn-ranking" type="button">Ver ranking</button>
+          <button data-testid="btn-play-again" type="button">Jogar novamente</button>
+        </main>
       </div>
-    )
+    );
   }
 }
 

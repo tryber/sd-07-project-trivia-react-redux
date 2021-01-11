@@ -5,10 +5,13 @@ class Header extends React.Component {
     return (
       <header>
         <div>
-          <img data-testid="header-profile-picture" />
+          <img data-testid="header-profile-picture" alt="avatar" />
           <h3 data-testid="header-player-name">Nome</h3>
         </div>
-        <h3>Pontos: <span data-testid="header-score">0</span></h3>
+        <h3>
+          Pontos:
+          <span data-testid="header-score">0</span>
+        </h3>
       </header>
     );
   }
