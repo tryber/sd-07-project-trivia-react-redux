@@ -13,6 +13,6 @@ const maracutaia = (desenvolvendo = true) => {
   return applyMiddleware(thunk);
 };
 
-const store = createStore(reducer, maracutaia(false));
+const store = createStore(reducer, maracutaia(true));
 
 export default store;
