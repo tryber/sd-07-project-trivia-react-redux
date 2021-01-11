@@ -23,7 +23,7 @@ export default class Login extends Component {
         <input
           type="email"
           placeholder="email"
-          data-testid="input-player-email"
+          data-testid="input-gravatar-email"
           value={ email }
           onChange={ (event) => this.setState({ email: event.target.value }) }
         />
