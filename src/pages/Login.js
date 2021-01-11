@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { sendLoginInfo } from '../redux/actions';
 import logo from '../trivia.png';
 
 class Login extends Component {
@@ -31,6 +33,7 @@ class Login extends Component {
 
   render() {
     const { name, email } = this.state;
+    const { sendLogin } = this.props;
     return(
       <>
         <div className="App">
@@ -62,9 +65,10 @@ class Login extends Component {
           />
 
           <button
-            type="submit"
+            type="button"
             disabled={ this.isValid() }
             data-testid="btn-play"
+            onClick={ () => sendLogin({ name, email }) }
           >
             Jogar
           </button>
@@ -74,4 +78,8 @@ class Login extends Component {
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  sendLogin: (info) => dispatch(sendLoginInfo(info)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
