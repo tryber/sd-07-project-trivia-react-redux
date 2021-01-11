@@ -1,7 +1,6 @@
-const initialState = {};
+import { combineReducers } from 'redux';
+import token from './sessionReducer';
 
-function initialReducer(state = initialState) {
-  return state;
-}
-
-export default initialReducer;
+export default combineReducers({
+  token,
+});
