@@ -9,33 +9,61 @@ class Login extends React.Component {
       email: '',
       emaiOk: false,
       buttonDisable: true,
-    }
+    };
 
     this.handleInputs = this.handleInputs.bind(this);
+    this.matchingEmail = this.matchingEmail.bind(this);
   }
 
   handleInputs({ target }) {
     const { value, name } = target;
-    this.setState({ [name]: value })
+    this.setState({ [name]: value });
     const { email } = this.state;
     const validacaoByStackOf = /[\w.-]+@[\w-]+\.[\w-.]+/gi;
     const matchEmail = email.match(validacaoByStackOf);
-    matchEmail ? this.setState({ emaiOk: true }) : this.setState({ emaiOk: false })
-    if(this.state.name && this.state.emaiOk) {
-      this.setState({ buttonDisable: false })
+    this.matchingEmail(matchEmail);
+  }
+
+  matchingEmail(matchEmail) {
+    const { name, emaiOk } = this.state;
+    if (matchEmail) {
+      this.setState({ emaiOk: true });
+      if (name && emaiOk) {
+        this.setState({ buttonDisable: false });
+      }
     }
   }
 
   render() {
-    return(
-      <div> 
+    const { buttonDisable } = this.state;
+
+    return (
+      <div>
         <form>
-          <input type="text" name="name" placeholder="Nick" data-testid="input-player-name" onChange={ this.handleInputs } />
-          <input type="text" name="email" placeholder="email" data-testid="input-gravatar-email" onChange={ this.handleInputs } />
-          <button data-testid="btn-play" disabled={ this.state.buttonDisable }>Jogar</button>
+          <input
+            type="text"
+            name="name"
+            placeholder="Nick"
+            data-testid="input-player-name"
+            onChange={ this.handleInputs }
+          />
+          <input
+            type="text"
+            name="email"
+            placeholder="email"
+            data-testid="input-gravatar-email"
+            onChange={ this.handleInputs }
+          />
+          <button
+            type="button"
+            data-testid="btn-play"
+            disabled={ buttonDisable }
+          >
+            Jogar
+          </button>
         </form>
       </div>
-    )
+    );
   }
 }
 
