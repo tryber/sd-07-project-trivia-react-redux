@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { userActions } from '../../actions';
-import LoginForm from './components/LoginForm';
+import { LoginForm, ConfigButton } from './components';
 
 class Home extends Component {
   constructor(props) {
@@ -56,6 +56,7 @@ class Home extends Component {
           email={ email }
           auth={ auth }
         />
+        <ConfigButton />
       </div>
     );
   }
