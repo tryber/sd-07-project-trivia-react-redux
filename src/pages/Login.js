@@ -14,16 +14,18 @@ class Login extends Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.isvalid = this.isvalid.bind(this);
+  }
+
+  isvalid() {
+    const { email, nome } = this.state;
+    if (email !== '' && nome !== '') {
+      return this.setState({ isValid: true });
+    }
   }
 
   handleChange({ target: { value, name } }) {
-    const { email, nome } = this.state;
-    this.setState({ [name]: value }, () => {
-      if (email !== '' && nome !== '') {
-        return this.setState({ isValid: true });
-      }
-      return this.setState({ isValid: false });
-    });
+    this.setState({ [name]: value }, this.isvalid);
   }
 
   render() {
