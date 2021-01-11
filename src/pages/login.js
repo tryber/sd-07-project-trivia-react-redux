@@ -22,9 +22,10 @@ class Login extends Component {
 
   emailValidation() {
     const { email, name, auth } = this.state;
+    console.log(auth);
     const magicNumber = 0;
     if (email.match(/\S+@\S+\.\S+/) && name.length > magicNumber) {
-      return this.setState({ [auth]: true });
+      return this.setState({ auth: true });
     }
   }
 
@@ -40,12 +41,14 @@ class Login extends Component {
     return (
       <div>
         <input
+          placeholder="Name"
           name="name"
           value={ name }
           data-testid="input-player-name"
           onChange={ (event) => this.handleChange(event) }
         />
         <input
+          placeholder="Email"
           name="email"
           value={ email }
           data-testid="input-gravatar-email"
