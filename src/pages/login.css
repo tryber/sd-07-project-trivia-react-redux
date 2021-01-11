@@ -10,7 +10,7 @@ body {
 
 form {
   align-items: center;
-  background-color:black;
+  background-color: black;
   border-radius: 5px;
   display: flex;
   flex-direction: column;
