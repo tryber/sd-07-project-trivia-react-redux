@@ -11,12 +11,6 @@ class Login extends React.Component {
     this.changeInputs = this.changeInputs.bind(this);
   }
 
-  async changeInputs({ target }) {
-    const { name, value } = target;
-    await this.setState({ [name]: value });
-    await this.setDisabled();
-  }
-
   async setDisabled() {
     const { email, name } = this.state;
     if (email !== '' && name !== '') {
@@ -26,30 +20,41 @@ class Login extends React.Component {
     }
   }
 
+  async changeInputs({ target }) {
+    const { name, value } = target;
+    await this.setState({ [name]: value });
+    await this.setDisabled();
+  }
+
   render() {
     const { disabled, email, name } = this.state;
     return (
       <div>
-       <form>
-         <label htmlFor="email">Email do Gravatar:</label>
-         <input
-          name="email"
-          id="email"
-          type="email"
-          data-testid="input-gravatar-email"
-          onChange={ this.changeInputs }
-          value={ email }
-         />
+        <form>
+          <label htmlFor="email">
+            Email do Gravatar:
+            <input
+              name="email"
+              id="email"
+              type="email"
+              data-testid="input-gravatar-email"
+              onChange={ this.changeInputs }
+              value={ email }
+            />
+          </label>
 
-        <label htmlFor="name">Nome do Jogador:</label>
-          <input
-            data-testid="input-player-name"
-            name="name"
-            id="name"
-            type="text"
-            onChange={ this.changeInputs }
-            value={ name }
-          />
+          <label htmlFor="name">
+            Nome do Jogador:
+            <input
+              data-testid="input-player-name"
+              name="name"
+              id="name"
+              type="text"
+              onChange={ this.changeInputs }
+              value={ name }
+            />
+          </label>
+
           <button
             type="button"
             data-testid="btn-play"
@@ -63,4 +68,4 @@ class Login extends React.Component {
   }
 }
 
-export default Login
+export default Login;
