@@ -17,20 +17,22 @@ class Login extends React.Component {
 
   handleInputs({ target }) {
     const { value, name } = target;
-    this.setState({ [name]: value });
-    const { email } = this.state;
-    const validacaoByStackOf = /[\w.-]+@[\w-]+\.[\w-.]+/gi;
-    const matchEmail = email.match(validacaoByStackOf);
-    this.matchingEmail(matchEmail);
+    this.setState({ [name]: value }, () => {
+      const { email } = this.state;
+      const validacaoByStackOf = /[\w.-]+@[\w-]+\.[\w-.]+/gi;
+      const matchEmail = email.match(validacaoByStackOf);
+      this.matchingEmail(matchEmail);
+    });
   }
 
   matchingEmail(matchEmail) {
-    const { name, emaiOk } = this.state;
     if (matchEmail) {
-      this.setState({ emaiOk: true });
-      if (name && emaiOk) {
-        this.setState({ buttonDisable: false });
-      }
+      this.setState({ emaiOk: true }, () => {
+        const { name, emaiOk } = this.state;
+        if (name && emaiOk) {
+          this.setState({ buttonDisable: false });
+        }
+      });
     }
   }
 
