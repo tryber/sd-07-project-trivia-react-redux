@@ -26,6 +26,7 @@ class login extends Component {
   }
 
   render() {
+    const { name, gravatarEmail, isButtonAble } = this.state;
     return (
       <form>
         <input
