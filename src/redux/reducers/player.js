@@ -10,7 +10,7 @@ const LOGIN_INITIAL_STATE = {
 const player = (state = LOGIN_INITIAL_STATE, action) => {
   switch (action.type) {
   case types.LOGIN_INFO:
-    return({
+    return ({
       ...state,
       name: action.payload.name,
       gravatarEmail: action.payload.email,

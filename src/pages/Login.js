@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { sendLoginInfo } from '../redux/actions';
 import logo from '../trivia.png';
@@ -10,7 +11,7 @@ class Login extends Component {
     this.state = {
       name: '',
       email: '',
-    }
+    };
 
     this.isValid = this.isValid.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -19,7 +20,7 @@ class Login extends Component {
   isValid() {
     const { name, email } = this.state;
     const emailValid = /\S+@\S+\.\S+/;
-    if(name !== '' && emailValid.test(email)) {
+    if (name !== '' && emailValid.test(email)) {
       return false;
     }
 
@@ -27,21 +28,21 @@ class Login extends Component {
   }
 
   handleChange({ target }) {
-    const { name, value }  = target;
+    const { name, value } = target;
     this.setState({ [name]: value });
   }
 
   render() {
     const { name, email } = this.state;
     const { sendLogin } = this.props;
-    return(
+    return (
       <>
         <div className="App">
           <header className="App-header">
-          <img src={ logo } className="App-logo" alt="logo" />
-          <p>
-            SUA VEZ
-          </p>
+            <img src={ logo } className="App-logo" alt="logo" />
+            <p>
+              SUA VEZ
+            </p>
           </header>
         </div>
 
@@ -55,7 +56,7 @@ class Login extends Component {
             onChange={ this.handleChange }
           />
 
-          <input 
+          <input
             type="email"
             name="email"
             value={ email }
@@ -83,3 +84,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(null, mapDispatchToProps)(Login);
+
+Login.propTypes = {
+  sendLogin: PropTypes.func.isRequired,
+};

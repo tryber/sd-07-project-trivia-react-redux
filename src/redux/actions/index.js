@@ -1,8 +1,14 @@
-import types from "./types"
+import types from './types';
 
 export const sendLoginInfo = (payload) => (
   {
     type: types.LOGIN_INFO,
     payload,
+  }
+);
+
+export const test = (t) => (
+  {
+    t,
   }
 );
