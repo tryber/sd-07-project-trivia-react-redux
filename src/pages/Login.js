@@ -21,7 +21,7 @@ class Login extends Component {
 
   valida() {
     // eslint-disable-next-line
-    const pattern = /[a-zA-Z0-9]+[\.]?([a-zA-Z0-9]+)?[\@][a-z]{3,9}[\.][a-z]{2,5}/g;
+    const pattern = /[a-zA-Z0-9]+[.]?([a-zA-Z0-9]+)?[@][a-z]{3,9}[.][a-z]{2,5}/g;
     const { email, name } = this.state;
     if (pattern.test(email) && name.length > 0) {
       return false;
