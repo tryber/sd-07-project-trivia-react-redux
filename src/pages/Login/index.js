@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getToken } from '../../redux/actions';
+import ButtonConfig from './ButtonConfig';
 
 class Login extends Component {
   constructor(props) {
@@ -17,17 +18,14 @@ class Login extends Component {
   }
 
   handleInputChange({ name: inputName, value }) {
-    this.setState(
-      { [inputName]: value },
-      () => {
-        const { name, email } = this.state;
-        if (name !== '' && email !== '') {
-          this.setState({ isDisable: false });
-        } else {
-          this.setState({ isDisable: true });
-        }
-      },
-    );
+    this.setState({ [inputName]: value }, () => {
+      const { name, email } = this.state;
+      if (name !== '' && email !== '') {
+        this.setState({ isDisable: false });
+      } else {
+        this.setState({ isDisable: true });
+      }
+    });
   }
 
   async handleSubmit(e) {
@@ -68,14 +66,11 @@ class Login extends Component {
               onChange={ ({ target }) => this.handleInputChange(target) }
             />
           </label>
-          <button
-            type="submit"
-            data-testid="btn-play"
-            disabled={ isDisable }
-          >
+          <button type="submit" data-testid="btn-play" disabled={ isDisable }>
             Jogar
           </button>
         </form>
+        <ButtonConfig />
       </main>
     );
   }
