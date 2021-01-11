@@ -13,7 +13,7 @@ function playerReducer(state = INITIAL_STATE, action) {
       ...state,
       name: action.player.name,
       assertions: action.player.assertions,
-    }
+    };
   }
   return state;
 }

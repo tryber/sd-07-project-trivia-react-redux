@@ -1,6 +1,6 @@
-const PLAYER = 'PLAYER';
+export const PLAYER = 'PLAYER';
 
-const playerAction = (player) => ({
+export const playerAction = (player) => ({
   type: PLAYER,
   player,
 });
