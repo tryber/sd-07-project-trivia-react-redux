@@ -8,7 +8,7 @@ export default function App() {
       <header className="App-header">
         <img src={ logo } className="App-logo" alt="logo" />
         <p>
-          31
+          ASDFJKASDF
         </p>
       </header>
     </div>
