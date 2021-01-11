@@ -10,7 +10,7 @@ body {
 
 form {
   align-items: center;
-  background-color: #000;
+  background-color:black;
   border-radius: 5px;
   display: flex;
   flex-direction: column;
@@ -21,7 +21,7 @@ form {
 }
 
 label {
-  color: #fff;
+  color: white;
   display: flex;
   flex-direction: column;
   margin: 5px;
@@ -36,8 +36,8 @@ input {
 
 button {
   background-color: #b80047;
-  border-radius: 5px;
   border: transparent;
+  border-radius: 5px;
   height: 40px;
   margin: 10px;
   width: 100px;
