@@ -14,17 +14,16 @@ class Login extends Component {
     };
   }
   handleChange(e){
-    const { value, type } = e.target;
-    this.setState({ [type]:value });
+    const { value, name } = e.target;
+    this.setState({ [name]:value });
   };
   valida(){
     // eslint-disable-next-line
     const pattern = /[a-zA-Z0-9]+[\.]?([a-zA-Z0-9]+)?[\@][a-z]{3,9}[\.][a-z]{2,5}/g;
     const { email, name } = this.state;
-    if(name.length < 1) {
-      if (pattern.test(email)) {
-        return false;
-      }
+  
+    if(pattern.test(email) && name.length > 0) {
+      return false;
     }
     return true;
   }
@@ -54,6 +53,7 @@ class Login extends Component {
           />
         </label>
         <button
+          data-testid='btn-play'
           disabled={this.valida()}
         >
           Jogar
