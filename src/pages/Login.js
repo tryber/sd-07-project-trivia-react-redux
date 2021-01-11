@@ -56,7 +56,7 @@ class Login extends React.Component {
         <label htmlFor="email">
           Email
           <input
-            type="email"
+            type="text"
             placeholder="Email"
             data-testid="input-gravatar-email"
             value={ email }
