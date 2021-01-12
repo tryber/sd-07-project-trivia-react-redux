@@ -1,8 +1,6 @@
-import Auth from './Auth';
-import Config from './Config';
-import Feedback from './Game';
-import Game from './Game';
-import Login from './Login';
-import Ranking from './Ranking';
-
-export { Auth, Config, Feedback, Game, Login, Ranking };
+export { default as Auth } from './Auth';
+export { default as Config } from './Config';
+export { default as Feedback } from './Feedback';
+export { default as Game } from './Game';
+export { default as Login } from './Login';
+export { default as Ranking } from './Ranking';
