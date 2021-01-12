@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { catchToken, getUser } from '../Redux/Actions';
@@ -42,20 +43,35 @@ class Login extends React.Component {
     const { name, email } = this.state;
     return (
       <div>
-        <input
-          onChange={ this.handleInput }
-          value={ name }
-          name="name"
-          data-testid="input-player-name"
-          type="text"
-        />
-        <input
-          onChange={ this.handleInput }
-          value={ email }
-          name="email"
-          data-testid="input-gravatar-email"
-          type="text"
-        />
+        <Link
+          to="/config"
+          data-testid="btn-settings"
+        >
+          configurações
+        </Link>
+        <label htmlFor="name">
+          Nome do jogador
+          <input
+            onChange={ this.handleInput }
+            value={ name }
+            name="name"
+            data-testid="input-player-name"
+            type="text"
+            id="name"
+          />
+        </label>
+
+        <label htmlFor="email">
+          <input
+            onChange={ this.handleInput }
+            value={ email }
+            name="email"
+            data-testid="input-gravatar-email"
+            type="text"
+            id="email"
+          />
+        </label>
+
         <button
           onClick={ this.handleClick }
           disabled={ this.verifyLogin() }
