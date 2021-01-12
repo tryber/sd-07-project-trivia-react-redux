@@ -4,14 +4,63 @@ import md5 from 'crypto-js/md5';
 import PropTypes from 'prop-types';
 
 class Play extends Component {
+  constructor() {
+    super();
+    this.state = {
+      trivia: [],
+    };
+    this.triviaApi = this.triviaApi.bind(this);
+  }
+
+  componentDidMount() {
+    this.triviaApi();
+  }
+
+  trivia() {
+    const { trivia } = this.state;
+    return (
+      <div>
+        {trivia.map((question, index) => (
+          <div key={ index }>
+            <p data-testid="question-category">{question.category}</p>
+            <p data-testid="question-text">{question.question}</p>
+            <button
+              type="button"
+              data-testid="correct-answer"
+            >
+              {question.correct_answer}
+            </button>
+            {question.incorrect_answers.map((incorrect, index2) => (
+              <div key={ index2 }>
+                <button
+                  type="button"
+                  data-testid={ `wrong-answer-${index2}` }
+                >
+                  {incorrect}
+                </button>
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>);
+  }
+
   hash() {
     const { email } = this.props;
     const url = `https://www.gravatar.com/avatar/${md5(email)}`;
     return url;
   }
 
+  triviaApi() {
+    const { token } = this.props;
+    const url = `https://opentdb.com/api.php?amount=5&token=${token}`;
+    fetch(url).then((response) => response.json())
+      .then((json) => { this.setState({ trivia: json.results }); });
+  }
+
   render() {
     const { name, score = 0 } = this.props;
+    const { trivia } = this.state;
     return (
       <div>
         <header>
@@ -19,6 +68,7 @@ class Play extends Component {
           <h1 data-testid="header-player-name">{name}</h1>
           <p data-testid="header-score">{score}</p>
         </header>
+        { trivia ? this.trivia() : <p>Em breve!</p> }
       </div>
     );
   }
@@ -35,6 +85,7 @@ Play.propTypes = {
   email: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   score: PropTypes.number.isRequired,
+  token: PropTypes.string.isRequired,
 };
 
 export default connect(mapStateToProps)(Play);
