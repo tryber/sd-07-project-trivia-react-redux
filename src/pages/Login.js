@@ -106,7 +106,8 @@ class Login extends React.Component {
           type="button"
           data-testid="btn-play"
           disabled={ !this.verifyEmailName() }
-          onClick={ this.handleSubmit }>
+          onClick={ this.handleSubmit }
+          >
           Jogar
         </button>
       </div>
