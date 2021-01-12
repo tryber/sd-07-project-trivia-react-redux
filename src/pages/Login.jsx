@@ -7,10 +7,11 @@ class Login extends React.Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClickSettings.bind(this);
     this.handleClickGame = this.handleClickGame.bind(this);
     this.state = {
-      nome: '',
-      email: '',
+      nome: "",
+      email: "",
     };
   }
 
@@ -18,6 +19,11 @@ class Login extends React.Component {
     const { name, value } = target;
     this.setState({ [name]: value });
   }
+
+
+  handleClickSettings() {
+    const { history } = this.props;
+    history.push("./settings");
 
   async handleClickGame() {
     const { signIn, history, fetchApi } = this.props;
@@ -36,10 +42,17 @@ class Login extends React.Component {
     const { nome, email } = this.state;
     return (
       <div>
+        <button
+          type="button"
+          data-testid="btn-settings"
+          onClick={ this.handleClickSettings }
+        >
+          Configurações
+        </button>
         <input
           type="text"
           name="nome"
-          value={ nome }
+          value={nome}
           data-testid="input-player-name"
           placeholder="Nome"
           onChange={ this.handleChange }
@@ -47,7 +60,7 @@ class Login extends React.Component {
         <input
           type="email"
           name="email"
-          value={ email }
+          value={email}
           data-testid="input-gravatar-email"
           placeholder="E-mail"
           onChange={ this.handleChange }
