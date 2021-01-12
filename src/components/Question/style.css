@@ -1,0 +1,22 @@
+.message-box {
+  display: flex;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 30px;
+  height: 200px;
+  width: 85%;
+  min-width: 85%;
+}
+
+.message {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 36px;
+  line-height: 42px;
+  display: flex;
+  align-items: center;
+  color: white;
+  text-align: center;
+  width: 85%;
+}

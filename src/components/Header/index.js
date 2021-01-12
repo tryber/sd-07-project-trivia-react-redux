@@ -6,22 +6,22 @@ class Header extends React.Component {
     super(props);
     this.state = {
       player: {
-        name,
-        assertions,
-        score,
-        gravaterEmail,
+        pname: '',
+        assertions: '',
+        score: '',
+        gravaterEmail: '',
       },
     };
   }
 
   renderJogador() {
     const { player } = this.state;
-    const { name, gravaterEmail } = player;
+    const { pname, gravaterEmail } = player;
     return (
       <div>
         {gravaterEmail}
         <h2 className="header-label">Jogador: </h2>
-        <h2>{ name }</h2>
+        <h2>{ pname }</h2>
       </div>
     );
   }
