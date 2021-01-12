@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { setUserLogin } from '../actions';
-import getToken from '../service/apiTrivia';
+import { getToken } from '../service/apiTrivia';
 
 class FormLogin extends React.Component {
   constructor(props) {
@@ -29,11 +29,11 @@ class FormLogin extends React.Component {
   async handleClick(name, email) {
     const { setUser } = this.props;
     setUser(name, email);
+    const { token } = await getToken();
+    localStorage.setItem('token', token);
     this.setState({
       redirect: true,
     });
-    const { token } = await getToken();
-    localStorage.setItem('token', token);
   }
 
   render() {
@@ -70,7 +70,7 @@ class FormLogin extends React.Component {
         >
           Jogar
         </button>
-        {redirect && <Redirect to="/game" />}
+        {(redirect) && <Redirect to="/game" />}
       </form>
     );
   }
