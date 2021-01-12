@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { signIn } from '../../store/ducks/user';
 
 class Login extends Component {
   constructor() {
@@ -23,6 +26,7 @@ class Login extends Component {
 
   render() {
     const { name, gravatarEmail } = this.state;
+    const { saveUser } = this.props;
     return (
       <form>
         <input
@@ -45,6 +49,7 @@ class Login extends Component {
           type="button"
           data-testid="btn-play"
           disabled={ !this.isValid(name, gravatarEmail) }
+          onClick={ () => saveUser({ name, gravatarEmail }) }
         >
           Play
         </button>
@@ -53,4 +58,12 @@ class Login extends Component {
   }
 }
 
-export default Login;
+Login.propTypes = {
+  saveUser: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  saveUser: (info) => dispatch(signIn(info)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
