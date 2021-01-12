@@ -1,6 +1,6 @@
-export function user(email) {
+export default function user(email) {
   return ({
-    type: "USER",
+    type: 'USER',
     payload: email,
   });
 }
