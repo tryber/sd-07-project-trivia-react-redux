@@ -9,7 +9,9 @@ class Login extends Component {
     super(props);
     this.state = {
       name: '',
-      email: '',
+      gravatarEmail: '',
+      // assertions: '',
+      score: 0,
     };
     this.handleChange = this.handleChange.bind(this);
     this.validateImputs = this.validateImputs.bind(this);
@@ -18,9 +20,10 @@ class Login extends Component {
   }
 
   validateImputs() {
-    const { email, name } = this.state;
+    const { gravatarEmail, name, score } = this.state;
     const emailValidator = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (emailValidator.test(email) && name.length) {
+    console.log(score);
+    if (emailValidator.test(gravatarEmail) && name.length) {
       return false;
     }
     return true;
@@ -36,6 +39,8 @@ class Login extends Component {
     const { token, history } = this.props;
     const { payload } = token;
     localStorage.setItem('token', JSON.stringify(payload));
+    const player = { player: this.state };
+    localStorage.setItem('state', JSON.stringify(player));
     history.push('/game');
   }
 
