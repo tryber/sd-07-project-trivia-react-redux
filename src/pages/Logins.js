@@ -1,7 +1,8 @@
 import React from 'react';
-import { requestToken } from '../actions';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { requestToken } from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -41,7 +42,8 @@ class Login extends React.Component {
   }
 
   startGame() {
-    this.props.requestAPI();
+    const { requestAPI } = this.props;
+    requestAPI();
   }
 
   render() {
@@ -65,14 +67,14 @@ class Login extends React.Component {
             onChange={ this.handleInputs }
           />
           <Link to="./game">
-          <button
-            type="button"
-            data-testid="btn-play"
-            disabled={ buttonDisable }
-            onClick={ this.startGame }
-          >
-            Jogar
-          </button>
+            <button
+              type="button"
+              data-testid="btn-play"
+              disabled={ buttonDisable }
+              onClick={ this.startGame }
+            >
+              Jogar
+            </button>
           </Link>
         </form>
       </div>
@@ -81,7 +83,7 @@ class Login extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  requestAPI: () => dispatch(requestToken());
+  requestAPI: () => dispatch(requestToken()),
 });
 
 const mapStateToProps = (state) => ({
@@ -92,5 +94,9 @@ const mapStateToProps = (state) => ({
   loading: state.Header.loading,
   token: state.Header.token,
 });
+
+Login.propTypes = {
+  requestAPI: PropTypes.func.isRequired,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
