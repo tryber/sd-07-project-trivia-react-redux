@@ -10,6 +10,7 @@ class Login extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.enableButton = this.enableButton.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.goToSettings = this.goToSettings.bind(this);
     this.state = {
       emailInput: '',
       nameInput: '',
@@ -42,6 +43,11 @@ class Login extends React.Component {
     history.push('./game');
   }
 
+  goToSettings() {
+    const { history } = this.props;
+    history.push('./settings');
+  }
+
   render() {
     const { emailInput, nameInput, disabled } = this.state;
 
@@ -70,6 +76,13 @@ class Login extends React.Component {
           onClick={ (event) => this.handleClick(event) }
         >
           Jogar
+        </button>
+        <button
+          type="button"
+          data-testid="btn-settings"
+          onClick={ (event) => this.goToSettings(event) }
+        >
+          Configurações
         </button>
         <Trivia />
       </div>
