@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import apiTriviaToken from '../services/apiTriviaToken';
-import { requestSuccess, sendLoginInfo } from '../redux/actions';
+import { fetchApiTrivia, requestTokenSuccess, sendLoginInfo } from '../redux/actions';
 import logo from '../trivia.png';
 
 class Login extends Component {
@@ -39,7 +39,7 @@ class Login extends Component {
   async handleClick() {
     const { name, email } = this.state;
 
-    const { sendLogin, requestToken } = this.props;
+    const { sendLogin, requestToken, requestQuestions } = this.props;
     sendLogin({ name, email });
     // fetchToken();
     const tokenObj = await apiTriviaToken();
@@ -48,6 +48,7 @@ class Login extends Component {
     requestToken(token);
 
     localStorage.setItem('token', token);
+    requestQuestions(token);
   }
 
   render() {
@@ -106,7 +107,8 @@ class Login extends Component {
 
 const mapDispatchToProps = (dispatch) => ({
   sendLogin: (info) => dispatch(sendLoginInfo(info)),
-  requestToken: (info) => dispatch(requestSuccess(info)),
+  requestToken: (info) => dispatch(requestTokenSuccess(info)),
+  requestQuestions: (info) => dispatch(fetchApiTrivia(info)),
 });
 
 export default connect(null, mapDispatchToProps)(Login);
@@ -114,4 +116,5 @@ export default connect(null, mapDispatchToProps)(Login);
 Login.propTypes = {
   sendLogin: PropTypes.func.isRequired,
   requestToken: PropTypes.func.isRequired,
+  requestQuestions: PropTypes.func.isRequired,
 };

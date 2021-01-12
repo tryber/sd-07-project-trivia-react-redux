@@ -3,9 +3,8 @@ import types from '../actions/types';
 const LOGIN_INITIAL_STATE = {
   name: '',
   assertions: 0,
-  score: 2,
+  score: 0,
   gravatarEmail: '',
-  isLoading: false,
   tokenString: '',
 };
 
@@ -22,7 +21,7 @@ const player = (state = LOGIN_INITIAL_STATE, action) => {
   //     ...state,
   //     isLoading: true,
   //   });
-  case types.REQUEST_SUCCESS:
+  case types.REQUEST_TOKEN_SUCCESS:
     return ({
       ...state,
       // isLoading: false,

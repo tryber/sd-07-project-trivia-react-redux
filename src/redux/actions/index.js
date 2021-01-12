@@ -1,5 +1,5 @@
 import types from './types';
-// import apiTriviaToken from '../../services/apiTriviaToken';
+import apiTrivia from '../../services/apiTrivia';
 
 export const sendLoginInfo = (payload) => (
   {
@@ -8,23 +8,30 @@ export const sendLoginInfo = (payload) => (
   }
 );
 
-// export const isFetching = () => (
-//   {
-//     type: types.IS_FETCHING,
-//   }
-// );
+export const isFetching = () => (
+  {
+    type: types.IS_FETCHING,
+  }
+);
 
-export const requestSuccess = (token) => (
+export const requestSuccess = (questions) => (
   {
     type: types.REQUEST_SUCCESS,
+    questions,
+  }
+);
+
+export const requestTokenSuccess = (token) => (
+  {
+    type: types.REQUEST_TOKEN_SUCCESS,
     token,
   }
 );
 
-// export function fetchApiToken() {
-//   return async (dispatch) => {
-//     dispatch(isFetching());
-//     const token = await apiTriviaToken();
-//     dispatch(requestSuccess(token));
-//   };
-// }
+export function fetchApiTrivia(token) {
+  return async (dispatch) => {
+    dispatch(isFetching());
+    const questions = await apiTrivia(token);
+    dispatch(requestSuccess(questions));
+  };
+}
