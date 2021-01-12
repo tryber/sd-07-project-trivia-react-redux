@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
+import settingsIcon from './images/setting2.png';
 
 class LoginForm extends Component {
   constructor(props) {
@@ -11,6 +12,17 @@ class LoginForm extends Component {
     };
 
     this.isDisabled = this.isDisabled.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  async handleSubmit() {
+    const { history } = this.props;
+    history.push('/game');
+    const endpoint = 'https://opentdb.com/api_token.php?command=request';
+    const fetchAPI = await fetch(endpoint);
+    const data = await fetchAPI.json();
+    const tokenHash = data.token;
+    localStorage.setItem('token', tokenHash);
   }
 
   isDisabled() {
@@ -29,8 +41,13 @@ class LoginForm extends Component {
           type="button"
           data-testid="btn-settings"
           onClick={ () => history.push('/settings') }
+          className="btn"
         >
-          Configurações
+          <img
+            src={ settingsIcon }
+            alt="settings icon"
+            className="settings"
+          />
         </button>
         <form>
           <input
@@ -51,6 +68,7 @@ class LoginForm extends Component {
             type="submit"
             data-testid="btn-play"
             disabled={ !this.isDisabled() }
+            onClick={ this.handleSubmit }
           >
             Jogar
           </button>
