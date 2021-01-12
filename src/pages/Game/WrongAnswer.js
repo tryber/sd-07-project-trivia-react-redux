@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class WrongAnswer extends Component {
   render() {
@@ -13,5 +14,10 @@ class WrongAnswer extends Component {
     );
   }
 }
+
+WrongAnswer.propTypes = {
+  answer: PropTypes.string.isRequired,
+  index: PropTypes.number.isRequired,
+};
 
 export default WrongAnswer;
