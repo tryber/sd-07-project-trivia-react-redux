@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Link, Redirect } from 'react-router-dom';
 import { login, userEmail, getToken } from '../actions';
 
 class Login extends Component {
@@ -35,6 +36,7 @@ class Login extends Component {
     nameDispatch(name);
     emailDispatch(email);
     token();
+    <Redirect to= "/play/"  />;
   }
 
   render() {
@@ -71,6 +73,14 @@ class Login extends Component {
         >
           Jogar
         </button>
+        <Link to="/settings">
+          <button
+            data-testid="btn-settings"
+            type="button"
+          >
+            Settings
+          </button>
+        </Link>
       </div>
     );
   }
