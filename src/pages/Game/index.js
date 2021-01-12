@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
+import Questions from './Questions';
 
 class Game extends Component {
   render() {
     return (
-      <p>Game</p>
+      <div>
+        <Questions />
+      </div>
     );
   }
 }
