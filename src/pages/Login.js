@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { tokenAction } from '../actions';
+import { tokenAction, addEmailAction, addNameAction } from '../actions';
 import api from '../services/api';
 import './login.css';
 
@@ -20,6 +20,7 @@ class Login extends Component {
 
   handleChange(e) {
     const { value, name } = e.target;
+
     this.setState({ [name]: value });
   }
 
@@ -34,7 +35,8 @@ class Login extends Component {
   }
 
   render() {
-    const { history, addToken } = this.props;
+    const { history, addToken, addEmail, addName } = this.props;
+    const { email, name } = this.state;
     const { returnToken } = api;
     return (
       <form>
@@ -70,11 +72,13 @@ class Login extends Component {
             data-testid="btn-play"
             disabled={ this.valida() }
             onClick={ async () => {
-              history.push('/play');
               const token = await returnToken();
               localStorage.clear();
               localStorage.setItem('token', token);
               addToken(token);
+              addEmail(email);
+              addName(name);
+              history.push('/play');
             } }
           >
             Jogar
@@ -98,11 +102,17 @@ class Login extends Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({ addToken: (e) => dispatch(tokenAction(e)) });
+const mapDispatchToProps = (dispatch) => ({
+  addToken: (e) => dispatch(tokenAction(e)),
+  addEmail: (email) => dispatch(addEmailAction(email)),
+  addName: (name) => dispatch(addNameAction(name)),
+});
 
 export default connect(null, mapDispatchToProps)(Login);
 
 Login.propTypes = {
   history: PropTypes.shape.isRequired,
   addToken: PropTypes.func.isRequired,
+  addEmail: PropTypes.func.isRequired,
+  addName: PropTypes.func.isRequired,
 };
