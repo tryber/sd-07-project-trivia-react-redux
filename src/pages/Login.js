@@ -82,7 +82,6 @@ class Login extends Component {
 const mapDispatchToProps = (dispatch) => ({ addToken: (e) => dispatch(tokenAction(e)) });
 
 export default connect(null, mapDispatchToProps)(Login);
-
 Login.propTypes = {
   history: PropTypes.shape.isRequired,
   addToken: PropTypes.func.isRequired,
