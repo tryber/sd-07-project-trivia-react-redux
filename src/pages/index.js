@@ -1,5 +1,4 @@
 import Home from './Home';
+import Config from './Config';
 
-const something = 'somenthing';
-
-export { Home, something };
+export { Home, Config };
