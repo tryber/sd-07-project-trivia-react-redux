@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { login, userEmail, getToken } from '../actions';
 
 class Login extends Component {
@@ -30,11 +31,12 @@ class Login extends Component {
   }
 
   async click() {
-    const { nameDispatch, emailDispatch, token } = this.props;
+    const { nameDispatch, emailDispatch, token, history } = this.props;
     const { name, email } = this.state;
     nameDispatch(name);
     emailDispatch(email);
     token();
+    history.push('/play');
   }
 
   render() {
@@ -71,6 +73,14 @@ class Login extends Component {
         >
           Jogar
         </button>
+        <Link to="/settings">
+          <button
+            data-testid="btn-settings"
+            type="button"
+          >
+            Settings
+          </button>
+        </Link>
       </div>
     );
   }
@@ -86,6 +96,7 @@ Login.propTypes = {
   nameDispatch: PropTypes.func.isRequired,
   emailDispatch: PropTypes.func.isRequired,
   token: PropTypes.func.isRequired,
+  history: PropTypes.shape(PropTypes.object).isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(Login);
