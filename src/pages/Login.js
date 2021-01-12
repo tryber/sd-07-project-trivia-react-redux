@@ -30,8 +30,10 @@ class Login extends Component {
   }
 
   render() {
+    const { history } = this.props;
     return (
       <form>
+        <img src="../"></img>
         <label
           htmlFor="name"
         >
@@ -54,6 +56,7 @@ class Login extends Component {
             onChange={ this.handleChange }
           />
         </label>
+        <div className="button-container">
         <button
           type="button"
           data-testid="btn-play"
@@ -61,6 +64,20 @@ class Login extends Component {
         >
           Jogar
         </button>
+        <button
+          data-testid="btn-settings"
+          className="btn-config"
+          onClick={ () => {
+            history.push('/config');
+          } }
+        >
+          <img
+          src="./config.png"
+          alt="Configurações"
+          ></img>
+        </button>
+        </div>
+        
       </form>
     );
   }
