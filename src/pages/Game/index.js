@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Header from './header';
 import Questions from './Questions';
+import Timer from './Timer';
 import './index.css';
 
 class Game extends Component {
@@ -9,6 +10,7 @@ class Game extends Component {
       <div>
         <Header />
         <Questions />
+        <Timer />
       </div>
     );
   }
