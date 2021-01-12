@@ -1,4 +1,4 @@
-import getToken from '../../../services';
+import fetchToken from '../../../services';
 import PlayerTypes from './types';
 
 export const signIn = (player) => ({
@@ -6,14 +6,16 @@ export const signIn = (player) => ({
   payload: player,
 });
 
-export const requestToken = (token) => ({
-  type: PlayerTypes.REQUEST_TOKEN,
-  payload: token,
+export const includeToken = (token) => ({
+  type: PlayerTypes.INCLUDE_TOKEN,
+  token,
 });
 
-export function fetchToken() {
+export function getToken() {
   return async (dispatch) => {
-    const response = await getToken();
-    dispatch(requestToken(response));
+    const response = await fetchToken();
+    const recevedToken = response.token;
+    dispatch(includeToken(recevedToken));
+    localStorage.setItem('token', recevedToken);
   };
 }

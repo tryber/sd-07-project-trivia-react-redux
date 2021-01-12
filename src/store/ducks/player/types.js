@@ -1,6 +1,6 @@
 const PlayerTypes = {
   SIGNIN: 'player/SIGNIN',
-  REQUEST_TOKEN: 'player/REQUEST_TOKEN',
+  INCLUDE_TOKEN: 'player/INCLUDE_TOKEN',
 };
 
 export default PlayerTypes;
