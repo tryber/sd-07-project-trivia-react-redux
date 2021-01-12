@@ -28,10 +28,11 @@ class Login extends React.Component {
 
   tokenRequest() {
     const { email, name } = this.state;
-    const { namePlayer, emailPlayer, requestToken } = this.props;
+    const { namePlayer, emailPlayer, requestToken, history } = this.props;
     namePlayer(name);
     emailPlayer(email);
     requestToken();
+    history.push('/trivia');
   }
 
   render() {
@@ -88,6 +89,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 Login.propTypes = {
+  history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
   namePlayer: PropTypes.string.isRequired,
   emailPlayer: PropTypes.string.isRequired,
   requestToken: PropTypes.func.isRequired,
