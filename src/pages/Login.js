@@ -2,12 +2,12 @@ import React from 'react';
 
 class Login extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       name: '',
       email: '',
       buttonDisable: true,
-    }
+    };
     this.enableButton = this.enableButton.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.verificationEmail = this.verificationEmail(this);
