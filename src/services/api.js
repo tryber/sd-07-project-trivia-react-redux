@@ -3,7 +3,7 @@ export async function fetchToken() {
   const dataJson = await data.json();
   const requestedToken = dataJson.token;
   return requestedToken;
-  }
+}
 
 export async function fetchTrivia(requestedToken) {
   const data2 = await fetch(
