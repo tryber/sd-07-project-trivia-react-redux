@@ -21,11 +21,9 @@ export const getToken = () => function api(dispatch) {
     .catch((error) => console.log(error));
 };
 
-export const saveState = (state) => {
-  try {
+export const saveState = (key, state) => {
+  return function teste(dispatch) {
     const serializedState = JSON.stringify(state);
-    localStorage.setItem('state', serializedState);
-  } catch (error) {
-    console.log(error);
-  }
+    dispatch(localStorage.setItem([key], serializedState));
+  };
 };

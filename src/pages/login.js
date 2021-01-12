@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link, Redirect } from 'react-router-dom';
-import { login, userEmail, getToken } from '../actions';
+import { Link } from 'react-router-dom';
+import { login, userEmail, getToken, saveState } from '../actions';
 
 class Login extends Component {
   constructor() {
@@ -31,12 +31,13 @@ class Login extends Component {
   }
 
   async click() {
-    const { nameDispatch, emailDispatch, token } = this.props;
+    const { nameDispatch, emailDispatch, token, history, saveToken } = this.props;
     const { name, email } = this.state;
     nameDispatch(name);
     emailDispatch(email);
     token();
-    <Redirect to= "/play/"  />;
+    saveToken('token', token);
+    history.push('/play');
   }
 
   render() {
@@ -90,6 +91,7 @@ const mapDispatchToProps = (dispatch) => ({
   nameDispatch: (name) => dispatch(login(name)),
   emailDispatch: (email) => dispatch(userEmail(email)),
   token: () => dispatch(getToken()),
+  saveToken: (key, state) => dispatch(saveState(key, state)),
 });
 
 Login.propTypes = {
