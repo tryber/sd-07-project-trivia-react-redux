@@ -39,7 +39,6 @@ class Login extends React.Component {
   handleClick() {
     const { token, history } = this.props;
     token();
-    localStorage.setItem('token', JSON.stringify(token));
     history.push('./game');
   }
 

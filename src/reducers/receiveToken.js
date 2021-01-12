@@ -7,6 +7,7 @@ const INITIAL_STATE = {
 const receiveToken = (state = INITIAL_STATE, action) => {
   switch (action.type) {
   case REQUEST_TOKEN_SUCCESS:
+    localStorage.setItem('token', JSON.stringify(action.token));
     return {
       ...state,
       token: action.token,
