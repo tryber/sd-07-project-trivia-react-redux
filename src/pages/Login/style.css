@@ -1,5 +1,5 @@
 body {
   background-color: #ff9914;
   display: flex;
-  
+  justify-content: space-around;
 }

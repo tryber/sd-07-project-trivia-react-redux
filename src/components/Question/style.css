@@ -1,11 +1,10 @@
 .message-box {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   background-color: rgba(0, 0, 0, 0.2);
   border-radius: 30px;
   height: 200px;
   width: 85%;
-  min-width: 85%;
 }
 
 .message {
