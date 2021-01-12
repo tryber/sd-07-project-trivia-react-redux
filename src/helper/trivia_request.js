@@ -6,7 +6,7 @@ export const tokenGetter = async () => {
       'https://opentdb.com/api_token.php?command=request',
     );
     const jsonResponse = await response.json();
-    console.log('Seu token é ', json.token);
+    console.log('Seu token é ', jsonResponse.token);
     return jsonResponse.token;
   } catch (error) {
     console.log(error);

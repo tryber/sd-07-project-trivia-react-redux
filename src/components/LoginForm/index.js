@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import { clickJogar } from '../../redux/actions/userActions';
 
 class LoginForm extends Component {
   constructor(props) {
@@ -26,6 +30,7 @@ class LoginForm extends Component {
 
   render() {
     const { username, userEmail, access } = this.state;
+    const { playGame } = this.props;
     return (
       <form>
         <input
@@ -44,12 +49,27 @@ class LoginForm extends Component {
           data-testid="input-gravatar-email"
           onChange={ this.handleInput }
         />
-        <button disabled={ !access } type="button" data-testid="btn-play">
-          Jogar
-        </button>
+        <Link to="/game">
+          <button
+            disabled={ !access }
+            type="button"
+            data-testid="btn-play"
+            onClick={ () => playGame(username, userEmail) }
+          >
+            Jogar
+          </button>
+        </Link>
       </form>
     );
   }
 }
 
-export default LoginForm;
+const mapDispatchToProps = (dispatch) => ({
+  playGame: (username, userEmail) => dispatch(clickJogar(username, userEmail)),
+});
+
+export default connect(null, mapDispatchToProps)(LoginForm);
+
+LoginForm.propTypes = {
+  playGame: PropTypes.func.isRequired,
+};
