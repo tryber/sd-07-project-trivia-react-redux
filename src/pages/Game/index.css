@@ -1,11 +1,11 @@
 .answer-button {
-  border: 3px solid rgb(100, 100, 100)
+  border: 3px solid rgb(100, 100, 100);
 
 }
 .answer-button-correct {
-  border: 3px solid rgb(6, 240, 15)
+  border: 3px solid rgb(6, 240, 15);
 }
 
 .answer-button-wrong {
-  border: 3px solid rgb(255, 0, 0)
+  border: 3px solid red;
 }
