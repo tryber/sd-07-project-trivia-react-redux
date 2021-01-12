@@ -9,7 +9,8 @@ class Feedback extends Component {
   }
 
   renderMessage(correctQuestions) {
-    if (correctQuestions < 3) {
+    const parameter = 3;
+    if (correctQuestions < parameter) {
       return (<h1 data-testid="feedback-text">Podia ser melhor...</h1>);
     }
     return (<h1 data-testid="feedback-text">Mandou bem!</h1>);
