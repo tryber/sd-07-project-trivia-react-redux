@@ -69,9 +69,9 @@ class Login extends React.Component {
           disabled={ !authentication || name.length < numberCharacters }
           type="button"
           onClick={ () => {
-            loggingin(email);
+            loggingin(name, email);
             this.handleClick();
-          } }
+          } }     
         >
           Jogar
         </button>
@@ -88,7 +88,7 @@ class Login extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  loggingin: (email) => dispatch(login(email)),
+  loggingin: (name ,email) => dispatch(login(name, email)),
   tokenAction: (token) => dispatch(fetchToken(token)),
 });
 
@@ -105,5 +105,4 @@ Login.propTypes = {
   token: PropTypes.string.isRequired,
 };
 
-// export default Login;
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

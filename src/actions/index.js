@@ -1,6 +1,6 @@
 // support provided by group 25-thx!
 export const LOGIN = 'LOGIN';
-export const login = (email) => ({ type: LOGIN, email });
+
 export const TOKEN_REQUEST = 'TOKEN_REQUEST';
 export const tokenRequest = (token) => ({ type: TOKEN_REQUEST, token });
 
@@ -21,4 +21,9 @@ export function fetchToken() {
       dispatch(requestFail());
     }
   };
-}
+  
+export const login = (nome, email) => ({
+  type: LOGIN,
+  nome,
+  email,
+});
