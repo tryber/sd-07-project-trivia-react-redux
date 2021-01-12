@@ -4,8 +4,8 @@ import './App.css';
 
 import Login from './pages/Login';
 import Game from './pages/Game';
-import Settings from './Pages/Settings';
-
+import Settings from './pages/Settings';
+import QuestionsPage from './pages/QuestionsPage';
 
 export default function App() {
   return (
@@ -14,6 +14,7 @@ export default function App() {
         <Route exact path="/" component={ Login } />
         <Route path="/game" component={ Game } />
         <Route exact path="/settings" component={ Settings } />
+        <Route exact path="/questions-page" component={ QuestionsPage } />
       </Switch>
     </div>
   );
