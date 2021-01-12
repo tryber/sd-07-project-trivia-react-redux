@@ -71,7 +71,7 @@ class Login extends React.Component {
           onClick={ () => {
             loggingin(name, email);
             this.handleClick();
-          } }     
+          } }
         >
           Jogar
         </button>
@@ -88,7 +88,7 @@ class Login extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  loggingin: (name ,email) => dispatch(login(name, email)),
+  loggingin: (name, email) => dispatch(login(name, email)),
   tokenAction: (token) => dispatch(fetchToken(token)),
 });
 
