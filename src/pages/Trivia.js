@@ -47,7 +47,9 @@ class Trivia extends React.Component {
   clickHandler() {
     this.setState({
       replyConfirmation: true,
+
       clicked: true,
+
     });
   }
 
@@ -61,6 +63,7 @@ class Trivia extends React.Component {
 
   render() {
     const { emailSave, nameSave } = this.props;
+
     const {
       urlImg,
       placar,
@@ -68,6 +71,7 @@ class Trivia extends React.Component {
       position,
       replyConfirmation,
       clicked } = this.state;
+
     const { results } = questions;
 
     return (
