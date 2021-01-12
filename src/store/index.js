@@ -1,6 +1,6 @@
 // aqui tu cria o state
 // importe o método applyMiddleware
-import { createStore, applyMiddleware, compose } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 // importe o redux-thunk
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
