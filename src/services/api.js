@@ -7,4 +7,16 @@ export const fetchToken = async () => {
   }
   return Promise.reject(json);
 };
-export const fetchQuests = () => {};
+
+export const fetchQuests = async () => {
+
+  const endpoint = `https://opentdb.com/api.php?amount=5&token=${localStorage.getItem('token')}`
+  const resp = await fetch(endpoint);
+  const json = await resp.json();
+  if (json.response_code === 0) {
+    return Promise.resolve(json.results);
+  }
+  return Promise.reject(json);
+
+};
+
