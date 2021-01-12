@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import Hearder from './Header';
+import Header from './Header';
 
 const rootReducer = combineReducers({
-  Hearder,
+  Header,
 });
 
 export default rootReducer;

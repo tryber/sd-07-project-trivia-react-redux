@@ -18,19 +18,31 @@ export const changeGravatarEmail = (payload) => ({
   payload,
 });
 
-export const requestApi = () => ({
-  type: 'REQUEST_API',
+const tokenToStoreSucess = (payload) => ({
+  type: 'CREATE_TOKEN_SUCCESS',
+  payload,
 });
 
-export function requestAPI() {
+const tokenToStoreFail = (error) => ({
+  type: 'CREAT_TOKEN_FAIL',
+  error,
+});
+
+export const requestApiToken = () => ({
+  type: 'REQUEST_TOKEN_API',
+});
+
+export function requestToken() {
   return (dispatch) => {
-    dispatch(requestMoeda());
+    dispatch(requestApiToken());
     return fetch('https://opentdb.com/api_token.php?command=request')
       .then((response) => {
         response.json().then(
-          (data) => dispatch(requestMoedaSucess(data)),
-          (error) => dispatch(requestMoedaFail(error)),
+          (data) => dispatch(tokenToStoreSucess(data.token)),
+          (error) => dispatch(tokenToStoreFail(error)),
         );
       });
   };
 }
+
+// 

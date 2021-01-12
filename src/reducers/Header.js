@@ -4,6 +4,7 @@ const initialState = {
   score: 0,
   gravatarEmail: '',
   loading: false,
+  token: '',
 };
 
 export default function (state = initialState, action) {
@@ -28,7 +29,13 @@ export default function (state = initialState, action) {
       ...state,
       gravatarEmail: action.payload,
     };
-  case 'REQUEST_API':
+  case 'CREATE_TOKEN_SUCCESS':
+    localStorage.setItem('token', action.payload);
+    return {
+      ...state,
+      token: action.payload,
+    };
+  case 'REQUEST_TOKEN_API':
     return {
       ...state,
       loading: true,

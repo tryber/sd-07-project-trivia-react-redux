@@ -1,8 +1,11 @@
 import React from 'react';
+import { requestToken } from '../actions';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 class Login extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
 
     this.state = {
       name: '',
@@ -13,6 +16,7 @@ class Login extends React.Component {
 
     this.handleInputs = this.handleInputs.bind(this);
     this.matchingEmail = this.matchingEmail.bind(this);
+    this.startGame = this.startGame.bind(this);
   }
 
   handleInputs({ target }) {
@@ -36,6 +40,10 @@ class Login extends React.Component {
     }
   }
 
+  startGame() {
+    this.props.requestAPI();
+  }
+
   render() {
     const { buttonDisable } = this.state;
 
@@ -56,17 +64,33 @@ class Login extends React.Component {
             data-testid="input-gravatar-email"
             onChange={ this.handleInputs }
           />
+          <Link to="./game">
           <button
             type="button"
             data-testid="btn-play"
             disabled={ buttonDisable }
+            onClick={ this.startGame }
           >
             Jogar
           </button>
+          </Link>
         </form>
       </div>
     );
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  requestAPI: () => dispatch(requestToken());
+});
+
+const mapStateToProps = (state) => ({
+  name: state.Header.name,
+  assertions: state.Header.assertions,
+  score: state.Header.score,
+  gravatarEmail: state.Header.gravatarEmail,
+  loading: state.Header.loading,
+  token: state.Header.token,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
