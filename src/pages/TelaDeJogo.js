@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types'; 
+import PropTypes from 'prop-types';
 import md5 from 'crypto-js/md5';
 
 class TelaDeJogo extends Component {
@@ -15,7 +15,7 @@ class TelaDeJogo extends Component {
           <img
             data-testid="header-profile-picture"
             alt=""
-            src={`https://www.gravatar.com/avatar/${hash}`}
+            src={ `https://www.gravatar.com/avatar/${hash}` }
           />
           <div data-testid="header-player-name">
             <p>{name}</p>
