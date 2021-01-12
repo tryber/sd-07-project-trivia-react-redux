@@ -9,6 +9,7 @@ class Header extends React.Component {
     const { name, email } = this.props;
     const hash = md5(email);
     const urlGravatar = `https://www.gravatar.com/avatar/${hash}`;
+
     return (
       <div>
         <h3>Header</h3>
