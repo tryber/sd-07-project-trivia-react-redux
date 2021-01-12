@@ -1,8 +1,8 @@
 const initialState = {
   name: '',
-  assertions,
-  score,
-  gravatarEmail,
+  assertions: '',
+  score: 0,
+  gravatarEmail: '',
   loading: false,
 };
 
