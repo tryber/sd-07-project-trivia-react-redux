@@ -13,6 +13,7 @@ class Trivia extends React.Component {
       placar: 0,
       questions: { results: [] },
       position: 0,
+      clicked: false,
     };
     this.clickHandler = this.clickHandler.bind(this);
     this.requestQuestions = this.requestQuestions.bind(this);
@@ -41,16 +42,17 @@ class Trivia extends React.Component {
     });
   }
 
-  clickHandler() {
-    const { position } = this.state;
+  clickHandler(target) {
     this.setState({
-      position: position + 1,
+      clicked: true,
     });
+    if (target.id === 'rightAnswer') target.className = 'rightGreen';
+    if (target.id === 'wrongAnswer') target.className = 'wrongRed';
   }
 
   render() {
     const { emailSave, nameSave } = this.props;
-    const { urlImg, placar, questions, position } = this.state;
+    const { urlImg, placar, questions, position, clicked } = this.state;
     const { results } = questions;
 
     return (
@@ -69,9 +71,10 @@ class Trivia extends React.Component {
             const quatro = 4;
             const answers = item.incorrect_answers.map((answer, index) => (
               <button
-                onClick={ this.clickHandler }
+                onClick={ ({ target }) => this.clickHandler(target) }
                 key={ index }
                 type="button"
+                className={ clicked ? 'wrongRed' : '' }
                 data-testid={ `wrong-answer-${index}` }
               >
                 {' '}
@@ -81,11 +84,13 @@ class Trivia extends React.Component {
             ));
             const answerCorrect = (
               <button
-                onClick={ this.clickHandler }
+                onClick={ ({ target }) => this.clickHandler(target) }
+                id="rightAnswer"
                 type="button"
+                className={ clicked ? 'rightGreen' : '' }
                 data-testid="correct-answer"
               >
-                {' '}
+                { ' '}
                 {item.correct_answer}
                 {' '}
               </button>
