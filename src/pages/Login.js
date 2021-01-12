@@ -70,12 +70,12 @@ class Login extends Component {
             data-testid="btn-play"
             disabled={ this.valida() }
             onClick={ async () => {
-            history.push('/play');
-            const token = await returnToken();
-            localStorage.clear();
-            localStorage.setItem('token', token);
-            addToken(token);
-          } }
+              history.push('/play');
+              const token = await returnToken();
+              localStorage.clear();
+              localStorage.setItem('token', token);
+              addToken(token);
+            } }
           >
             Jogar
           </button>
