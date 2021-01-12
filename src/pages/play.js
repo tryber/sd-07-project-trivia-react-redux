@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import md5 from 'crypto-js/md5';
+import PropTypes from 'prop-types';
 
 class Play extends Component {
   hash() {
@@ -29,5 +30,11 @@ const mapStateToProps = (state) => ({
   name: state.player.name,
   score: state.player.score,
 });
+
+Play.propTypes = {
+  email: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  score: PropTypes.number.isRequired,
+};
 
 export default connect(mapStateToProps)(Play);
