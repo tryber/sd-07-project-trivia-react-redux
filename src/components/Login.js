@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-// import callAPI from '../services/callAPI';
 
 class Login extends Component {
   constructor() {
@@ -27,7 +26,7 @@ class Login extends Component {
     } catch (err) {
       localStorage.clear();
     }
-  }
+
 
   isDisabled() {
     const { name, email } = this.state;
