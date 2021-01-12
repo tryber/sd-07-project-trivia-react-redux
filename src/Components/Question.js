@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 class Question extends React.Component {
   render() {
-    const { questions, currentQuestion, answered, clickAnswered } = this.props;
+    const { questions, currentQuestion, answered, clickAnswered, isDisable } = this.props;
     return (
       <div>
         <h1 data-testid="question-category">{questions[currentQuestion].category}</h1>
@@ -14,6 +14,7 @@ class Question extends React.Component {
           data-testid="correct-answer"
           className={ answered ? 'correct-answer' : 'answered' }
           onClick={ () => clickAnswered() }
+          disabled={ isDisable }
         >
           {questions[currentQuestion].correct_answer}
         </button>
@@ -26,6 +27,7 @@ class Question extends React.Component {
               type="button"
               data-testid={ datatestid }
               onClick={ () => clickAnswered() }
+              disabled={ isDisable }
             >
               {e}
             </button>);
@@ -52,6 +54,7 @@ Question.propTypes = {
     }).isRequired,
   ).isRequired,
   answered: PropTypes.bool.isRequired,
+  isDisable: PropTypes.bool.isRequired,
   clickAnswered: PropTypes.func.isRequired,
 };
 

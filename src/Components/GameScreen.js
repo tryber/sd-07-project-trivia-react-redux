@@ -15,6 +15,8 @@ class GameScreen extends React.Component {
       token: localStorage.getItem('token'),
       currentQuestion: 0,
       answered: false,
+      timer: 30,
+      isDisable: false,
     };
   }
 
@@ -22,6 +24,33 @@ class GameScreen extends React.Component {
     const { setQuestionsProps } = this.props;
     const { token } = this.state;
     setQuestionsProps(token);
+  }
+
+  // timeout = () => {
+  //   const { timer } = this.state;
+  // return setTimeout(() => {
+  //   this.setState({
+  //     timer: timer - 1
+  //   })
+  // }, 1000);}
+
+  componentDidUpdate() {
+    const time = 1000;
+    const { timer } = this.state;
+    this.timeout = setTimeout(() => {
+      if (timer > 0) {
+        this.setState({
+          timer: timer - 1,
+        });
+      } else {
+        this.setState({ isDisable: true });
+        clearInterval(this.timeout);
+      }
+    }, time);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timeout);
   }
 
   clickAnswered() {
@@ -35,13 +64,15 @@ class GameScreen extends React.Component {
       this.setState({
         currentQuestion: currentQuestion + 1,
         answered: false,
+        timer: 30,
+        isDisable: false,
       });
     }
   }
 
   render() {
     const { questions } = this.props;
-    const { currentQuestion, answered } = this.state;
+    const { currentQuestion, answered, timer, isDisable } = this.state;
     if (questions.length === 0) {
       return <div>carregando...</div>;
     }
@@ -51,6 +82,7 @@ class GameScreen extends React.Component {
           currentQuestion={ currentQuestion }
           answered={ answered }
           clickAnswered={ this.clickAnswered }
+          isDisable={ isDisable }
         />
         <button
           type="button"
@@ -58,6 +90,7 @@ class GameScreen extends React.Component {
         >
           Próxima Questão
         </button>
+        <h1>{timer}</h1>
       </div>
     );
   }
