@@ -1,4 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { getTokenAction } from '../../actions/tokenAction';
 
 class Login extends React.Component {
   constructor(props) {
@@ -9,6 +12,7 @@ class Login extends React.Component {
       name: '',
     };
     this.changeInputs = this.changeInputs.bind(this);
+    this.handleLogin = this.handleLogin.bind(this);
   }
 
   async setDisabled() {
@@ -26,11 +30,21 @@ class Login extends React.Component {
     await this.setDisabled();
   }
 
+  handleLogin(event) {
+    event.preventDefault();
+    const { tokenAction, history } = this.props;
+    tokenAction();
+    if (history) history.push('/login');
+  }
+
   render() {
     const { disabled, email, name } = this.state;
+    const { isFetchingToken, error } = this.props;
     return (
       <div>
         <form>
+          {isFetchingToken && <div>loading</div>}
+          {error && <div>error</div>}
           <label htmlFor="email">
             Email do Gravatar:
             <input
@@ -59,6 +73,7 @@ class Login extends React.Component {
             type="button"
             data-testid="btn-play"
             disabled={ disabled }
+            onClick={ this.handleLogin }
           >
             Jogar
           </button>
@@ -68,4 +83,20 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+Login.propTypes = {
+  isFetchingToken: PropTypes.bool.isRequired,
+  error: PropTypes.string.isRequired,
+  tokenAction: PropTypes.func.isRequired,
+  history: PropTypes.shape().isRequired,
+};
+
+const mapStateToProps = ({ token }) => ({
+  isFetchingToken: token.isFetchingToken,
+  error: token.error,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  tokenAction: () => dispatch(getTokenAction()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

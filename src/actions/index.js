@@ -1,6 +1,6 @@
-export const PLAYER = 'PLAYER';
-
-export const playerAction = (player) => ({
-  type: PLAYER,
-  player,
-});
+export {
+  TOKEN_SUCCESS,
+  TOKEN_REQUEST,
+  TOKEN_FAILURE,
+  tokenSuccess,
+} from './tokenAction';
