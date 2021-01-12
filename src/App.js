@@ -10,6 +10,7 @@ export default function App() {
         <p>
           vamos lá
         </p>
+        <h1>teste </h1>
       </header>
     </div>
   );

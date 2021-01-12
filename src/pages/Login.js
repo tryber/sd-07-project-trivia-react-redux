@@ -39,7 +39,8 @@ class Login extends React.Component {
 
   render() {
     const { email, name } = this.state;
-    return (
+    const { sendEmail } = this.props;
+    return ( 
       <div>
 
         <h1> Trivia</h1>
