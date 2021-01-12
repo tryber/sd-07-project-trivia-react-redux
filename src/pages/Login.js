@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { ResultToken } from '../services/Api';
 import { Link } from 'react-router-dom';
+import { ResultToken } from '../services/Api';
 
 class Login extends Component {
   constructor() {
@@ -51,14 +51,14 @@ class Login extends Component {
           />
         </label>
         <Link to="/jogo">
-        <button
-          type="button"
-          data-testid="btn-play"
-          onClick={ this.handleClick }
-          disabled={ !bothValid }
-        >
-          Jogar
-        </button>
+          <button
+            type="button"
+            data-testid="btn-play"
+            onClick={ this.handleClick }
+            disabled={ !bothValid }
+          >
+            Jogar
+          </button>
         </Link>
       </form>
     );

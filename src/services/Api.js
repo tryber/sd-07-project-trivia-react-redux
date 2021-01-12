@@ -4,6 +4,7 @@ const typeMethod = { method: 'GET' };
 export const ResultToken = () => {
   fetch(requestApi, typeMethod)
     .then((response) => response.json()
-      .then((result) => localStorage.setItem('token', result.token)),
-    );
+      .then((result) => localStorage.setItem('token', result.token)),);
 };
+
+export default ResultToken;
