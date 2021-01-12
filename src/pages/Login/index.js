@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import md5 from 'crypto-js/md5'
+import md5 from 'crypto-js/md5';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
@@ -40,7 +40,8 @@ class Login extends Component {
     const { history, signInAction, getTokenAction } = this.props;
     await getTokenAction();
     const { name, gravatarEmail } = this.state;
-    signInAction({ name, gravatarEmail });
+    const hash = md5(gravatarEmail);
+    signInAction({ name, gravatarEmail, hash });
     history.push('/game');
   }
 
