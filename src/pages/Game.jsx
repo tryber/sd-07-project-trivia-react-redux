@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
+import Header from '../components/Header';
 
 const Game = () => {
   const [counter, setCounter] = useState(0);
@@ -18,6 +19,7 @@ const Game = () => {
 
   return (
     <div>
+      <Header />
       <div>
         <h3 data-testid="question-category">{results[counter].category}</h3>
       </div>
