@@ -1,36 +1,43 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { fetchToken, requestSucessToken } from '../actions';
+import apiToken from '../services/api';
 
 class Login extends Component {
   constructor(props) {
     super(props);
 
-    // this.handleChange = this.handleChange.bind(this);
+    this.saveToken = this.saveToken.bind(this);
+    this.tokenObject = this.tokenObject.bind(this);
+    this.saveToken = this.saveToken.bind(this);
 
     this.state = {
       email: '',
       name: '',
+      token: '',
     };
   }
 
-  // handleChange(event) {
-  //   const { email, validateEmail } = this.state;
-  //   this.setState({ [event.target.name]: event.target.value });
-  //   const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
-  //   const isEmailValid = email.match(emailRegex);
-  //   console.log(isEmailValid);
-  //   const emailRegex = /[\w.-]+@[\w-]+\.[\w-.]+/gi;
-  //   const isEmailValid = email.match(emailRegex);
+  tokenObject(tokens) {
+    this.setState({
+      token: tokens,
+    });
+  }
 
-  //   if (isEmailValid) {
-  //     this.setState({ validateEmail: true });
-  //   } else {
-  //     this.setState({ validateEmail: false });
-  //   }
-  //   console.log(validateEmail);
-  // }
+  async saveToken() {
+    const tokenResponse = await apiToken();
+    this.tokenObject(tokenResponse);
+    const { token } = this.state;
+    const { addToken } = this.props;
+    localStorage.setItem('token', JSON.stringify(token));
+    addToken(token);
+  }
 
   render() {
     const { email, name } = this.state;
+
     return (
       <div>
         <form>
@@ -51,16 +58,28 @@ class Login extends Component {
             onChange={ (e) => this.setState({ email: e.target.value }) }
           />
         </form>
-        <button
-          type="button"
-          data-testid="btn-play"
-          disabled={ !email || !name }
-        >
-          Jogar
-        </button>
+        <Link to="/game">
+          <button
+            type="button"
+            data-testid="btn-play"
+            disabled={ !email || !name }
+            onClick={ this.saveToken }
+          >
+            Jogar
+          </button>
+        </Link>
       </div>
     );
   }
 }
 
-export default Login;
+Login.propTypes = {
+  addToken: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  sendToken: (token) => dispatch(fetchToken(token)),
+  addToken: (token) => dispatch(requestSucessToken(token)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
