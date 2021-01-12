@@ -20,11 +20,3 @@ export const getToken = () => function api(dispatch) {
     })
     .catch((error) => console.log(error));
 };
-
-export const gravatar = (hash) => {
-  const URL = `https://www.gravatar.com/avatar/${hash}`;
-  return function gravatarApi(dispatch) {
-    return fetch(URL).then((response) => response.json())
-      .then((json) => console.log(json));
-  };
-};
