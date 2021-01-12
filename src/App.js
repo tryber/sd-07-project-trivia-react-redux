@@ -10,6 +10,7 @@ export default function App() {
       <Route path="/settings" component={ pages.Settings } />
       <Route path="/feedback" component={ pages.Feedback } />
       <Route path="/game" component={ pages.Game } />
+      <Route path="/ranking" component={ pages.Ranking } />
     </Switch>
   );
 }
