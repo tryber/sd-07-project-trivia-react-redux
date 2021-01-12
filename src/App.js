@@ -1,13 +1,13 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import Login from './pages/Login';
-
+import * as pages from './pages';
 import './App.css';
 
 export default function App() {
   return (
     <Switch>
-      <Route exact path="/" component={ Login } />
+      <Route exact path="/" component={ pages.Login } />
+      <Route path="/settings" component={ pages.Settings } />
     </Switch>
   );
 }
