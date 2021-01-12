@@ -60,7 +60,7 @@ class Login extends React.Component {
           data-testid="btn-play"
           disabled={ !authentication || name.length < numberCharacters }
           type="button"
-          onClick={ () => loggingin(email) }
+          onClick={ () => loggingin(name, email) }
         >
           Jogar
         </button>
@@ -77,7 +77,7 @@ class Login extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  loggingin: (email) => dispatch(login(email)),
+  loggingin: (nome, email) => dispatch(login(nome, email)),
 });
 
 const mapStateToProps = (state) => ({
