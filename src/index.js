@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './index.css';
 import App from './App';
 import Game from './pages/Game';
+import Config from './pages/Config';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
@@ -11,6 +12,7 @@ ReactDOM.render(
     <Switch>
       <Route exact path="/" component={ App } />
       <Route path="/game" component={ Game } />
+      <Route path="/config" component={ Config } />
     </Switch>
   </BrowserRouter>,
   document.getElementById('root'),

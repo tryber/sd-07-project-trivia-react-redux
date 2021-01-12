@@ -1,15 +1,34 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import logo from './trivia.png';
 import './App.css';
 import Login from './components/login';
 
-export default function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={ logo } className="App-logo" alt="logo" />
-        <Login />
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  render() {
+    const { history } = this.props;
+    return (
+      <div className="App">
+        <header className="App-header">
+          <img src={ logo } className="App-logo" alt="logo" />
+          <Login />
+          <button
+            onClick={ () => history.push('./config') }
+            type="button"
+            to="/config"
+            data-testid="btn-settings"
+          >
+            ⚙
+          </button>
+        </header>
+      </div>
+    );
+  }
 }
+
+export default withRouter(App);
+
+App.propTypes = {
+  history: PropTypes.objectOf().isRequired,
+};
