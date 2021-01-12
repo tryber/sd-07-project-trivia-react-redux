@@ -4,6 +4,10 @@ import { connect } from 'react-redux';
 import { getToken } from '../../redux/actions';
 import ButtonConfig from './ButtonConfig';
 
+import Trivia from '../../trivia.png';
+
+import './index.css';
+
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -42,8 +46,12 @@ class Login extends Component {
     localStorage.setItem('gravatarEmail', email);
 
     return (
-      <main onSubmit={ (e) => this.handleSubmit(e) }>
-        <form>
+      <main
+        className="login__wrapper"
+        onSubmit={ (e) => this.handleSubmit(e) }
+      >
+        <form className="login__container">
+          <img src={ Trivia } alt="Trybe Trivia" />
           <label htmlFor="name">
             Nome:
             <input
@@ -54,6 +62,7 @@ class Login extends Component {
               autoCorrect="off"
               data-testid="input-player-name"
               value={ name }
+              placeholder="Trybetop312"
               onChange={ ({ target }) => this.handleInputChange(target) }
             />
           </label>
@@ -67,6 +76,7 @@ class Login extends Component {
               autoComplete="off"
               autoCorrect="off"
               value={ email }
+              placeholder="triviagod@gmail.com"
               onChange={ ({ target }) => this.handleInputChange(target) }
             />
           </label>
