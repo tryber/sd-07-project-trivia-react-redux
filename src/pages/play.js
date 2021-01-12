@@ -5,7 +5,9 @@ class Play extends Component {
   render() {
     return (
       <div>
-        <header> { this.props.token }</header>
+        <header>
+          <h1>Bem vindo a página Play!</h1>
+        </header>
       </div>
     );
   }
