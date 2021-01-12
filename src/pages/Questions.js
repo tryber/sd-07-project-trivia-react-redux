@@ -67,6 +67,7 @@ class Questions extends React.Component {
                 { item }
               </button>))}
         </div>
+        <button type="button" onClick={ () => console.log('click') }>Next</button>
       </div>
     );
   }
