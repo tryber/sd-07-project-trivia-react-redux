@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import * as PlayerActions from '../../store/ducks/player/actions';
 
 class Login extends Component {
@@ -45,33 +46,38 @@ class Login extends Component {
   render() {
     const { name, gravatarEmail, isButtonAble } = this.state;
     return (
-      <form>
-        <input
-          type="text"
-          data-testid="input-player-name"
-          name="name"
-          id="name"
-          placeholder="Enter your name"
-          value={ name }
-          onChange={ this.handleInputChange }
-        />
-        <input
-          type="text"
-          data-testid="input-gravatar-email"
-          name="gravatarEmail"
-          id="gravatarEmail"
-          value={ gravatarEmail }
-          onChange={ this.handleInputChange }
-        />
-        <button
-          type="button"
-          data-testid="btn-play"
-          disabled={ isButtonAble }
-          onClick={ () => this.handleClick() }
-        >
-          Jogar
-        </button>
-      </form>
+      <>
+        <Link to="/settings" data-testid="btn-settings">
+          Configurações
+        </Link>
+        <form>
+          <input
+            type="text"
+            data-testid="input-player-name"
+            name="name"
+            id="name"
+            placeholder="Enter your name"
+            value={ name }
+            onChange={ this.handleInputChange }
+          />
+          <input
+            type="text"
+            data-testid="input-gravatar-email"
+            name="gravatarEmail"
+            id="gravatarEmail"
+            value={ gravatarEmail }
+            onChange={ this.handleInputChange }
+          />
+          <button
+            type="button"
+            data-testid="btn-play"
+            disabled={ isButtonAble }
+            onClick={ () => this.handleClick() }
+          >
+            Jogar
+          </button>
+        </form>
+      </>
     );
   }
 }
