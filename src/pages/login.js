@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { login, userEmail, apiToken } from '../actions';
+import { login, userEmail, getToken } from '../actions';
 
 class Login extends Component {
   constructor() {
@@ -10,22 +10,9 @@ class Login extends Component {
       name: '',
       email: '',
       auth: false,
-      token: '',
     };
     this.handleChange = this.handleChange.bind(this);
     this.click = this.click.bind(this);
-    this.fetchApi = this.fetchApi.bind(this);
-  }
-
-  componentDidMount() {
-    this.fetchApi();
-  }
-
-  fetchApi() {
-    const url = 'https://opentdb.com/api_token.php?command=request';
-    fetch(url)
-      .then((response) => response.json())
-      .then((json) => this.setState({ token: json.token }));
   }
 
   handleChange({ target: { name, value } }) {
@@ -43,11 +30,11 @@ class Login extends Component {
   }
 
   async click() {
-    const { nameDispatch, emailDispatch, saveToken } = this.props;
-    const { name, email, token } = this.state;
+    const { nameDispatch, emailDispatch, token } = this.props;
+    const { name, email } = this.state;
     nameDispatch(name);
     emailDispatch(email);
-    saveToken(token);
+    token();
   }
 
   render() {
@@ -92,13 +79,13 @@ class Login extends Component {
 const mapDispatchToProps = (dispatch) => ({
   nameDispatch: (name) => dispatch(login(name)),
   emailDispatch: (email) => dispatch(userEmail(email)),
-  saveToken: (token) => dispatch(apiToken(token)),
+  token: () => dispatch(getToken()),
 });
 
 Login.propTypes = {
   nameDispatch: PropTypes.func.isRequired,
   emailDispatch: PropTypes.func.isRequired,
-  saveToken: PropTypes.func.isRequired,
+  token: PropTypes.func.isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(Login);
