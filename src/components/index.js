@@ -8,3 +8,4 @@ export { default as RankingItem } from './RankingItem';
 export { default as Timer } from './Timer';
 export { default as AuthForm } from './AuthForm';
 export { default as FeedbackInfo } from './FeedbackInfo';
+export { default as ConfigButton } from './ConfigButton';

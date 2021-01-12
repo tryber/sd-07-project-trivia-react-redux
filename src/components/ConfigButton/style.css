@@ -1,0 +1,22 @@
+.configButton-container {
+  background-color: blue;
+  display: flex;
+}
+
+.configButton-icon {
+  -webkit-filter: drop-shadow(2px 2px 2px #222);
+  filter: drop-shadow(2px 2px 2px #222);
+  transition: 0.2s;
+  width: 36px;
+}
+
+.configButton-icon:hover {
+  cursor: pointer;
+}
+
+.configButton-icon:active {
+  -webkit-filter: none;
+  filter: none;
+  transform: translate(1px, 1px);
+  transition: 0.2s;
+}
