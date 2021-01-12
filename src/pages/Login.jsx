@@ -7,7 +7,7 @@ class Login extends React.Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
-    this.handleClick = this.handleClick.bind(this);
+    this.handleClickGame = this.handleClickGame.bind(this);
     this.state = {
       nome: '',
       email: '',
@@ -19,7 +19,7 @@ class Login extends React.Component {
     this.setState({ [name]: value });
   }
 
-  async handleClick() {
+  async handleClickGame() {
     const { signIn, history, fetchApi } = this.props;
     const { nome, email } = this.state;
 
@@ -56,7 +56,7 @@ class Login extends React.Component {
           <button
             type="button"
             data-testid="btn-play"
-            onClick={ this.handleClick }
+            onClick={ this.handleClickGame }
           >
             Jogar
           </button>
