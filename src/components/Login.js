@@ -21,7 +21,10 @@ class Login extends Component {
   try {
   fetch(url)
   .then((results) => results.json())
-  .then((response) => localStorage.setItem('token', JSON.stringify(response.token)));
+  .then((response) => {
+    localStorage.setItem('token', response.token);
+    return ({ token: response.token, date: new Date() });
+  });
 } catch(err) {
  localStorage.clear();
 }
