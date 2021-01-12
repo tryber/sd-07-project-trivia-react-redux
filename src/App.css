@@ -5,3 +5,7 @@ body {
 label {
   margin: 10px;
 }
+
+.unvisible {
+  visibility: hidden;
+}

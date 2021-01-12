@@ -15,6 +15,7 @@ class Questions extends React.Component {
     };
     this.fetchQuestions = this.fetchQuestions.bind(this);
     this.nextQuestion = this.nextQuestion.bind(this);
+    this.clickButton = this.clickButton.bind(this);
   }
 
   componentDidMount() {
@@ -37,8 +38,12 @@ class Questions extends React.Component {
     });
   }
 
+  clickButton() {
+    console.log('click');
+  }
+
   render() {
-    const { questions, index } = this.state;
+    const { questions, index, status } = this.state;
     return (
       <div>
         <h3>
@@ -59,6 +64,7 @@ class Questions extends React.Component {
         </span>
         <div id="bloco-respostas">
           <button
+            onClick={ this.clickButton }
             type="button"
             key="correct"
             data-testid="correct-answer"
@@ -68,6 +74,7 @@ class Questions extends React.Component {
           {questions[index].incorrect_answers
             .map((item, itemIndex) => (
               <button
+                onClick={ this.clickButton }
                 type="button"
                 key="incorrect"
                 data-testid={ `wrong-answer-${itemIndex}` }
@@ -76,6 +83,7 @@ class Questions extends React.Component {
               </button>))}
         </div>
         <button
+          className={ status ? 'unvisible' : '' }
           type="button"
           data-testid="btn-next"
           onClick={ this.nextQuestion }
