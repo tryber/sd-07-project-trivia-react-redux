@@ -74,39 +74,39 @@ class Login extends React.Component {
 
   render() {
     const { email, name, redirect } = this.state;
-    if (redirect) return <Redirect to='/game' />;
+    if (redirect) return <Redirect to="/game" />;
     return (
       <div>
         <h1> Trivia</h1>
 
-        <label htmlFor='name'>
+        <label htmlFor="name">
           Nome
           <input
-            placeholder='Nome'
-            data-testid='input-player-name'
-            type='text'
-            value={name}
-            onChange={this.handleChange}
-            name='name'
+            placeholder="Nome"
+            data-testid="input-player-name"
+            type="text"
+            value={ name }
+            onChange={ this.handleChange }
+            name="name"
           />
         </label>
 
-        <label htmlFor='email'>
+        <label htmlFor="email">
           Email
           <input
-            placeholder='Email'
-            data-testid='input-gravatar-email'
-            value={email}
-            onChange={this.handleChange}
-            name='email'
+            placeholder="Email"
+            data-testid="input-gravatar-email"
+            value={ email }
+            onChange={ this.handleChange }
+            name="email"
           />
         </label>
 
         <button
-          type='button'
-          data-testid='btn-play'
-          disabled={!this.verifyEmailName()}
-          onClick={this.handleSubmit}>
+          type="button"
+          data-testid="btn-play"
+          disabled={ !this.verifyEmailName() }
+          onClick={ this.handleSubmit }>
           Jogar
         </button>
       </div>
@@ -114,8 +114,8 @@ class Login extends React.Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  sendEmail: email => dispatch(getEmail(email)),
+const mapDispatchToProps = (dispatch) => ({
+  sendEmail: (email) => dispatch(getEmail(email)),
 });
 
 Login.propTypes = {
