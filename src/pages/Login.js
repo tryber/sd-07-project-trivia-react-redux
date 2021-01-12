@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import addInfo from '../store/ducks/UserInfo/actions';
+import handleAsync from '../store/ducks/TokenRequest/actions';
 
 class Login extends Component {
   constructor() {
@@ -9,17 +11,19 @@ class Login extends Component {
 
     this.state = {
       email: '',
-      nome: '',
+      name: '',
       isValid: false,
+      loggedIn: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.isvalid = this.isvalid.bind(this);
+    this.handleChangeLogIn = this.handleChangeLogIn.bind(this);
   }
 
   isvalid() {
-    const { email, nome } = this.state;
-    if (email !== '' && nome !== '') {
+    const { email, name } = this.state;
+    if (email !== '' && name !== '') {
       return this.setState({ isValid: true });
     }
   }
@@ -28,9 +32,16 @@ class Login extends Component {
     this.setState({ [name]: value }, this.isvalid);
   }
 
+  async handleChangeLogIn() {
+    const { fetchToken } = this.props;
+    this.setState({ loggedIn: true });
+    const token = await fetchToken();
+    return token;
+  }
+
   render() {
     const { actionInfo } = this.props;
-    const { email, nome, isValid } = this.state;
+    const { email, name, isValid, loggedIn } = this.state;
     return (
       <div>
         <form>
@@ -46,14 +57,14 @@ class Login extends Component {
               onChange={ this.handleChange }
             />
           </label>
-          <label htmlFor="nome">
+          <label htmlFor="name">
             Nome
             <input
-              value={ nome }
+              value={ name }
               type="text"
-              name="nome"
-              placeholder="Nome"
-              id="nome"
+              name="name"
+              placeholder="name"
+              id="name"
               data-testid="input-player-name"
               onChange={ this.handleChange }
             />
@@ -63,20 +74,26 @@ class Login extends Component {
             disabled={ !isValid }
             type="button"
             data-testid="btn-play"
-            onClick={ () => actionInfo({ email, nome }) }
+            onClick={ () => { actionInfo({ email, name }); this.handleChangeLogIn(); } }
           >
             Jogar
           </button>
+          {loggedIn && <Redirect to="/game" />}
         </form>
       </div>
     );
   }
 }
 
-const mapDispatchToProps = { actionInfo: addInfo };
+const mapStateToProps = ({ TokenRequest: { token } }) => ({
+  token,
+});
 
-export default connect(null, mapDispatchToProps)(Login);
+const mapDispatchToProps = { actionInfo: addInfo, fetchToken: handleAsync };
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
 
 Login.propTypes = {
   actionInfo: PropTypes.func.isRequired,
+  fetchToken: PropTypes.func.isRequired,
 };
