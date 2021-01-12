@@ -7,8 +7,8 @@ class Game extends React.Component {
     return (
       <div>
         Página do Jogo
-        <Questions />
         <Header />
+        <Questions />
       </div>
     );
   }
