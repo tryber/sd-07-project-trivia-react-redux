@@ -37,8 +37,7 @@ class Login extends Component {
         <img
           src="../"
           alt="Trivia"
-        >
-        </img>
+        />
         <label
           htmlFor="name"
         >
@@ -70,6 +69,7 @@ class Login extends Component {
             Jogar
           </button>
           <button
+            type="button"
             data-testid="btn-settings"
             className="btn-config"
             onClick={ () => {
@@ -79,8 +79,7 @@ class Login extends Component {
             <img
               src="./config.png"
               alt="Configurações"
-            > 
-            </img>
+            />
           </button>
         </div>
       </form>
@@ -91,5 +90,13 @@ class Login extends Component {
 export default Login;
 
 Login.propTypes = {
-  history: PropTypes.shape({}),
+  history: PropTypes.shape({
+    push: PropTypes.string,
+  }),
+};
+
+Login.defaultProps = {
+  history: PropTypes.shape({
+    push: PropTypes.string,
+  }),
 };

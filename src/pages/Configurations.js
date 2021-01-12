@@ -28,5 +28,13 @@ class Configurations extends Component {
 export default Configurations;
 
 Configurations.propTypes = {
-  history: PropTypes.shape({}),
+  history: PropTypes.shape({
+    push: PropTypes.string,
+  }),
+};
+
+Configurations.defaltProps = {
+  history: PropTypes.shape({
+    push: PropTypes.string,
+  }),
 };
