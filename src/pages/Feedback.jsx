@@ -27,7 +27,7 @@ class Feedback extends Component {
         { this.renderMessage(correctQuestions) }
         <div className="score-questions-container">
           <h3
-            data-testid="feedbakc-total-quesiton"
+            data-testid="feedback-total-quesiton"
           >
             Você acertou { correctQuestions } questões!
           </h3>
