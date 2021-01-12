@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { login } from '../actions';
+import { login, fetchToken } from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -16,6 +16,7 @@ class Login extends React.Component {
 
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handleNameChange = this.handleNameChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   handleEmailChange({ target }) {
@@ -35,6 +36,13 @@ class Login extends React.Component {
   handleNameChange({ target }) {
     const { value } = target;
     this.setState({ name: value });
+  }
+
+  handleClick() {
+    const { history, tokenAction, token } = this.props;
+    history.push('/gamepage');
+    tokenAction();
+    localStorage.setItem('token', token);
   }
 
   render() {
@@ -58,7 +66,10 @@ class Login extends React.Component {
           data-testid="btn-play"
           disabled={ !authentication || name.length < numberCharacters }
           type="button"
-          onClick={ () => loggingin(email) }
+          onClick={ () => {
+            loggingin(email);
+            this.handleClick();
+          } }
         >
           Jogar
         </button>
@@ -69,15 +80,20 @@ class Login extends React.Component {
 
 const mapDispatchToProps = (dispatch) => ({
   loggingin: (email) => dispatch(login(email)),
+  tokenAction: () => dispatch(fetchToken.fetchToken()),
 });
 
 const mapStateToProps = (state) => ({
   logged: state.login,
+  token: state.login.token,
 });
 
 Login.propTypes = {
   loggingin: PropTypes.func.isRequired,
   logged: PropTypes.bool.isRequired,
+  tokenAction: PropTypes.func.isRequired,
+  token: PropTypes.string.isRequired,
+  history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
 };
 
 // export default Login;
