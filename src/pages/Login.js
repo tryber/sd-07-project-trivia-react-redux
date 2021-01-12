@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 export default class Login extends React.Component {
   constructor(props) {
@@ -54,6 +55,7 @@ export default class Login extends React.Component {
         >
           Jogar
         </button>
+        <Link to="/settings" data-testid="btn-settings">Settings</Link>
       </div>
     );
   }
