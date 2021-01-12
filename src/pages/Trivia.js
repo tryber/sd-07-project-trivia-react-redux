@@ -13,10 +13,12 @@ class Trivia extends React.Component {
       placar: 0,
       questions: { results: [] },
       position: 0,
+      replyConfirmation: false,
       clicked: false,
     };
     this.clickHandler = this.clickHandler.bind(this);
     this.requestQuestions = this.requestQuestions.bind(this);
+    this.nextQuestion = this.nextQuestion.bind(this);
   }
 
   componentDidMount() {
@@ -44,13 +46,32 @@ class Trivia extends React.Component {
 
   clickHandler() {
     this.setState({
+      replyConfirmation: true,
+
       clicked: true,
+
+    });
+  }
+
+  nextQuestion() {
+    const { position } = this.state;
+    this.setState({
+      position: position + 1,
+      replyConfirmation: false,
     });
   }
 
   render() {
     const { emailSave, nameSave } = this.props;
-    const { urlImg, placar, questions, position, clicked } = this.state;
+
+    const {
+      urlImg,
+      placar,
+      questions,
+      position,
+      replyConfirmation,
+      clicked } = this.state;
+
     const { results } = questions;
 
     return (
@@ -110,6 +131,14 @@ class Trivia extends React.Component {
               </div>
             );
           })[position]}
+          <button
+            data-testid="btn-next"
+            hidden={ replyConfirmation ? '' : 'hidden' }
+            onClick={ this.nextQuestion }
+            type="button"
+          >
+            Próxima
+          </button>
         </section>
       </div>
     );
