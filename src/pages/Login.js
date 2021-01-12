@@ -1,5 +1,8 @@
+import PropTypes from 'prop-types';
 import React from 'react';
+import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import { fetchToken, saveEmail, saveName } from '../redux/actions';
 
 class Login extends React.Component {
   constructor(props) {
@@ -11,6 +14,7 @@ class Login extends React.Component {
     };
     this.handlerInput = this.handlerInput.bind(this);
     this.validateEmail = this.validateEmail.bind(this);
+    this.tokenRequest = this.tokenRequest.bind(this);
   }
 
   handlerInput({ target }) {
@@ -20,6 +24,14 @@ class Login extends React.Component {
 
   validateEmail(email) {
     return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.+-]+\.com$/.test(email);
+  }
+
+  tokenRequest() {
+    const { email, name } = this.state;
+    const { namePlayer, emailPlayer, requestToken } = this.props;
+    namePlayer(name);
+    emailPlayer(email);
+    requestToken();
   }
 
   render() {
@@ -53,6 +65,7 @@ class Login extends React.Component {
           type="button"
           disabled={ this.validateEmail(email) && name.length !== 0 ? '' : 'disabled' }
           data-testid="btn-play"
+          onClick={ this.tokenRequest }
         >
           Jogar
         </button>
@@ -68,4 +81,16 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  requestToken: () => dispatch(fetchToken()),
+  namePlayer: (name) => dispatch(saveName(name)),
+  emailPlayer: (email) => dispatch(saveEmail(email)),
+});
+
+Login.propTypes = {
+  namePlayer: PropTypes.string.isRequired,
+  emailPlayer: PropTypes.string.isRequired,
+  requestToken: PropTypes.func.isRequired,
+};
+
+export default connect(null, mapDispatchToProps)(Login);
