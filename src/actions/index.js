@@ -16,14 +16,13 @@ export const getToken = () => function api(dispatch) {
     .then((response) => response.json())
     .then((json) => {
       const { token } = json;
+      localStorage.setItem('token', token);
       dispatch({ type: TOKEN, token });
     })
     .catch((error) => console.log(error));
 };
 
-export const saveState = (key, state) => {
-  return function teste(dispatch) {
-    const serializedState = JSON.stringify(state);
-    dispatch(localStorage.setItem([key], serializedState));
-  };
-};
+// export const saveState = (key, state) => function teste(dispatch) {
+//   const serializedState = JSON.stringify(state);
+//   dispatch(localStorage.setItem([key], serializedState));
+// };
