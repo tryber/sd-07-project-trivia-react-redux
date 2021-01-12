@@ -12,8 +12,10 @@ class Trivia extends React.Component {
       urlImg: '',
       placar: 0,
       questions: { results: [] },
+      position: 0,
     };
     this.requestQuestions = this.requestQuestions.bind(this);
+    this.clickHandler = this.clickHandler.bind(this);
   }
 
   componentDidMount() {
@@ -39,9 +41,16 @@ class Trivia extends React.Component {
     });
   }
 
+  clickHandler() {
+    const { position } = this.state;
+    this.setState({
+      position: position + 1,
+    });
+  }
+
   render() {
     const { emailSave, nameSave } = this.props;
-    const { urlImg, placar, questions } = this.state;
+    const { urlImg, placar, questions, position } = this.state;
     const { results } = questions;
 
     return (
@@ -59,14 +68,23 @@ class Trivia extends React.Component {
           {results.map((item, index1) => {
             const quatro = 4;
             const answers = item.incorrect_answers.map((answer, index) => (
-              <button key={ index } type="button" data-testid={ `wrong-answer-${index}` }>
+              <button
+                onClick={ this.clickHandler }
+                key={ index }
+                type="button"
+                data-testid={ `wrong-answer-${index}` }
+              >
                 {' '}
                 {answer}
                 {' '}
               </button>
             ));
             const answerCorrect = (
-              <button type="button" data-testid="correct-answer">
+              <button
+                onClick={ this.clickHandler }
+                type="button"
+                data-testid="correct-answer"
+              >
                 {' '}
                 {item.correct_answer}
                 {' '}
@@ -88,7 +106,7 @@ class Trivia extends React.Component {
                 </ul>
               </div>
             );
-          })}
+          })[position]}
         </section>
       </div>
     );
