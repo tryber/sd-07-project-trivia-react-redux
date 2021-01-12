@@ -36,9 +36,8 @@ class Login extends Component {
 
   handleClick() {
     const { name, email } = this.state;
-    const { sendLogin, fetchToken } = this.props;
+    const { sendLogin } = this.props;
     sendLogin({ name, email });
-    fetchToken();
   }
 
   render() {
@@ -104,5 +103,4 @@ export default connect(null, mapDispatchToProps)(Login);
 
 Login.propTypes = {
   sendLogin: PropTypes.func.isRequired,
-  fetchToken: PropTypes.func.isRequired,
 };

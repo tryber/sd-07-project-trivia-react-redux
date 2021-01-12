@@ -3,7 +3,7 @@ import types from '../actions/types';
 const LOGIN_INITIAL_STATE = {
   name: '',
   assertions: 0,
-  score: 0,
+  score: 2,
   gravatarEmail: '',
   isLoading: false,
   token: {},
