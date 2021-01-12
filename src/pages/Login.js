@@ -33,7 +33,6 @@ class Login extends Component {
     const { email, nome } = this.state;
     dispatchEmail(email);
     dispatchNome(nome);
-    console.log(nome, email);
     await dispatchToken(setStorage);
   }
 

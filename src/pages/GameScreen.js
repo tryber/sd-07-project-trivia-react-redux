@@ -3,18 +3,21 @@ import { connect } from 'react-redux';
 import { CustomHeader } from '../components';
 
 class GameScreen extends Component {
+ constructor() {
+   super();
+ }
   render() {
     return (
       <div>
-        <CustomHeader { ...this.props } />
+        <CustomHeader {...this.props} />
       </div>
     );
   }
 }
 
-const mapStateToProps = (state) => ({
-  name: state.loginReducer.name,
-  email: state.loginReducer.email,
+const mapStateToProps = ({loginReducer: {name, email} }) => ({
+  name,
+  email,
 });
 
 export default connect(mapStateToProps)(GameScreen);
