@@ -34,7 +34,7 @@ class Login extends React.Component {
     event.preventDefault();
     const { tokenAction, history } = this.props;
     tokenAction();
-    if (history) history.push('/login');
+    if (history) history.push('/game');
   }
 
   render() {
