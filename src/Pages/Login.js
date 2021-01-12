@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { clickLogin } from '../actions';
 
+import SettingsButton from '../Components/SettingsButton';
+
 class Login extends React.Component {
   constructor() {
     super();
@@ -41,6 +43,7 @@ class Login extends React.Component {
     const { validate, email, name } = this.state;
     return (
       <div>
+        <SettingsButton />
         <form>
           <label htmlFor="email">
             <input
