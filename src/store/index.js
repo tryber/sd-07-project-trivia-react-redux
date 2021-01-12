@@ -1,15 +1,15 @@
 // aqui tu cria o state
 // importe o método applyMiddleware
-import { createStore, compose } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 // importe o redux-thunk
-// import thunk from 'redux-thunk';
+import thunk from 'redux-thunk';
+import { composeWithDevTools } from 'redux-devtools-extension';
 import rootReducer from './ducks/rootReducer';
 
-const composed = compose(
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-);
-
 // aplique o middleware
-const store = createStore(rootReducer, composed);
+const store = createStore(rootReducer,
+  composeWithDevTools(applyMiddleware(thunk)));
 
 export default store;
+
+// npm run cy:open
