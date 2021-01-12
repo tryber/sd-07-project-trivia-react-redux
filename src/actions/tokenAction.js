@@ -18,14 +18,12 @@ export const tokenFailure = (error) => ({
   error,
 });
 
-export const getTokenAction = () => {
-  return (dispatch) => {
-    dispatch(tokenRequest());
-    return getToken()
-      .then((response) => {
-        localStorage.setItem('token', response);
-        dispatch(tokenSuccess(response));
-      })
-      .catch((error) => dispatch(tokenFailure(error)));
-  };
+export const getTokenAction = () => (dispatch) => {
+  dispatch(tokenRequest());
+  return getToken()
+    .then((response) => {
+      localStorage.setItem('token', response);
+      dispatch(tokenSuccess(response));
+    })
+    .catch((error) => dispatch(tokenFailure(error)));
 };
