@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { tokenAction } from '../actions';
+import api from '../services/api';
 import './login.css';
 
 class Login extends Component {
@@ -30,6 +34,8 @@ class Login extends Component {
   }
 
   render() {
+    const { history, addToken } = this.props;
+    const { returnToken } = api;
     return (
       <form>
         <label
@@ -58,6 +64,13 @@ class Login extends Component {
           type="button"
           data-testid="btn-play"
           disabled={ this.valida() }
+          onClick={ async () => {
+            history.push('/play');
+            const token = await returnToken();
+            localStorage.clear();
+            localStorage.setItem('token', token);
+            addToken(token);
+          } }
         >
           Jogar
         </button>
@@ -66,4 +79,10 @@ class Login extends Component {
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({ addToken: (e) => dispatch(tokenAction(e)) });
+
+export default connect(null, mapDispatchToProps)(Login);
+Login.propTypes = {
+  history: PropTypes.shape.isRequired,
+  addToken: PropTypes.func.isRequired,
+};
