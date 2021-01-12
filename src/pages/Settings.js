@@ -4,7 +4,7 @@ class Settings extends Component {
   render() {
     return (
       <div>
-        <h1>Configurações</h1>
+        <h1 data-testid="settings-title">Configurações</h1>
       </div>
     );
   }
