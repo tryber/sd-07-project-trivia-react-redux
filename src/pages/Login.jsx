@@ -1,5 +1,5 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fetchToken } from '../actions';
@@ -20,34 +20,41 @@ class Login extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.loadTokenToLocalStorage = this.loadTokenToLocalStorage.bind(this);
   }
+
   componentDidMount() { this.handleFetch(); }
 
-  async handleFetch() {
+  loadTokenToLocalStorage() {
+    // const { token } = this.state;
+    const { token } = this.props;
+    const { tokenData } = token;
+    // console.log(this.props);
+    // console.log(tokenData);
+    if (Storage) {
+      const getTokenSaved = JSON.parse(localStorage.getItem('token'));
+      const value = (getTokenSaved === null ? [] : getTokenSaved);
+      // let value;
+      console.log(tokenData);
+      value.push(tokenData);
+      localStorage.setItem('token', JSON.stringify(value));
+    }
+  }
+
+  handleFetch() {
     const { apiFetchToken } = this.props;
     // const { token } = this.state;
     // const newToken = await apiFetchToken();
-    console.log(apiFetchToken());
+    apiFetchToken();
+    this.loadTokenToLocalStorage();
     // this.setState({
     //   token: newToken.token,
     // });
   }
 
-  loadTokenToLocalStorage() {
-    const { token } = this.state;
-    if (Storage) {
-      const getTokenSaved = JSON.parse(localStorage.getToken('token'));
-      const value = (getTokenSaved === null ? [] : getTokenSaved);
-      value.push(token);
-      localStorage.setItem('token', JSON.stringify(value));
-    }
-  };
-
   handleChange(event) {
     event.preventDefault();
     // console.log(this.props);
-    const { handleFetch } = this;
-    handleFetch();
-    console.log(this.state) // deve trazer o estado name, email e token. doneName e doneEmail false
+    this.handleFetch();
+    console.log(this.state); // deve trazer o estado name, email e token. doneName e doneEmail false
     // this.loadTokenToLocalStorage(); //Logica para passar token do estado para localStorage
   }
 
@@ -62,63 +69,70 @@ class Login extends React.Component {
   testName(value) {
     if (value.lenght !== 0) return this.setState({ name: value, doneName: true });
   }
-  
+
   render() {
-    console.log(this.props)
+    console.log(this.props);
     // console.log(this.props);
     const { email, name, doneEmail, doneName } = this.state;
     return (
-    	<form className="form">
-    	     <label htmlFor="name">
-                Name
-                <input
-                  required
-                  id="name"
-                  type="text"
-                  name="name"
-                  value={ name }
-                  data-testid="input-player-name"
-                  onChange={ (e) => this.testName(e.target.value) }
-                />
-              </label>
-    	     <label htmlFor="email">
-                E-mail
-                <input
-                  required
-                  id="email"
-                  type="email"
-                  placeholder="Digite seu e-mail"
-                  value={ email }
-                  data-testid="input-gravatar-email"
-                  onChange={ (e) => this.testEmail(e.target.value) }
-                />
-              </label>
-              <Link to="/play">
-                <button
-                  id="entryButton"
-                  type="submit"
-                  data-testid="btn-play"
-                  disabled={ !doneName || !doneEmail }
-                  onClick={(event) => this.handleChange(event) }
-                >
-                  Jogar
-                </button>
-              </Link>
-              <div>
-              	  <Link to="/ranking">Ranking</Link>
-              	  <Link data-testid="btn-settings" to="/configuration">Configurações</Link>
-              </div>
-             </form>
-    )
+      <form className="form">
+        <label htmlFor="name">
+          Name
+          <input
+            required
+            id="name"
+            type="text"
+            name="name"
+            value={ name }
+            data-testid="input-player-name"
+            onChange={ (e) => this.testName(e.target.value) }
+          />
+        </label>
+        <label htmlFor="email">
+          E-mail
+          <input
+            required
+            id="email"
+            type="email"
+            placeholder="Digite seu e-mail"
+            value={ email }
+            data-testid="input-gravatar-email"
+            onChange={ (e) => this.testEmail(e.target.value) }
+          />
+        </label>
+
+        <Link to="/play">
+          <button
+            id="entryButton"
+            type="submit"
+            data-testid="btn-play"
+            disabled={ !doneName || !doneEmail }
+            onClick={ (event) => this.handleChange(event) }
+          >
+            Jogar
+          </button>
+        </Link>
+
+        <div>
+          <Link to="/ranking">Ranking</Link>
+          <Link data-testid="btn-settings" to="/configuration">Configurações</Link>
+        </div>
+      </form>
+    );
   }
 }
+
+const mapStateToProps = (state) => ({
+  token: state.token,
+});
 
 const mapDispatchToProps = (dispatch) => ({
   apiFetchToken: () => dispatch(fetchToken()),
 });
 
-// Login.propTypes = {
-//   apiFetchToken: PropTypes.func.isRequired,
-// };
+Login.propTypes = {
+  token: PropTypes.shape().isRequired,
+  apiFetchToken: PropTypes.func.isRequired,
+};
 
-export default connect(mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
