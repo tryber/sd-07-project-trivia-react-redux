@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import md5 from 'crypto-js/md5';
 import fetchQuestions from '../services/questionsApi';
+import Timer from '../components/Timer';
 
 class Trivia extends React.Component {
   constructor(props) {
@@ -13,25 +14,16 @@ class Trivia extends React.Component {
       placar: 0,
       questions: { results: [] },
       position: 0,
-      counter: 30,
     };
     this.clickHandler = this.clickHandler.bind(this);
     this.requestQuestions = this.requestQuestions.bind(this);
-    this.countDown = this.countDown.bind(this);
   }
 
   componentDidMount() {
     const cinco = 5;
-    const second = 1000;
     const { tokenValue } = this.props;
-    const { counter } = this.state;
     this.fetchGravatar();
     this.requestQuestions(cinco, tokenValue);
-    if (counter !== 0) {
-      setTimeout(() => {
-        this.countDown();
-      }, second);
-    }
   }
 
   async requestQuestions(number, token) {
@@ -55,11 +47,6 @@ class Trivia extends React.Component {
     this.setState({
       position: position + 1,
     });
-  }
-
-  countDown() {
-    this.setState((prevState) => ({ counter: prevState.counter - 1 }));
-    console.log(this.state.counter)
   }
 
   render() {
@@ -122,6 +109,7 @@ class Trivia extends React.Component {
             );
           })[position]}
         </section>
+        <Timer />
       </div>
     );
   }
