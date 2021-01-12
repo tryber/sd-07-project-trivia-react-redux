@@ -15,7 +15,7 @@ class Settings extends React.Component {
         <h1
           data-testid="settings-title"
         >
-          d
+          Configurações
         </h1>
       </div>
     );
