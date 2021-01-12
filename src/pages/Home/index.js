@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { userActions } from '../../actions';
+import LoginForm from './components/LoginForm';
 
 class Home extends Component {
   constructor(props) {
     super(props);
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
     this.state = {
       name: '',
       email: '',
@@ -35,30 +37,25 @@ class Home extends Component {
     }
   }
 
+  async handleClick() {
+    const endpoint = await fetch('https://opentdb.com/api_token.php?command=request');
+    const objct = await endpoint.json();
+
+    localStorage.setItem('token', objct.token);
+  }
+
   render() {
     const { name, email, auth } = this.state;
+
     return (
       <div>
-        <input
-          type="text"
-          id="name"
-          placeholder="Insira seu nome"
-          onChange={ (e) => this.handleChange(e) }
-          value={ name }
-          data-testid="input-player-name"
+        <LoginForm
+          handleChange={ this.handleChange }
+          handleClick={ this.handleClick }
+          name={ name }
+          email={ email }
+          auth={ auth }
         />
-        <input
-          type="text"
-          id="email"
-          placeholder="Insira seu email"
-          onChange={ (e) => this.handleChange(e) }
-          value={ email }
-          data-testid="input-gravatar-email"
-        />
-
-        <button type="button" disabled={ !auth } data-testid="btn-play">
-          Jogar
-        </button>
       </div>
     );
   }
