@@ -8,9 +8,13 @@ class GameScreen extends React.Component {
   constructor(props) {
     super(props);
 
+    this.clickAnswered = this.clickAnswered.bind(this);
+    this.clickNext = this.clickNext.bind(this);
+
     this.state = {
       token: localStorage.getItem('token'),
       currentQuestion: 0,
+      answered: false,
     };
   }
 
@@ -20,21 +24,37 @@ class GameScreen extends React.Component {
     setQuestionsProps(token);
   }
 
+  clickAnswered() {
+    this.setState({ answered: true });
+  }
+
+  clickNext() {
+    const { currentQuestion } = this.state;
+    const quantQuestions = 4;
+    if (currentQuestion < quantQuestions) {
+      this.setState({
+        currentQuestion: currentQuestion + 1,
+        answered: false,
+      });
+    }
+  }
+
   render() {
     const { questions } = this.props;
-    const { currentQuestion } = this.state;
-    const quantWongQuestions = questions.incorrect_answers.length;
+    const { currentQuestion, answered } = this.state;
     if (questions.length === 0) {
       return <div>carregando...</div>;
     }
     return (
       <div>
-        <Question currentQuestion={ currentQuestion } />
+        <Question
+          currentQuestion={ currentQuestion }
+          answered={ answered }
+          clickAnswered={ this.clickAnswered }
+        />
         <button
           type="button"
-          onClick={ () => currentQuestion < quantWongQuestions && this.setState(
-            { currentQuestion: currentQuestion + 1 },
-          ) }
+          onClick={ () => this.clickNext() }
         >
           Próxima Questão
         </button>
@@ -53,7 +73,16 @@ const mapDispatchToProps = (dispatch) => ({
 
 GameScreen.propTypes = {
   setQuestionsProps: PropTypes.func.isRequired,
-  questions: PropTypes.arrayOf.isRequired,
+  questions: PropTypes.arrayOf(
+    PropTypes.shape({
+      category: PropTypes.string,
+      type: PropTypes.string,
+      difficulty: PropTypes.string,
+      question: PropTypes.string,
+      correct_answer: PropTypes.string,
+      incorrect_answers: PropTypes.arrayOf,
+    }).isRequired,
+  ).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(GameScreen);

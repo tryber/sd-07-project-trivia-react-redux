@@ -16,6 +16,5 @@ const saveQuestions = (questions) => ({
 
 export const setQuestions = (token) => async (dispatch) => {
   const questions = await getQuestions(token);
-  console.log(questions);
   dispatch(saveQuestions(questions.results));
 };
