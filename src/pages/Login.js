@@ -95,6 +95,7 @@ class Login extends Component {
             } }
           >
             <img
+              className="config-logo"
               src={ tools }
               alt="Configurações"
             />

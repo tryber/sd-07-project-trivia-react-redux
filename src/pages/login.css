@@ -45,6 +45,7 @@ button {
 }
 
 .btn-config {
+  color: white;
   height: 40px;
   width: 40px;
 }
@@ -91,7 +92,7 @@ h1 {
 
 .stats-container {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 }
 
 .wright-answer {
@@ -99,5 +100,5 @@ h1 {
 }
 
 .wrong-answer {
-  border: 3px solid rgb(255, 0, 0);
+  border: 3px solid red;
 }
