@@ -10,7 +10,7 @@ class Game extends React.Component {
 
   render() {
     /* const { token } = this.props; */
-    return ('xablau')
+    return ('xablau');
   }
 }
 

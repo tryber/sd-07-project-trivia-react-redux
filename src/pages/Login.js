@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-/* import { ty } from 'react-router-dom'; */
 import Trivia from '../components/Trivia';
 import { fetchTokenTrivia } from '../actions';
 
@@ -85,7 +84,7 @@ const mapDispatchToProps = (dispatch) => ({
 Login.propTypes = {
   token: PropTypes.func.isRequired,
   history: PropTypes.shape({
-    push: PropTypes.func
+    push: PropTypes.func,
   }).isRequired,
 };
 
