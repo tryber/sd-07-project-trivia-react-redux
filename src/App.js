@@ -7,10 +7,10 @@ import Settings from './pages/Settings';
 export default function App() {
   return (
     <div className="App">
-        <Switch>
-          <Route exact path="/" component={ Login } />
-          <Route exact path="/settings" component={ Settings } />
-        </Switch>
+      <Switch>
+        <Route exact path="/" component={ Login } />
+        <Route exact path="/settings" component={ Settings } />
+      </Switch>
     </div>
   );
 }
