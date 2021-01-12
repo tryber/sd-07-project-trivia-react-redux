@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getUser } from '../Redux/Actions';
+import { Link } from 'react-router-dom';
 
 class Login extends React.Component {
   constructor() {
@@ -56,6 +57,7 @@ class Login extends React.Component {
         >
           Jogar
         </button>
+        <Link to="/ranking">Ranking</Link>
       </div>
     );
   }
