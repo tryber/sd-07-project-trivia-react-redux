@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 class FormLogin extends Component {
   render() {
-    const { handleChange, validateImputs } = this.props;
+    const { handleChange, validateImputs, handleClick } = this.props;
     return (
       <div>
         <label htmlFor="username">
@@ -32,6 +32,7 @@ class FormLogin extends Component {
           data-testid="btn-play"
           type="button"
           disabled={ validateImputs() }
+          onClick={ () => handleClick() }
         >
           Jogar
         </button>
@@ -45,4 +46,5 @@ export default FormLogin;
 FormLogin.propTypes = {
   handleChange: PropTypes.func.isRequired,
   validateImputs: PropTypes.func.isRequired,
+  handleClick: PropTypes.func.isRequired,
 };
