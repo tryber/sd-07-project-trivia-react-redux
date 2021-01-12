@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { catchToken, getUser } from '../Redux/Actions';
@@ -10,10 +10,18 @@ class Login extends React.Component {
     this.state = {
       email: '',
       name: '',
+      redirect: false,
     };
     this.handleInput = this.handleInput.bind(this);
     this.verifyLogin = this.verifyLogin.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.setRedirect = this.setRedirect.bind(this);
+  }
+
+  setRedirect() {
+    this.setState({
+      redirect: true,
+    });
   }
 
   handleInput({ target }) {
@@ -36,13 +44,23 @@ class Login extends React.Component {
     const { getUserProps, getToken } = this.props;
     const responseToken = await getToken();
     console.log(responseToken);
-    getUserProps(email, name);
+    getUserProps(name, email);
+
+    this.setRedirect();
+  }
+
+  renderRedirect() {
+    const { redirect } = this.state;
+    if (redirect) {
+      return <Redirect to="/game" />;
+    }
   }
 
   render() {
     const { name, email } = this.state;
     return (
       <div>
+        { this.renderRedirect() }
         <Link
           to="/config"
           data-testid="btn-settings"
