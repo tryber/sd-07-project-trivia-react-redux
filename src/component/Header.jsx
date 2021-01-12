@@ -29,7 +29,7 @@ class Header extends Component {
 
 export default Header;
 
-CurrencyOption.propTypes = {
+Header.propTypes = {
   src: propTypes.string,
   name: propTypes.string,
   score: propTypes.number,
