@@ -1,4 +1,5 @@
 import React from 'react';
+import Redirect from 'react-router-dom';
 
 class Login extends React.Component {
   constructor(props) {
@@ -53,6 +54,13 @@ class Login extends React.Component {
           data-testid="btn-play"
         >
           Jogar
+        </button>
+        <button
+          type="button"
+          data-testid="btn-settings"
+          onClick={ () => <Redirect to="/settings" /> }
+        >
+          Configurações
         </button>
       </div>
     );
