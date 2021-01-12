@@ -1,10 +1,12 @@
 // import { render } from '@testing-library/react';
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const CustomLogin = ({
   formData: { nome, email },
   onInputChange,
   onHandleSubmit,
+  validate,
 }) => (
   <form size="large">
     <input
@@ -19,15 +21,21 @@ const CustomLogin = ({
     <input
       data-testid="input-gravatar-email"
       maxLength="50"
-      fluid
       placeholder="E-mail address"
       value={email}
       name="email"
       //onChange={(e) => onInputChange(e)}
       onChange={onInputChange}
     />
-
-    <button onClick={onHandleSubmit}>Jogar</button>
+    <Link to="/bichinhosFofinhos">
+      <button
+        onClick={onHandleSubmit}
+        data-testid="btn-play"
+        disabled={validate}
+      >
+        Jogar
+      </button>
+    </Link>
   </form>
 );
 
