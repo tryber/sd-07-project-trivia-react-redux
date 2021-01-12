@@ -20,3 +20,12 @@ export const getToken = () => function api(dispatch) {
     })
     .catch((error) => console.log(error));
 };
+
+export const saveState = (state) => {
+  try {
+    const serializedState = JSON.stringify(state);
+    localStorage.setItem('state', serializedState);
+  } catch (error) {
+    console.log(error);
+  }
+};
