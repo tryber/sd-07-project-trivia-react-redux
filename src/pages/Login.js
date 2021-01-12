@@ -1,8 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getUser } from '../Redux/Actions';
-import { Link } from 'react-router-dom';
+import { catchToken, getUser } from '../Redux/Actions';
 
 class Login extends React.Component {
   constructor() {
@@ -13,6 +13,7 @@ class Login extends React.Component {
     };
     this.handleInput = this.handleInput.bind(this);
     this.verifyLogin = this.verifyLogin.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   handleInput({ target }) {
@@ -30,27 +31,49 @@ class Login extends React.Component {
     return true;
   }
 
+  async handleClick() {
+    const { email, name } = this.state;
+    const { getUserProps, getToken } = this.props;
+    const responseToken = await getToken();
+    console.log(responseToken);
+    getUserProps(email, name);
+  }
+
   render() {
     const { name, email } = this.state;
-    const { getUserProps } = this.props;
     return (
       <div>
-        <input
-          onChange={ this.handleInput }
-          value={ name }
-          name="name"
-          data-testid="input-player-name"
-          type="text"
-        />
-        <input
-          onChange={ this.handleInput }
-          value={ email }
-          name="email"
-          data-testid="input-gravatar-email"
-          type="text"
-        />
+        <Link
+          to="/config"
+          data-testid="btn-settings"
+        >
+          configurações
+        </Link>
+        <label htmlFor="name">
+          Nome do jogador
+          <input
+            onChange={ this.handleInput }
+            value={ name }
+            name="name"
+            data-testid="input-player-name"
+            type="text"
+            id="name"
+          />
+        </label>
+
+        <label htmlFor="email">
+          <input
+            onChange={ this.handleInput }
+            value={ email }
+            name="email"
+            data-testid="input-gravatar-email"
+            type="text"
+            id="email"
+          />
+        </label>
+
         <button
-          onClick={ () => getUserProps(email, name) }
+          onClick={ this.handleClick }
           disabled={ this.verifyLogin() }
           data-testid="btn-play"
           type="button"
@@ -65,10 +88,12 @@ class Login extends React.Component {
 
 const mapDispatchToProps = (dispatch) => ({
   getUserProps: (email, name) => dispatch(getUser(email, name)),
+  getToken: () => dispatch(catchToken()),
 });
 
 export default connect(null, mapDispatchToProps)(Login);
 
 Login.propTypes = {
   getUserProps: PropTypes.func.isRequired,
+  getToken: PropTypes.func.isRequired,
 };
