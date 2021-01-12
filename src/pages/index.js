@@ -1,3 +1,4 @@
 import Login from './Login';
+import FeedBack from './FeedBack';
 
-export { Login };
+export { Login, FeedBack };
