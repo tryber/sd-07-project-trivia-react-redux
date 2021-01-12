@@ -5,6 +5,7 @@ import './App.css';
 import Login from './Pages/Login';
 import Config from './Pages/configuracoes';
 
+
 export default function App() {
   return (
     <div className="App">
