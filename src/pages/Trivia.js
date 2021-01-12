@@ -14,8 +14,8 @@ class Trivia extends React.Component {
       questions: { results: [] },
       position: 0,
     };
-    this.requestQuestions = this.requestQuestions.bind(this);
     this.clickHandler = this.clickHandler.bind(this);
+    this.requestQuestions = this.requestQuestions.bind(this);
   }
 
   componentDidMount() {
