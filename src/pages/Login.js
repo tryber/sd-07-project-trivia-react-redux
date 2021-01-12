@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { tokenAction, addEmailAction, addNameAction } from '../actions';
 import api from '../services/api';
+import trivia from '../trivia.png';
 import './login.css';
 
 class Login extends Component {
@@ -41,7 +42,8 @@ class Login extends Component {
     return (
       <form>
         <img
-          src="../"
+          className="img-trivia"
+          src={ trivia }
           alt="Trivia"
         />
         <label

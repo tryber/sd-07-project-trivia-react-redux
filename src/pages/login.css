@@ -56,3 +56,8 @@ h1 {
   display: flex;
   justify-content: space-between;
 }
+
+.img-trivia {
+  margin-top: 30px;
+  width: 200px;
+}
