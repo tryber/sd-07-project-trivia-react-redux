@@ -6,7 +6,7 @@ import { trivia } from '../trivia.png';
 
 class Header extends Component {
   render() {
-    const { name, email, score } = this.props;
+    const { name, email, score = 0 } = this.props;
     const hash = md5(email);
     return (
       <div className="header-nav">

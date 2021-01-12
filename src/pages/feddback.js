@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import Header from './play';
+import Play from './play';
+import Header from './header';
 
 class Feedback extends Component {
   constructor() {
