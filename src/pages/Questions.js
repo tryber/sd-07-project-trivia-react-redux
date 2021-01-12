@@ -41,7 +41,7 @@ class Questions extends React.Component {
             <span
               data-testid="question-category"
             >
-              ₢ategory:
+              Category:
               {questions[index].category}
             </span>
           </div>
