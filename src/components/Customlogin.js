@@ -28,7 +28,7 @@ const CustomLogin = ({
       // onChange={(e) => onInputChange(e)}
       onChange={ onInputChange }
     />
-    <Link to="/bichinhosFofinhos">
+    <Link to="/gamescreen">
       <button
         type="button"
         onClick={ onHandleSubmit }

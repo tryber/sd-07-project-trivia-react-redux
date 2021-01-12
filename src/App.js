@@ -1,11 +1,12 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import Login from './pages/Login';
+import { Login, GameScreen } from './pages';
 
 function App() {
   return (
     <Switch>
       <Route exact path="/" component={ Login } />
+      <Route exact path="/gamescreen" component={ GameScreen } />
     </Switch>
   );
 }
