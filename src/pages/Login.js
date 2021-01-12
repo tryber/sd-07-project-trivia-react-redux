@@ -1,8 +1,8 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
-import { getEmail } from '../actions/user';
+// import { Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { getEmail } from '../actions';
 
 class Login extends React.Component {
   constructor(props) {
@@ -14,7 +14,7 @@ class Login extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.verifyEmailName = this.verifyEmailPass.bind(this);
+    this.verifyEmailName = this.verifyEmailName.bind(this);
   }
 
   handleSubmit() {
@@ -23,58 +23,54 @@ class Login extends React.Component {
     sendEmail(email);
   }
 
-  handleChange(e) {
-    const { target } = e;
-    const { value } = target;
-    const inputName = target.name;
-    this.setState({ [inputName]: value });
+  handleChange({ target }) {
+    const { name, value } = target;
+    this.setState({ [name]: value });
   }
 
   verifyEmailName() {
     const { email, name } = this.state;
     const re = /\S+@\S+\.\S+/;
-    const minLength = 1;
-    return re.test(email) && name.length >= minLength;
+    return re.test(email) && name.length;
   }
 
   render() {
     const { email, name } = this.state;
-    const { sendEmail } = this.props;
-    return ( 
+    return (
       <div>
 
         <h1> Trivia</h1>
 
-        <label htmlFor="email">
+        <label htmlFor="name">
           Nome
           <input
-            placeholder="E-mail address"
-            data-testid="email-input"
-            type="email"
+            placeholder="Nome"
+            data-testid="input-player-name"
+            type="text"
             value={ name }
+            onChange={ this.handleChange }
+            name="name"
+          />
+        </label>
+
+        <label htmlFor="email">
+          Email
+          <input
+            placeholder="Email"
+            data-testid="input-gravatar-email"
+            value={ email }
             onChange={ this.handleChange }
             name="email"
           />
         </label>
 
-        <label htmlFor="senha">
-          Email
-          <input
-            placeholder="Password"
-            data-testid="password-input"
-            value={ email }
-            onChange={ this.handleChange }
-            name="password"
-          />
-        </label>
-
         <button
-          type="submit"
-          value=""
+          type="button"
+          data-testid="btn-play"
           disabled={ !this.verifyEmailName() }
           onClick={ this.handleSubmit }
         >
-          Entrar
+          Jogar
         </button>
 
       </div>);
@@ -84,5 +80,9 @@ class Login extends React.Component {
 const mapDispatchToProps = (dispatch) => ({
   sendEmail: (email) => dispatch(getEmail(email)),
 });
+
+Login.propTypes = {
+  sendEmail: PropTypes.func.isRequired,
+};
 
 export default connect(null, mapDispatchToProps)(Login);
