@@ -16,7 +16,10 @@ class Login extends Component {
   }
 
   getToken() {
-    requestToken();
+    const tokenTrivia = requestToken();
+
+    console.log(tokenTrivia)
+    localStorage.setItem('token', {tokenTrivia} );
   }
 
   verifyLogin() {
