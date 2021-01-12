@@ -1,4 +1,5 @@
 export const LOG_IN = 'LOG_IN';
+export const QUESTION_ANSWERED = 'QUESTION_ANSWERED';
 
 export const logIn = (token) => ({ type: LOG_IN, payload: token });
 
@@ -8,3 +9,8 @@ export const getToken = () => async (dispatch) => {
   localStorage.setItem('token', token);
   return dispatch(logIn(token));
 };
+
+export const questionAnswered = () => ({
+  type: QUESTION_ANSWERED,
+  payload: true,
+});
