@@ -12,6 +12,7 @@ const store = createStore(reducer, persistedState, composeEnhancers(
 store.subscribe(() => {
   saveState({
     login: store.getState().login,
+    player: store.getState().player,
   });
 });
 

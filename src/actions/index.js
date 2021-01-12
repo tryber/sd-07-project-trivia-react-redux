@@ -1,7 +1,6 @@
 export const LOGIN = 'LOGIN';
 export const EMAIL = 'EMAIL';
 export const TOKEN = 'TOKEN';
-
 export const login = (name) => ({
   type: LOGIN, name,
 });
@@ -21,8 +20,3 @@ export const getToken = () => function api(dispatch) {
     })
     .catch((error) => console.log(error));
 };
-
-// export const saveState = (key, state) => function teste(dispatch) {
-//   const serializedState = JSON.stringify(state);
-//   dispatch(localStorage.setItem([key], serializedState));
-// };
