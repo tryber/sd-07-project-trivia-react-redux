@@ -41,6 +41,8 @@ class Login extends React.Component {
     const { authentication, email, name } = this.state;
     const { loggingin, logged } = this.props;
     const numberCharacters = 1;
+    const { history } = this.props;
+
     if (logged) {
       return <Redirect to="/" />;
     }
@@ -62,6 +64,13 @@ class Login extends React.Component {
         >
           Jogar
         </button>
+        <button
+          data-testid="btn-settings"
+          type="button"
+          onClick={ () => history.push('/settings') }
+        >
+          Configurações
+        </button>
       </div>
     );
   }
@@ -78,6 +87,7 @@ const mapStateToProps = (state) => ({
 Login.propTypes = {
   loggingin: PropTypes.func.isRequired,
   logged: PropTypes.bool.isRequired,
+  history: PropTypes.func.isRequired,
 };
 
 // export default Login;
