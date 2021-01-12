@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import callAPI from '../services/callAPI';
 
 class Login extends Component {
   constructor() {
@@ -14,12 +13,20 @@ class Login extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  async handleSubmit(event) {
+  handleSubmit(event) {
     event.preventDefault();
-    const callingApi = await callAPI();
-    localStorage.setItem('token', JSON.stringify(callingApi.token));
-    return callingApi;
-  }
+    const url = 'https://opentdb.com/api_token.php?command=request';
+    try {
+      fetch(url)
+        .then((results) => results.json())
+        .then((response) => {
+          localStorage.setItem('token', response.token);
+          return ({ token: response.token, date: new Date() });
+        });
+    } catch (err) {
+      localStorage.clear();
+    }
+
 
   isDisabled() {
     const { name, email } = this.state;
