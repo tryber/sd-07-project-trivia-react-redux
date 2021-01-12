@@ -16,24 +16,24 @@
 }
 
 .settings {
-    position: relative;
-    z-index: 2;
-    max-width: 20px;
-}
-.btn{
-  background-color: white;
-  color:black;
-  padding: 3px 5px 2px 5px;
-  border:0px;
-  font-size: 0.8rem;
-  transition: 1s;
-  font-weight: 900;
-  border-radius: 1px;
-  cursor: pointer;
+  max-width: 20px;
+  position: relative;
+  z-index: 2;
 }
 
-.btn:hover{
-  background-color:#525853;
+.btn {
+  background-color: white;
+  border-radius: 1px;
+  color: black;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 900;
+  padding: 3px 5px 2px;
+  transition: 1s;
+}
+
+.btn:hover {
+  background-color: #525853;
 }
 
 @media ( prefers-reduced-motion : no-preference ) {
