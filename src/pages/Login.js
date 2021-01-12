@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { login, fetchToken } from '../actions';
+import { login, fetchToken } from '../actions/index';
 
 class Login extends React.Component {
   constructor() {
@@ -49,6 +49,8 @@ class Login extends React.Component {
     const { authentication, email, name } = this.state;
     const { loggingin, logged } = this.props;
     const numberCharacters = 1;
+    const { history } = this.props;
+
     if (logged) {
       return <Redirect to="/" />;
     }
@@ -73,6 +75,13 @@ class Login extends React.Component {
         >
           Jogar
         </button>
+        <button
+          data-testid="btn-settings"
+          type="button"
+          onClick={ () => history.push('/settings') }
+        >
+          Configurações
+        </button>
       </div>
     );
   }
@@ -80,20 +89,20 @@ class Login extends React.Component {
 
 const mapDispatchToProps = (dispatch) => ({
   loggingin: (email) => dispatch(login(email)),
-  tokenAction: () => dispatch(fetchToken.fetchToken()),
+  tokenAction: (token) => dispatch(fetchToken(token)),
 });
 
 const mapStateToProps = (state) => ({
   logged: state.login,
-  token: state.login.token,
+  token: state.fetch.token,
 });
 
 Login.propTypes = {
   loggingin: PropTypes.func.isRequired,
   logged: PropTypes.bool.isRequired,
+  history: PropTypes.func.isRequired,
   tokenAction: PropTypes.func.isRequired,
   token: PropTypes.string.isRequired,
-  history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
 };
 
 // export default Login;

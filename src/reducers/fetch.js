@@ -1,3 +1,4 @@
+// support provided by group 25-thx!
 import { TOKEN_REQUEST, REQUEST_STARTED, REQUEST_FAIL } from '../actions/index';
 
 const INITIAL_STATE = {
