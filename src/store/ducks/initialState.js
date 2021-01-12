@@ -3,5 +3,7 @@ export default {
     name: '',
     gravatarEmail: '',
     token: '',
+    hash: '',
+    score: 0,
   },
 };
