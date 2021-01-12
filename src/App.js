@@ -6,6 +6,7 @@ import './App.css';
 export default function App() {
   return (
     <Switch>
+      <Route path="/feedback" component={ pages.Feedback } />
       <Route exact path="/" component={ pages.Login } />
       <Route path="/settings" component={ pages.Settings } />
       <Route path="/game" component={ pages.Game } />
