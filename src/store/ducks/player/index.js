@@ -3,11 +3,11 @@ import initialState from '../initialState';
 
 const INITIAL_STATE = initialState.player;
 
-const playerReducer = (state = INITIAL_STATE, action) => {
+const player = (state = INITIAL_STATE, action) => {
   switch (action.type) {
   case PlayerTypes.SIGNIN: {
-    const { name, gravatarEmail } = action.payload;
-    return { ...state, name, gravatarEmail };
+    const { name, gravatarEmail, hash } = action.payload;
+    return { ...state, name, gravatarEmail, hash };
   }
   case PlayerTypes.INCLUDE_TOKEN: {
     const { token } = action;
@@ -18,4 +18,4 @@ const playerReducer = (state = INITIAL_STATE, action) => {
   }
 };
 
-export default playerReducer;
+export default player;
