@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 const CustomLogin = ({
-  formData: { nome, email },
   onInputChange,
   onHandleSubmit,
   validate,
@@ -14,7 +13,6 @@ const CustomLogin = ({
       data-testid="input-player-name"
       maxLength="40"
       placeholder="User Name"
-      value={ nome }
       name="nome"
       // onChange={(e) => onInputChange(e)}
       onChange={ onInputChange }
@@ -23,7 +21,6 @@ const CustomLogin = ({
       data-testid="input-gravatar-email"
       maxLength="50"
       placeholder="E-mail address"
-      value={ email }
       name="email"
       // onChange={(e) => onInputChange(e)}
       onChange={ onInputChange }
@@ -38,16 +35,20 @@ const CustomLogin = ({
         Jogar
       </button>
     </Link>
+    <Link to="/settings">
+      <button
+        type="button"
+        data-testid="btn-settings"
+      >
+        Configurações
+      </button>
+    </Link>
   </form>
 );
 
 export default CustomLogin;
 
 CustomLogin.propTypes = {
-  formData: PropTypes.shape({
-    nome: PropTypes.string.isRequired,
-    email: PropTypes.string.isRequired,
-  }).isRequired,
   onInputChange: PropTypes.func.isRequired,
   onHandleSubmit: PropTypes.func.isRequired,
   validate: PropTypes.bool.isRequired,

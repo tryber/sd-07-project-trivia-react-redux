@@ -46,7 +46,6 @@ class Login extends Component {
     const { permitir } = this.state;
     return (
       <CustomLogin
-        formData={ this.state }
         onInputChange={ this.handleInputChange }
         onHandleSubmit={ this.handleSubmit }
         validate={ permitir }
