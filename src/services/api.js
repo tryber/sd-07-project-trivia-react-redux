@@ -6,6 +6,6 @@ export function fetchTokenAPI() {
 }
 
 export function fetchTriviaAPI(token, amount = '5') {
-  const url = `https://opentdb.com/api.php?amount=${+amount}&token=${token}`;
+  const url = `https://opentdb.com/api.php?amount=${Number(amount)}&token=${token}`;
   return getFetch(url);
 }
