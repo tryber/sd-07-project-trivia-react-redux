@@ -15,4 +15,4 @@ export default class Multiple extends React.Component {
       </div>
     );
   }
-};
+}

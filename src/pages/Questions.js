@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 class Questions extends React.Component {
   constructor() {
@@ -29,7 +30,6 @@ class Questions extends React.Component {
   }
 
   render() {
-    const respostas = ['Verdadeiro', 'Falso'];
     const { questions, index } = this.state;
     return (
       <div>
@@ -50,19 +50,22 @@ class Questions extends React.Component {
           {questions[index].question}
         </span>
         <div id="bloco-respostas">
-          <button type="button" key="correct" data-testid="correct-answer">{questions[index].correct_answer}</button>
+          <button
+            type="button"
+            key="correct"
+            data-testid="correct-answer"
+          >
+            {questions[index].correct_answer}
+          </button>
           {questions[index].incorrect_answers
-            .map((item, itemIndex) =>
-              (
-                <button
-                  type="button"
-                  key="incorrect"
-                  data-testid={ `wrong-answer-${itemIndex}` }
-                  key={ itemIndex }
-                >{ item }</button>)
-              )}
-          {/* { respostas.map((resposta) => <button type="button" key="btn">{ resposta }</button>) } */}
-
+            .map((item, itemIndex) => (
+              <button
+                type="button"
+                key="incorrect"
+                data-testid={ `wrong-answer-${itemIndex}` }
+              >
+                { item }
+              </button>))}
         </div>
       </div>
     );
@@ -74,3 +77,7 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps)(Questions);
+
+Questions.propTypes = {
+  token: PropTypes.string.isRequired,
+};
