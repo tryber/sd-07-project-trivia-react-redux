@@ -9,19 +9,22 @@ class Header extends React.Component {
     const hashEmail = md5(email);
 
     return (
-      <header>
-        <div>
+      <header className="header">
+        <div className="gamer-stats">
           <img
+            className="gamer-avatar"
             data-testid="header-profile-picture"
             src={ `https://www.gravatar.com/avatar/${hashEmail}` }
             alt="avatar"
           />
-          <h3 data-testid="header-player-name">{name}</h3>
+          <div className="stats-container">
+            <h3 data-testid="header-player-name">{name}</h3>
+            <h3>
+              Pontos:
+              <span data-testid="header-score">0</span>
+            </h3>
+          </div>
         </div>
-        <h3>
-          Pontos:
-          <span data-testid="header-score">0</span>
-        </h3>
       </header>
     );
   }

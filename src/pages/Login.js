@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { tokenAction, addEmailAction, addNameAction } from '../actions';
 import api from '../services/api';
 import trivia from '../trivia.png';
+import tools from '../tools.svg';
 import './login.css';
 
 class Login extends Component {
@@ -94,7 +95,7 @@ class Login extends Component {
             } }
           >
             <img
-              src="./config.png"
+              src={ tools }
               alt="Configurações"
             />
           </button>
