@@ -1,0 +1,16 @@
+.config__link__container {
+  margin-top: 50px;
+}
+
+.config__link {
+  border: 0;
+  cursor: pointer;
+  background: transparent;
+  color: #666;
+  font-weight: 500;
+  transition: all 400ms ease-out;
+}
+
+.config__link:hover {
+  color: #333;
+}
