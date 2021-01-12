@@ -34,23 +34,31 @@ class Login extends React.Component {
     const { getUserProps } = this.props;
     return (
       <div>
-        <input
-          onChange={ this.handleInput }
-          value={ name }
-          name="name"
-          data-testid="input-player-name"
-          type="text"
-        />
-        <input
-          onChange={ this.handleInput }
-          value={ email }
-          name="email"
-          data-testid="input-gravatar-email"
-          type="text"
-        />
+        
+        <label>
+          Nome do jogador
+          <input
+            onChange={this.handleInput}
+            value={name}
+            name="name"
+            data-testid="input-player-name"
+            type="text"
+          />
+        </label>
+
+        <label>
+          <input
+            onChange={this.handleInput}
+            value={email}
+            name="email"
+            data-testid="input-gravatar-email"
+            type="text"
+          />
+        </label>
+
         <button
-          onClick={ () => getUserProps(email, name) }
-          disabled={ this.verifyLogin() }
+          onClick={() => getUserProps(email, name)}
+          disabled={this.verifyLogin()}
           data-testid="btn-play"
           type="button"
         >
