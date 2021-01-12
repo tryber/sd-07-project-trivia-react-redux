@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import { PropTypes } from 'prop-types';
 
 class LoginForm extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       email: '',
@@ -20,8 +21,17 @@ class LoginForm extends Component {
   }
 
   render() {
+    const { history } = this.props;
+    console.log(this.props);
     return (
       <div>
+        <button
+          type="button"
+          data-testid="btn-settings"
+          onClick={ () => history.push('/settings') }
+        >
+          Configurações
+        </button>
         <form>
           <input
             type="email"
@@ -41,7 +51,6 @@ class LoginForm extends Component {
             type="submit"
             data-testid="btn-play"
             disabled={ !this.isDisabled() }
-            // onClick={}
           >
             Jogar
           </button>
@@ -50,5 +59,10 @@ class LoginForm extends Component {
     );
   }
 }
+
+LoginForm.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired }).isRequired,
+};
 
 export default LoginForm;
