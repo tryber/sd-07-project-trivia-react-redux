@@ -1,13 +1,10 @@
-const INITIAL_STATE = {
-  isFetching: false,
-  token: '',
-  questions: [],
-};
-const reducer = (state = INITIAL_STATE, action) => {
-  switch (action.type) {
-  default:
-    return state;
-  }
-};
+import { combineReducers } from 'redux';
+import playerReducer from './playerReducer';
+import questionReducer from './questionReducer';
+import tokenReducer from './tokenReducer';
 
-export default reducer;
+export default combineReducers({
+  playerReducer,
+  questionReducer,
+  tokenReducer,
+});
