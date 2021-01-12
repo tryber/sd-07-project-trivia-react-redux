@@ -4,6 +4,7 @@ class Login extends React.Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClickSettings.bind(this);
     this.state = {
       nome: '',
       email: '',
@@ -15,10 +16,16 @@ class Login extends React.Component {
     this.setState({ [name]: value });
   }
 
+  handleClickSettings() {
+    const { history } = this.props;
+    history.push("./settings")
+  }
+
   render() {
     const { nome, email } = this.state;
     return (
       <div>
+        <button data-testid="btn-settings" onClick={ this.handleClickSettings }>Configurações</button>
         <input
           type="text"
           name="nome"
