@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { getToken } from '../../redux/actions';
 
 class Login extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       isDisable: true,
       name: '',
@@ -27,9 +30,11 @@ class Login extends Component {
     );
   }
 
-  handleSubmit(e) {
+  async handleSubmit(e) {
     e.preventDefault();
-    // Validações
+    const { getToken: loginGetToken, history } = this.props;
+    await loginGetToken();
+    history.push('game');
   }
 
   render() {
@@ -76,4 +81,15 @@ class Login extends Component {
   }
 }
 
-export default Login;
+const mapDispatchToProps = {
+  getToken,
+};
+
+Login.propTypes = {
+  getToken: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
+
+export default connect(null, mapDispatchToProps)(Login);
