@@ -27,7 +27,7 @@ const failedRequest = (error) => ({
 
 export function fetchQuestions() {
   return async (dispatch) => {
-    dispatch(startRequest);
+    dispatch(startRequest());
     try {
       const { token } = JSON.parse(localStorage.getItem('token')).token;
       const endpoint = `https://opentdb.com/api.php?amount=5&token=${token}`;
