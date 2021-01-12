@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import md5 from 'crypto-js/md5';
 
 const CustomHeader = ({ form: { name, email } }) => (
@@ -17,5 +16,6 @@ const CustomHeader = ({ form: { name, email } }) => (
     <h4 data-testid="header-score">0</h4>
   </div>
 );
+
 
 export default CustomHeader;

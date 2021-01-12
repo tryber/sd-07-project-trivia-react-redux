@@ -1,5 +1,5 @@
 const ADD_EMAIL = 'ADD_EMAIL';
-const ADD_NAME = 'ADD_NAME';
+const ADD_NOME = 'ADD_NOME';
 
 const INITIAL_STATE = {
   email: '',
@@ -8,15 +8,15 @@ const INITIAL_STATE = {
 
 function loginReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
-  case ADD_EMAIL:
-    console.log({...state.email, email: action.email })
-    return { email: action.email };
-  case ADD_NAME:
-    console.log({...state.name, name: action.name })
+    case ADD_NOME:
+      console.log({ ...state, name: action.name })
+      return { ...state, name: action.name };
+    case ADD_EMAIL:
+      console.log( {...state, email: action.email })
 
-    return { name: action.name };
-  default:
-    return state;
+      return {...state, email: action.email };
+    default:
+      return state;
   }
 }
 export default loginReducer;
