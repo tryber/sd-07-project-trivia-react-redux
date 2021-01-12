@@ -70,7 +70,10 @@ class Questions extends Component {
             console.log(`Valor: ${value}`);
             if (value === Math.max(...numberArray)) {
               return (
-                <CorrectAnswer answer={ questions[currentQuestion].correct_answer } />
+                <CorrectAnswer
+                  key={ value }
+                  answer={ questions[currentQuestion].correct_answer }
+                />
               );
             }
             return (
