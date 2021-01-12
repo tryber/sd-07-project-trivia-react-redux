@@ -1,5 +1,8 @@
 import { combineReducers } from 'redux';
+import receiveToken from './receiveToken';
 
-const reducer = combineReducers({  });
+const rootReducer = combineReducers({
+  receiveToken,
+});
 
-export default reducer;
+export default rootReducer;

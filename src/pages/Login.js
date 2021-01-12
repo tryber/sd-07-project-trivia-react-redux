@@ -1,14 +1,16 @@
 import React from 'react';
-/* import PropTypes from 'prop-types'; */
-/* import { Link } from 'react-router-dom'; */
 import { connect } from 'react-redux';
-/* import { login } from '../actions'; */
+import PropTypes from 'prop-types';
+/* import { ty } from 'react-router-dom'; */
+import Trivia from '../components/Trivia';
+import { fetchTokenTrivia } from '../actions';
 
 class Login extends React.Component {
   constructor() {
     super();
     this.handleChange = this.handleChange.bind(this);
     this.enableButton = this.enableButton.bind(this);
+    this.handleClick = this.handleClick.bind(this);
     this.state = {
       emailInput: '',
       nameInput: '',
@@ -34,9 +36,15 @@ class Login extends React.Component {
     }
   }
 
+  handleClick() {
+    const { token, history } = this.props;
+    token();
+    localStorage.setItem('token', JSON.stringify(token));
+    history.push('./game');
+  }
+
   render() {
     const { emailInput, nameInput, disabled } = this.state;
-    /* const { email } = this.props; */
 
     return (
       <div>
@@ -60,23 +68,25 @@ class Login extends React.Component {
           type="button"
           disabled={ disabled }
           data-testid="btn-play"
-          /* onClick={ () => email(emailInput) } */
+          onClick={ (event) => this.handleClick(event) }
         >
           Jogar
         </button>
+        <Trivia />
       </div>
     );
   }
 }
 
-/* const mapDispatchToProps = (dispatch) => ({
-  email: (value) => dispatch(login(value)),
-}); */
+const mapDispatchToProps = (dispatch) => ({
+  token: (key) => dispatch(fetchTokenTrivia(key)),
+});
 
-/* Login.propTypes = {
-  email: PropTypes.func.isRequired,
+Login.propTypes = {
+  token: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func
+  }).isRequired,
 };
- */
 
-export default Login;
-/* export default connect(null, mapDispatchToProps)(Login); */
+export default connect(null, mapDispatchToProps)(Login);
