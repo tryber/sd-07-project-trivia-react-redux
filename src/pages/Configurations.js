@@ -33,7 +33,7 @@ Configurations.propTypes = {
   }),
 };
 
-Configurations.defaltProps = {
+Configurations.defaultProps = {
   history: PropTypes.shape({
     push: PropTypes.string,
   }),
