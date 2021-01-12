@@ -3,9 +3,10 @@ export const REQUEST_TOKEN = 'TOKEN';
 export const SUCCESS = 'SUCCESS';
 export const ERROR = 'ERROR';
 
-export const login = (email) => ({
+export const login = (email, name) => ({
   type: LOGIN,
   email,
+  name,
 });
 
 export const requestToken = () => ({

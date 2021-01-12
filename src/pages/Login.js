@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { fetchToken, requestSucessToken } from '../actions';
+import { fetchToken, requestSucessToken, login } from '../actions';
 import apiToken from '../services/api';
 
 class Login extends Component {
@@ -29,8 +29,9 @@ class Login extends Component {
   async saveToken() {
     const tokenResponse = await apiToken();
     this.tokenObject(tokenResponse);
-    const { token } = this.state;
-    const { addToken } = this.props;
+    const { token, name, email } = this.state;
+    const { addToken, userLogin } = this.props;
+    userLogin(email, name);
     localStorage.setItem('token', JSON.stringify(token));
     addToken(token);
   }
@@ -83,11 +84,13 @@ class Login extends Component {
 
 Login.propTypes = {
   addToken: PropTypes.func.isRequired,
+  userLogin: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
   sendToken: (token) => dispatch(fetchToken(token)),
   addToken: (token) => dispatch(requestSucessToken(token)),
+  userLogin: (email, name) => dispatch(login(email, name)),
 });
 
 export default connect(null, mapDispatchToProps)(Login);
