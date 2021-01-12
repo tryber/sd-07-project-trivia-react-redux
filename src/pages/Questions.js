@@ -40,7 +40,9 @@ class Questions extends React.Component {
   }
 
   clickButton() {
-    console.log('click');
+    this.setState({
+      status: false,
+    });
   }
 
   render() {
