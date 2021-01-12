@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { tokenAction } from '../actions';
 import api from '../services/api';
 import './login.css';
@@ -81,3 +82,8 @@ class Login extends Component {
 const mapDispatchToProps = (dispatch) => ({ addToken: (e) => dispatch(tokenAction(e)) });
 
 export default connect(null, mapDispatchToProps)(Login);
+
+Login.propTypes = {
+  history: PropTypes.shape.isRequired,
+  addToken: PropTypes.func.isRequired,
+};
