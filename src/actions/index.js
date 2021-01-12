@@ -11,3 +11,5 @@ export function fetchTokenAction() {
   return (dispatch) => getToken()
     .then((token) => dispatch(play(token)));
 }
+
+// Trem atoa qualquer
