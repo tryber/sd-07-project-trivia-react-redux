@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Header from '../components/Header';
 import requestQuest from '../store/ducks/QuestionsRequest/actions'
 import { connect } from 'react-redux';
 
@@ -9,10 +10,13 @@ class GameScreen extends Component {
     await actionRequest();
   }
 
+
   render() {
     const { quest } = this.props;
     return (
+
       <div >
+      <div><Header /></div>
         {quest.map(({ category, question }) => (
           <div>
             <div data-testid="question-category" >
@@ -24,6 +28,7 @@ class GameScreen extends Component {
           </div>
         ))}
       </div>
+
     );
   }
 
