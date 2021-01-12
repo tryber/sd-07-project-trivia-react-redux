@@ -23,7 +23,7 @@ class FormLogin extends Component {
             data-testid="input-gravatar-email"
             placeholder="Email"
             id="user-email"
-            name="email"
+            name="gravatarEmail"
             onChange={ (event) => handleChange(event) }
           />
         </label>
