@@ -5,6 +5,8 @@ const LOGIN_INITIAL_STATE = {
   assertions: 0,
   score: 0,
   gravatarEmail: '',
+  isLoading: false,
+  token: {},
 };
 
 const player = (state = LOGIN_INITIAL_STATE, action) => {
@@ -14,6 +16,17 @@ const player = (state = LOGIN_INITIAL_STATE, action) => {
       ...state,
       name: action.payload.name,
       gravatarEmail: action.payload.email,
+    });
+  case types.IS_FETCHING:
+    return ({
+      ...state,
+      isLoading: true,
+    });
+  case types.REQUEST_SUCCESS:
+    return ({
+      ...state,
+      isLoading: false,
+      token: action.token,
     });
   default:
     return state;
