@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import Header from '../components/Header';
 
 class Feedback extends Component {
   render() {
@@ -9,6 +10,7 @@ class Feedback extends Component {
     const { assertions, score } = this.props;
     return (
       <div>
+        <Header />
         <p data-testid="feedback-text">
           {
             assertions >= minAssertions

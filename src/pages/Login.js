@@ -38,6 +38,7 @@ class Login extends Component {
 
   async handleClick() {
     const { name, email } = this.state;
+
     const { sendLogin, requestToken } = this.props;
     sendLogin({ name, email });
     // fetchToken();
@@ -105,7 +106,6 @@ class Login extends Component {
 
 const mapDispatchToProps = (dispatch) => ({
   sendLogin: (info) => dispatch(sendLoginInfo(info)),
-  // fetchToken: () => dispatch(fetchApiToken()),
   requestToken: (info) => dispatch(requestSuccess(info)),
 });
 
