@@ -10,8 +10,8 @@ class Login extends React.Component {
     this.handleClick = this.handleClickSettings.bind(this);
     this.handleClickGame = this.handleClickGame.bind(this);
     this.state = {
-      nome: "",
-      email: "",
+      nome: '',
+      email: '',
     };
   }
 
@@ -20,10 +20,10 @@ class Login extends React.Component {
     this.setState({ [name]: value });
   }
 
-
   handleClickSettings() {
     const { history } = this.props;
-    history.push("./settings");
+    history.push('./settings');
+  }
 
   async handleClickGame() {
     const { signIn, history, fetchApi } = this.props;
@@ -52,7 +52,7 @@ class Login extends React.Component {
         <input
           type="text"
           name="nome"
-          value={nome}
+          value={ nome }
           data-testid="input-player-name"
           placeholder="Nome"
           onChange={ this.handleChange }
@@ -60,7 +60,7 @@ class Login extends React.Component {
         <input
           type="email"
           name="email"
-          value={email}
+          value={ email }
           data-testid="input-gravatar-email"
           placeholder="E-mail"
           onChange={ this.handleChange }
