@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import './login.css';
 
 class Login extends Component {
@@ -33,7 +34,11 @@ class Login extends Component {
     const { history } = this.props;
     return (
       <form>
-        <img src="../"></img>
+        <img
+          src="../"
+          alt="Trivia"
+        >
+        </img>
         <label
           htmlFor="name"
         >
@@ -57,30 +62,34 @@ class Login extends Component {
           />
         </label>
         <div className="button-container">
-        <button
-          type="button"
-          data-testid="btn-play"
-          disabled={ this.valida() }
-        >
-          Jogar
-        </button>
-        <button
-          data-testid="btn-settings"
-          className="btn-config"
-          onClick={ () => {
-            history.push('/config');
-          } }
-        >
-          <img
-          src="./config.png"
-          alt="Configurações"
-          ></img>
-        </button>
+          <button
+            type="button"
+            data-testid="btn-play"
+            disabled={ this.valida() }
+          >
+            Jogar
+          </button>
+          <button
+            data-testid="btn-settings"
+            className="btn-config"
+            onClick={ () => {
+              history.push('/config');
+            } }
+          >
+            <img
+              src="./config.png"
+              alt="Configurações"
+            > 
+            </img>
+          </button>
         </div>
-        
       </form>
     );
   }
 }
 
 export default Login;
+
+Login.propTypes = {
+  history: PropTypes.shape({}),
+};
