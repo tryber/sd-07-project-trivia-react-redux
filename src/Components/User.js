@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 
-export default class User extends Component {
+class User extends Component {
   constructor() {
     super();
 
-    this.state={
+    this.state = {
       img: '',
       name: '',
       score: '',
-    }
+    };
   }
 
   render() {
@@ -21,6 +21,8 @@ export default class User extends Component {
           <p data-testid="header-score">{score}</p>
         </header>
       </div>
-    )
+    );
   }
 }
+
+export default User;
