@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Header } from '../../components';
+import Header from '../../components';
 
 class FeedBack extends Component {
   render() {

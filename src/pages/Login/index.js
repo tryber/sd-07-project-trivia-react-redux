@@ -80,6 +80,7 @@ const mapDispatchToProps = (dispatch) => ({
   signInAction: (user) => dispatch(PlayerActions.signIn(user)),
   getTokenAction: (() => dispatch(PlayerActions.getToken())),
 });
+
 Login.propTypes = {
   signInAction: PropTypes.func.isRequired,
   getTokenAction: PropTypes.func.isRequired,
