@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fetchToken, requestSucessToken, login } from '../actions';
-import apiToken from '../services/api';
 
 class Login extends Component {
   constructor(props) {
@@ -27,10 +26,10 @@ class Login extends Component {
   }
 
   async saveToken() {
-    const tokenResponse = await apiToken();
+    const { addToken, userLogin, sendToken } = this.props;
+    const tokenResponse = sendToken();
     this.tokenObject(tokenResponse);
     const { token, name, email } = this.state;
-    const { addToken, userLogin } = this.props;
     userLogin(email, name);
     localStorage.setItem('token', JSON.stringify(token));
     addToken(token);
@@ -85,6 +84,7 @@ class Login extends Component {
 Login.propTypes = {
   addToken: PropTypes.func.isRequired,
   userLogin: PropTypes.func.isRequired,
+  sendToken: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
