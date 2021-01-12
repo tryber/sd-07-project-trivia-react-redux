@@ -14,6 +14,7 @@ class Login extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.validateImputs = this.validateImputs.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.handleSettings = this.handleSettings.bind(this);
   }
 
   validateImputs() {
@@ -38,12 +39,18 @@ class Login extends Component {
     history.push('/game');
   }
 
+  handleSettings() {
+    const { history } = this.props;
+    history.push('/settings');
+  }
+
   render() {
     return (
       <FormLogin
         handleChange={ this.handleChange }
         validateImputs={ this.validateImputs }
         handleClick={ this.handleClick }
+        handleSettings={ this.handleSettings }
       />
     );
   }
