@@ -48,7 +48,6 @@ class Login extends Component {
     requestToken(token);
 
     localStorage.setItem('token', token);
-
   }
 
   render() {
