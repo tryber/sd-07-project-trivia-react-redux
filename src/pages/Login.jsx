@@ -28,7 +28,7 @@ class Login extends React.Component {
         <button
           type="button"
           data-testid="btn-settings"
-          onClick={this.handleClickSettings}
+          onClick={ this.handleClickSettings }
         >
           Configurações
         </button>
@@ -38,7 +38,7 @@ class Login extends React.Component {
           value={nome}
           data-testid="input-player-name"
           placeholder="Nome"
-          onChange={this.handleChange}
+          onChange={ this.handleChange }
         />
         <input
           type="email"
@@ -46,7 +46,7 @@ class Login extends React.Component {
           value={email}
           data-testid="input-gravatar-email"
           placeholder="E-mail"
-          onChange={this.handleChange}
+          onChange={ this.handleChange }
         />
         {email.length !== 0 && nome.length !== 0 ? (
           <button type="button" data-testid="btn-play">
