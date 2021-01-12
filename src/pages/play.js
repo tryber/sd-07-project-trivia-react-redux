@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import md5 from 'crypto-js/md5';
 import PropTypes from 'prop-types';
+import Header from './header';
 
 class Play extends Component {
   constructor() {
@@ -45,12 +46,6 @@ class Play extends Component {
       </div>);
   }
 
-  hash() {
-    const { email } = this.props;
-    const url = `https://www.gravatar.com/avatar/${md5(email)}`;
-    return url;
-  }
-
   triviaApi() {
     const { token } = this.props;
     const url = `https://opentdb.com/api.php?amount=5&token=${token}`;
@@ -63,11 +58,7 @@ class Play extends Component {
     const { trivia } = this.state;
     return (
       <div>
-        <header>
-          <img src={ this.hash() } alt="avatar" data-testid="header-profile-picture" />
-          <h1 data-testid="header-player-name">{name}</h1>
-          <p data-testid="header-score">{score}</p>
-        </header>
+        <Header />        
         { trivia ? this.trivia() : <p>Em breve!</p> }
       </div>
     );
