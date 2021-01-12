@@ -14,6 +14,7 @@ class Questions extends React.Component {
       index: 0,
     };
     this.fetchQuestions = this.fetchQuestions.bind(this);
+    this.nextQuestion = this.nextQuestion.bind(this);
   }
 
   componentDidMount() {
@@ -27,6 +28,13 @@ class Questions extends React.Component {
       .then((data) => this.setState({
         questions: data.results,
       }));
+  }
+
+  nextQuestion() {
+    const { index } = this.state;
+    this.setState({
+      index: index + 1,
+    });
   }
 
   render() {
@@ -67,7 +75,13 @@ class Questions extends React.Component {
                 { item }
               </button>))}
         </div>
-        <button type="button" onClick={ () => console.log('click') }>Next</button>
+        <button
+          type="button"
+          data-testid="btn-next"
+          onClick={ this.nextQuestion }
+        >
+          Next
+        </button>
       </div>
     );
   }
