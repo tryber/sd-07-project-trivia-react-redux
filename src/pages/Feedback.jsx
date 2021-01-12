@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Header from '../component/Header';
 import propTypes from 'prop-types';
+import Header from '../components/Header';
 
 class Feedback extends Component {
   constructor(props) {
@@ -10,9 +10,9 @@ class Feedback extends Component {
 
   renderMessage(correctQuestions) {
     if (correctQuestions < 3) {
-      return (<h1 data-testid="feedback-text">Podia ser melhor...</h1>)
+      return (<h1 data-testid="feedback-text">Podia ser melhor...</h1>);
     }
-    return (<h1 data-testid="feedback-text">Mandou bem!</h1>)
+    return (<h1 data-testid="feedback-text">Mandou bem!</h1>);
   }
 
   render() {
@@ -27,14 +27,18 @@ class Feedback extends Component {
         { this.renderMessage(correctQuestions) }
         <div className="score-questions-container">
           <h3
-            data-testid="feedbakc-total-quesiton"
+            data-testid="feedback-total-quesiton"
           >
-            Você acertou { correctQuestions } questões!
+            Você acertou
+            { correctQuestions }
+            questões!
           </h3>
           <h3
             data-testid="feedback-total-score"
           >
-            Um total de { score } pontos!
+            Um total de
+            { score }
+            pontos!
           </h3>
         </div>
       </div>

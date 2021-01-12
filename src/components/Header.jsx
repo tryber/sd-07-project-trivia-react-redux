@@ -9,6 +9,7 @@ class Header extends Component {
         <div className="avatar-container">
           <img
             src={ imgSource }
+            alt={ playerName }
             data-testid="header-profile-picture"
           />
         </div>
