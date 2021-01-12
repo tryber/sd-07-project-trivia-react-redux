@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { tokenAction } from '../actions';
+import api from '../services/api';
 import './login.css';
 
 class Login extends Component {
@@ -30,8 +34,14 @@ class Login extends Component {
   }
 
   render() {
+    const { history, addToken } = this.props;
+    const { returnToken } = api;
     return (
       <form>
+        <img
+          src="../"
+          alt="Trivia"
+        />
         <label
           htmlFor="name"
         >
@@ -54,16 +64,45 @@ class Login extends Component {
             onChange={ this.handleChange }
           />
         </label>
-        <button
-          type="button"
-          data-testid="btn-play"
-          disabled={ this.valida() }
-        >
-          Jogar
-        </button>
+        <div className="button-container">
+          <button
+            type="button"
+            data-testid="btn-play"
+            disabled={ this.valida() }
+            onClick={ async () => {
+              history.push('/play');
+              const token = await returnToken();
+              localStorage.clear();
+              localStorage.setItem('token', token);
+              addToken(token);
+            } }
+          >
+            Jogar
+          </button>
+          <button
+            type="button"
+            data-testid="btn-settings"
+            className="btn-config"
+            onClick={ () => {
+              history.push('/config');
+            } }
+          >
+            <img
+              src="./config.png"
+              alt="Configurações"
+            />
+          </button>
+        </div>
       </form>
     );
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({ addToken: (e) => dispatch(tokenAction(e)) });
+
+export default connect(null, mapDispatchToProps)(Login);
+
+Login.propTypes = {
+  history: PropTypes.shape.isRequired,
+  addToken: PropTypes.func.isRequired,
+};

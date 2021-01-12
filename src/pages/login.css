@@ -42,3 +42,17 @@ button {
   margin: 10px;
   width: 100px;
 }
+
+.btn-config {
+  height: 40px;
+  width: 40px;
+}
+
+h1 {
+  color: white;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+}
