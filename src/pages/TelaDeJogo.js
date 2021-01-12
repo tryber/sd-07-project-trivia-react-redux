@@ -17,11 +17,11 @@ class TelaDeJogo extends Component {
             alt=""
             src={ `https://www.gravatar.com/avatar/${hash}` }
           />
-          <div data-testid="header-player-name">
-            <p>{name}</p>
+          <div>
+            <p data-testid="header-player-name">{name}</p>
           </div>
-          <div data-testid="header-score">
-            <p>{score}</p>
+          <div>
+            <p data-testid="header-score">{score}</p>
           </div>
         </header>
       </div>
