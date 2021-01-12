@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { setStorage } from '../services/localStorage';
-import CustomLogin from '../components/Customlogin';
+import { CustomLogin } from '../components';
 import { addEmail, fetchToken, addName } from '../actions';
 
 class Login extends Component {
@@ -30,10 +30,10 @@ class Login extends Component {
 
   async handleSubmit() {
     const { dispatchEmail, dispatchToken, dispatchNome } = this.props;
-    const { email, nome} = this.state;
+    const { email, nome } = this.state;
     dispatchEmail(email);
     dispatchNome(nome);
-    console.log(nome , email)
+    console.log(nome, email);
     await dispatchToken(setStorage);
   }
 

@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import CustomHeader from '../components/CustomHeader';
+import { CustomHeader } from '../components';
 
 class GameScreen extends Component {
   render() {
-    const { name, email } = this.props
-    
     return (
       <div>
-        <CustomHeader form={name, email} />;
+        <CustomHeader { ...this.props } />
       </div>
     );
   }
