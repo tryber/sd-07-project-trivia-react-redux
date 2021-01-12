@@ -50,7 +50,7 @@
     "eslint-plugin-react": "^7.21.5",
     "mocha": "^7.2.0",
     "mochawesome": "^6.1.1",
-    "mochawesome-merge": "^4.0.3",,
+    "mochawesome-merge": "^4.0.3",
     "mochawesome-report-generator": "^5.1.0",
     "stylelint": "^13.8.0",
     "stylelint-order": "^4.1.0"
