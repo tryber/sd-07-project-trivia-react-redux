@@ -15,7 +15,7 @@ export function fetchThunk() {
     try {
       const token = localStorage.getItem('token');
       const response = await fetch(`https://opentdb.com/api.php?amount=5&token=${token}`);
-      const questions = response.json();
+      const questions = await response.json();
       dispatch(requestSucces(questions));
     } catch (error) {
       console.log(error);

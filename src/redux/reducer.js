@@ -1,8 +1,8 @@
 import { REQUEST_QUESTION, REQUEST_SUCCESS } from './actions';
 
 const INITIAL_STATE = {
-  loading: false,
-  questions: '',
+  loading: true,
+  questions: {},
 };
 
 function reducer(state = INITIAL_STATE, action) {
