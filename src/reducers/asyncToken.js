@@ -3,10 +3,11 @@ const INITIAL_STATE = {
 };
 
 const token = (state = INITIAL_STATE, action) => {
-  const { type, data } = action;
+  console.log(action);
+  const { type, tokenData } = action;
   switch (type) {
   case 'fetchSucessToken':
-    return { ...state, data };
+    return { ...state, tokenData };
   default:
     return state;
   }
