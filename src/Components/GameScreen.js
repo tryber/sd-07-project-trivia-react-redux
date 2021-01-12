@@ -16,6 +16,7 @@ class GameScreen extends React.Component {
       currentQuestion: 0,
       answered: false,
       timer: 30,
+      isDisable: false,
     };
   }
 
@@ -24,32 +25,34 @@ class GameScreen extends React.Component {
     const { token } = this.state;
     setQuestionsProps(token);
   }
-  
+
   // timeout = () => {
   //   const { timer } = this.state;
-    // return setTimeout(() => {
-    //   this.setState({
-    //     timer: timer - 1
-    //   })
-    // }, 1000);}
-    
+  // return setTimeout(() => {
+  //   this.setState({
+  //     timer: timer - 1
+  //   })
+  // }, 1000);}
+
   componentDidUpdate() {
+    const time = 1000;
     const { timer } = this.state;
     this.timeout = setTimeout(() => {
       if (timer > 0) {
-      this.setState({
-        timer: timer - 1
-      })
-    } else {
-      clearInterval(this.timeout)
-    }
-    }, 1000);
+        this.setState({
+          timer: timer - 1,
+        });
+      } else {
+        this.setState({ isDisable: true });
+        clearInterval(this.timeout);
+      }
+    }, time);
   }
-  
+
   componentWillUnmount() {
-    clearInterval(this.timeout)
+    clearInterval(this.timeout);
   }
-  
+
   clickAnswered() {
     this.setState({ answered: true });
   }
@@ -62,14 +65,14 @@ class GameScreen extends React.Component {
         currentQuestion: currentQuestion + 1,
         answered: false,
         timer: 30,
+        isDisable: false,
       });
     }
   }
 
-
   render() {
     const { questions } = this.props;
-    const { currentQuestion, answered, timer } = this.state;
+    const { currentQuestion, answered, timer, isDisable } = this.state;
     if (questions.length === 0) {
       return <div>carregando...</div>;
     }
@@ -79,6 +82,7 @@ class GameScreen extends React.Component {
           currentQuestion={ currentQuestion }
           answered={ answered }
           clickAnswered={ this.clickAnswered }
+          isDisable={ isDisable }
         />
         <button
           type="button"
