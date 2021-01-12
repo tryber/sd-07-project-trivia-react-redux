@@ -12,6 +12,7 @@ class Questions extends React.Component {
         correct_answer: '',
         incorrect_answers: [] }],
       index: 0,
+      status: true,
     };
     this.fetchQuestions = this.fetchQuestions.bind(this);
     this.nextQuestion = this.nextQuestion.bind(this);
