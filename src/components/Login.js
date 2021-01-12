@@ -17,7 +17,7 @@ class Login extends Component {
   async handleSubmit(event) {
     event.preventDefault();
     const callingApi = await callAPI();
-    localStorage.setItem('token', JSON.stringify(callingApi));
+    localStorage.setItem('token', JSON.stringify(callingApi.token));
     return callingApi;
   }
 
