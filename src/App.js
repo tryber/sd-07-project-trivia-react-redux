@@ -9,6 +9,7 @@ export default function App() {
       <Route exact path="/" component={ pages.Login } />
       <Route path="/settings" component={ pages.Settings } />
       <Route path="/feedback" component={ pages.Feedback } />
+      <Route path="/game" component={ pages.Game } />
     </Switch>
   );
 }
