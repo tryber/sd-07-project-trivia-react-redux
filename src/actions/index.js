@@ -4,3 +4,5 @@ export {
   TOKEN_FAILURE,
   tokenSuccess,
 } from './tokenAction';
+
+export { PLAYER } from './playerAction';
