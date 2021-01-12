@@ -1,0 +1,16 @@
+.header {
+  background-color: #FF9914;
+  color: #F21B3F;
+  font-family: Roboto;
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 900;
+  height: 100px;
+  width: 100%;
+}
+
+.header-label {
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+}
