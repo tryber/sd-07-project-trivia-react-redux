@@ -336,7 +336,7 @@ describe.skip('11 - [TELA DE JOGO] Desenvolva o jogo de forma que a pessoa que j
 
 // feedback
 
-describe.only('12 - [TELA DE FEEDBACK] Desenvolva o header de _feedback_ que deve conter as informações da pessoa jogadora', () => {
+describe.skip('12 - [TELA DE FEEDBACK] Desenvolva o header de _feedback_ que deve conter as informações da pessoa jogadora', () => {
   beforeEach(() => {
     cy.visit('http://localhost:3000/');
     cy.clearLocalStorage();
