@@ -42,7 +42,7 @@ class Trivia extends React.Component {
     });
   }
 
-  clickHandler(target) {
+  clickHandler() {
     this.setState({
       clicked: true,
     });
