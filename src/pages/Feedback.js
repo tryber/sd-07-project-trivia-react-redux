@@ -39,7 +39,6 @@ class Feedback extends Component {
   }
 }
 
-
 Feedback.propTypes = {
   assertions: PropTypes.number.isRequired,
   score: PropTypes.number.isRequired,
