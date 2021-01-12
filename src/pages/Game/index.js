@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
+import Header from './header';
 
 class Game extends Component {
   render() {
     return (
-      <p>Game</p>
+      <div>
+        <Header />
+      </div>
     );
   }
 }

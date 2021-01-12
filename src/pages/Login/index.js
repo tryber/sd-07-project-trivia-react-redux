@@ -39,6 +39,10 @@ class Login extends Component {
 
   render() {
     const { isDisable, name, email } = this.state;
+
+    localStorage.setItem('playerName', name);
+    localStorage.setItem('gravatarEmail', email);
+
     return (
       <main onSubmit={ (e) => this.handleSubmit(e) }>
         <form>
