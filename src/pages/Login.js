@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchToken } from '../redux/actions/token';
+import { fetchToken, saveEmail, saveName } from '../redux/actions';
 
 class Login extends React.Component {
   constructor(props) {
@@ -25,9 +25,11 @@ class Login extends React.Component {
   }
 
   tokenRequest() {
-    const { requestToken, token } = this.props;
+    const { email, name } = this.state;
+    const { namePlayer, emailPlayer, requestToken } = this.props;
+    namePlayer(name);
+    emailPlayer(email);
     requestToken();
-    localStorage.setItem('token', token);
   }
 
   render() {
@@ -72,15 +74,14 @@ class Login extends React.Component {
 
 const mapDispatchToProps = (dispatch) => ({
   requestToken: () => dispatch(fetchToken()),
-});
-
-const mapStateToProps = (state) => ({
-  token: state.token.token,
+  namePlayer: (name) => dispatch(saveName(name)),
+  emailPlayer: (email) => dispatch(saveEmail(email)),
 });
 
 Login.propTypes = {
-  token: PropTypes.string.isRequired,
+  namePlayer: PropTypes.string.isRequired,
+  emailPlayer: PropTypes.string.isRequired,
   requestToken: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(null, mapDispatchToProps)(Login);

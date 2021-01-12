@@ -2,6 +2,12 @@ export const GET_TOKEN = 'GET_TOKEN';
 export const REQUEST_TOKEN = 'REQUEST_TOKEN';
 export const FAILED_REQUEST = 'FAILED_REQUEST';
 
+export const SAVE_NAME = 'SAVE_NAME';
+export const SAVE_EMAIL = 'SAVE_EMAIL';
+
+export const saveName = (name) => ({ type: SAVE_NAME, name });
+export const saveEmail = (email) => ({ type: SAVE_EMAIL, email });
+
 function getToken(json) {
   return { type: GET_TOKEN, tokenCode: json };
 }
@@ -17,9 +23,10 @@ function failedRequest(error) {
 export const fetchToken = () => async (dispatch) => {
   try {
     dispatch(requestToken());
-    const tokenResponse = await fetch('https://opentdb.com/api_token.php?command=request');
-    const tokenJson = await tokenResponse.json();
-    return dispatch(getToken(tokenJson));
+    const request = await fetch('https://opentdb.com/api_token.php?command=request');
+    const requestJson = await request.json();
+    localStorage.setItem('token', requestJson.token);
+    return dispatch(getToken(requestJson));
   } catch (error) {
     return dispatch(failedRequest(error));
   }
