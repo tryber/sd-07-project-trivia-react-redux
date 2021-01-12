@@ -1,9 +1,22 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import CustomHeader from '../components/CustomHeader';
 
-export default class GameScreen extends Component {
+class GameScreen extends Component {
   render() {
+    const { name, email } = this.props
+    
     return (
-      <h1>Tela do jogo</h1>
+      <div>
+        <CustomHeader form={name, email} />;
+      </div>
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  name: state.loginReducer.name,
+  email: state.loginReducer.email,
+});
+
+export default connect(mapStateToProps)(GameScreen);
