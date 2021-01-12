@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { sendLoginInfo } from '../redux/actions';
+import { Link } from 'react-router-dom';
+import { sendLoginInfo, fetchApiToken } from '../redux/actions';
 import logo from '../trivia.png';
 
 class Login extends Component {
@@ -15,6 +16,7 @@ class Login extends Component {
 
     this.isValid = this.isValid.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   isValid() {
@@ -32,9 +34,15 @@ class Login extends Component {
     this.setState({ [name]: value });
   }
 
+  handleClick() {
+    const { name, email } = this.state;
+    const { sendLogin, fetchToken } = this.props;
+    sendLogin({ name, email });
+    fetchToken();
+  }
+
   render() {
     const { name, email } = this.state;
-    const { sendLogin } = this.props;
     return (
       <>
         <div className="App">
@@ -69,10 +77,18 @@ class Login extends Component {
             type="button"
             disabled={ this.isValid() }
             data-testid="btn-play"
-            onClick={ () => sendLogin({ name, email }) }
+            onClick={ this.handleClick }
           >
             Jogar
           </button>
+          <Link to="/settings">
+            <button
+              type="button"
+              data-testid="btn-settings"
+            >
+              Configurações
+            </button>
+          </Link>
         </form>
       </>
     );
@@ -81,10 +97,12 @@ class Login extends Component {
 
 const mapDispatchToProps = (dispatch) => ({
   sendLogin: (info) => dispatch(sendLoginInfo(info)),
+  fetchToken: () => dispatch(fetchApiToken()),
 });
 
 export default connect(null, mapDispatchToProps)(Login);
 
 Login.propTypes = {
   sendLogin: PropTypes.func.isRequired,
+  fetchToken: PropTypes.func.isRequired,
 };
