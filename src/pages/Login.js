@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { CustomLogin } from '../components';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { addEmail } from '../actions';
-
+import CustomLogin from '../components/Customlogin';
+import addEmail from '../actions/index';
 
 class Login extends Component {
   constructor() {
@@ -10,15 +10,14 @@ class Login extends Component {
     this.state = {
       nome: '',
       email: '',
-      permitir: true
-  };
-this.handleInputChange = this.handleInputChange.bind(this)
-this.handleSubmit = this.handleSubmit.bind(this)
-this.validaInput = this.validaInput.bind(this)
+      permitir: true,
+    };
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.validaInput = this.validaInput.bind(this);
+  }
 
-
-} 
-validaInput() {
+  validaInput() {
     const { email, nome } = this.state;
     const number = 5;
     if (email.match(/\S+@\S+\.\S+/) && nome.length > number) {
@@ -29,23 +28,25 @@ validaInput() {
   }
 
   handleSubmit() {
-    const { add } = this.props
-    add(this.state.email)
+    const { add } = this.props;
+    const { email } = this.state;
+    add(email);
   }
 
   handleInputChange({ target: { name, value } }) {
     this.setState({ [name]: value }, this.validaInput);
     // validaInput é chamada assim que o estado se atualiza
     // ou seja , a cada momento que o onchange é modificado
-  };
+  }
 
   render() {
+    const { permitir } = this.state;
     return (
       <CustomLogin
-        formData={this.state}
-        onInputChange={this.handleInputChange}
-        onHandleSubmit={this.handleSubmit}
-        validate={this.state.permitir}
+        formData={ this.state }
+        onInputChange={ this.handleInputChange }
+        onHandleSubmit={ this.handleSubmit }
+        validate={ permitir }
       />
     );
   }
@@ -56,3 +57,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(null, mapDispatchToProps)(Login);
+
+Login.propTypes = {
+  add: PropTypes.func.isRequired,
+};

@@ -1,5 +1,6 @@
 // import { render } from '@testing-library/react';
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 const CustomLogin = ({
@@ -13,25 +14,26 @@ const CustomLogin = ({
       data-testid="input-player-name"
       maxLength="40"
       placeholder="User Name"
-      value={nome}
+      value={ nome }
       name="nome"
-      //onChange={(e) => onInputChange(e)}
-      onChange={onInputChange}
+      // onChange={(e) => onInputChange(e)}
+      onChange={ onInputChange }
     />
     <input
       data-testid="input-gravatar-email"
       maxLength="50"
       placeholder="E-mail address"
-      value={email}
+      value={ email }
       name="email"
-      //onChange={(e) => onInputChange(e)}
-      onChange={onInputChange}
+      // onChange={(e) => onInputChange(e)}
+      onChange={ onInputChange }
     />
     <Link to="/bichinhosFofinhos">
       <button
-        onClick={onHandleSubmit}
+        type="button"
+        onClick={ onHandleSubmit }
         data-testid="btn-play"
-        disabled={validate}
+        disabled={ validate }
       >
         Jogar
       </button>
@@ -40,3 +42,13 @@ const CustomLogin = ({
 );
 
 export default CustomLogin;
+
+CustomLogin.propTypes = {
+  formData: PropTypes.shape({
+    nome: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired,
+  }).isRequired,
+  onInputChange: PropTypes.func.isRequired,
+  onHandleSubmit: PropTypes.func.isRequired,
+  validate: PropTypes.bool.isRequired,
+};
