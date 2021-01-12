@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import getToken from '../services/trivia';
 
 class Login extends Component {
   constructor(props) {
@@ -6,6 +9,7 @@ class Login extends Component {
     this.state = { email: '', userName: '', btnDisabled: true };
     this.handleChange = this.handleChange.bind(this);
     this.disableButton = this.disableButton.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidUpdate() {
@@ -28,24 +32,42 @@ class Login extends Component {
     this.setState({ [name]: value });
   }
 
+  handleClick() {
+    // const requestToken = getToken().then((response) => console.log(response));
+    getToken();
+    const { history } = this.props;
+    history.push('/game');
+  }
+
   render() {
     const { btnDisabled } = this.state;
     return (
       <div>
-        <input
-          type="email"
-          onChange={ this.handleChange }
-          name="email"
-          data-testid="input-gravatar-email"
-        />
-        <input
-          type="text"
-          onChange={ this.handleChange }
-          name="userName"
-          data-testid="input-player-name"
-        />
+        <div>
+          <label htmlFor="email">
+            Email do Gravatar:
+            <input
+              type="email"
+              onChange={ this.handleChange }
+              name="email"
+              data-testid="input-gravatar-email"
+            />
+          </label>
+        </div>
+        <div>
+          <label htmlFor="userName">
+            Nome do Jogador:
+            <input
+              type="text"
+              onChange={ this.handleChange }
+              name="userName"
+              data-testid="input-player-name"
+            />
+          </label>
+        </div>
         <button
           disabled={ btnDisabled }
+          onClick={ this.handleClick }
           type="button"
           data-testid="btn-play"
         >
@@ -54,5 +76,9 @@ class Login extends Component {
       </div>);
   }
 }
-// agora foi o celular que descarregou
-export default Login;
+
+Login.propTypes = {
+  history: PropTypes.objectOf.isRequired,
+};
+
+export default withRouter(Login);
