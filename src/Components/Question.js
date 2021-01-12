@@ -30,7 +30,16 @@ const mapStateToProps = (state) => ({
 
 Question.propTypes = {
   currentQuestion: PropTypes.number.isRequired,
-  questions: PropTypes.arrayOf.isRequired,
+  questions: PropTypes.arrayOf(
+    PropTypes.shape({
+      category: PropTypes.string,
+      type: PropTypes.string,
+      difficulty: PropTypes.string,
+      question: PropTypes.string,
+      correct_answer: PropTypes.string,
+      incorrect_answers: PropTypes.arrayOf,
+    }).isRequired,
+  ).isRequired,
 };
 
 export default connect(mapStateToProps)(Question);

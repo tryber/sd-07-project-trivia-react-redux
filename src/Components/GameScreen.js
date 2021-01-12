@@ -23,7 +23,10 @@ class GameScreen extends React.Component {
   render() {
     const { questions } = this.props;
     const { currentQuestion } = this.state;
-    const quantWongQuestions = questions.incorrect_answers.length;
+    let quantWongQuestions = 0;
+    if (questions.length > 0) {
+      quantWongQuestions = questions[currentQuestion].incorrect_answers.length;
+    }
     if (questions.length === 0) {
       return <div>carregando...</div>;
     }
@@ -53,7 +56,16 @@ const mapDispatchToProps = (dispatch) => ({
 
 GameScreen.propTypes = {
   setQuestionsProps: PropTypes.func.isRequired,
-  questions: PropTypes.arrayOf.isRequired,
+  questions: PropTypes.arrayOf(
+    PropTypes.shape({
+      category: PropTypes.string,
+      type: PropTypes.string,
+      difficulty: PropTypes.string,
+      question: PropTypes.string,
+      correct_answer: PropTypes.string,
+      incorrect_answers: PropTypes.arrayOf,
+    }).isRequired,
+  ).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(GameScreen);
