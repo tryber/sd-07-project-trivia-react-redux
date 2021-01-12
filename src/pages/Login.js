@@ -32,11 +32,13 @@ class Login extends React.Component {
   }
 
   async handleClick() {
+    const { history } = this.props;
     const { email, name } = this.state;
     const { getUserProps, getToken } = this.props;
     const responseToken = await getToken();
-    console.log(responseToken);
     getUserProps(email, name);
+    history.push('/game');
+    return responseToken;
   }
 
   render() {
@@ -62,6 +64,7 @@ class Login extends React.Component {
         </label>
 
         <label htmlFor="email">
+          E-mail
           <input
             onChange={ this.handleInput }
             value={ email }
@@ -95,4 +98,7 @@ export default connect(null, mapDispatchToProps)(Login);
 Login.propTypes = {
   getUserProps: PropTypes.func.isRequired,
   getToken: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
 };
