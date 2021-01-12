@@ -35,3 +35,5 @@ Header.propTypes = {
   name: propTypes.string,
   score: propTypes.number,
 }.isRequired;
+
+// teste
