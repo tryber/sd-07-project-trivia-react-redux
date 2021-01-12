@@ -1,5 +1,4 @@
 import React from 'react';
-import * as api from '../services/api.js'
 
 class Login extends React.Component {
   constructor(props) {
@@ -11,15 +10,7 @@ class Login extends React.Component {
     };
   }
 
-  componentDidMount() {
-    async function teste() {
-    const data = await api.fetchTrivia();
-    console.log(data);
-  } 
-    teste();
-  }
-
-  handleChange({ target }) {
+   handleChange({ target }) {
     const { name, value } = target;
     this.setState({ [name]: value });
   }
