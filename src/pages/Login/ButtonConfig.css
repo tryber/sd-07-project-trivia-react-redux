@@ -3,10 +3,10 @@
 }
 
 .config__link {
-  border: 0;
-  cursor: pointer;
   background: transparent;
+  border: 0;
   color: #666;
+  cursor: pointer;
   font-weight: 500;
   transition: all 400ms ease-out;
 }
