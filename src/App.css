@@ -52,23 +52,23 @@
 }
 
 .container-form {
+  align-items: center;
   display: flex;
   justify-content: center;
-  align-items: center;
 }
 
 .bottom-content {
-  color: #afaaaa;
   background-color: #fff;
+  color: #afaaaa;
   font-size: 15pt;
   text-align: center;
   width: 100%;  
 }
 
 .form-login {
-  padding: 10px;
   border-radius:5px;
   box-shadow: 1px 4px 1px rgba(0, 0, 0, 0.5);
+  padding: 10px;
 }
 
 .label-form {
@@ -83,8 +83,8 @@
 }
 
 .btn-login-form {
-  color: white;
   background-color: #79d0f5;
+  color: white;
   font-weight: 700;
   padding: 10px;
   width: 100%;
@@ -99,9 +99,9 @@
 .header {
   background-color:black;
   color: white;
+  display: flex; 
   padding: 5px;
   width: 100%;
-  display: flex; 
 }
 
 .logo .score .player .avatar {
