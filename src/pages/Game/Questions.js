@@ -8,6 +8,8 @@ class Questions extends Component {
 
     this.state = {
       questions: [],
+      currentQuestion: 0,
+      isLoading: true,
     };
   }
 
@@ -25,15 +27,19 @@ class Questions extends Component {
   }
 
   render() {
-    const { questions } = this.state;
-    console.log(questions);
+    const { isLoading } = this.state;
+    if (isLoading) return '';
+
+    const { currentQuestion, questions } = this.state;
+    console.log(questions[currentQuestion]);
+
     return (
       <div>
         <div data-testid="question-category">
-          Categoria
+          { questions[currentQuestion].category }
         </div>
         <div data-testid="question-text">
-          Pergunta
+          { questions[currentQuestion].question }
         </div>
         <div>
           Resposta
