@@ -89,6 +89,14 @@ class Login extends Component {
               Configurações
             </button>
           </Link>
+          <Link to="/ranking">
+            <button
+              type="button"
+              data-testid="btn-ranking"
+            >
+              Ver Ranking
+            </button>
+          </Link>
         </form>
       </>
     );
