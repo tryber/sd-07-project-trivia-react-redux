@@ -1,3 +1,3 @@
 import FeedBack from './Feedback';
 
-export { FeedBack };
+export default FeedBack;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Header } from '../components';
+import Header from '../components';
 
 class FeedBack extends React.Component {
   render() {
@@ -7,7 +7,7 @@ class FeedBack extends React.Component {
       <div>
         <Header />
         <main>
-          <h1 data-testid="feedback-text">Poia ser melhor....</h1>
+          <h1 data-testid="feedback-text">Podia ser melhor....</h1>
 
           <h2 data-testid="feedback-total-question">Você acertou ... questões!</h2>
           <h2 data-testid="feedback-total-score">Um total de ... pontos</h2>
