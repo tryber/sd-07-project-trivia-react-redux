@@ -29,7 +29,7 @@ class Login extends Component {
     const requiredEmail = expectedPattern.test(email) && email !== '';
     const requiredName = username !== '';
     const bothValid = requiredEmail && requiredName;
-    
+
     return (
       <form>
         <label htmlFor="name-input">
