@@ -46,8 +46,6 @@ class Trivia extends React.Component {
     this.setState({
       clicked: true,
     });
-    if (target.id === 'rightAnswer') target.className = 'rightGreen';
-    if (target.id === 'wrongAnswer') target.className = 'wrongRed';
   }
 
   render() {
