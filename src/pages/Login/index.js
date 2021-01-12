@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import * as PlayerActions from '../../store/ducks/player/actions';
 
 class Login extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
 
     this.validateEmailAndName = this.validateEmailAndName.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
 
     this.state = {
       name: '',
@@ -28,6 +32,14 @@ class Login extends Component {
         : this.setState({ isButtonAble: true });
       return validate;
     });
+  }
+
+  async handleClick() {
+    const { history, signInAction, getTokenAction } = this.props;
+    await getTokenAction();
+    const { name, gravatarEmail } = this.state;
+    signInAction({ name, gravatarEmail });
+    history.push('/game');
   }
 
   render() {
@@ -55,6 +67,7 @@ class Login extends Component {
           type="button"
           data-testid="btn-play"
           disabled={ isButtonAble }
+          onClick={ () => this.handleClick() }
         >
           Jogar
         </button>
@@ -63,4 +76,17 @@ class Login extends Component {
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  signInAction: (user) => dispatch(PlayerActions.signIn(user)),
+  getTokenAction: (() => dispatch(PlayerActions.getToken())),
+});
+
+Login.propTypes = {
+  signInAction: PropTypes.func.isRequired,
+  getTokenAction: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
+
+export default connect(null, mapDispatchToProps)(Login);
