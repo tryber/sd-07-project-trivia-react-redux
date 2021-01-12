@@ -11,7 +11,7 @@ export default class Routes extends Component {
         <Switch>
           <Route exact path="/" component={ Login } />
           <Route path="/game" component={ GameScreen } />
-          <Route path="/settings" component={ Settings }/>
+          <Route path="/settings" component={ Settings } />
         </Switch>
       </BrowserRouter>
     );

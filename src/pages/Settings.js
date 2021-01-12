@@ -5,7 +5,7 @@ export default class Settings extends Component {
     return (
       <div>
         <h1 data-testid="settings-title">Configurações</h1>
-        </div>
+      </div>
     );
   }
 }
