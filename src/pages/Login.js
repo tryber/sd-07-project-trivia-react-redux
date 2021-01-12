@@ -20,10 +20,14 @@ export default class Login extends React.Component {
 
   async fetchApi() {
     const { history } = this.props;
+    const { name, email } = this.state;
     const request = await fetch('https://opentdb.com/api_token.php?command=request');
     const requestJson = await request.json();
     const tokenCode = requestJson.token;
     localStorage.setItem('token', tokenCode);
+    localStorage.setItem('state', JSON.stringify(
+      { player: { name, assertions: 0, score: 0, gravatarEmail: email } },
+    ));
     history.push('/game');
   }
 
