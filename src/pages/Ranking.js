@@ -1,51 +1,41 @@
 import React, { Component } from 'react';
 import * as components from '../components';
+import recoveryProductsFromLocalStorage from '../services/localStorageFunctions';
 
 class Ranking extends Component {
-    constructor() {
-        super();
-        this.state = {
-            ranking: [
-                {
-                    name: 'Denner',
-                    score: '10',
-                    picture: 'https://static.nationalgeographicbrasil.com/files/styles/image_3200/public/87871.webp?w=710&h=1059'
-                },
-                {
-                    name: 'Andressa',
-                    score: '20',
-                    picture: 'https://static.nationalgeographicbrasil.com/files/styles/image_3200/public/87871.webp?w=710&h=1059'
-                },
-                {
-                    name: 'Adinelson',
-                    score: '30',
-                    picture: 'https://static.nationalgeographicbrasil.com/files/styles/image_3200/public/87871.webp?w=710&h=1059'
-                },
-            ]
-        }
-        this.orderRanking = this.orderRanking.bind(this);
-    }
-
-    orderRanking() {
-        const { ranking } = this.state;
-        if(ranking.length > 0) {
-            const result = ranking.sort((first, second) => second.score - first.score)
-            this.setState({
-                ranking: result,
-            })
-        }
-    }
   render() {
-      const { ranking } = this.state;
+    // const { ranking } = this.state;
+    const ranking = recoveryProductsFromLocalStorage();
+    console.log(ranking);
+    const compareNumber = 0;
+
+    if (
+      ranking.length !== compareNumber
+      || ranking !== undefined
+      || ranking !== null
+    ) {
+      return (
+        <div>
+          <h1 data-testid="ranking-title">Ranking</h1>
+          <ul>
+            {ranking
+              .sort((first, second) => second.score - first.score)
+              .map((player, index) => (
+                <components.RankingItem
+                  player={ player }
+                  key={ index }
+                  index={ index }
+                />
+              ))}
+          </ul>
+          <components.ButtonLogin />
+        </div>
+      );
+    }
     return (
       <div>
-        <h1 data-testid="ranking-title">
-          Ranking
-        </h1>
+        <h1 data-testid="ranking-title">Ranking</h1>
         <components.ButtonLogin />
-        <ul>
-        {ranking.sort((first, second) => second.score - first.score).map((player) => < components.RankingItem player={player} />)}
-        </ul>
       </div>
     );
   }

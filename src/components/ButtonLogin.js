@@ -4,16 +4,11 @@ import { Link } from 'react-router-dom';
 class ButtonLogin extends Component {
   render() {
     return (
-      <>
-          <Link to="/">
-            <button
-              type="button"
-              data-testid="btn-go-home"
-            >
-              Início
-            </button>
-          </Link>
-      </>
+      <Link to="/">
+        <button type="button" data-testid="btn-go-home">
+          Início
+        </button>
+      </Link>
     );
   }
 }
