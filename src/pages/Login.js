@@ -2,6 +2,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { fetchToken, saveEmail, saveName } from '../redux/actions';
+import { Redirect } from 'react-router-dom';
+
 
 class Login extends React.Component {
   constructor(props) {
@@ -9,6 +11,7 @@ class Login extends React.Component {
     this.state = {
       email: '',
       name: '',
+      redirect: false,
     };
     this.handlerInput = this.handlerInput.bind(this);
     this.validateEmail = this.validateEmail.bind(this);
@@ -33,8 +36,8 @@ class Login extends React.Component {
   }
 
   render() {
-    const { email, name } = this.state;
-    return (
+    const { email, name, redirect } = this.state;
+    return redirect ? <Redirect to="/settings" /> : (
       <div>
         <form>
           <label htmlFor="email">
@@ -66,6 +69,13 @@ class Login extends React.Component {
           onClick={ this.tokenRequest }
         >
           Jogar
+        </button>
+        <button
+          type="button"
+          data-testid="btn-settings"
+          onClick={ () => { this.setState({ redirect: true }); } }
+        >
+          Configurações
         </button>
       </div>
     );
