@@ -7,7 +7,7 @@ class Login extends React.Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
-    this.handleClick = this.handleClickSettings.bind(this);
+    this.handleClickSettings = this.handleClickSettings.bind(this);
     this.handleClickGame = this.handleClickGame.bind(this);
     this.state = {
       nome: '',
