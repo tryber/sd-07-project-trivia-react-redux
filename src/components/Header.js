@@ -18,8 +18,6 @@ class Header extends Component {
         />
         <p class="header-component" data-testid="header-player-name">{name}</p>
         <p class="header-component" data-testid="header-score">
-          pontuacão:
-          {' '}
           {score}
         </p>
         </div>
