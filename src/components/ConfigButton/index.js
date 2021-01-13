@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
-import './style.css';
 
-class Header extends Component {
+class ConfigButton extends Component {
   render() {
     return (
       <>
-        <h1>Header component</h1>
+        <h1>ConfigButton component</h1>
         <h3>developing</h3>
       </>
     );
   }
 }
 
-export default Header;
+export default ConfigButton;
