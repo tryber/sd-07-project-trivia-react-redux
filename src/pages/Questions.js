@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { addScore } from '../Redux/Actions';
 
 class Questions extends React.Component {
   constructor() {
@@ -10,13 +11,16 @@ class Questions extends React.Component {
         question: '',
         category: '',
         correct_answer: '',
-        incorrect_answers: [] }],
+        incorrect_answers: [],
+      }],
       index: 0,
       status: true,
+      score: 0,
     };
     this.fetchQuestions = this.fetchQuestions.bind(this);
     this.nextQuestion = this.nextQuestion.bind(this);
     this.clickButton = this.clickButton.bind(this);
+    this.clickRightAnswer = this.clickRightAnswer.bind(this);
   }
 
   componentDidMount() {
@@ -39,6 +43,29 @@ class Questions extends React.Component {
     });
   }
 
+  clickRightAnswer() {
+    const { addScore } = this.props;
+    const { score, questions, index } = this.state;
+    const hard = 3;
+    const medium = 2;
+    let difficulty = 0;
+    if (questions[index].difficulty === 'hard') {
+      difficulty = hard;
+    } else if (questions[index].difficulty === 'medium') {
+      difficulty = medium;
+    } else {
+      difficulty = 1;
+    }
+    const multiplePoints = 10;
+    const finalCount = multiplePoints + (17 * difficulty);
+    addScore(score + finalCount);
+    this.setState({
+      score: score + finalCount,
+    });
+    localStorage.setItem('score', score + finalCount);
+    this.clickButton();
+  }
+
   clickButton() {
     this.setState({
       status: false,
@@ -47,6 +74,7 @@ class Questions extends React.Component {
 
   render() {
     const { questions, index, status } = this.state;
+    console.log(questions);
     return (
       <div>
         <h3>
@@ -67,7 +95,7 @@ class Questions extends React.Component {
         </span>
         <div id="bloco-respostas">
           <button
-            onClick={ this.clickButton }
+            onClick={ this.clickRightAnswer }
             type="button"
             key="correct"
             data-testid="correct-answer"
@@ -100,10 +128,16 @@ class Questions extends React.Component {
 
 const mapStateToProps = (state) => ({
   token: state.token.token,
+  score: state.user.score,
 });
 
-export default connect(mapStateToProps)(Questions);
+const mapDispatchToProps = (dispatch) => ({
+  addScore: (score) => dispatch(addScore(score)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Questions);
 
 Questions.propTypes = {
   token: PropTypes.string.isRequired,
+  addScore: PropTypes.func.isRequired,
 };
