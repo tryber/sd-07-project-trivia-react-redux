@@ -33,6 +33,15 @@
   min-height: 100vh;
 }
 
+.class-ranking {
+  
+}
+
+.imagem-ranking {
+  border-radius: 50%;
+  width: 80px;
+}
+
 .App-link {
   color: #61dafb;
 }

@@ -1,16 +1,20 @@
 import React from 'react';
-import logo from './trivia.png';
+import { Switch, Route } from 'react-router-dom';
+import Ranking from './pages/Ranking';
+import Login from './pages/Login';
 import './App.css';
 
-export default function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={ logo } className="App-logo" alt="logo" />
-        <p>
-          SUA VEZ
-        </p>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  render() {
+    return (
+      <div className="App">
+        <Switch>
+          <Route exact path="/" component={ Login } />
+          <Route path="/ranking" component={ Ranking } />
+        </Switch>
+      </div>
+    );
+  }
 }
+
+export default App;
