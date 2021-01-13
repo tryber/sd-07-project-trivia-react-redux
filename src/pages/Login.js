@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { setStorage } from '../services/localStorage';
 import { CustomLogin } from '../components';
-import { addEmail, fetchToken, addName } from '../actions';
+import { addEmail, fetchToken, addName, fetchTrivia} from '../actions';
 
 class Login extends Component {
   constructor() {
@@ -29,11 +29,13 @@ class Login extends Component {
   }
 
   async handleSubmit() {
-    const { dispatchEmail, dispatchToken, dispatchNome } = this.props;
+    const { dispatchEmail, dispatchToken, dispatchNome,dispatchTrivia } = this.props;
     const { email, nome } = this.state;
     dispatchEmail(email);
     dispatchNome(nome);
     await dispatchToken(setStorage);
+    await dispatchTrivia();
+
   }
 
   handleInputChange({ target: { name, value } }) {
@@ -58,6 +60,8 @@ const mapDispatchToProps = (dispatch) => ({
   dispatchEmail: (e) => dispatch(addEmail(e)),
   dispatchNome: (e) => dispatch(addName(e)),
   dispatchToken: (callback) => dispatch(fetchToken(callback)),
+  dispatchTrivia: () => dispatch(fetchTrivia()),
+
 });
 
 export default connect(null, mapDispatchToProps)(Login);
