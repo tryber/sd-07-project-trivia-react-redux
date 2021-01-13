@@ -8,7 +8,7 @@ class Questions extends Component {
     super(props);
     this.handleButtonClick = this.handleButtonClick.bind(this);
   }
-  
+
   handleButtonClick() {
     const { dispatchQuestionCount } = this.props;
     dispatchQuestionCount();
@@ -17,7 +17,7 @@ class Questions extends Component {
   render() {
     const { questionCounter, questions } = this.props;
     if (!questions) {
-      return <div>Loading...</div>
+      return <div>Loading...</div>;
     }
     const {
       category,
@@ -34,17 +34,18 @@ class Questions extends Component {
           data-testid="correct-answer"
           onClick={ this.handleButtonClick }
         >
-          { correctAnswer}
+          { correctAnswer }
         </button>
-        { incorrectAnswers
-          .map((answer, index) => (
-            <button
-              key={ answer }
-              type="button"
-              data-testid={ `wrong-answer-${index}` }
-            >
-              { answer }
-            </button>))
+        {
+          incorrectAnswers
+            .map((answer, index) => (
+              <button
+                key={ answer }
+                type="button"
+                data-testid={ `wrong-answer-${index}` }
+              >
+                { answer }
+              </button>))
         }
       </div>
     );

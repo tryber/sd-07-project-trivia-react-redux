@@ -18,7 +18,9 @@ class Header extends Component {
   }
 
   handleState() {
-    const { player: { gravatarEmail, name, score } } = JSON.parse(localStorage.getItem('state'));
+    const {
+      player: { gravatarEmail, name, score },
+    } = JSON.parse(localStorage.getItem('state'));
     const hash = md5(gravatarEmail);
     this.setState({
       name,

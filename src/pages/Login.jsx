@@ -42,7 +42,7 @@ class Login extends Component {
   saveLocalStorage({ token }) {
     const { name, email } = this.state;
     const objectPlayer = {
-        player: {
+      player: {
         name,
         assertions: 0,
         score: 0,
