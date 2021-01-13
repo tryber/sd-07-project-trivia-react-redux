@@ -123,7 +123,7 @@ class GameScreen extends Component {
               {resps[3]}
             </button>
           </div>
-          {timer}
+          {!disabledTimeOut && timer}
         </div>
       </div>
     );
