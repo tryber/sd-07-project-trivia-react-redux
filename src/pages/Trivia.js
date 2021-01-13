@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import md5 from 'crypto-js/md5';
 import fetchQuestions from '../services/questionsApi';
 import Timer from '../components/Timer';
+import Questions from '../components/Questions';
 
 class Trivia extends React.Component {
   constructor(props) {
@@ -12,6 +13,7 @@ class Trivia extends React.Component {
     this.clickHandler = this.clickHandler.bind(this);
     this.requestQuestions = this.requestQuestions.bind(this);
     this.disable = this.disable.bind(this);
+    this.nextQuestion = this.nextQuestion.bind(this);
     this.state = {
       urlImg: '',
       placar: 0,
@@ -60,6 +62,7 @@ class Trivia extends React.Component {
     this.setState({
       position: position + 1,
       replyConfirmation: false,
+      clicked: false,
     });
   }
 
@@ -78,8 +81,6 @@ class Trivia extends React.Component {
       clicked,
       disabled } = this.state;
 
-    const { results } = questions;
-
     return (
       <div>
         <header>
@@ -92,54 +93,13 @@ class Trivia extends React.Component {
         </header>
         <h1 data-testid="settings-title">Trivia!</h1>
         <section>
-          {results.map((item, index1) => {
-            const quatro = 4;
-            const answers = item.incorrect_answers.map((answer, index) => (
-              <button
-                onClick={ ({ target }) => this.clickHandler(target) }
-                key={ index }
-                type="button"
-                className={ clicked ? 'wrongRed' : '' }
-                data-testid={ `wrong-answer-${index}` }
-                disabled={ disabled }
-
-              >
-                {' '}
-                {answer}
-                {' '}
-              </button>
-            ));
-            const answerCorrect = (
-              <button
-                onClick={ ({ target }) => this.clickHandler(target) }
-                id="rightAnswer"
-                type="button"
-                className={ clicked ? 'rightGreen' : '' }
-                data-testid="correct-answer"
-                disabled={ disabled }
-              >
-                { ' '}
-                {item.correct_answer}
-                {' '}
-              </button>
-            );
-            answers.splice(Math.floor(Math.random() * quatro), 0, answerCorrect);
-            return (
-              <div key={ index1 }>
-                <p data-testid="question-category">
-                  Categoria:
-                  {item.category}
-                </p>
-                <p data-testid="question-text">
-                  Questão :
-                  {item.question}
-                </p>
-                <ul>
-                  {answers.map((item1, index2) => <li key={ index2 }>{item1}</li>)}
-                </ul>
-              </div>
-            );
-          })[position]}
+          <Questions
+            clicked={ clicked }
+            disabled={ disabled }
+            position={ position }
+            questions={ questions }
+            clickHandler={ this.clickHandler }
+          />
           <button
             data-testid="btn-next"
             hidden={ replyConfirmation ? '' : 'hidden' }
