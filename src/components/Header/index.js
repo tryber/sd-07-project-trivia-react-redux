@@ -21,12 +21,12 @@ Header.propTypes = {
   score: PropTypes.number.isRequired,
 };
 
-const mapStateToProps = (state) => {
-  return {
+const mapStateToProps = (state) => (
+  {
     avatar: state.user.avatarUrl,
     user: state.user.userName,
     score: state.session.score,
-  };
-};
+  }
+);
 
 export default connect(mapStateToProps)(Header);
