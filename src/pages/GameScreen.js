@@ -33,6 +33,9 @@ class GameScreen extends Component {
   handleQuest() {
     const { quest } = this.props;
     console.log(quest);
+    if (quest.length === 0) {
+      return null;
+    }
     this.setState({
       category: quest[0].category,
       question: quest[0].question,
