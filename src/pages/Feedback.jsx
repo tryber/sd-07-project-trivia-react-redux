@@ -20,14 +20,14 @@ class Feedback extends Component {
     const { score, assertions } = this.props;
     return (
       <div>
-        <Header/>
+        <Header />
         { this.renderMessage(assertions) }
         <div className="score-questions-container">
           <h3
             data-testid="feedback-total-quesiton"
           >
             Você acertou
-            { correctQuestions }
+            { assertions }
             questões!
           </h3>
           <h3

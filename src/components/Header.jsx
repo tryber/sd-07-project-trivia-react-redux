@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 
 class Header extends Component {
   render() {
-    const { imageSrc, name, score } = this.props.info;
+    const { info } = this.props;
+    const { imageSrc, name, score } = info;
     return (
       <header>
         <div className="avatar-container">
