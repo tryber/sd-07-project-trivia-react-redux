@@ -8,24 +8,20 @@ class Feedback extends Component {
     this.renderMessage = this.renderMessage.bind(this);
   }
 
-  renderMessage(correctQuestions) {
+  renderMessage(assertions) {
     const parameter = 3;
-    if (correctQuestions < parameter) {
+    if (assertions < parameter) {
       return (<h1 data-testid="feedback-text">Podia ser melhor...</h1>);
     }
     return (<h1 data-testid="feedback-text">Mandou bem!</h1>);
   }
 
   render() {
-    const { src, name, score, correctQuestions } = this.props;
+    const { score, assertions } = this.props;
     return (
       <div>
-        <Header
-          imgSource={ src }
-          playerName={ name }
-          playerScore={ score }
-        />
-        { this.renderMessage(correctQuestions) }
+        <Header/>
+        { this.renderMessage(assertions) }
         <div className="score-questions-container">
           <h3
             data-testid="feedback-total-quesiton"

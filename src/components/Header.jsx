@@ -1,26 +1,27 @@
 import React, { Component } from 'react';
 import propTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 class Header extends Component {
   render() {
-    const { imgSource, playerName, playerScore } = this.props;
+    const { imageSrc, name, score } = this.props.info;
     return (
       <header>
         <div className="avatar-container">
           <img
-            src={ imgSource }
-            alt={ playerName }
+            src={ imageSrc }
+            alt={ name }
             data-testid="header-profile-picture"
           />
         </div>
         <div className="name-container">
           <p data-testid="header-player-name">
-            { playerName }
+            { name }
           </p>
         </div>
         <div className="score-container">
           <p data-testid="header-score">
-            { playerScore }
+            { score }
           </p>
         </div>
       </header>
@@ -28,7 +29,11 @@ class Header extends Component {
   }
 }
 
-export default Header;
+const mapStateToProps = (state) => ({
+  info: state.player,
+});
+
+export default connect(mapStateToProps)(Header);
 
 Header.propTypes = {
   src: propTypes.string,
