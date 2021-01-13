@@ -27,7 +27,7 @@ class Feedback extends Component {
             data-testid="feedback-total-quesiton"
           >
             Você acertou
-            { correctQuestions }
+            { assertions }
             questões!
           </h3>
           <h3

@@ -20,7 +20,7 @@ class Question extends Component {
 
   /*
   if (random === 0) {
-  
+
     this.renderCorrectAnswer(questions[random]);
     const newQuestions = questions.filter((question) => question === questions[random]);
     counter -= 1;
