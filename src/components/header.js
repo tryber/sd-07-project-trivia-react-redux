@@ -6,7 +6,8 @@ import './header.css';
 
 class Header extends React.Component {
   render() {
-    const { name, email } = this.props;
+    const { name, email, score } = this.props;
+    console.log(score);
     const hash = md5(email);
     const urlGravatar = `https://www.gravatar.com/avatar/${hash}`;
 
@@ -20,7 +21,7 @@ class Header extends React.Component {
         />
         <span data-testid="header-player-name">{ name }</span>
         <span>Pontuação:</span>
-        <span data-testid="header-score">0</span>
+        <span data-testid="header-score">{score}</span>
       </div>
     );
   }
@@ -30,6 +31,7 @@ const mapStateToProps = (state) => ({
   token: state.token.token,
   name: state.user.name,
   email: state.user.email,
+  score: state.score.score,
 });
 
 export default connect(mapStateToProps)(Header);

@@ -53,12 +53,13 @@ class Questions extends React.Component {
     const { index } = this.state;
     this.setState({
       index: index + 1,
+      seconds: 30,
     });
   }
 
   clickRightAnswer() {
-    const { addScore } = this.props;
-    const { score, questions, index } = this.state;
+    const { addScoreAction } = this.props;
+    const { score, questions, index, seconds } = this.state;
     const hard = 3;
     const medium = 2;
     let difficulty = 0;
@@ -70,12 +71,19 @@ class Questions extends React.Component {
       difficulty = 1;
     }
     const multiplePoints = 10;
-    const finalCount = multiplePoints + (17 * difficulty);
-    addScore(score + finalCount);
+    const finalCount = multiplePoints + (seconds * difficulty);
+    addScoreAction(score + finalCount);
     this.setState({
       score: score + finalCount,
     });
-    localStorage.setItem('score', score + finalCount);
+    const player = {
+      name: '',
+      assertions: '',
+      score: score + finalCount,
+      gravatarEmail: '',
+    };
+
+    localStorage.setItem('state', JSON.stringify(player));
     this.clickButton();
   }
 
@@ -86,7 +94,6 @@ class Questions extends React.Component {
   }
 
   render() {
-    const { questions, index, status } = this.state;
     const { questions, index, status, seconds } = this.state;
     return (
       <div>
@@ -110,7 +117,6 @@ class Questions extends React.Component {
           <button
             onClick={ this.clickRightAnswer }
             disabled={ seconds === 0 }
-            onClick={ this.clickButton }
             type="button"
             key="correct"
             data-testid="correct-answer"
@@ -152,12 +158,12 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  addScore: (score) => dispatch(addScore(score)),
+  addScoreAction: (score) => dispatch(addScore(score)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Questions);
 
 Questions.propTypes = {
   token: PropTypes.string.isRequired,
-  addScore: PropTypes.func.isRequired,
+  addScoreAction: PropTypes.func.isRequired,
 };
