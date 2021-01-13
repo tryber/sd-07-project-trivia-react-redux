@@ -17,6 +17,8 @@ class GamePage extends Component {
       indexx: 0,
       nextQuestion: false,
       finnish: false,
+      time: 30,
+      count: true,
       errado: { border: '2px solid rgb(0, 0, 0)' },
       certo: { border: '2px solid rgb(0, 0, 0)' },
       obj: {},
@@ -25,8 +27,23 @@ class GamePage extends Component {
 
   componentDidMount() {
     const { fetchHere } = this.props;
+    const interval = 1000;
     fetchHere();
     this.localset();
+    setInterval(() => {
+      this.decrementar();
+    }, interval);
+  }
+
+  decrementar() {
+    const { loading } = this.props;
+    const { count, time } = this.state;
+    if (count && !loading && time > 0) {
+      this.setState((oldstate) => ({ time: oldstate.time - 1 }));
+    }
+    if (time === 0) {
+      this.select('errado');
+    }
   }
 
   localset() {
@@ -35,12 +52,13 @@ class GamePage extends Component {
   }
 
   select(pram, dif) {
-    const { obj } = this.state;
+    const { obj, time } = this.state;
     this.setState({ nextQuestion: true });
     let PD = 0;
     this.setState({
       errado: { border: '3px solid rgb(255, 0, 0)' },
       certo: { border: '3px solid rgb(6, 240, 15)' },
+      count: false,
     });
     switch (dif) {
     case 'easy':
@@ -56,7 +74,7 @@ class GamePage extends Component {
       break;
     }
     if (pram === 'certo') {
-      const pontos = (2 * 2 * 2 + 2) + (1 * PD);
+      const pontos = (2 * 2 * 2 + 2) + (time * PD);
       const total = pontos + obj.player.score;
       const acertos = obj.player.assertions + 1;
       const objobj = obj;
@@ -76,6 +94,8 @@ class GamePage extends Component {
       this.setState((prevState) => ({
         indexx: prevState.indexx + 1,
         nextQuestion: false,
+        time: 30,
+        count: true,
         errado: { border: '2px solid rgb(0, 0, 0)' },
         certo: { border: '2px solid rgb(0, 0, 0)' } }
       ));
@@ -84,7 +104,7 @@ class GamePage extends Component {
 
   pergunta() {
     const { questions } = this.props;
-    const { indexx, errado, certo } = this.state;
+    const { indexx, errado, certo, time, count } = this.state;
     const questao = questions.results[indexx];
     return (
       <div>
@@ -95,6 +115,7 @@ class GamePage extends Component {
             data-testid="correct-answer"
             type="button"
             style={ certo }
+            disabled={ !count }
             onClick={ () => this.select('certo', questao.difficulty) }
           >
             {questao.correct_answer}
@@ -104,12 +125,14 @@ class GamePage extends Component {
               type="button"
               key={ index }
               style={ errado }
+              disabled={ !count }
               data-testid={ `wrong-answer-${index}` }
               onClick={ () => this.select('errado') }
             >
               {msg}
             </button>
           ))}
+          <p>{`tempo: ${time}`}</p>
         </div>
       </div>
     );
