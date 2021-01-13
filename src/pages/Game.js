@@ -5,15 +5,9 @@ import { requestQuestionAndAnsewrs } from '../actions';
 class Game extends React.Component {
   constructor() {
     super();
-    this.testApi = this.testApi.bind(this);
   }
 
   componentDidMount() {
-    setTimeout(() => {  this.testApi(); }, 5000);
-  }
-
-  testApi() {
-    console.log(localStorage.token);
     this.props.requestQuestions(localStorage.token);
   }
 
@@ -36,7 +30,7 @@ class Game extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  requestQuestions: () => dispatch(requestQuestionAndAnsewrs()),
+  requestQuestions: (token) => dispatch(requestQuestionAndAnsewrs(token)),
 });
 
 const mapStateToProps = (state) => ({
