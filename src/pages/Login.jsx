@@ -20,9 +20,10 @@ class Login extends React.Component {
     this.handleFetch = this.handleFetch.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.loadTokenToLocalStorage = this.loadTokenToLocalStorage.bind(this);
+    this.loadRankingToLocalStorage = this.loadRankingToLocalStorage.bind(this);
   }
 
-  componentDidMount() { this.handleFetch(); }
+  // componentDidMount() { this.handleFetch(); }
 
   loadTokenToLocalStorage() {
     // const { token } = this.state;
@@ -40,19 +41,35 @@ class Login extends React.Component {
     }
   }
 
+  loadRankingToLocalStorage() {
+    const { name } = this.state;
+    const { gravatar } = this.props;
+    const { hashData } = gravatar;
+    const ranking = {
+      name,
+      score: 0,
+      picture: hashData,
+    };
+    if (Storage) {
+      const getRakingSaved = JSON.parse(localStorage.getItem('ranking'));
+      const value = (getRakingSaved === null ? [] : getRakingSaved);
+      value.push(ranking);
+      localStorage.setItem('ranking', JSON.stringify(value));
+    }
+  }
+
   handleFetch() {
     const { apiFetchToken, apiFetchGravatar } = this.props;
     const { email } = this.state;
     const hash = md5(email).toString().toLocaleLowerCase().trim(); // https://www.gravatar.com/avatar/b463ad6c517f53d7b179ece3079c23ed
-    // console.log(hash);
     apiFetchGravatar(hash);
     apiFetchToken();
     this.loadTokenToLocalStorage();
+    this.loadRankingToLocalStorage();
   }
 
   handleChange(event) {
     event.preventDefault();
-    // console.log(this.props);
     this.handleFetch();
     // console.log(this.state); // deve trazer o estado name, email e token. doneName e doneEmail false
     // this.loadTokenToLocalStorage(); //Logica para passar token do estado para localStorage
@@ -72,7 +89,7 @@ class Login extends React.Component {
 
   render() {
     // console.log(this.props);
-    // console.log(this.props);
+    const { history } = this.props;
     const { email, name, doneEmail, doneName } = this.state;
     return (
       <form className="form">
@@ -100,19 +117,15 @@ class Login extends React.Component {
             onChange={ (e) => this.testEmail(e.target.value) }
           />
         </label>
-
-        <Link to="/play">
-          <button
-            id="entryButton"
-            type="submit"
-            data-testid="btn-play"
-            disabled={ !doneName || !doneEmail }
-            onClick={ (event) => this.handleChange(event, email) }
-          >
-            Jogar
-          </button>
-        </Link>
-
+        <button
+          id="entryButton"
+          type="submit"
+          data-testid="btn-play"
+          disabled={ !doneName || !doneEmail }
+          onClick={ (event) => { this.handleChange(event); history.push('/play'); } }
+        >
+          Jogar
+        </button>
         <div>
           <Link to="/ranking">Ranking</Link>
           <Link data-testid="btn-settings" to="/configuration">Configurações</Link>
@@ -136,6 +149,8 @@ Login.propTypes = {
   token: PropTypes.shape().isRequired,
   apiFetchToken: PropTypes.func.isRequired,
   apiFetchGravatar: PropTypes.func.isRequired,
+  gravatar: PropTypes.objectOf.isRequired,
+  history: PropTypes.objectOf.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
