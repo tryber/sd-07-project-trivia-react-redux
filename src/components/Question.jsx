@@ -77,5 +77,5 @@ Question.propTypes = {
   item: propTypes.shape({
     category: propTypes.string,
     question: propTypes.string,
-  });
+  }),
 }.isRequired;
