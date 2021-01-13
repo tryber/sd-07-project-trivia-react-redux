@@ -1,8 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+
 import { getQuestions } from '../services/api';
+
 import Quiz from '../components/Quiz';
+import Header from '../components/Header';
 
 class GamePage extends React.Component {
   constructor() {
@@ -37,13 +40,14 @@ class GamePage extends React.Component {
     }
     const {
       category,
-      incorrectAnswers,
+      incorrect_answers: incorrectAnswers,
       question,
-      correctAnswer,
+      correct_answer: correctAnswer,
     } = queries[0];
 
     return (
       <div>
+        <Header />
         <Quiz
           category={ category }
           question={ question }

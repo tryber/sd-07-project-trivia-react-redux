@@ -14,8 +14,8 @@ class Quiz extends React.Component {
 
     return (
       <div>
-        <h3 data-testid="question-category" key={ `category${i}` }>{category}</h3>
-        <p data-testid="question-text" key={ `question${i}` }>{question}</p>
+        <h3 data-testid="question-category" key={ `category${i}` }>{ category }</h3>
+        <p data-testid="question-text" key={ `question${i}` }>{ question }</p>
         {incorrectAnswers.map((incorrectAnswer, index) => (
           <button
             type="button"

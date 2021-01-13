@@ -4,8 +4,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import md5 from 'crypto-js/md5';
 
-import Header from '../../components/Header';
-
 import { getTokenAction } from '../../actions/tokenAction';
 import { playerAction } from '../../actions/playerAction';
 
@@ -56,7 +54,6 @@ class Login extends React.Component {
     const { isFetchingToken, error } = this.props;
     return (
       <div>
-        <Header />
         <form>
           {isFetchingToken && <div>loading</div>}
           {error && <div>error</div>}
