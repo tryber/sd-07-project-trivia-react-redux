@@ -17,7 +17,6 @@ class GameScreen extends React.Component {
       currentQuestion: 0,
       answered: false,
       timer: 30,
-      isDisable: false,
       redirect: false,
     };
   }
@@ -26,33 +25,15 @@ class GameScreen extends React.Component {
     const { setQuestionsProps } = this.props;
     const { token } = this.state;
     setQuestionsProps(token);
-  }
+    console.log('oi');
 
-  // timeout = () => {
-  //   const { timer } = this.state;
-  // return setTimeout(() => {
-  //   this.setState({
-  //     timer: timer - 1
-  //   })
-  // }, 1000);}
-
-  componentDidUpdate() {
-    const time = 1000;
-    const { timer } = this.state;
-    this.timeout = setTimeout(() => {
+    const umSec = 1000;
+    setInterval(() => {
+      const { timer } = this.state;
       if (timer > 0) {
-        this.setState({
-          timer: timer - 1,
-        });
-      } else {
-        this.setState({ isDisable: true });
-        clearInterval(this.timeout);
-      }
-    }, time);
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.timeout);
+        this.setState((prevState) => ({ timer: prevState.timer - 1 }));
+      } else { this.setState(() => ({ answered: true })); }
+    }, umSec);
   }
 
   clickAnswered() {
@@ -67,7 +48,6 @@ class GameScreen extends React.Component {
         currentQuestion: currentQuestion + 1,
         answered: false,
         timer: 30,
-        isDisable: false,
       });
     } else if (currentQuestion === quantQuestions) {
       this.setState({ redirect: true });
@@ -76,22 +56,24 @@ class GameScreen extends React.Component {
 
   render() {
     const { questions } = this.props;
-    const { currentQuestion, answered, timer, isDisable, redirect } = this.state;
+    const { currentQuestion, answered, timer, redirect } = this.state;
     if (questions.length === 0) {
       return <div>carregando...</div>;
     }
+
     return (
       <div>
         <Question
           currentQuestion={ currentQuestion }
           answered={ answered }
           clickAnswered={ this.clickAnswered }
-          isDisable={ isDisable }
         />
         <button
           type="button"
           data-testid="btn-next"
           onClick={ () => this.clickNext() }
+          className={ answered ? '' : 'nextBtn' }
+          data-testid="btn-next"
         >
           Próxima Questão
         </button>

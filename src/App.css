@@ -9,3 +9,7 @@
 .answered {
   border: none;
 }
+
+.nextBtn {
+  display: none;
+}
