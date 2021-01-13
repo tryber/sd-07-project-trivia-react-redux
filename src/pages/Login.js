@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { ResultToken, generateHash } from '../services/Api';
+import PropTypes from 'prop-types';
 
 class Login extends Component {
   constructor() {
@@ -8,10 +9,11 @@ class Login extends Component {
     this.state = {
       username: '',
       email: '',
-
     };
+
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.handleClickSettingsBtn = this.handleClickSettingsBtn.bind(this);
   }
 
   handleInputChange({ target }) {
@@ -25,6 +27,13 @@ class Login extends Component {
     const { username, email } = this.state;
     ResultToken();
     generateHash(username, email);
+    const { history } = this.props;
+    history.push('/jogo');
+  }
+
+  handleClickSettingsBtn() {
+    const { history } = this.props;
+    history.push('/config');
   }
 
   render() {
@@ -52,19 +61,30 @@ class Login extends Component {
             onChange={ this.handleInputChange }
           />
         </label>
-        <Link to="/jogo">
-          <button
-            type="button"
-            data-testid="btn-play"
-            onClick={ this.handleClick }
-            disabled={ !bothValid }
-          >
-            Jogar
-          </button>
-        </Link>
+        <button
+          type="button"
+          data-testid="btn-play"
+          onClick={ this.handleClick }
+          disabled={ !bothValid }
+        >
+          Jogar
+        </button>
+        <button
+          type="button"
+          data-testid="btn-settings"
+          onClick={ this.handleClickSettingsBtn }
+        >
+          Configuração
+        </button>
       </form>
     );
   }
 }
+
+Login.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+};
 
 export default Login;
