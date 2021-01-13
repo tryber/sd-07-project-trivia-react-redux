@@ -5,7 +5,10 @@ export const login = (email, userName) => ({
   payload: { email, userName },
 });
 
-export const getApiTrivia = () => ({});
+export const getApiTrivia = (perguntas) => ({
+  type: 'SAVE_TRIVIA',
+  payload: perguntas,
+});
 
 export const saveAvatar = (data) => ({
   type: 'SAVE_AVATAR',
