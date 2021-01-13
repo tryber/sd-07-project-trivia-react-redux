@@ -40,6 +40,9 @@ class FormLogin extends React.Component {
       },
     };
     localStorage.setItem('state', JSON.stringify(state));
+    if (!localStorage.getItem('ranking')) {
+      localStorage.setItem('ranking', JSON.stringify([]));
+    }
     this.setState({
       redirect: true,
     });
