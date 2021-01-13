@@ -7,12 +7,11 @@ class Feedback extends React.Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-
   handleClick() {
     const { history } = this.props;
     history.push('/ranking');
   }
-  
+
   render() {
     return (
       <div className="feedback-screen">
