@@ -9,8 +9,12 @@ class GamePage extends Component {
   constructor() {
     super();
     this.pergunta = this.pergunta.bind(this);
+    this.select = this.select.bind(this);
     this.state = {
       indexx: 0,
+      errado: { border: '2px solid rgb(0, 0, 0)' },
+      certo: { border: '2px solid rgb(0, 0, 0)' },
+      obj: {},
     };
   }
 
@@ -19,9 +23,25 @@ class GamePage extends Component {
     fetchHere();
   }
 
+  select(pram) {
+    const { obj } = this.state;
+    if (obj.key === undefined) {
+      const LS = JSON.parse(localStorage.getItem('state'));
+      this.setState({ obj: LS });
+    }
+    this.setState({
+      errado: { border: '3px solid rgb(255, 0, 0)' },
+      certo: { border: '3px solid rgb(6, 240, 15)' },
+    });
+    if (pram === 'certo') {
+      const pontos = 10;
+      console.log(pontos);
+    }
+  }
+
   pergunta() {
     const { questions } = this.props;
-    const { indexx } = this.state;
+    const { indexx, errado, certo } = this.state;
     const questao = questions.results[indexx];
     return (
       <div>
@@ -31,7 +51,8 @@ class GamePage extends Component {
           <button
             data-testid="correct-answer"
             type="button"
-            onClick={ () => console.log('ritapediu') }
+            style={ certo }
+            onClick={ () => this.select('certo') }
           >
             {questao.correct_answer}
           </button>
@@ -39,8 +60,9 @@ class GamePage extends Component {
             <button
               type="button"
               key={ index }
+              style={ errado }
               data-testid={ `wrong-answer-${index}` }
-              onClick={ () => console.log('carolpediu') }
+              onClick={ () => this.select('errado') }
             >
               {msg}
             </button>

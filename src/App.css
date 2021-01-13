@@ -33,6 +33,10 @@
   min-height: 100vh;
 }
 
+button:focus {
+  outline: none;
+}
+
 .App-link {
   color: #61dafb;
 }
