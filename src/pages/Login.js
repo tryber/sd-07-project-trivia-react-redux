@@ -89,7 +89,7 @@ class Login extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  getUserProps: (email, name) => dispatch(getUser(email, name)),
+  getUserProps: (email, name) => dispatch(getUser(name, email)),
   getToken: () => dispatch(catchToken()),
 });
 
