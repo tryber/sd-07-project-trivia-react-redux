@@ -3,7 +3,7 @@ import './style.css';
 
 const Timer = () => {
   return (
-    <section>
+    <section className="timer-section">
       <div className="timer-circle">
         <div className="timer">0</div>
       </div>

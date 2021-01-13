@@ -6,9 +6,9 @@ class Header extends React.Component {
     super(props);
     this.state = {
       player: {
-        pname: '',
+        pname: 'Eduardo',
         assertions: '',
-        score: '',
+        score: '20',
         gravaterEmail: '',
       },
     };
@@ -18,7 +18,7 @@ class Header extends React.Component {
     const { player } = this.state;
     const { pname, gravaterEmail } = player;
     return (
-      <div>
+      <div className="header-name">
         {gravaterEmail}
         <h2 className="header-label">Jogador: </h2>
         <h2>{ pname }</h2>
@@ -30,7 +30,7 @@ class Header extends React.Component {
     const { player } = this.state;
     const { score } = player;
     return (
-      <div>
+      <div className="header-score">
         <h2 className="header-label">Pontos: </h2>
         <h2>{ score }</h2>
       </div>
@@ -39,8 +39,8 @@ class Header extends React.Component {
 
   render() {
     return (
-      <header className="header">
-        {this.renderAvatar()}
+      <header className="header-section">
+        {this.renderJogador()}
         {this.renderScore()}
       </header>
     );

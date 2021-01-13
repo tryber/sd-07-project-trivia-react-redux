@@ -1,3 +1,9 @@
+.timer-section {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: top;
+  justify-content:flex-end
+}
 .timer-circle {
   position: absolute;
   width: 150px;
