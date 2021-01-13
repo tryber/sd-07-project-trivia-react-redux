@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import Header from '../components/Header';
 
@@ -8,7 +8,10 @@ const Game = () => {
     style1: '',
     style2: '',
   });
-  // const [style2, setStyle2] = useState("");
+  const [assertions, setAssertion] = useState('');
+  const tempMax = 5;
+  const [time, setTime] = useState(tempMax);
+
   const handleQuestion = () => {
     const maxQuestions = 4;
     if (counter === maxQuestions) {
@@ -20,18 +23,40 @@ const Game = () => {
       style1: 'border-neutral',
       style2: 'border-neutral',
     });
+
+    setTime(tempMax);
   };
 
-  const handleClickAnswer = () => {
+  let intervalId;
+  const handleClickAnswer = ({ target }) => {
     setColor({
       style1: 'border-correct',
       style2: 'border-incorrect',
     });
-    // target.value==="correct" ? target.style.border="3px solid rgb(6, 240, 15)" : target.style.border="3px solid rgb(255, 0, 0)";
-    // setTimeout(() => {
-    //   target.style.border=style;
-    // }, 1000)
+
+    if (target.value === 'correct') {
+      setAssertion(true);
+    } else {
+      setAssertion(false);
+    }
+    clearInterval(intervalId);
   };
+
+  useEffect(() => {
+    if (!time) return;
+
+    const maxTime = 1000;
+    intervalId = setInterval(() => {
+      setTime(time - 1);
+    }, maxTime);
+
+    if (time === 0) {
+      setAssertion(false);
+      // return clearInterval(intervalId);
+    }
+
+    return () => clearInterval(intervalId);
+  }, [time]);
 
   const dataGame = useSelector((state) => state.game);
   const { results } = dataGame.data;
@@ -75,6 +100,8 @@ const Game = () => {
           Próxima
         </button>
       </div>
+      <div>{time}</div>
+      <p>{assertions}</p>
     </div>
   );
 };
