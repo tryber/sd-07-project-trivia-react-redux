@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { fetchToken, fetchGravatar } from '../actions';
 import md5 from 'crypto-js/md5';
+import { fetchToken, fetchGravatar } from '../actions';
 
 class Login extends React.Component {
   constructor(props) {
@@ -13,7 +13,7 @@ class Login extends React.Component {
       email: '',
       doneEmail: false,
       doneName: false,
-      token: '',
+      // token: '',
     };
     this.testEmail = this.testEmail.bind(this);
     this.testName = this.testName.bind(this);
@@ -54,7 +54,6 @@ class Login extends React.Component {
     event.preventDefault();
     // console.log(this.props);
     this.handleFetch();
-    
     // console.log(this.state); // deve trazer o estado name, email e token. doneName e doneEmail false
     // this.loadTokenToLocalStorage(); //Logica para passar token do estado para localStorage
   }

@@ -3,7 +3,7 @@ let tokenUsed = '';
 export const getGravatar = (hash) => ({
   type: 'fetchSucessGravatar',
   hashData: hash,
-})
+});
 
 export const getToken = (token) => ({
   type: 'fetchSucessToken',
@@ -32,7 +32,7 @@ export const fetchQuestions = () => async (dispatch) => {
 export const fetchGravatar = (value) => async (dispatch) => {
   // console.log(value) // chegando value de hash ok //d8c145dca4f9fca77a49ec32b58e688b55c01b721a2d9cf5d2478662e3fe5e5d
   const requestGravatar = await fetch(`https://www.gravatar.com/avatar/${value}`);
-  console.log(requestGravatar) // retorna objeto com varias keys incluindo chave url
+  console.log(requestGravatar); // retorna objeto com varias keys incluindo chave url
   // const gravatarResponse = await request.json();
   // console.log(gravatarResponse);
   dispatch(getGravatar(requestGravatar.url));
