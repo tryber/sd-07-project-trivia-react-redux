@@ -1,16 +1,23 @@
 import React, { Component } from 'react';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import requestToken from '../services/api';
 
 class Login extends Component {
   constructor(props) {
     super(props);
 
     this.verifyLogin = this.verifyLogin.bind(this);
+    this.getToken = this.getToken.bind(this);
 
     this.state = {
       name: '',
       email: '',
     };
+  }
+
+  getToken() {
+    const tokenTrivia = requestToken();
+    localStorage.setItem('token', { tokenTrivia });
   }
 
   verifyLogin() {
@@ -27,6 +34,9 @@ class Login extends Component {
 
     return (
       <div>
+        <Link to="/settings">
+          <button type="button" data-testid="btn-settings">Configurações</button>
+        </Link>
         <form>
           <input
             type="text"
@@ -44,16 +54,16 @@ class Login extends Component {
             onChange={ (e) => this.setState({ email: e.target.value }) }
           />
 
-          {/* <Link to="/carteira"> */}
-          <button
-            type="button"
-            data-testid="btn-play"
-            disabled={ this.verifyLogin() }
-            onClick={ () => this.currency(email) }
-          >
-            Jogar
-          </button>
-          {/* </Link> */}
+          <Link to="/play">
+            <button
+              type="button"
+              data-testid="btn-play"
+              disabled={ this.verifyLogin() }
+              onClick={ () => this.getToken() }
+            >
+              Jogar
+            </button>
+          </Link>
         </form>
       </div>
     );
