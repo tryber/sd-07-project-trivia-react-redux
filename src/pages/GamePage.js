@@ -36,18 +36,19 @@ class GamePage extends React.Component {
     }
      const {
       category,
-      incorrect_Answers,
+      incorrect_answers,
       question,
-      correct_Answer
+      correct_answer
      } = queries[0];
     
+     console.log(queries[0])
     return (
       <div>
         <Quiz
           category={ category }
           question={ question }
-          correctAnswer={ correct_Answer }
-          incorrectAnswers={ incorrect_Answers }
+          correctAnswer={ correct_answer }
+          incorrectAnswers={ incorrect_answers }
         />
       </div>
     )
