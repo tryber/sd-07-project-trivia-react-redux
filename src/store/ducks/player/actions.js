@@ -1,4 +1,4 @@
-import fetchToken from '../../../services';
+import { fetchToken } from '../../../services';
 import PlayerTypes from './types';
 
 export const signIn = (player) => ({

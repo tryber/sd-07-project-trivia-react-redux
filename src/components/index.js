@@ -1,3 +1,5 @@
 import Header from './Header';
+import Questions from './Questions';
+import Loading from './Loading';
 
-export default Header;
+export { Header, Questions, Loading };

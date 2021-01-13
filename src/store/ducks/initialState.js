@@ -6,4 +6,7 @@ export default {
     hash: '',
     score: 0,
   },
+  game: {
+    questions: [],
+  },
 };
