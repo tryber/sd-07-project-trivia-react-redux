@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchQuestions } from '../actions';
-//  import  './App.css'
+import '../App.css';
 
 class Game extends Component {
   constructor() {
@@ -11,8 +11,6 @@ class Game extends Component {
     this.handleUserAnswer = this.handleUserAnswer.bind(this);
     this.state = {
       questionIndex: 0,
-     correctAnswerValue: "",
-     wrongAnswerValue: "",
     };
   }
 
@@ -22,15 +20,14 @@ class Game extends Component {
   }
 
   renderAllDataQuestion() {
-    console.log()
+    // console.log()
     const { questionIndex } = this.state;
     const { questions } = this.props;
 
-   
     if (questions.results) {
       const correctAnswer = (
         <button  type="button" 
-         data-testid="correct-answer" onClick={this.handleUserAnswer} id="ok">
+         data-testid="correct-answer" onClick={this.handleUserAnswer} key='correct' id="ok">
           { questions.results[questionIndex].correct_answer }
         </button>
       );
@@ -44,32 +41,15 @@ class Game extends Component {
     }
   }
 
-  handleUserAnswer(e) {
-    const { id } = e.target
-    e.currentTarget.className = "btnColorRed"
-
-    if(id === "ok"){
-      e.currentTarget.className = "btnColorGreen"
-
-    } 
-  
-
-  //   const { questionIndex } = this.state;
-  //   const { questions } = this.props;
-
-  // this.setState({...this.state, correctAnswerValue: questions.results[questionIndex].correct_answer })
-  //  const {value } = e.target
-  //  console.log("oi",)
-  //  if(value=== this.state.correctAnswerValue){
-  //   e.currentTarget.className = "btnColorGreen"
-  //  } 
-  //   else(value !== this.state.correctAnswerValue)
-  //   { 
-  //     e.currentTarget.className = "btnColorRed"
-
-  //     }
+  handleUserAnswer() {
+    document.querySelectorAll('button').forEach((button) => {
+      const { id } = button;
+      if (id === 'ok') {
+        button.classList.add('btnColorGreen')
+      }
+      button.classList.add('btnColorRed')
+    });
   }
-
 
   render() {
     const { questionIndex } = this.state;
@@ -90,6 +70,7 @@ class Game extends Component {
     );
   }
 }
+
 const mapStateToProps = ({ gameReducer }) => ({
   questions: gameReducer.questions,
   isFetching: gameReducer.isFetching,
@@ -103,7 +84,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(Game);
 
 Game.propTypes = {
   questions: PropTypes.shape({
-    results: PropTypes.arrayOf(Object).isRequired,
+    results: PropTypes.array,
   }).isRequired,
   getQuestions: PropTypes.func.isRequired,
 };
