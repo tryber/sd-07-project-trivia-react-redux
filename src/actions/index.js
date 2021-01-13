@@ -2,6 +2,7 @@ import * as api from '../services/api';
 
 const SIGN_IN = 'SIGN_IN';
 const GAME_DATA = 'GAME_DATA';
+// const GAME_STATUS = 'GAME_STATUS';
 
 export const signIn = (name, email) => ({
   type: SIGN_IN,
@@ -24,3 +25,10 @@ export function fetchApi() {
     dispatch(gameData(token, data));
   };
 }
+
+//--------------------------------------------------------
+
+// export const gameStatus = (assertions) => ({
+//   type: GAME_STATUS,
+//   assertions,
+// });
