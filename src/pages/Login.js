@@ -45,6 +45,9 @@ class Login extends Component {
     return (
       <div className="login">
         <div className="form">
+          <h1>
+            Trivia Reduxidil Game
+          </h1>
           <input
             className="input text"
             type="name"
@@ -78,7 +81,9 @@ class Login extends Component {
         {redirect && (
           <Redirect to="/game" />
         )}
-        <Link to="/settings" />
+        <Link className="settings" to="/settings">
+          +
+        </Link>
       </div>
     );
   }
