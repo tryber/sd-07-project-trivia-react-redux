@@ -76,6 +76,14 @@ class Login extends React.Component {
               Jogar
             </button>
           </Link>
+          <Link to="./config">
+            <button
+              type="button"
+              data-testid="btn-settings"
+            >
+              Configurações
+            </button>
+          </Link>
         </form>
       </div>
     );
@@ -87,12 +95,12 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const mapStateToProps = (state) => ({
-  name: state.Header.name,
-  assertions: state.Header.assertions,
-  score: state.Header.score,
-  gravatarEmail: state.Header.gravatarEmail,
-  loading: state.Header.loading,
-  token: state.Header.token,
+  name: state.player.name,
+  assertions: state.player.assertions,
+  score: state.player.score,
+  gravatarEmail: state.player.gravatarEmail,
+  loading: state.player.loading,
+  token: state.player.token,
 });
 
 Login.propTypes = {
