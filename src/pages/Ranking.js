@@ -1,7 +1,4 @@
 import React from "react";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
-import { getUser } from "../Redux/Actions";
 
 class Ranking extends React.Component {
   constructor() {
@@ -22,15 +19,15 @@ class Ranking extends React.Component {
 
     this.state = {
       player: {
-        name = '',
-        assertions = '',
-        score = '',
-        gravatarEmail = '',
+        name: '',
+        assertions: '',
+        score: '',
+        gravatarEmail: '',
       },
       ranking: {
         name: 'João', 
-        score: '', 
-        picture: ''
+        score: '10', 
+        picture: ' :-) '
       }
     };
   }
@@ -40,20 +37,13 @@ class Ranking extends React.Component {
     
     return (
       <div>
+        <p>Tela do ranking</p>
         <ul>
-          <li>{ name }{ score }{ picture }</li>
+          <li data-testid='player-name-${index}'>{ `Nome: ${name},  ` }{ `Pontuação: ${score},   ` }{ `foto: ${picture}` }</li>
         </ul>
       </div>
     );
   }
 }
 
-// const mapDispatchToProps = (dispatch) => ({
-//   getUserProps: (email, name) => dispatch(getUser(email, name)),
-// });
-
-// export default connect(null, mapDispatchToProps)(Ranking);
-
-// Ranking.propTypes = {
-//   getUserProps: PropTypes.func.isRequired,
-// };
+export default Ranking;
