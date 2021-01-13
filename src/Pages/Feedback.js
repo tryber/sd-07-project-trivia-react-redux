@@ -1,5 +1,6 @@
 import React from 'react';
 import Header from '../Components/Header';
+import MessageFeedback from '../Components/MessageFeedback';
 
 class Feedback extends React.Component {
   render() {
@@ -7,7 +8,7 @@ class Feedback extends React.Component {
       <>
         <h1>Tela de Feedback</h1>
         <Header />
-        <h3 data-testid="feedback-text">Texto da tela de feedback</h3>
+        <MessageFeedback />
       </>
     );
   }
