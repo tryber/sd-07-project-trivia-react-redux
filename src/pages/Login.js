@@ -36,8 +36,8 @@ class Login extends Component {
   async handleClick() {
     const { fetchTokenActionProps } = this.props;
     await fetchTokenActionProps();
-    const { token, history } = this.props;
-    const { payload } = token;
+    const { game, history } = this.props;
+    const { payload } = game;
     localStorage.setItem('token', JSON.stringify(payload));
     const player = { player: this.state };
     localStorage.setItem('state', JSON.stringify(player));
@@ -62,7 +62,7 @@ class Login extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  token: state.token,
+  game: state.game,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -74,7 +74,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(Login);
 
 Login.propTypes = {
   fetchTokenActionProps: PropTypes.func.isRequired,
-  token: PropTypes.shape({
+  game: PropTypes.shape({
     payload: PropTypes.shape({
       response_code: PropTypes.number,
       response_message: PropTypes.string,

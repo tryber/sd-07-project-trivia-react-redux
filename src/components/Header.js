@@ -17,8 +17,6 @@ class Header extends Component {
   render() {
     const { playerProfile } = this.props;
     const { player } = playerProfile;
-    console.log(player);
-
     return (
       <header>
         <div>
