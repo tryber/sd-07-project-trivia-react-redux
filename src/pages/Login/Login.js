@@ -35,7 +35,7 @@ class Login extends Component {
 
   render() {
     const { name, gravatarEmail } = this.state;
-    const { isLoading } = this.props;
+    const { isLoading, history } = this.props;
     return (
       <form>
         <input
@@ -61,6 +61,13 @@ class Login extends Component {
           onClick={ () => this.playClick(name, gravatarEmail) }
         >
           Play
+        </button>
+        <button
+          type="button"
+          data-testid="btn-settings"
+          onClick={ () => history.push('/setting') }
+        >
+          Settings
         </button>
         {isLoading && <h1>Loading...</h1>}
       </form>
