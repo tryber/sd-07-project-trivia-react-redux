@@ -1,0 +1,7 @@
+.answer-correct {
+  border: 3px solid #06f00f;
+}
+
+.answer-wrong {
+  border: 3px solid red;
+}
