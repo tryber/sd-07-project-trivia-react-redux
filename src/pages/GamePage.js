@@ -9,19 +9,60 @@ class GamePage extends Component {
   constructor() {
     super();
     this.pergunta = this.pergunta.bind(this);
+    this.select = this.select.bind(this);
+    this.localset = this.localset.bind(this);
     this.state = {
       indexx: 0,
+      errado: { border: '2px solid rgb(0, 0, 0)' },
+      certo: { border: '2px solid rgb(0, 0, 0)' },
+      obj: {},
     };
   }
 
   componentDidMount() {
     const { fetchHere } = this.props;
     fetchHere();
+    this.localset();
+  }
+
+  localset() {
+    const LS = JSON.parse(localStorage.getItem('state'));
+    this.setState({ obj: LS });
+  }
+
+  select(pram, dif) {
+    const { obj } = this.state;
+    let PD = 0;
+    this.setState({
+      errado: { border: '3px solid rgb(255, 0, 0)' },
+      certo: { border: '3px solid rgb(6, 240, 15)' },
+    });
+    switch (dif) {
+    case 'easy':
+      PD = 1;
+      break;
+    case 'medium':
+      PD = 2;
+      break;
+    case 'hard':
+      PD = (1 + 2);
+      break;
+    default:
+      break;
+    }
+    if (pram === 'certo') {
+      const pontos = (2 * 2 * 2 + 2) + (1 * PD);
+      const total = pontos + obj.player.score;
+      const objobj = obj;
+      objobj.player.score = total;
+      this.setState({ obj: objobj });
+      localStorage.setItem('state', JSON.stringify(objobj));
+    }
   }
 
   pergunta() {
     const { questions } = this.props;
-    const { indexx } = this.state;
+    const { indexx, errado, certo } = this.state;
     const questao = questions.results[indexx];
     return (
       <div>
@@ -31,7 +72,8 @@ class GamePage extends Component {
           <button
             data-testid="correct-answer"
             type="button"
-            onClick={ () => console.log('ritapediu') }
+            style={ certo }
+            onClick={ () => this.select('certo', questao.difficulty) }
           >
             {questao.correct_answer}
           </button>
@@ -39,8 +81,9 @@ class GamePage extends Component {
             <button
               type="button"
               key={ index }
+              style={ errado }
               data-testid={ `wrong-answer-${index}` }
-              onClick={ () => console.log('carolpediu') }
+              onClick={ () => this.select('errado') }
             >
               {msg}
             </button>
