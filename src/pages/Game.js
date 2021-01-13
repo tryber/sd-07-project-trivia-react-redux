@@ -14,8 +14,8 @@ class Game extends React.Component {
     this.requestAsks = this.requestAsks.bind(this);
   }
 
-  componentDidMount() {
-    this.requestAsks();
+  async componentDidMount() {
+    await this.requestAsks();
   }
 
   async requestAsks() {
@@ -31,15 +31,13 @@ class Game extends React.Component {
   render() {
     const { questions } = this.state;
     console.log(questions);
-    if (questions === []) {
+    if (questions === [] || questions === undefined) {
       return <h1>Carregando...</h1>;
     }
     return (
       <div>
         <Header />
-        {/* <Answers questions={ questions } /> */}
-        <div>Contagem regressiva</div>
-        <button type="button">Próxima</button>
+        <Answers questions={ questions } />
       </div>
     );
   }

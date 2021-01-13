@@ -2,59 +2,74 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from './Header';
+import Counter from './Counter';
 
 class Answers extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       index: 0,
+      counter: 30,
     };
 
     this.mountQuestion = this.mountQuestion.bind(this);
   }
 
   mountQuestion(quest, index) {
-    const {
-      category,
-      correct_answer: correct,
-      incorrect_answers: wrong,
-      question,
-    } = quest;
-
-    return (
-      <div>
-        <div>
-          <h3 key={ `category${index}` } data-testid="question-category">{ category }</h3>
-          <h2 key={ `question${index}` } data-testid="question-text">{ question }</h2>
-        </div>
+    if (quest[index]) {
+      const {
+        category,
+        correct_answer: correct,
+        incorrect_answers: wrong,
+        question,
+      } = quest[index];
+      const correctAnswer = { correct, id: true };
+      const arrayAnswers = [correctAnswer, ...wrong];
+      for (let i = 0; i < arrayAnswers.length; i += 1) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arrayAnswers[i], arrayAnswers[j]] = [arrayAnswers[j], arrayAnswers[i]]; // Foi pego no stackOverFlow
+      }
+      console.log(arrayAnswers);
+      return (
         <div>
           <div>
-            <button
-              key={ `correct${index}` }
-              type="button"
-              data-testid="correct-answer"
-            >
-              { correct }
-            </button>
-            { wrong.map((answer, set) => (
-              <button
-                key={ `wrong${set}` }
-                type="button"
-                data-testid={ `wrong-answer-${set}` }
-              >
-                { answer }
-              </button>
-            ))}
+            <h3 key={ `category${index}` } data-testid="question-category">{ category }</h3>
+            <h2 key={ `question${index}` } data-testid="question-text">{ question }</h2>
+          </div>
+          <div>
+            <div>
+              {arrayAnswers.map((element, set) => {
+                if (element.id) {
+                  return (
+                    <button
+                      key={ `correct${set}` }
+                      type="button"
+                      data-testid="correct-answer"
+                      onClick={ () => this.setState({ index: index + 1 }) }
+                    >
+                      { correct }
+                    </button>
+                  );
+                }
+                return (
+                  <button
+                    key={ `wrong${set}` }
+                    type="button"
+                    data-testid={ `wrong-answer-${'0'}` }
+                    onClick={ () => this.setState({ index: index + 1 }) }
+                  >
+                    { element }
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </div>
-      </div>
-    );
+      );
+    }
   }
 
   render() {
-    // Fazer um map das alternativas
-    // Exibir as alternativas de forma aleatória
-    // Contagem regressiva
     const { questions } = this.props;
     const { index } = this.state;
     console.log(questions);
@@ -64,7 +79,7 @@ class Answers extends React.Component {
         <Header />
         <h1>Joguinho</h1>
         { this.mountQuestion(questions, index) }
-        <div>Contagem regressiva</div>
+        <Counter />
         <button type="button">Próxima</button>
       </div>
     );
