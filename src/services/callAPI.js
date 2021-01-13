@@ -1,4 +1,3 @@
-
 export const requestToken = async () => {
   const url = 'https://opentdb.com/api_token.php?command=request';
   const fetchingApi = await fetch(url);
@@ -12,4 +11,3 @@ export const requestQuestions = async (token) => {
   const jsonApi = await fetchingApi.json();
   return jsonApi;
 };
-

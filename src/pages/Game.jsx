@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import propTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
 import Question from '../components/Question';
@@ -14,21 +15,22 @@ class Game extends Component {
     this.getQuestions = this.getQuestions.bind(this);
   }
 
+  componentDidMount() {
+    this.getQuestions();
+  }
+
   async getQuestions() {
     const { token } = this.props;
     const requestQuestions = await callAPI.requestQuestions(token);
     this.setState({ questions: requestQuestions.results });
   }
 
-  componentDidMount() {
-    this.getQuestions();
-  }
-
   render() {
+    const { questions } = this.state;
     return (
       <div>
         <Header />
-        { this.state.questions[0] ? <Question item={ this.state.questions[0] }/> : null }
+        { questions[0] ? <Question item={ questions[0] } /> : null }
       </div>
     );
   }
@@ -39,3 +41,7 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps)(Game);
+
+Game.propTypes = {
+  token: propTypes.string,
+}.isRequired;

@@ -23,7 +23,7 @@ class Login extends Component {
     event.preventDefault();
     const expiredToken = 3;
     const callingApi = await callAPI.requestToken();
-    if (callingApi.response_code === expiredToken) return alert('Email expirado');
+    if (callingApi.response_code === expiredToken) return console.log('Email expirado');
     const { token } = callingApi;
     localStorage.setItem('token', JSON.stringify(token));
     this.sendPlayerInfo(token);
@@ -31,12 +31,12 @@ class Login extends Component {
   }
 
   sendPlayerInfo(token) {
-    const { login } = this.props;
+    const { sendInfoToStore } = this.props;
     const { name, email } = this.state;
     const hash = md5(email).toString();
-    const imageSrc = `https://www.gravatar.com/avatar/${hash}`
+    const imageSrc = `https://www.gravatar.com/avatar/${hash}`;
     const playerInfo = { name, email, token, imageSrc };
-    login(playerInfo);
+    sendoInfoToStore(playerInfo);
     return this.setState({ redirect: true });
   }
 
@@ -85,6 +85,10 @@ class Login extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  login: (object) => dispatch(login(object)) });
+  sendInfoToStore: (object) => dispatch(login(object)) });
 
 export default connect(null, mapDispatchToProps)(Login);
+
+Login.propTypes = {
+  sendInfoToStore: propTypes.func,
+}.isRequired;

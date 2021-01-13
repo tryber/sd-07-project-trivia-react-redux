@@ -11,7 +11,7 @@ class Answer extends Component {
 
   render() {
     const { answer } = this.props;
-    return ();
+    return null;
   }
 }
 

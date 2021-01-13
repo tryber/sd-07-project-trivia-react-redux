@@ -8,7 +8,7 @@ class Question extends Component {
     // this.renderCorrectAnswer = this.renderCorrectAnswer.bind(this);
     // this.renderIncorrectAnswer = this.renderIncorrectAnswer.bind(this);
   }
-/*
+  /*
   renderCorrectAnswer(answer) {
     return (<button data-testid="correct-answer">{ answer }</button>);
   }
@@ -17,13 +17,6 @@ class Question extends Component {
 
   } */
 
-  renderAnswers(counter, questions) {
-    // if (counter === 0) break;
-    const random = Math.floor(Math.random() * questions.length);
-    const question = questions[random];
-    console.log(question);
-    console.log(question["correctAnswer"]);
-  }
     /*
     if (random === 0) {
       
@@ -49,6 +42,14 @@ class Question extends Component {
       counter += incorrect_answers.length;
     } else counter = questions.length;
     this.renderAnswers(counter, questions);
+  }
+
+  renderAnswers(counter, questions) {
+    // if (counter === 0) break;
+    const random = Math.floor(Math.random() * questions.length);
+    const question = questions[random];
+    console.log(question);
+    console.log(question.correctAnswer);
   }
 
   render() {
