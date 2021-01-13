@@ -16,6 +16,7 @@ class Questions extends React.Component {
       index: 0,
       status: true,
       showAnswers: false,
+      seconds: 30,
     };
     this.fetchQuestions = this.fetchQuestions.bind(this);
     this.nextQuestion = this.nextQuestion.bind(this);
@@ -24,6 +25,19 @@ class Questions extends React.Component {
 
   componentDidMount() {
     this.fetchQuestions();
+
+    const oneSecond = 1000;
+    const myInterval = setInterval(() => {
+      const { seconds } = this.state;
+      if (seconds > 0) {
+        this.setState(({ seconds: prevSeconds }) => ({
+          seconds: prevSeconds - 1,
+        }));
+      }
+      if (seconds === 0) {
+        clearInterval(myInterval);
+      }
+    }, oneSecond);
   }
 
   fetchQuestions() {
@@ -50,7 +64,7 @@ class Questions extends React.Component {
   }
 
   render() {
-    const { questions, index, status, showAnswers } = this.state;
+    const { questions, index, status, showAnswers, seconds } = this.state;
     return (
       <div>
         <h3>
@@ -72,6 +86,7 @@ class Questions extends React.Component {
         <div id="bloco-respostas">
           <button
             onClick={ this.clickButtonAnswer }
+            disabled={ seconds === 0 }
             type="button"
             key="correct"
             data-testid="correct-answer"
@@ -83,6 +98,7 @@ class Questions extends React.Component {
             .map((item, itemIndex) => (
               <button
                 onClick={ this.clickButtonAnswer }
+                disabled={ seconds === 0 }
                 type="button"
                 key="incorrect"
                 data-testid={ `wrong-answer-${itemIndex}` }
@@ -99,6 +115,10 @@ class Questions extends React.Component {
         >
           Next
         </button>
+        <span>
+          Tempo restante:
+          { seconds }
+        </span>
       </div>
     );
   }
