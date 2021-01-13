@@ -7,7 +7,9 @@ import Header from '../Components/Header';
 class Game extends Component {
   render() {
     const { questions, isFetching } = this.props;
-    const options = [...questions[0].incorrect_answers, questions[0].correct_answer].sort();
+    const options = [...questions[0].incorrect_answers,
+      questions[0].correct_answer]
+      .sort();
     console.log(options);
     if (isFetching) {
       return <p>Loading</p>;
