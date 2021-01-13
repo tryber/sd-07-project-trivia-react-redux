@@ -16,7 +16,6 @@ class Login extends Component {
 
    handleSubmit(event) {
     event.preventDefault();
-
   const url = 'https://opentdb.com/api_token.php?command=request';
   try {
   fetch(url)
