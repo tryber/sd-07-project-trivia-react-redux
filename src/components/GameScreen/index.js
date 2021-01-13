@@ -25,6 +25,7 @@ class GameScreen extends Component {
     const { actual, correct } = this.state;
     let counter = 0;
 
+    // nada elegante
     const arrayDefault = ['', '', '', ''];
 
     if (questions.length > 0) {
