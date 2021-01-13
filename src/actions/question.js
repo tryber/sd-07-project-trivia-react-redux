@@ -1,18 +1,16 @@
-export function thunkApiQuestions(questions, token) {
-  return async (dispatch) => {
-    try {
-      dispatch();
-      const quest = await fetch(`https://opentdb.com/api.php?amount=${questions}&token=${token}`);
-      const result = await quest.json();
-      dispatch(getQuestion(result));
-    } catch (error) {
-      dispatch();
-    }
-  };
-}
-
 export const getQuestion = (payload) => ({
   type: 'GET_QUESTIONS',
   payload,
 });
 
+export const requestQuestion = () => ({
+  type: 'REQUEST_QUESTIONS',
+});
+
+export function thunkApiQuestions(questions, token) {
+  return async (dispatch) => {
+    const resolve = await fetch(`https://opentdb.com/api.php?amount=${questions}&token=${token}`);
+    const json = await resolve.json();
+    return dispatch(getQuestion(json));
+  };
+}

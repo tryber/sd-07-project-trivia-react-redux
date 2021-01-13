@@ -1,1 +1,7 @@
-export default addUser = (user) => ({ type: 'ADD_USER', user });
+import { thunkApiQuestions } from './question';
+import { thunkApiToken } from './player';
+
+export default {
+  thunkApiQuestions,
+  thunkApiToken,
+};
