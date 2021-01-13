@@ -1,7 +1,7 @@
 import { SET_PLAYER } from '../actions';
 
 const playerInitialState = {
-  name: 'Dieguinho',
+  name: '',
   assertions: 0,
   score: 0,
   gravatarEmail: '',
