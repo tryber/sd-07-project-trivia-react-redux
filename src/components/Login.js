@@ -15,22 +15,29 @@ class Login extends Component {
       redirect: false,
     };
     this.isDisabled = this.isDisabled.bind(this);
+    this.sendPlayerInfo = this.sendPlayerInfo.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   async handleSubmit(event) {
-    const { login } = this.props;
-    const { name, email } = this.state;
     event.preventDefault();
+    const expiredToken = 3;
     const callingApi = await callAPI.requestToken();
+    if (callingApi.response_code === expiredToken) return alert('Email expirado');
     const { token } = callingApi;
     localStorage.setItem('token', JSON.stringify(token));
+    this.sendPlayerInfo(token);
+    return callingApi;
+  }
+
+  sendPlayerInfo(token) {
+    const { login } = this.props;
+    const { name, email } = this.state;
     const hash = md5(email).toString();
     const imageSrc = `https://www.gravatar.com/avatar/${hash}`
     const playerInfo = { name, email, token, imageSrc };
     login(playerInfo);
-    this.setState({ redirect: true });
-    return callingApi;
+    return this.setState({ redirect: true });
   }
 
   isDisabled() {
