@@ -10,7 +10,7 @@ class Game extends Component {
     // const { results } = this.props;
     this.state = {
       key: 0,
-    //  results: results,
+      //  results: results,
     };
     this.nextQuestion = this.nextQuestion.bind(this);
   }
@@ -29,13 +29,9 @@ class Game extends Component {
     const { key } = this.state;
     const { results, isLoading } = this.props;
     if (isLoading || results === undefined) {
-      return (
-        <p>Carregando</p>
-      );
+      return <p>Carregando</p>;
     }
-
     // setTimeout(() => console.log(results), 2000);
-
     return (
       <div>
         <Header />
@@ -44,14 +40,16 @@ class Game extends Component {
     );
   }
 }
-
-const mapStateToProps = ({ game: { isLoading, questions: { results } } }) => ({
+const mapStateToProps = ({
+  game: {
+    isLoading,
+    questions: { results },
+  },
+}) => ({
   isLoading,
   results,
 });
-
 export default connect(mapStateToProps)(Game);
-
 Game.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   results: PropTypes.arrayOf(PropTypes.object).isRequired,
