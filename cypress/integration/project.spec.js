@@ -176,28 +176,28 @@ describe('7 - [TELA DE JOGO] Desenvolva o estilo que, ao clicar em uma resposta,
     cy.get(BUTTON_PLAY_SELECTOR).click();
   });
 
-  it.skip('Verifica cor da alternativa correta quando acerta a questão', () => {
+  it('Verifica cor da alternativa correta quando acerta a questão', () => {
     cy.get(CORRECT_ALTERNATIVE_SELECTOR).click();
     cy.get(CORRECT_ALTERNATIVE_SELECTOR).should('have.css', 'border-color', 'rgb(6, 240, 15)');
     cy.get(CORRECT_ALTERNATIVE_SELECTOR).should('have.css', 'border-style', 'solid');
     cy.get(CORRECT_ALTERNATIVE_SELECTOR).should('have.css', 'border-width', '3px');
   });
 
-  it.skip('Verifica a cor das alternativas incorretas quando acerta a questão', () => {
+  it('Verifica a cor das alternativas incorretas quando acerta a questão', () => {
     cy.get(CORRECT_ALTERNATIVE_SELECTOR).click();
     cy.get(WRONG_ALTERNATIVES_SELECTOR).should('have.css', 'border-color', 'rgb(255, 0, 0)');
     cy.get(WRONG_ALTERNATIVES_SELECTOR).should('have.css', 'border-style', 'solid');
     cy.get(WRONG_ALTERNATIVES_SELECTOR).should('have.css', 'border-width', '3px');
   });
 
-  it.skip('Verifica cor da alternativa correta quando erra a questão', () => {
+  it('Verifica cor da alternativa correta quando erra a questão', () => {
     cy.get(WRONG_ALTERNATIVES_SELECTOR).first().click();
     cy.get(CORRECT_ALTERNATIVE_SELECTOR).should('have.css', 'border-color', 'rgb(6, 240, 15)');
     cy.get(CORRECT_ALTERNATIVE_SELECTOR).should('have.css', 'border-style', 'solid');
     cy.get(CORRECT_ALTERNATIVE_SELECTOR).should('have.css', 'border-width', '3px');
   });
 
-  it.skip('Verifica a cor das alternativas incorretas quando erra a questão', () => {
+  it('Verifica a cor das alternativas incorretas quando erra a questão', () => {
     cy.get(WRONG_ALTERNATIVES_SELECTOR).first().click();
     cy.get(WRONG_ALTERNATIVES_SELECTOR).should('have.css', 'border-color', 'rgb(255, 0, 0)');
     cy.get(WRONG_ALTERNATIVES_SELECTOR).should('have.css', 'border-style', 'solid');
@@ -214,12 +214,12 @@ describe('8 - [TELA DE JOGO] Desenvolva um timer onde a pessoa que joga tem 30 s
     cy.get(BUTTON_PLAY_SELECTOR).click();
   });
 
-  it.skip('Aguarda 5 segundos e responde a alternativa correta', () => {
+  it('Aguarda 5 segundos e responde a alternativa correta', () => {
     cy.wait(5000);
     cy.get(CORRECT_ALTERNATIVE_SELECTOR).should('not.be.disabled').click();
   });
 
-  it.skip('Aguarda mais de 30 segundos para responder', () => {
+  it('Aguarda mais de 30 segundos para responder', () => {
     cy.wait(32000);
     cy.get(CORRECT_ALTERNATIVE_SELECTOR).should('be.disabled');
   });

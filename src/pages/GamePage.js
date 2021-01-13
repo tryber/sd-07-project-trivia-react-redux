@@ -58,8 +58,10 @@ class GamePage extends Component {
     if (pram === 'certo') {
       const pontos = (2 * 2 * 2 + 2) + (1 * PD);
       const total = pontos + obj.player.score;
+      const acertos = obj.player.assertions + 1;
       const objobj = obj;
       objobj.player.score = total;
+      objobj.player.assertions = acertos;
       this.setState({ obj: objobj });
       localStorage.setItem('state', JSON.stringify(objobj));
     }
@@ -73,7 +75,9 @@ class GamePage extends Component {
     } else {
       this.setState((prevState) => ({
         indexx: prevState.indexx + 1,
-        nextQuestion: false }
+        nextQuestion: false,
+        errado: { border: '2px solid rgb(0, 0, 0)' },
+        certo: { border: '2px solid rgb(0, 0, 0)' } }
       ));
     }
   }
