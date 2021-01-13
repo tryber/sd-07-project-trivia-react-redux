@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fetchToken } from '../actions';
 
@@ -12,7 +12,6 @@ class Login extends React.Component {
       email: '',
       doneEmail: false,
       doneName: false,
-      token: '',
     };
     this.testEmail = this.testEmail.bind(this);
     this.testName = this.testName.bind(this);
@@ -24,15 +23,12 @@ class Login extends React.Component {
   componentDidMount() { this.handleFetch(); }
 
   loadTokenToLocalStorage() {
-    // const { token } = this.state;
     const { token } = this.props;
     const { tokenData } = token;
-    // console.log(this.props);
-    // console.log(tokenData);
+
     if (Storage) {
       const getTokenSaved = JSON.parse(localStorage.getItem('token'));
       const value = (getTokenSaved === null ? [] : getTokenSaved);
-      // let value;
       console.log(tokenData);
       value.push(tokenData);
       localStorage.setItem('token', JSON.stringify(value));
@@ -41,21 +37,13 @@ class Login extends React.Component {
 
   handleFetch() {
     const { apiFetchToken } = this.props;
-    // const { token } = this.state;
-    // const newToken = await apiFetchToken();
     apiFetchToken();
     this.loadTokenToLocalStorage();
-    // this.setState({
-    //   token: newToken.token,
-    // });
   }
 
   handleChange(event) {
     event.preventDefault();
-    // console.log(this.props);
     this.handleFetch();
-    console.log(this.state); // deve trazer o estado name, email e token. doneName e doneEmail false
-    // this.loadTokenToLocalStorage(); //Logica para passar token do estado para localStorage
   }
 
   testEmail(value) {
@@ -72,8 +60,11 @@ class Login extends React.Component {
 
   render() {
     console.log(this.props);
-    // console.log(this.props);
     const { email, name, doneEmail, doneName } = this.state;
+    const { token } = this.props;
+    if (token.tokenData !== '') {
+      return <Redirect to="/play" />;
+    }
     return (
       <form className="form">
         <label htmlFor="name">
