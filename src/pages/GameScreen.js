@@ -14,8 +14,11 @@ class GameScreen extends Component {
       question: 'Loading...',
       // respCorrect: '',
       resps: [],
+      right: '',
+      wrong: '',
     };
     this.handleQuest = this.handleQuest.bind(this);
+    this.changeStyle = this.changeStyle.bind(this);
   }
 
   async componentDidMount() {
@@ -35,8 +38,12 @@ class GameScreen extends Component {
     });
   }
 
+  changeStyle() {
+    this.setState({ right: 'right', wrong: 'wrong' });
+  }
+
   render() {
-    const { category, question, resps } = this.state;
+    const { category, question, resps, right, wrong } = this.state;
     return (
       <div>
         <div>
@@ -48,30 +55,34 @@ class GameScreen extends Component {
           <div data-testid="question-text">{question}</div>
           <div>
             <button
-              className="right"
+              className={ right }
               data-testid="correct-answer"
               type="button"
+              onClick={ this.changeStyle }
             >
               {resps[0]}
             </button>
             <button
-              className="wrong"
+              className={ wrong }
               data-testid="wrong-answer-1"
               type="button"
+              onClick={ this.changeStyle }
             >
               {resps[1]}
             </button>
             <button
-              className="wrong"
+              className={ wrong }
               data-testid="wrong-answer-2"
               type="button"
+              onClick={ this.changeStyle }
             >
               {resps[2]}
             </button>
             <button
-              className="wrong"
+              className={ wrong }
               data-testid="wrong-answer-3"
               type="button"
+              onClick={ this.changeStyle }
             >
               {resps[3]}
             </button>
