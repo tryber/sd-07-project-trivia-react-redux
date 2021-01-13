@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Redirect, Link } from 'react-router-dom';
 import { login } from '../actions';
+import './Login.css';
 
 class Login extends Component {
   constructor(props) {
@@ -42,9 +43,10 @@ class Login extends Component {
     const { email, name, disabled } = this.state;
     const { signin, redirect } = this.props;
     return (
-      <div>
-        <div>
+      <div className="login">
+        <div className="form">
           <input
+            className="input text"
             type="name"
             name="name"
             placeholder="Name"
@@ -53,6 +55,7 @@ class Login extends Component {
             onChange={ this.handleInputChange }
           />
           <input
+            className="input text"
             type="text"
             name="email"
             placeholder="email"
@@ -61,6 +64,7 @@ class Login extends Component {
             onChange={ this.handleInputChange }
           />
           <button
+            className="input"
             type="button"
             disabled={ disabled }
             data-testid="btn-play"
