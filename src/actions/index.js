@@ -2,12 +2,20 @@ const USER_EMAIL = 'USER_EMAIL';
 const START_REQUEST = 'START_REQUEST';
 const RECEIVED_QUESTIONS = 'RECEIVED_QUESTIONS';
 const FAILED_REQUEST = 'FAILED_REQUEST';
+const USER_NAME = 'USER_NAME';
 
-export default { USER_EMAIL, START_REQUEST, RECEIVED_QUESTIONS, FAILED_REQUEST };
+export default {
+  USER_EMAIL, START_REQUEST, RECEIVED_QUESTIONS, FAILED_REQUEST, USER_NAME,
+};
 
 export const getEmail = (email) => ({
   type: USER_EMAIL,
   email,
+});
+
+export const getName = (name) => ({
+  type: USER_NAME,
+  name,
 });
 
 const startRequest = () => ({
@@ -33,6 +41,7 @@ export function fetchQuestions() {
       const endpoint = `https://opentdb.com/api.php?amount=5&token=${token}`;
       const response = await fetch(endpoint);
       const data = await response.json();
+      console.log(data);
       dispatch(receivedQuestions(data));
     } catch (error) {
       dispatch(failedRequest(error));

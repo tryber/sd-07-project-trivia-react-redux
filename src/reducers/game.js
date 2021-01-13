@@ -2,7 +2,7 @@ import type from '../actions';
 
 const INITIAL_STATE = {
   isFetching: false,
-  questions: '',
+  questions: {},
   error: '',
 };
 

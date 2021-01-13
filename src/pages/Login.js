@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getEmail } from '../actions';
+import { getEmail, getName } from '../actions';
 
 class Login extends React.Component {
   constructor(props) {
@@ -51,9 +51,10 @@ class Login extends React.Component {
   }
 
   handleSubmit() {
-    const { sendEmail, history } = this.props;
-    const { email } = this.state;
+    const { sendEmail, history, sendName } = this.props;
+    const { email, name } = this.state;
     sendEmail(email);
+    sendName(name);
     this.createLocalStorage();
     history.push('/game');
   }
@@ -126,10 +127,12 @@ class Login extends React.Component {
 
 const mapDispatchToProps = (dispatch) => ({
   sendEmail: (email) => dispatch(getEmail(email)),
+  sendName: (name) => dispatch(getName(name)),
 });
 
 Login.propTypes = {
   sendEmail: PropTypes.func.isRequired,
+  sendName: PropTypes.func.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
