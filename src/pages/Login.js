@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { ResultToken } from '../services/Api';
+import { ResultToken, generateHash } from '../services/Api';
 
 class Login extends Component {
   constructor() {
@@ -22,7 +22,9 @@ class Login extends Component {
   }
 
   handleClick() {
+    const { username, email } = this.state;
     ResultToken();
+    generateHash(username, email);
   }
 
   render() {
