@@ -17,7 +17,7 @@ class GameScreen extends Component {
       right: '',
       wrong: '',
       buttonNext: false,
-      id: 0,
+      id: 1,
     };
     this.handleQuest = this.handleQuest.bind(this);
     this.changeStyle = this.changeStyle.bind(this);
@@ -54,6 +54,7 @@ class GameScreen extends Component {
       question: quest[id].question,
       // respCorrect: quest[1].correct_answer,
       resps: [quest[id].correct_answer, ...quest[id].incorrect_answers],
+      buttonNext: false,
     });
   }
 
@@ -103,14 +104,13 @@ class GameScreen extends Component {
               {resps[3]}
             </button>
           </div>
-          <button
-            disabled={ !buttonNext }
+          { buttonNext && <button
             data-testid="btn-next"
             type="button"
             onClick={ this.nextQuestion }
           >
             Próxima
-          </button>
+          </button> }
         </div>
       </div>
     );
