@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class Quiz extends React.Component {
   render() {
@@ -34,5 +35,12 @@ class Quiz extends React.Component {
     );
   }
 }
+
+Quiz.propTypes = {
+  category: PropTypes.string.isRequired,
+  question: PropTypes.string.isRequired,
+  correctAnswer: PropTypes.string.isRequired,
+  incorrectAnswers: PropTypes.arrayOf(PropTypes.string).isRequired,
+};
 
 export default Quiz;

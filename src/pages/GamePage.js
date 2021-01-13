@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getQuestions } from '../services/api';
 import Quiz from '../components/Quiz';
@@ -57,5 +58,9 @@ class GamePage extends React.Component {
 const mapStateToProps = ({ token }) => ({
   token: token.value,
 });
+
+GamePage.propTypes = {
+  token: PropTypes.string.isRequired,
+};
 
 export default connect(mapStateToProps)(GamePage);
