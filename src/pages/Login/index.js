@@ -2,8 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import md5 from 'crypto-js/md5';
+
 import Header from '../../components/Header';
+
 import { getTokenAction } from '../../actions/tokenAction';
+import { playerAction } from '../../actions/playerAction';
 
 class Login extends React.Component {
   constructor(props) {
@@ -34,8 +38,15 @@ class Login extends React.Component {
 
   handleLogin(event) {
     event.preventDefault();
-    const { tokenAction, history } = this.props;
+    const { tokenAction, history, logarPlayer } = this.props;
     tokenAction();
+    const { email, name } = this.state;
+    const gravatarEmail = md5(email);
+    const player = {
+      name,
+      gravatarEmail,
+    };
+    logarPlayer(player);
     if (history) history.push('/login');
   }
 
@@ -85,7 +96,6 @@ class Login extends React.Component {
               Configurações
             </Link>
           </button>
-
         </form>
       </div>
     );
@@ -96,6 +106,7 @@ Login.propTypes = {
   isFetchingToken: PropTypes.bool.isRequired,
   error: PropTypes.string.isRequired,
   tokenAction: PropTypes.func.isRequired,
+  logarPlayer: PropTypes.func.isRequired,
   history: PropTypes.shape().isRequired,
 };
 
@@ -106,6 +117,7 @@ const mapStateToProps = ({ token }) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   tokenAction: () => dispatch(getTokenAction()),
+  logarPlayer: (player) => dispatch(playerAction(player)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
