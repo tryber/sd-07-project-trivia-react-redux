@@ -2,7 +2,10 @@ import React from 'react';
 import './App.css';
 import { Route, Switch } from 'react-router-dom';
 import Login from './pages/Login';
+
 import GamePage from './pages/GamePage';
+
+import Ranking from './pages/Ranking';
 
 import Settings from './pages/Settings';
 
@@ -12,6 +15,7 @@ export default function App() {
       <Switch>
         <Route path="/" component={ Login } exact />
         <Route path="/game" component={ GamePage } />
+        <Route path="/ranking" component={ Ranking } />
         <Route path="/settings" component={ Settings } exact />
       </Switch>
     </div>

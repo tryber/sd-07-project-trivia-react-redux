@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import Header from '../../components/Header';
 import { getTokenAction } from '../../actions/tokenAction';
 
 class Login extends React.Component {
@@ -43,6 +44,7 @@ class Login extends React.Component {
     const { isFetchingToken, error } = this.props;
     return (
       <div>
+        <Header />
         <form>
           {isFetchingToken && <div>loading</div>}
           {error && <div>error</div>}
