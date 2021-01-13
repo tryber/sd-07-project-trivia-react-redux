@@ -2,11 +2,33 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
+import Quiz from '../components/Quiz';
 
 class Game extends Component {
+  constructor(props) {
+    super(props);
+    // const { results } = this.props;
+    this.state = {
+      key: 0,
+    //  results: results,
+    };
+    this.nextQuetion = this.nextQuetion.bind(this);
+  }
+
+  nextQuetion() {
+    const { key } = this.state;
+    const numberQuestion = 4;
+    if (key < numberQuestion) {
+      this.setState({
+        key: key + 1,
+      });
+    }
+  }
+
   render() {
+    const { key } = this.state;
     const { results, isLoading } = this.props;
-    if (isLoading) {
+    if (isLoading || results === undefined) {
       return (
         <p>Carregando</p>
       );
@@ -17,8 +39,7 @@ class Game extends Component {
     return (
       <div>
         <Header />
-        <p data-testid="question-category"> Category:</p>
-        {console.log(results)}
+        <Quiz nextQuestion={ this.nextQuetion } results={ results[key] } />
       </div>
     );
   }
@@ -32,13 +53,6 @@ const mapStateToProps = ({ game: { isLoading, questions: { results } } }) => ({
 export default connect(mapStateToProps)(Game);
 
 Game.propTypes = {
-  results: PropTypes.shape({
-    category: PropTypes.string,
-    type: PropTypes.string,
-    difficulty: PropTypes.string,
-    question: PropTypes.string,
-    correct_answer: PropTypes.string,
-    incorrect_answers: PropTypes,
-  }).isRequired,
   isLoading: PropTypes.bool.isRequired,
+  results: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
