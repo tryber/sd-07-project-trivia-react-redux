@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import propTypes from 'prop-types';
 
 class GameTimer extends Component {
   constructor() {
@@ -43,5 +44,10 @@ class GameTimer extends Component {
     );
   }
 }
+
+GameTimer.propTypes = {
+  timerZero: propTypes.func.isRequired,
+  clicked: propTypes.func.isRequired,
+};
 
 export default GameTimer;
