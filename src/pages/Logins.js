@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { requestToken } from '../actions';
+import { requestToken, changeName, changeGravatarEmail } from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -22,11 +22,15 @@ class Login extends React.Component {
 
   handleInputs({ target }) {
     const { value, name } = target;
+    const { changeName, changeGravatarEmail } = this.props;
     this.setState({ [name]: value }, () => {
-      const { email } = this.state;
+      const { email, name: nameState } = this.state;
       const validacaoByStackOf = /[\w.-]+@[\w-]+\.[\w-.]+/gi;
       const matchEmail = email.match(validacaoByStackOf);
       this.matchingEmail(matchEmail);
+      changeName(nameState);
+      changeGravatarEmail(email);
+
     });
   }
 
@@ -43,12 +47,15 @@ class Login extends React.Component {
 
   startGame() {
     const { requestAPI } = this.props;
+    const { name, email } = this.state;
+    changeName(name);
+    console.log('teste name em login: ', name);
+    changeGravatarEmail(email);
     requestAPI();
   }
 
   render() {
     const { buttonDisable } = this.state;
-
     return (
       <div>
         <form>
@@ -92,6 +99,8 @@ class Login extends React.Component {
 
 const mapDispatchToProps = (dispatch) => ({
   requestAPI: () => dispatch(requestToken()),
+  changeGravatarEmail: (email) => dispatch(changeGravatarEmail(email)),
+  changeName: (name) => dispatch(changeName(name)),
 });
 
 const mapStateToProps = (state) => ({
@@ -105,6 +114,8 @@ const mapStateToProps = (state) => ({
 
 Login.propTypes = {
   requestAPI: PropTypes.func.isRequired,
+  changeName: PropTypes.func.isRequired,
+  changeGravatarEmail: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

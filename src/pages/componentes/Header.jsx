@@ -20,6 +20,7 @@ class Header extends React.Component {
     const { name, score } = this.props;
     return (
       <header>
+        {console.log('Name em Header: ', name)}
         <img data-testid="header-profile-picture" src={ this.geraImagem } alt="avatar" />
         <h3 data-testid="header-player-name">{ name }</h3>
         <h3 data-testid="header-score">{ score }</h3>
