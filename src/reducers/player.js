@@ -1,10 +1,12 @@
 import { PLAYER } from '../actions';
 
+const storage = JSON.parse(localStorage.getItem('state'));
+
 const INITIAL_STATE = {
-  name: '',
+  name: storage.player.name || '',
   assertions: 0,
   score: 0,
-  gravatarEmail: '',
+  gravatarEmail: storage.player.gravatarEmail || '',
 };
 
 function playerReducer(state = INITIAL_STATE, action) {
