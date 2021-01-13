@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import Play from './play';
 import Header from './header';
 
 class Feedback extends Component {
@@ -15,7 +14,7 @@ class Feedback extends Component {
     return (
       <p>
         Você acertou
-        <span data-testid="feedback-total-question"> 
+        <span data-testid="feedback-total-question">
           { assertions }
         </span>
         Perguntas
@@ -25,7 +24,7 @@ class Feedback extends Component {
 
   render() {
     const { renderAssertionsText } = this;
-    const { assertions, score = 0 } = this.props;
+    const { assertions, score } = this.props;
     const three = 3;
     return (
       <div>
@@ -52,14 +51,14 @@ class Feedback extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state) => ({
   assertions: state.player.assertions,
   score: state.player.score,
-};
+});
 
 Feedback.propTypes = {
   assertions: PropTypes.number.isRequired,
   score: PropTypes.number.isRequired,
 };
 
-export default connect(mapStateToProps) (Feedback);
+export default connect(mapStateToProps)(Feedback);

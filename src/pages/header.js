@@ -6,8 +6,7 @@ import { trivia } from '../trivia.png';
 
 class Header extends Component {
   render() {
-    const score = 0;
-    const { name, email } = this.props;
+    const { name, email, score } = this.props;
     const hash = md5(email);
     return (
       <div className="header-nav">
@@ -31,15 +30,15 @@ class Header extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  name: state.Play.name,
-  email: state.Play.gravatarEmail,
-//  score: state.Play.score,
+  name: state.player.name,
+  email: state.player.gravatarEmail,
+  score: state.player.score,
 });
 
 Header.propTypes = {
   name: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
-//  score: PropTypes.number.isRequired,
+  score: PropTypes.number.isRequired,
 };
 
 export default connect(mapStateToProps)(Header);
