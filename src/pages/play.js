@@ -9,32 +9,65 @@ class Play extends Component {
     this.state = {
       trivia: [],
       isLoading: false,
+      disabled: false,
+      timer: 30,
+      index: 0,
     };
     this.triviaApi = this.triviaApi.bind(this);
+    this.counter = this.counter.bind(this);
+    this.next = this.next.bind(this);
   }
 
   componentDidMount() {
     this.triviaApi();
+    this.counter();
+  }
+
+  next() {
+    const { index } = this.state;
+    if (index < 4) {
+      this.setState(({ index }) => ({ index: index + 1 }));
+      this.setState({ timer: 30 });
+    } else {
+      const { history } = this.props;
+      history.push('/feedback');
+    }
+  }
+
+  counter() {
+    const magicNumber = 1000;
+    setInterval(() => {
+      const { timer } = this.state;
+      if (timer > 0) {
+        this.setState(({ timer }) => ({ timer: timer - 1 }));
+      }
+      if (timer <= 0) {
+        this.setState({ disabled: true });
+      }
+    }, magicNumber);
   }
 
   trivia() {
-    const { trivia } = this.state;
+    const { trivia, disabled, timer, index } = this.state;
     console.log(trivia);
     return (
       <div>
         <div>
-          <p data-testid="question-category">{trivia[0].category}</p>
-          <p data-testid="question-text">{trivia[0].question}</p>
+          <p>{timer}</p>
+          <p data-testid="question-category">{trivia[index].category}</p>
+          <p data-testid="question-text">{trivia[index].question}</p>
           <button
             type="button"
             data-testid="correct-answer"
+            disabled={ disabled }
           >
-            {trivia[0].correct_answer}
+            {trivia[index].correct_answer}
           </button>
-          {trivia[0].incorrect_answers.map((incorrect, index2) => (
+          {trivia[index].incorrect_answers.map((incorrect, index2) => (
             <div key={ index2 }>
               <button
                 type="button"
+                disabled={ disabled }
                 data-testid={ `wrong-answer-${index2}` }
               >
                 {incorrect}
@@ -42,7 +75,7 @@ class Play extends Component {
             </div>
           ))}
         </div>
-        ))
+        <button type="button" onClick={ this.next }>Próxima</button>
       </div>);
   }
 
