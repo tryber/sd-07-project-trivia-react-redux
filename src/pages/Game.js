@@ -20,6 +20,16 @@ class Game extends Component {
     getQuestions();
   }
 
+  handleUserAnswer() {
+    document.querySelectorAll('button').forEach((button) => {
+      const { id } = button;
+      if (id === 'ok') {
+        button.classList.add('btnColorGreen');
+      }
+      button.classList.add('btnColorRed');
+    });
+  }
+
   renderAllDataQuestion() {
     // console.log()
     const { questionIndex } = this.state;
@@ -27,29 +37,30 @@ class Game extends Component {
 
     if (questions.results) {
       const correctAnswer = (
-        <button  type="button" 
-         data-testid="correct-answer" onClick={this.handleUserAnswer} key='correct' id="ok">
+        <button
+          type="button"
+          data-testid="correct-answer"
+          onClick={ this.handleUserAnswer }
+          key="correct"
+          id="ok"
+        >
           { questions.results[questionIndex].correct_answer }
         </button>
       );
-      const wrongAnswer = questions.results[questionIndex].incorrect_answers.map((answer, index) => (
-        <button   onClick={this.handleUserAnswer} type="button"  key={ answer } 
-        data-testid={ `wrong-answer-${index}`} id="notOk">
-          {answer}
-        </button>
-      ));
+      const wrongAnswer = questions.results[questionIndex].incorrect_answers
+        .map((answer, index) => (
+          <button
+            onClick={ this.handleUserAnswer }
+            type="button"
+            key={ answer }
+            data-testid={ `wrong-answer-${index}` }
+            id="notOk"
+          >
+            {answer}
+          </button>
+        ));
       return [correctAnswer, ...wrongAnswer];
     }
-  }
-
-  handleUserAnswer() {
-    document.querySelectorAll('button').forEach((button) => {
-      const { id } = button;
-      if (id === 'ok') {
-        button.classList.add('btnColorGreen')
-      }
-      button.classList.add('btnColorRed')
-    });
   }
 
   render() {
@@ -84,7 +95,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 Game.propTypes = {
   questions: PropTypes.shape({
-    results: PropTypes.array,
+    results: PropTypes.arrayOf(Object),
   }).isRequired,
   getQuestions: PropTypes.func.isRequired,
 };
