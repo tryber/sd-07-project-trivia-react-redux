@@ -1,15 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const CustomGame = ({ challenge }) => (
+const CustomGame = ({ challenge ,correct}) => (
   <div>
     {challenge.map(
-      ({ category, question, correct_answer, incorrect_answers }) => {
+      ({ category, question, correct_answer, incorrect_answers }, index ) => {
         return (
-          <div>
-            <p data-testid="question-category">{category}</p>
-            <p data-testid="question-text">{question}</p>
-            <button data-testid="correct-answer">{correct_answer}</button>
+          <div key={index}>
+            <p data-testid="question-category">{ category }</p>
+            <p data-testid="question-text">{ question }</p>
+            <button key={correct_answer} data-testid="correct-answer" onClick={ correct } >{ correct_answer }</button>
             {incorrect_answers.map((item,index) => (
               <button key={ index } data-testid={`wrong-answer-${index}`}>{item}</button>
             ))}

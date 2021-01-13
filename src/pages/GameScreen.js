@@ -4,7 +4,15 @@ import { CustomHeader, CustomGame } from '../components';
 import triviaReducer from '../reducers/triviaReducer';
 import { getStorage } from '../services/localStorage';
 
-class GameScreen extends Component { 
+class GameScreen extends Component {
+  constructor() {
+    super()
+    this.correctSubimit = this.correctSubimit.bind(this);
+  }
+  correctSubimit() {
+    alert('resposta_correta')
+  }
+
   render() {
     const { name, email, trivia } = this.props
     console.log(trivia)
@@ -12,7 +20,7 @@ class GameScreen extends Component {
     return (
       <div>
         <CustomHeader name={name} email={email} />
-        <CustomGame challenge={trivia} />
+        <CustomGame challenge={trivia} correct={ this.correctSubimit } />
       </div>
     );
   }
