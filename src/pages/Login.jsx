@@ -71,8 +71,6 @@ class Login extends React.Component {
   handleChange(event) {
     event.preventDefault();
     this.handleFetch();
-    // console.log(this.state); // deve trazer o estado name, email e token. doneName e doneEmail false
-    // this.loadTokenToLocalStorage(); //Logica para passar token do estado para localStorage
   }
 
   testEmail(value) {

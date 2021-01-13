@@ -35,7 +35,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Rowdies&display=swap') ;
 
 .container-fluid {
-  background-image: url('./img/bg-image.jpg');
+  background-image: url('./image/bg-image.jpg');
   background-position: fixed;
   background-repeat: no-repeat;
   background-size: cover;
@@ -48,21 +48,28 @@
 .container-form {
   align-items: center;
   display: flex;
+  height: 100vh;
   justify-content: center;
 }
 
 .bottom-content {
   background-color: white;
   color: #afaaaa;
-  font-size: 15pt;
+  font-size: 9pt;
   text-align: center;
   width: 100%;
 }
 
 .form-login {
+  background-color: white;
   border-radius: 5px;
-  box-shadow: 1px 4px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: 1px 4px 5px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  margin: 50px;
+  min-height: 150px;
   padding: 10px;
+  width: 250px;
 }
 
 .label-form {
@@ -87,7 +94,14 @@
 .btn-actions {
   border: none;
   border-radius: 5px;
+  cursor: pointer;
+  font-weight: 700;
+  margin-top: 20px;
   padding: 10px;
+}
+
+.btn-actions:hover {
+  box-shadow: 1px 1px 4px rgba(11, 148, 182, 0.63);
 }
 
 .header {
@@ -100,4 +114,30 @@
 
 .logo .score .player .avatar {
   flex: 1;
+}
+
+.answer {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.questions {
+  background-color: #dbdada;
+  border: none;
+  border-radius: 5px;
+  margin: 5px;
+  margin-bottom: 10px;
+  padding: 5px;
+}
+
+.timer {
+  background-color: #e6e6e6;
+  border: none;
+  border-radius: 5px;
+  color: red;
+  font-size: 10pt;
+  font-weight: 700;
+  margin-top: 10px;
+  padding: 10px;
+  text-align: center;
 }
