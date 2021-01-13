@@ -11,6 +11,8 @@ class Game extends Component {
     this.renderAllDataQuestion = this.renderAllDataQuestion.bind(this);
     this.handleUserAnswer = this.handleUserAnswer.bind(this);
     this.timer = this.timer.bind(this);
+    this.shuffle = this.shuffle.bind(this);
+
     this.state = {
       questionIndex: 0,
       timer: 30,
@@ -61,6 +63,25 @@ class Game extends Component {
     });
   }
 
+  shuffle(array) {
+    var currentIndex = array.length, temporaryValue, randomIndex;
+  
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+  
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+  
+      // And swap it with the current element.
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+  
+    return array;
+  }
+
   renderAllDataQuestion() {
     // console.log()
     const { questionIndex, disableButton } = this.state;
@@ -92,7 +113,9 @@ class Game extends Component {
             {answer}
           </button>
         ));
-      return [correctAnswer, ...wrongAnswer];
+
+      const arrayAnswers = [correctAnswer, ...wrongAnswer];
+      return arrayAnswers;
     }
   }
 
@@ -110,7 +133,7 @@ class Game extends Component {
           {questions.results[questionIndex].question}
         </h2>
         <div>{this.renderAllDataQuestion()}</div>
-        <p>{ timer }</p>
+        <p>{timer}</p>
       </div>
     ) : (
       <p>loading</p>
