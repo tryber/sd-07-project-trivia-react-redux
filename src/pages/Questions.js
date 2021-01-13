@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 
 class Questions extends React.Component {
   constructor() {
@@ -13,6 +14,7 @@ class Questions extends React.Component {
         incorrect_answers: [] }],
       index: 0,
       status: true,
+      finalQuestion: false,
     };
     this.fetchQuestions = this.fetchQuestions.bind(this);
     this.nextQuestion = this.nextQuestion.bind(this);
@@ -34,9 +36,14 @@ class Questions extends React.Component {
 
   nextQuestion() {
     const { index } = this.state;
-    this.setState({
+    if(index<4) {this.setState({
       index: index + 1,
-    });
+    });}
+    else {
+      this.setState({
+        finalQuestion: true,
+      })
+    }
   }
 
   clickButton() {
@@ -46,7 +53,12 @@ class Questions extends React.Component {
   }
 
   render() {
-    const { questions, index, status } = this.state;
+    const { questions, index, status, finalQuestion } = this.state;
+    if (finalQuestion) {
+      return (
+        <Redirect to='/feedback'/>
+      )
+    }
     return (
       <div>
         <h3>
