@@ -20,23 +20,22 @@ class Question extends Component {
 
   /*
   if (random === 0) {
-      
+  
     this.renderCorrectAnswer(questions[random]);
     const newQuestions = questions.filter((question) => question === questions[random]);
     counter -= 1;
     return this.renderAnswers(counter, newQuestions);
   };
   if (random === 1) {
-      
+
   }
   this.renderAnswers(counter, array);
   } */
 
-  getAnswers(object) {
-    const { correct_answer, incorrect_answers } = object;
+  getAnswers(obj) {
     const questions = [
-      { correctAnswer: correct_answer },
-      { incorrectAnswer: incorrect_answers },
+      { correctAnswer: obj.correct_answer },
+      { incorrectAnswer: obj.incorrect_answers },
     ];
     let counter = 1;
     if (incorrect_answers.length > counter) {
@@ -78,5 +77,5 @@ Question.propTypes = {
   item: propTypes.shape({
     category: propTypes.string,
     question: propTypes.string,
-  })
+  });
 }.isRequired;
