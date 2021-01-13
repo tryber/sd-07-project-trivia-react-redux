@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { addScore } from '../Redux/Actions';
-
 import './Questions.css';
+import { Redirect } from 'react-router-dom';
 
 class Questions extends React.Component {
   constructor() {
@@ -21,6 +21,7 @@ class Questions extends React.Component {
       assertions: 0,
       showAnswers: false,
       seconds: 30,
+      finalQuestion: false,
     };
     this.fetchQuestions = this.fetchQuestions.bind(this);
     this.nextQuestion = this.nextQuestion.bind(this);
@@ -55,10 +56,16 @@ class Questions extends React.Component {
 
   nextQuestion() {
     const { index } = this.state;
-    this.setState({
-      index: index + 1,
-      seconds: 30,
-    });
+    if (index < 4) {
+      this.setState({
+        index: index + 1,
+        seconds: 30
+      });
+    } else {
+      this.setState({
+        finalQuestion: true,
+      })
+    }
   }
 
   clickRightAnswer() {
@@ -98,20 +105,21 @@ class Questions extends React.Component {
   }
 
   render() {
-    const { questions, index, status, showAnswers, seconds } = this.state;
+    const { questions, index, status, showAnswers, seconds, finalQuestion } = this.state;
+    if (finalQuestion) {
+      return (
+        <Redirect to='/feedback' />
+      )
+    }
     return (
       <div>
         <h3>
           Question
         </h3>
         <div id="bloco-pergunta">
-          <div id="categoria-pergunta">
-            <span
-              data-testid="question-category"
-            >
-              Category:
-              {questions[index].category}
-            </span>
+          <div id="categoria-pergunta" data-testid="question-category">
+            Category:
+            {questions[index].category}
           </div>
         </div>
         <span data-testid="question-text">
@@ -119,39 +127,39 @@ class Questions extends React.Component {
         </span>
         <div id="bloco-respostas">
           <button
-            onClick={ this.clickRightAnswer }
-            disabled={ seconds === 0 }
+            onClick={this.clickRightAnswer}
+            disabled={seconds === 0}
             type="button"
             key="correct"
             data-testid="correct-answer"
-            className={ showAnswers ? 'correct' : '' }
+            className={showAnswers ? 'correct' : ''}
           >
             {questions[index].correct_answer}
           </button>
           {questions[index].incorrect_answers
             .map((item, itemIndex) => (
               <button
-                onClick={ this.clickButtonAnswer }
-                disabled={ seconds === 0 }
+                onClick={this.clickButtonAnswer}
+                disabled={seconds === 0}
                 type="button"
                 key="incorrect"
-                data-testid={ `wrong-answer-${itemIndex}` }
-                className={ showAnswers ? 'incorrect' : '' }
+                data-testid={`wrong-answer-${itemIndex}`}
+                className={showAnswers ? 'incorrect' : ''}
               >
-                { item }
+                { item}
               </button>))}
         </div>
         <button
-          className={ status ? 'unvisible' : '' }
+          className={status ? 'unvisible' : ''}
           type="button"
           data-testid="btn-next"
-          onClick={ this.nextQuestion }
+          onClick={this.nextQuestion}
         >
           Next
         </button>
         <span>
           Tempo restante:
-          { seconds }
+          {seconds}
         </span>
       </div>
     );
