@@ -1,7 +1,6 @@
 const INITIAL_STATE = {
   questions: '',
 };
-
 const question = (state = INITIAL_STATE, action) => {
   const { type, data } = action;
   switch (type) {
