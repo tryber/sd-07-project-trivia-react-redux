@@ -55,3 +55,14 @@
     transform: translate3d(4px, 0, 0);
   }
 }
+
+.btnColorRed {
+  border: 3px solid rgb(6, 240, 15);
+  display: none
+  
+  }
+  
+  .btnColorBlue {
+   border: 3px solid rgb(255, 0, 0)
+  
+  }
