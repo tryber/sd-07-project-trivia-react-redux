@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { ResultToken } from '../services/Api';
 
 class Login extends Component {
   constructor() {
@@ -20,7 +22,7 @@ class Login extends Component {
   }
 
   handleClick() {
-    console.log('clicou');
+    ResultToken();
   }
 
   render() {
@@ -48,14 +50,16 @@ class Login extends Component {
             onChange={ this.handleInputChange }
           />
         </label>
-        <button
-          type="button"
-          data-testid="btn-play"
-          onClick={ this.handleClick }
-          disabled={ !bothValid }
-        >
-          Jogar
-        </button>
+        <Link to="/jogo">
+          <button
+            type="button"
+            data-testid="btn-play"
+            onClick={ this.handleClick }
+            disabled={ !bothValid }
+          >
+            Jogar
+          </button>
+        </Link>
       </form>
     );
   }
