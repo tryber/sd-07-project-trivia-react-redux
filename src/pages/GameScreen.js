@@ -18,9 +18,13 @@ class GameScreen extends Component {
       wrong: '',
       buttonNext: false,
       id: 1,
+      disabledTimeOut: false,
+      timer: 25,
     };
     this.handleQuest = this.handleQuest.bind(this);
     this.changeStyle = this.changeStyle.bind(this);
+    this.timeOut = this.timeOut.bind(this);
+    this.disableQuestion = this.disableQuestion.bind(this);
     this.nextQuestion = this.nextQuestion.bind(this);
   }
 
@@ -28,11 +32,12 @@ class GameScreen extends Component {
     const { actionRequest } = this.props;
     await actionRequest();
     this.handleQuest();
+    this.timeOut();
   }
 
   handleQuest() {
     const { quest } = this.props;
-    console.log(quest);
+    console.log('q', quest);
     if (quest.length === 0) {
       return null;
     }
@@ -61,9 +66,36 @@ class GameScreen extends Component {
     });
   }
 
+  disableQuestion() {
+    const { timer } = this.state;
+    if (timer <= 0) {
+      this.setState({ disabledTimeOut: true });
+    }
+  }
+
+  timeOut() {
+    const ONE_SEC = 1000;
+    setInterval(() => {
+      this.setState((state) => ({
+        timer: state.timer - 1,
+      }), this.disableQuestion);
+    }, ONE_SEC);
+  }
+
   render() {
     console.log('state:', this.state);
-    const { category, question, resps, right, wrong, buttonNext } = this.state;
+
+    const {
+      category,
+      question,
+      resps,
+      right,
+      wrong,
+      disabledTimeOut,
+      timer,
+      buttonNext,
+    } = this.state;
+
     return (
       <div>
         <div>
@@ -79,6 +111,7 @@ class GameScreen extends Component {
               data-testid="correct-answer"
               type="button"
               onClick={ this.changeStyle }
+              disabled={ disabledTimeOut }
             >
               {resps[0]}
             </button>
@@ -87,6 +120,7 @@ class GameScreen extends Component {
               data-testid="wrong-answer-1"
               type="button"
               onClick={ this.changeStyle }
+              disabled={ disabledTimeOut }
             >
               {resps[1]}
             </button>
@@ -95,6 +129,7 @@ class GameScreen extends Component {
               data-testid="wrong-answer-2"
               type="button"
               onClick={ this.changeStyle }
+              disabled={ disabledTimeOut }
             >
               {resps[2]}
             </button>
@@ -103,6 +138,7 @@ class GameScreen extends Component {
               data-testid="wrong-answer-3"
               type="button"
               onClick={ this.changeStyle }
+              disabled={ disabledTimeOut }
             >
               {resps[3]}
             </button>
@@ -116,6 +152,7 @@ class GameScreen extends Component {
               Próxima
             </button>
           )}
+          {!disabledTimeOut && timer}
         </div>
       </div>
     );
