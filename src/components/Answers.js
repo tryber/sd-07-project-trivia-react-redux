@@ -9,7 +9,11 @@ class Answers extends React.Component {
     super(props);
     this.state = {
       index: 0,
-      counter: 30,
+      clicked: false,
+      sort: false,
+      next: true,
+      newCounter: 0,
+      nextUp: false,
     };
 
     this.mountQuestion = this.mountQuestion.bind(this);
@@ -25,27 +29,38 @@ class Answers extends React.Component {
       } = quest[index];
       const correctAnswer = { correct, id: true };
       const arrayAnswers = [correctAnswer, ...wrong];
-      for (let i = 0; i < arrayAnswers.length; i += 1) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [arrayAnswers[i], arrayAnswers[j]] = [arrayAnswers[j], arrayAnswers[i]]; // Foi pego no stackOverFlow
+      const { sort } = this.state;
+      if (sort) {
+        for (let i = 0; i < arrayAnswers.length; i += 1) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [arrayAnswers[i], arrayAnswers[j]] = [arrayAnswers[j], arrayAnswers[i]];
+          this.setState({ sort: true });
+        } // Foi pego no stackOverFlow
       }
       console.log(arrayAnswers);
       return (
         <div>
           <div>
-            <h3 key={ `category${index}` } data-testid="question-category">{ category }</h3>
+            <h3
+              key={ `category${index}` }
+              data-testid="question-category"
+            >
+              { category }
+            </h3>
             <h2 key={ `question${index}` } data-testid="question-text">{ question }</h2>
           </div>
           <div>
             <div>
               {arrayAnswers.map((element, set) => {
+                const { clicked } = this.state;
                 if (element.id) {
                   return (
                     <button
+                      className={ clicked ? 'wright-answer' : '' }
                       key={ `correct${set}` }
                       type="button"
                       data-testid="correct-answer"
-                      onClick={ () => this.setState({ index: index + 1 }) }
+                      onClick={ () => this.setState({ clicked: true, nextUp: true }) }
                     >
                       { correct }
                     </button>
@@ -53,10 +68,11 @@ class Answers extends React.Component {
                 }
                 return (
                   <button
+                    className={ clicked ? 'wrong-answer' : '' }
                     key={ `wrong${set}` }
                     type="button"
                     data-testid={ `wrong-answer-${'0'}` }
-                    onClick={ () => this.setState({ index: index + 1 }) }
+                    onClick={ () => this.setState({ clicked: true, nextUp: true }) }
                   >
                     { element }
                   </button>
@@ -71,7 +87,24 @@ class Answers extends React.Component {
 
   render() {
     const { questions } = this.props;
-    const { index } = this.state;
+    const { index, clicked, next, newCounter, nextUp } = this.state;
+    const nextButton = (
+      <button
+        type="button"
+        onClick={ () => {
+          this.setState({
+            index: index + 1,
+            clicked: false,
+            sort: false,
+            next: true,
+            newCounter: newCounter + 1,
+            nextUp: false,
+          });
+        } }
+      >
+        Próxima
+      </button>);
+
     console.log(questions);
     console.log(this.props);
     return (
@@ -79,8 +112,9 @@ class Answers extends React.Component {
         <Header />
         <h1>Joguinho</h1>
         { this.mountQuestion(questions, index) }
-        <Counter />
-        <button type="button">Próxima</button>
+        <Counter key={ newCounter } clicked={ clicked } next={ next } />
+        {nextUp ? nextButton : ''}
+
       </div>
     );
   }

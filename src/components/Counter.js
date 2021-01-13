@@ -5,7 +5,7 @@ class Counter extends React.Component {
     super(props);
     this.counterFunc = this.counterFunc.bind(this);
     this.state = {
-      count: 5,
+      count: 2,
     };
   }
 
@@ -13,11 +13,15 @@ class Counter extends React.Component {
     this.counterFunc();
   }
 
-  counterFunc() {
+  componentDidUpdate() {
+    const { clicked, next } = this.props;
     const { count } = this.state;
+    if (count === 0 || clicked) clearInterval(this.timer);
+  }
+
+  counterFunc() {
     const second = 1000;
     this.timer = setInterval(() => {
-      if (count === 0) clearInterval(this.timer);
       this.setState(({ count: counter }) => ({ count: counter - 1 }));
     }, second);
   }
