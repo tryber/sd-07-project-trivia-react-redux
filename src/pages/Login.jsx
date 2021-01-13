@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { fetchToken } from '../actions';
+import md5 from 'crypto-js/md5';
+import { fetchToken, fetchGravatar } from '../actions';
 
 class Login extends React.Component {
   constructor(props) {
@@ -12,6 +13,7 @@ class Login extends React.Component {
       email: '',
       doneEmail: false,
       doneName: false,
+      // token: '',
     };
     this.testEmail = this.testEmail.bind(this);
     this.testName = this.testName.bind(this);
@@ -36,7 +38,11 @@ class Login extends React.Component {
   }
 
   handleFetch() {
-    const { apiFetchToken } = this.props;
+    const { apiFetchToken, apiFetchGravatar } = this.props;
+    const { email } = this.state;
+    const hash = md5(email).toString().toLocaleLowerCase().trim(); // https://www.gravatar.com/avatar/b463ad6c517f53d7b179ece3079c23ed
+    // console.log(hash);
+    apiFetchGravatar(hash);
     apiFetchToken();
     this.loadTokenToLocalStorage();
   }
@@ -44,6 +50,8 @@ class Login extends React.Component {
   handleChange(event) {
     event.preventDefault();
     this.handleFetch();
+    // console.log(this.state); // deve trazer o estado name, email e token. doneName e doneEmail false
+    // this.loadTokenToLocalStorage(); //Logica para passar token do estado para localStorage
   }
 
   testEmail(value) {
@@ -59,7 +67,8 @@ class Login extends React.Component {
   }
 
   render() {
-    console.log(this.props);
+    // console.log(this.props);
+    // console.log(this.props);
     const { email, name, doneEmail, doneName } = this.state;
     const { token } = this.props;
     if (token.tokenData !== '') {
@@ -98,7 +107,7 @@ class Login extends React.Component {
             type="submit"
             data-testid="btn-play"
             disabled={ !doneName || !doneEmail }
-            onClick={ (event) => this.handleChange(event) }
+            onClick={ (event) => this.handleChange(event, email) }
           >
             Jogar
           </button>
@@ -115,15 +124,18 @@ class Login extends React.Component {
 
 const mapStateToProps = (state) => ({
   token: state.token,
+  gravatar: state.gravatar,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   apiFetchToken: () => dispatch(fetchToken()),
+  apiFetchGravatar: (value) => dispatch(fetchGravatar(value)),
 });
 
 Login.propTypes = {
   token: PropTypes.shape().isRequired,
   apiFetchToken: PropTypes.func.isRequired,
+  apiFetchGravatar: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

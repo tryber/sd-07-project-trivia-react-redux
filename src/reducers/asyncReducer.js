@@ -1,7 +1,6 @@
 const INITIAL_STATE = {
   questions: [],
 };
-
 const question = (state = INITIAL_STATE, action) => {
   console.log(action);
   const { type, questions } = action;
