@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { setQuestions } from '../actions';
 import Question from './Question';
@@ -16,6 +17,7 @@ class GameScreen extends React.Component {
       currentQuestion: 0,
       answered: false,
       timer: 30,
+      redirect: false,
     };
   }
 
@@ -47,12 +49,14 @@ class GameScreen extends React.Component {
         answered: false,
         timer: 30,
       });
+    } else if (currentQuestion === quantQuestions) {
+      this.setState({ redirect: true });
     }
   }
 
   render() {
     const { questions } = this.props;
-    const { currentQuestion, answered, timer } = this.state;
+    const { currentQuestion, answered, timer, redirect } = this.state;
     if (questions.length === 0) {
       return <div>carregando...</div>;
     }
@@ -66,6 +70,7 @@ class GameScreen extends React.Component {
         />
         <button
           type="button"
+          data-testid="btn-next"
           onClick={ () => this.clickNext() }
           className={ answered ? '' : 'nextBtn' }
           data-testid="btn-next"
@@ -73,6 +78,7 @@ class GameScreen extends React.Component {
           Próxima Questão
         </button>
         <h1>{timer}</h1>
+        {redirect && <Redirect to="/feedback" />}
       </div>
     );
   }
