@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchQuestions } from '../actions';
+import GameHeader from '../components/GameHeader';
 
 class Game extends React.Component {
   constructor() {
@@ -12,7 +13,6 @@ class Game extends React.Component {
   async componentDidMount() {
     const { requestQuestions, token } = this.props;
     await requestQuestions(token);
-    console.log(token);
   }
 
   shuffle(answers) {
@@ -62,24 +62,27 @@ class Game extends React.Component {
       }];
     const randomAnswers = this.shuffle(taggedAnswers);
     return (
-      <div key={ question.question }>
-        <h4 key={ question.category } data-testid="question-category">
-          {question.category}
-        </h4>
-        <h3 data-testid="question-text">
-          {question.question}
-        </h3>
-        {randomAnswers.map((answer) => (
-          <button
-            type="button"
-            key={ answer.answer }
-            data-testid={ answer.correct
-              ? 'correct-answer'
-              : `wrong-answer-${answer.index}` }
-          >
-            {answer.answer}
-          </button>
-        ))}
+      <div>
+        <GameHeader />
+        <div key={ question.question }>
+          <h4 key={ question.category } data-testid="question-category">
+            {question.category}
+          </h4>
+          <h3 data-testid="question-text">
+            {question.question}
+          </h3>
+          {randomAnswers.map((answer) => (
+            <button
+              type="button"
+              key={ answer.answer }
+              data-testid={ answer.correct
+                ? 'correct-answer'
+                : `wrong-answer-${answer.index}` }
+            >
+              {answer.answer}
+            </button>
+          ))}
+        </div>
       </div>
     );
   }
