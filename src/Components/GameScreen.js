@@ -67,13 +67,13 @@ class GameScreen extends React.Component {
           currentQuestion={ currentQuestion }
           answered={ answered }
           clickAnswered={ this.clickAnswered }
+          timer={ timer }
         />
         <button
           type="button"
           data-testid="btn-next"
           onClick={ () => this.clickNext() }
           className={ answered ? '' : 'nextBtn' }
-          data-testid="btn-next"
         >
           Próxima Questão
         </button>

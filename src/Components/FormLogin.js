@@ -31,6 +31,15 @@ class FormLogin extends React.Component {
     setUser(name, email);
     const { token } = await getToken();
     localStorage.setItem('token', token);
+    const state = {
+      player: {
+        nome: name,
+        assertions: 0,
+        score: 0,
+        gravatarEmail: email,
+      },
+    };
+    localStorage.setItem('state', JSON.stringify(state));
     this.setState({
       redirect: true,
     });
