@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Timer from 'react-compound-timer';
 import GridQuestions from './GridQuestions';
 import Header from './Header';
 
@@ -8,6 +9,10 @@ class Game extends Component {
       <div>
         <Header />
         <GridQuestions />
+        <Timer initialTime={ 30000 } direction="backward">
+          {() => (
+            <Timer.Seconds />)}
+        </Timer>
       </div>
     );
   }
