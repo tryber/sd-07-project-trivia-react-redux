@@ -28,15 +28,16 @@ class Login extends Component {
     }
   }
 
-  async handleSubmit() {
+   handleSubmit() {
     const { dispatchEmail, dispatchToken, dispatchNome,dispatchTrivia } = this.props;
     const { email, nome } = this.state;
     dispatchEmail(email);
     dispatchNome(nome);
-    await dispatchToken(setStorage);
-    await dispatchTrivia(getStorage('token'));
-
+    dispatchToken(setStorage);
+    dispatchTrivia(getStorage('token'));
   }
+
+  
 
   handleInputChange({ target: { name, value } }) {
     this.setState({ [name]: value }, this.validaInput);
