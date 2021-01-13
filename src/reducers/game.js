@@ -4,6 +4,7 @@ const INITIAL_STATE = {
   isLoading: false,
   error: '',
   questions: {},
+  score: 0,
 };
 
 const gameReducer = (state = INITIAL_STATE, action) => {

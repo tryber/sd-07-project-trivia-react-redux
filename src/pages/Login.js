@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
 import { login, fetchToken } from '../actions/index';
 
 class Login extends React.Component {
@@ -38,22 +37,19 @@ class Login extends React.Component {
     this.setState({ name: value });
   }
 
-  handleClick() {
+  async handleClick() {
     const { history, tokenAction, token } = this.props;
-    history.push('/game');
-    tokenAction();
+    await tokenAction();
     localStorage.setItem('token', token);
+    history.push('/game');
   }
 
   render() {
     const { authentication, email, name } = this.state;
-    const { loggingin, logged } = this.props;
+    const { loginAction } = this.props;
     const numberCharacters = 1;
     const { history } = this.props;
 
-    if (logged) {
-      return <Redirect to="/" />;
-    }
     return (
       <div>
         <input
@@ -69,7 +65,7 @@ class Login extends React.Component {
           disabled={ !authentication || name.length < numberCharacters }
           type="button"
           onClick={ () => {
-            loggingin(name, email);
+            loginAction(name, email);
             this.handleClick();
           } }
         >
@@ -88,18 +84,16 @@ class Login extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  loggingin: (name, email) => dispatch(login(name, email)),
+  loginAction: (name, email) => dispatch(login(name, email)),
   tokenAction: (token) => dispatch(fetchToken(token)),
 });
 
 const mapStateToProps = (state) => ({
-  logged: state.login,
-  token: state.fetch.token,
+  token: state.login.token,
 });
 
 Login.propTypes = {
-  loggingin: PropTypes.func.isRequired,
-  logged: PropTypes.bool.isRequired,
+  loginAction: PropTypes.func.isRequired,
   history: PropTypes.func.isRequired,
   tokenAction: PropTypes.func.isRequired,
   token: PropTypes.string.isRequired,
