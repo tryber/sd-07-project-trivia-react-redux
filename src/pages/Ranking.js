@@ -20,12 +20,13 @@ class Ranking extends React.Component {
   }
 
   render() {
+    const { login } = this.state;
+
     localStorage.setItem('ranking', JSON.stringify(rank));
 
     const localRanking = JSON.parse(localStorage.getItem('ranking'))
-      .sort((a, b) => a.score > b.score ? -1 : a.score < b.score ? 1 : 0);
+      .sort((a, b) => a.score - b.score);
 
-    const { login } = this.state;
     if (login) return <Redirect to="/" />;
     return (
       <div>
@@ -35,7 +36,7 @@ class Ranking extends React.Component {
             Ranking
           </p>
           <div className="class-ranking">
-            {localRanking.map(({ picture, nome, score }, index = 1) => (
+            {localRanking.map(({ picture, nome, score }, index) => (
               <div key={ nome }>
                 <img src={ picture } className="imagem-ranking" alt="ranking" />
                 {' '}
