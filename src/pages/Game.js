@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { fetchQuestions } from '../actions/index';
+import Header from '../Components/Header';
 
 class Game extends Component {
   constructor(props) {
@@ -24,62 +25,43 @@ class Game extends Component {
   }
 
   render() {
-    const { name, questions, isFetching } = this.props;
+    const { questions, isFetching } = this.props;
     if (isFetching) {
       return <p>Loading</p>;
     }
     return (
       <div>
-        <header>
-          <img
-            alt="Imagem do Gravatar"
-            data-testid="header-profile-picture"
-            src="https://img.ibxk.com.br/2014/06/06/06165614150388.jpg?w=1120&h=420&mode=crop&scale=both"
-          />
-          <h2
-            data-testid="header-player-name"
-          >
-            {name}
-          </h2>
-          <h2
-            data-testid="header-score"
-          >
-            0
-          </h2>
-        </header>
+        <Header />
         <section>
           <div>
-            {questions && questions.map(
-              (question) => (
-                <div key={ Math.random() }>
-                  <h5 data-testid="question-category">
-                    { question.category }
-                  </h5>
-                  <h5 data-testid="question-text">
-                    { question.question }
-                  </h5>
-                  <button
-                    data-testid="correct-answer"
-                    value="correct"
-                    type="button"
-                    onClick={ (e) => this.answerAnalyze(e) }
-                  >
-                    {question.correct_answer}
-                  </button>
-                  {question.incorrect_answers
-                    .map((answer, index) => (
-                      <button
-                        key={ index }
-                        data-testid={ `wrong-answer-${index}` }
-                        value="incorrect"
-                        type="button"
-                        onClick={ (e) => this.answerAnalyze(e) }
-                      >
-                        { answer }
-                      </button>))}
-                </div>
-              ),
-            )}
+            { questions && (
+              <div key={ Math.random() }>
+                <h5 data-testid="question-category">
+                  { questions[0].category }
+                </h5>
+                <h5 data-testid="question-text">
+                  { questions[0].question }
+                </h5>
+                <button
+                  data-testid="correct-answer"
+                  value="correct"
+                  type="button"
+                  onClick={ (e) => this.answerAnalyze(e) }
+                >
+                  {questions[0].correct_answer}
+                </button>
+                {questions[0].incorrect_answers
+                  .map((answer, index) => (
+                    <button
+                      key={ index }
+                      data-testid={ `wrong-answer-${index}` }
+                      value="incorrect"
+                      type="button"
+                      onClick={ (e) => this.answerAnalyze(e) }
+                    >
+                      { answer }
+                    </button>))}
+              </div>)}
           </div>
         </section>
       </div>
@@ -88,7 +70,6 @@ class Game extends Component {
 }
 
 Game.propTypes = {
-  name: PropTypes.string.isRequired,
   getQuestions: PropTypes.func.isRequired,
   token: PropTypes.string.isRequired,
   questions: PropTypes.arrayOf(PropTypes.object).isRequired,
@@ -96,7 +77,6 @@ Game.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  name: state.userReducer.name,
   token: state.tokenReducer.token,
   questions: state.questionsReducer.questions,
   isFetching: state.questionsReducer.isFetching,
