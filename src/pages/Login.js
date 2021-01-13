@@ -19,7 +19,7 @@ class Login extends Component {
   }
 
   componentDidMount() {
-    const { fetchTokenAction } = this.props
+    const { fetchTokenAction } = this.props;
     fetchTokenAction();
     this.setToken();
   }
@@ -28,7 +28,7 @@ class Login extends Component {
     const { token } = this.state;
     this.setState({
       token: token.token,
-    }); 
+    });
   }
 
   async saveToken() {
@@ -52,28 +52,28 @@ class Login extends Component {
         </Link>
         <form>
           <input
-            value={name}
+            value={ name }
             name="name"
             type="text"
             data-testid="input-player-name"
             placeholder="Digite seu nome"
-            onChange={(e) => this.setState({ name: e.target.value })}
+            onChange={ (e) => this.setState({ name: e.target.value }) }
           />
           <input
-            value={email}
+            value={ email }
             name="email"
             type="email"
             data-testid="input-gravatar-email"
             placeholder="Digite seu e-mail"
-            onChange={(e) => this.setState({ email: e.target.value })}
+            onChange={ (e) => this.setState({ email: e.target.value }) }
           />
         </form>
         <Link to="/game">
           <button
             type="button"
             data-testid="btn-play"
-            disabled={!email || !name}
-            onClick={this.saveToken}
+            disabled={ !email || !name }
+            onClick={ this.saveToken }
           >
             Jogar
           </button>
@@ -85,6 +85,7 @@ class Login extends Component {
 
 Login.propTypes = {
   userLogin: PropTypes.func.isRequired,
+  fetchTokenAction: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({

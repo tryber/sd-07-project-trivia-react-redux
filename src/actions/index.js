@@ -50,7 +50,7 @@ export const fetchToken = () => async (dispatch) => {
 };
 
 export const fetchQuestions = (token) => async (dispatch) => {
-  const endPoint = `https://opentdb.com/api.php?amount=5&token-$${token}`
+  const endPoint = `https://opentdb.com/api.php?amount=5&token-$${token}`;
   try {
     dispatch(requestQuestions);
     const response = await fetch(endPoint);
