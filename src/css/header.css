@@ -1,15 +1,15 @@
 .header-nav {
   align-items: center;
-  background: #000000;
+  background: black;
   border: 4px solid white;
   border-radius: 6px;
+  box-shadow: 0 0 30px 5px white;
   box-sizing: border-box;
-  box-shadow: 0px 0px 30px 5px white;
   display: flex;
   height: 140px;
   justify-content: space-between;
   opacity: 0.5;
-  width: 1550px;  
+  width: 1550px;
 }
 
 .header-logo {
@@ -26,10 +26,8 @@
   color: white;
   display: flex;
   flex-direction: column;
-  font-family: Roboto;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-size: 32px;
-  font-style: normal;
-  font-weight: normal;
   line-height: 37px;
   text-align: center;
 }
