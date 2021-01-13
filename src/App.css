@@ -141,3 +141,13 @@
   padding: 10px;
   text-align: center;
 }
+
+.correct-answer {
+  border:3px solid rgb(6, 240, 15);
+  border-radius: 5px;
+}
+
+.wrong-answer {
+  border: 3px solid rgb(255, 0, 0);
+  border-radius: 5px;
+}

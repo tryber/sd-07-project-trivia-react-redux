@@ -9,7 +9,7 @@ class QuestionForm extends React.Component {
       <div className="form-login">
         <div className="question" />
         <Question />
-        <label htmlFor="answer_1" className="label-form answer">
+        <label htmlFor="answer_1" className="label-form answer wrong-answer">
           <input type="radio" name="answer" id="answer_1" value="answer_5" />
           answer_1
         </label>
