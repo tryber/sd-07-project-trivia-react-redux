@@ -32,6 +32,20 @@ export const requestApiToken = () => ({
   type: 'REQUEST_TOKEN_API',
 });
 
+const gravatarToStoreSucess = (payload) => ({
+  type: 'CREATE_GRAVATAR_SUCCESS',
+  payload,
+});
+
+const gravatarToStoreFail = (error) => ({
+  type: 'CREAT_GRAVATAR_FAIL',
+  error,
+});
+
+export const requestApiGravatar = () => ({
+  type: 'REQUEST_GRAVATAR_API',
+});
+
 export function requestToken() {
   return (dispatch) => {
     dispatch(requestApiToken());
@@ -40,6 +54,18 @@ export function requestToken() {
         response.json().then(
           (data) => dispatch(tokenToStoreSucess(data.token)),
           (error) => dispatch(tokenToStoreFail(error)),
+        );
+      });
+  };
+}
+export function requestGravatar(hash) {
+  return (dispatch) => {
+    dispatch(requestApiGravatar(hash));
+    return fetch(`https://www.gravatar.com/avatar/${hash}`)
+      .then((response) => {
+        response.json().then(
+          (data) => dispatch(gravatarToStoreSucess(data)),
+          (error) => dispatch(gravatarToStoreFail(error)),
         );
       });
   };
