@@ -6,7 +6,7 @@
   flex-flow: row wrap;
   align-items: center;
   justify-content: space-between;
-  margin: 0 50px;
+  margin: 0;
 }
 
 .header {

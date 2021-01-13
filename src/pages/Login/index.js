@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Header, Question, LoginForm, RankingItem } from '../../components';
+import { LoginForm, ConfigButton } from '../../components';
 import './style.css';
 
 class Login extends Component {
@@ -7,6 +7,7 @@ class Login extends Component {
     return (
       <div>
         <LoginForm />
+        <ConfigButton />
       </div>
     );
   }
