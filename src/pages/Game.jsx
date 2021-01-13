@@ -4,12 +4,13 @@ import Header from '../components/Header';
 
 const Game = () => {
   const [counter, setCounter] = useState(0);
+  const [isEnable, setIsEnable] = useState(false);
   const [color, setColor] = useState({
     style1: '',
     style2: '',
   });
   const [assertions, setAssertion] = useState('');
-  const tempMax = 5;
+  const tempMax = 30;
   const [time, setTime] = useState(tempMax);
 
   const handleQuestion = () => {
@@ -25,6 +26,7 @@ const Game = () => {
     });
 
     setTime(tempMax);
+    setIsEnable(false);
   };
 
   let intervalId;
@@ -43,7 +45,10 @@ const Game = () => {
   };
 
   useEffect(() => {
-    if (!time) return;
+    if (!time) {
+      setIsEnable(true);
+      return;
+    }
 
     const maxTime = 1000;
     intervalId = setInterval(() => {
@@ -77,6 +82,7 @@ const Game = () => {
           data-testid="correct-answer"
           className={ color.style1 }
           onClick={ handleClickAnswer }
+          disabled={ isEnable }
         >
           {results[counter].correct_answer}
         </button>
@@ -90,13 +96,18 @@ const Game = () => {
             data-testid={ `wrong-answer-${index}` }
             className={ color.style2 }
             onClick={ handleClickAnswer }
+            disabled={ isEnable }
           >
             {answer}
           </button>
         ))}
       </div>
       <div>
-        <button type="button" data-testid="btn-next" onClick={ handleQuestion }>
+        <button
+          type="button"
+          data-testid="btn-next"
+          onClick={ handleQuestion }
+        >
           Próxima
         </button>
       </div>
