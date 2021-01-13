@@ -11,8 +11,8 @@ const Routes = () => (
     <Route exact path="/" component={ Login } />
     <Route exact path="/jogo" component={ Game } />
     <Route path="/config" component={ Settings } />
-    <Route path="/feedback" component={Feedback}/>
-    <Route path="/ranking" component={Ranking} />
+    <Route path="/feedback" component={ Feedback } />
+    <Route path="/ranking" component={ Ranking } />
   </Switch>
 );
 
