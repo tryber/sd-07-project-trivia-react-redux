@@ -1,7 +1,8 @@
 import { thunkApiQuestions } from './question';
-import { thunkApiToken } from './player';
+import { thunkApiToken, setName } from './player';
 
-export default {
+export {
   thunkApiQuestions,
   thunkApiToken,
+  setName,
 };

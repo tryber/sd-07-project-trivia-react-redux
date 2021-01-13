@@ -1,6 +1,6 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import thunkApiQuestions from '../actions'
+// import { connect } from 'react-redux';
+// import thunkApiQuestions from '../actions'
 
 class Game extends React.Component {
   constructor(props) {
@@ -20,12 +20,4 @@ class Game extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
-
-};
-
-const mapDispatchToProps = (dispatch) => {
-
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Game);
+export default Game;

@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import thunkApiToken from '../actions';
+import { thunkApiToken } from '../actions';
+import { connect } from 'react-redux';
+import { setName } from '../actions';
 
 class Login extends React.Component {
   constructor(props) {
@@ -37,8 +39,11 @@ class Login extends React.Component {
   }
 
   routeChangeGame() {
-    const { history } = this.props;
-    this.addToken();
+    const { email } = this.state;
+    const { history, sendName } = this.props;
+    console.log(this.props)
+    sendName(email);
+    // this.addToken();
     history.push('/game');
   }
 
@@ -46,6 +51,7 @@ class Login extends React.Component {
     const fetchToken = await thunkApiToken();
     console.log(fetchToken);
     const { token } = fetchToken;
+    console.log(token);
     if (Storage) {
       const tokens = JSON.parse(localStorage.getItem('token'));
       const values = tokens === null ? [] : tokens;
@@ -108,4 +114,9 @@ Login.propTypes = {
   }).isRequired,
 };
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  sendName: (email) => dispatch(setName(email))
+});
+
+export default connect(null, mapDispatchToProps)(Login);
+
