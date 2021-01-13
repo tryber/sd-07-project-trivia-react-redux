@@ -33,7 +33,7 @@ class Login extends Component {
           type="text"
           name="email"
           placeholder="Email"
-          data-testid="email-input"
+          data-testid="input-gravatar-email"
         />
         <input
           onChange={ this.onChangeHandler }
@@ -45,6 +45,7 @@ class Login extends Component {
         <button
           disabled={ isLoginOk(email, userName) }
           type="submit"
+          data-testid="btn-play"
           onClick={ () => userLoggin({ email, userName }) }
         >
           Jogar
