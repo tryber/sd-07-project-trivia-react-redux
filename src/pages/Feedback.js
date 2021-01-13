@@ -1,7 +1,12 @@
 import React from 'react';
 
 class Feedback extends React.Component {
-  
+  constructor() {
+    super();
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+
   handleClick() {
     const { history } = this.props;
     history.push('/ranking');
@@ -16,7 +21,7 @@ class Feedback extends React.Component {
           data-testid="btn-ranking"
           type="button"
         >
-          Ranking
+          Ver Ranking
         </button>
       </div>
     );
