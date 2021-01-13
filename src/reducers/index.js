@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import Header from './Header';
+import player from './player';
 
 const rootReducer = combineReducers({
-  Header,
+  player,
 });
 
 export default rootReducer;
