@@ -1,4 +1,5 @@
 import Header from './Header';
 import QuestionsList from './QuestionsList';
+import GameTimer from './GameTimer';
 
-export { Header, QuestionsList };
+export { Header, QuestionsList, GameTimer };
