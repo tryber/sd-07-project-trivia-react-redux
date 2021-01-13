@@ -4,7 +4,6 @@ import questionAnswererd from './questionAnswererd';
 import throwTimer from './throwTimer';
 import player from './playerReducer';
 
-
 export default combineReducers({
   token,
   questionAnswererd,
