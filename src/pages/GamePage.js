@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import Header from '../components/Header';
 import { fetchThunk } from '../redux/actions';
 
@@ -11,8 +11,12 @@ class GamePage extends Component {
     this.pergunta = this.pergunta.bind(this);
     this.select = this.select.bind(this);
     this.localset = this.localset.bind(this);
+    // this.changeQUestions = this.changeQUestions.bind(this);
+    this.changeQUestionsAndFinnish = this.changeQUestionsAndFinnish.bind(this);
     this.state = {
       indexx: 0,
+      nextQuestion: false,
+      finnish: false,
       errado: { border: '2px solid rgb(0, 0, 0)' },
       certo: { border: '2px solid rgb(0, 0, 0)' },
       obj: {},
@@ -32,6 +36,7 @@ class GamePage extends Component {
 
   select(pram, dif) {
     const { obj } = this.state;
+    this.setState({ nextQuestion: true });
     let PD = 0;
     this.setState({
       errado: { border: '3px solid rgb(255, 0, 0)' },
@@ -53,10 +58,27 @@ class GamePage extends Component {
     if (pram === 'certo') {
       const pontos = (2 * 2 * 2 + 2) + (1 * PD);
       const total = pontos + obj.player.score;
+      const acertos = obj.player.assertions + 1;
       const objobj = obj;
       objobj.player.score = total;
+      objobj.player.assertions = acertos;
       this.setState({ obj: objobj });
       localStorage.setItem('state', JSON.stringify(objobj));
+    }
+  }
+
+  changeQUestionsAndFinnish() {
+    const { indexx } = this.state;
+    const numberFour = 4;
+    if (indexx === numberFour) {
+      this.setState({ finnish: true });
+    } else {
+      this.setState((prevState) => ({
+        indexx: prevState.indexx + 1,
+        nextQuestion: false,
+        errado: { border: '2px solid rgb(0, 0, 0)' },
+        certo: { border: '2px solid rgb(0, 0, 0)' } }
+      ));
     }
   }
 
@@ -95,12 +117,22 @@ class GamePage extends Component {
 
   render() {
     const { loading } = this.props;
+    const { nextQuestion, finnish } = this.state;
     return (
       <div>
         <Header />
         { loading ? <p>loading</p> : this.pergunta() }
         <Link to="/feedback">Feedback</Link>
-        <button type="button" data-testid="btn-next">Next</button>
+        {nextQuestion && (
+          <button
+            type="button"
+            data-testid="btn-next"
+            onClick={ this.changeQUestionsAndFinnish }
+          >
+            Next
+          </button>
+        )}
+        {finnish && <Redirect to="/feedback" />}
       </div>
     );
   }

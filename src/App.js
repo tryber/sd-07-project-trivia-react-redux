@@ -2,10 +2,10 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import './App.css';
 import Login from './pages/Login';
-import GamePage from './pages/GamePage';
 import Settings from './pages/Settings';
 import Feedback from './pages/Feedback';
 import Ranking from './pages/Ranking';
+import GamePage from './pages/GamePage';
 
 export default function App() {
   return (
