@@ -21,6 +21,8 @@ class GameScreen extends Component {
   }
 
   questFrame() {
+    // return <p>Loading</p>;
+
     const { questions } = this.props;
     const { actual, correct } = this.state;
     let counter = 0;
@@ -80,8 +82,6 @@ class GameScreen extends Component {
         </div>
       );
     }
-
-    return <p>Loading...</p>;
   }
 
   render() {
