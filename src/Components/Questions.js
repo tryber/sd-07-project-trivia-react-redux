@@ -38,9 +38,9 @@ class Questions extends React.Component {
           <div>
             {`Questão número ${questionNumber + 1}`}
             <div>
-              <h2 data-testid="question-category">
+              <p data-testid="question-category">
                 {questions[questionNumber].category}
-              </h2>
+              </p>
               <p data-testid="question-text">
                 {questions[questionNumber].question}
               </p>
@@ -67,7 +67,7 @@ class Questions extends React.Component {
       }
       return <h1>Tente novamente</h1>;
     }
-    return <p>Carregando...</p>;
+    return <p>Loading...</p>;
   }
 }
 
