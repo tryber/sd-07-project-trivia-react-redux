@@ -1,7 +1,7 @@
 import React from 'react';
 import md5 from 'crypto-js/md5';
 import PropTypes from 'prop-types';
-
+import Scoreboard from './CustomPoints';
 
 export default function CustomHeader({ name, email }) {
   return (
@@ -16,7 +16,7 @@ export default function CustomHeader({ name, email }) {
         Nome do Jogador:
         {name}
       </h3>
-      <h4 data-testid="header-score">0</h4>
+      <Scoreboard data-testid="header-score" />
     </div>
   );
 }
