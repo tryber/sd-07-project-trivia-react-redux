@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import thunkApiToken from '../actions/player';
+import thunkApiToken from '../actions';
 
 class Login extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
+    this.state = {  
       name: '',
       email: '',
       buttonDisable: true,
@@ -14,7 +14,8 @@ class Login extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.verificationEmail = this.verificationEmail.bind(this);
     this.addToken = this.addToken.bind(this);
-    this.routeChange = this.routeChange.bind(this);
+    this.routeChangeConfig = this.routeChangeConfig.bind(this);
+    this.routeChangeGame = this.routeChangeGame.bind(this);
   }
 
   verificationEmail() {
@@ -30,13 +31,20 @@ class Login extends React.Component {
     });
   }
 
-  routeChange() {
+  routeChangeConfig() {
     const { history } = this.props;
     history.push('/configuracoes');
   }
 
-  addToken() {
-    const fetchToken = thunkApiToken();
+  routeChangeGame() {
+    const { history } = this.props;
+    this.addToken();
+    history.push('/game');
+  }
+
+  async addToken() {
+    const fetchToken = await thunkApiToken();
+    console.log(fetchToken);
     const { token } = fetchToken;
     if (Storage) {
       const tokens = JSON.parse(localStorage.getItem('token'));
@@ -60,7 +68,7 @@ class Login extends React.Component {
       <div>
         <button
           type="button"
-          onClick={ this.routeChange }
+          onClick={ this.routeChangeConfig }
         >
           Configurações
         </button>
@@ -85,6 +93,7 @@ class Login extends React.Component {
           data-testid="btn-play"
           name="buttonDisable"
           disabled={ buttonDisable }
+          onClick={ this.routeChangeGame }
         >
           Jogar
         </button>

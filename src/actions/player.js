@@ -11,17 +11,8 @@ export const setName = (payload) => ({
   payload,
 });
 
-function thunkApiToken() {
-  return async (dispatch) => {
-    try {
-      dispatch();
-      const token = await fetch('https://opentdb.com/api_token.php?command=request');
-      const result = await token.json();
-      dispatch();
-    } catch (error) {
-      dispatch();
-    }
-  };
+export async function thunkApiToken() {
+  const url = 'https://opentdb.com/api_token.php?command=request';
+  const myReturn = await fetch(url).then((response) => response.json());
+  return myReturn;
 }
-
-export default thunkApiToken;
