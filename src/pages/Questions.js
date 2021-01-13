@@ -24,7 +24,6 @@ class Questions extends React.Component {
     };
     this.fetchQuestions = this.fetchQuestions.bind(this);
     this.nextQuestion = this.nextQuestion.bind(this);
-    this.clickButton = this.clickButton.bind(this);
     this.clickRightAnswer = this.clickRightAnswer.bind(this);
     this.clickButtonAnswer = this.clickButtonAnswer.bind(this);
   }
@@ -88,7 +87,7 @@ class Questions extends React.Component {
     storage.player.score = finalCount;
     storage.player.assertions = assertions + 1;
     localStorage.setItem('state', JSON.stringify(storage));
-    this.clickButton();
+    this.clickButtonAnswer();
   }
 
   clickButtonAnswer() {
