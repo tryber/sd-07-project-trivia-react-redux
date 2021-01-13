@@ -21,6 +21,13 @@ class Quiz extends React.Component {
             {incorrectAnswer}
           </button>
         ))}
+        <button
+          type="button"
+          data-testid="correct-answer"
+          key={correctAnswer}
+        >
+          {correctAnswer}
+        </button>
       </div>
     )
   }
