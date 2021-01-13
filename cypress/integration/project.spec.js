@@ -252,7 +252,7 @@ describe.skip('9 - [TELA DE JOGO] Crie o placar com as seguintes característica
   });
 });
 
-describe.skip('10 - [TELA DE JOGO] Crie um botão de \"Próxima\" que apareça após a resposta ser dada', () => {
+describe('10 - [TELA DE JOGO] Crie um botão de \"Próxima\" que apareça após a resposta ser dada', () => {
   beforeEach(() => {
     cy.visit('http://localhost:3000/');
     cy.clearLocalStorage();

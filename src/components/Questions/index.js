@@ -82,6 +82,16 @@ class Questions extends Component {
                 { answer }
               </button>)) }
         </div>
+        <div>
+          <button
+            data-testid="btn-next"
+            type="button"
+            hidden={ !isDisabled }
+          >
+            Next Question
+
+          </button>
+        </div>
       </div>
     );
   }
