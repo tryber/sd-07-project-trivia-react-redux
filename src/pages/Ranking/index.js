@@ -29,6 +29,7 @@ class Ranking extends React.Component {
           </div>
         ))}
         <button
+          type="button"
           onClick={ this.redirectForHome }
           data-testid="btn-go-home"
         >

@@ -47,12 +47,14 @@ class Feedback extends React.Component {
         </div>
         <div>
           <button
+            type="button"
             data-testid="btn-play-again"
             onClick={ this.redirectForPlayAgain }
           >
             Jogar novamente
           </button>
           <button
+            type="button"
             data-testid="btn-ranking"
             onClick={ this.redirectForRanking }
           >
