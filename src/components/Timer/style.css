@@ -1,0 +1,33 @@
+.timer-section {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: top;
+  justify-content:flex-end
+}
+
+.timer-circle {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  background: rgb(242, 27, 63);
+  border: 5px solid white;
+  border-radius: 50%;
+  box-sizing: border-box;
+  box-shadow: 4px 4px 4px 3px rgba(0, 0, 0, 0.25);
+}
+
+.timer {
+  position: relative;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 64px;
+  line-height: 75px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  color: rgb(255, 153, 20);
+  width: 140px;
+  height: 145px;
+}

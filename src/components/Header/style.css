@@ -1,0 +1,50 @@
+.header-section {
+  background-color: #FF9914;
+  color: #F21B3F;
+  display: flex;
+  flex-direction: row;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 50px;
+}
+
+.header {
+  background-color: #FF9914;
+  color: #F21B3F;
+  font-family: Roboto;
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 900;
+  height: 100px;
+  width: 100%;
+}
+
+.header-label {
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+}
+
+.header-name {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 36px;
+  line-height: 42px;
+  display: flex;
+  align-items: center;
+  text-align: right;
+}
+
+.header-score {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight:700;
+  font-size: 36px;
+  line-height: 42px;
+  display: flex;
+  align-items: center;
+  text-align: left;
+  margin-right: 150px;
+}
