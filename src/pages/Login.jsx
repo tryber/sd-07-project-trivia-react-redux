@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import getToken from '../services/API';
+import { getToken } from '../services/API';
 
 class Login extends Component {
   constructor(props) {
