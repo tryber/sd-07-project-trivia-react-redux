@@ -1,8 +1,11 @@
 export const LOGIN_EMAIL = 'LOGIN_EMAIL';
 
-export const login = (user) => (
+export const login = (name, email) => (
   {
     type: LOGIN_EMAIL,
-    user,
+    user: {
+      name,
+      email,
+    },
   }
 );
