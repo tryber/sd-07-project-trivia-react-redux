@@ -16,6 +16,7 @@ class Questions extends React.Component {
       index: 0,
       status: true,
       score: 0,
+      assertions: 0,
       seconds: 30,
     };
     this.fetchQuestions = this.fetchQuestions.bind(this);
@@ -59,7 +60,7 @@ class Questions extends React.Component {
 
   clickRightAnswer() {
     const { addScoreAction } = this.props;
-    const { score, questions, index, seconds } = this.state;
+    const { score, questions, index, seconds, assertions } = this.state;
     const hard = 3;
     const medium = 2;
     let difficulty = 0;
@@ -71,19 +72,18 @@ class Questions extends React.Component {
       difficulty = 1;
     }
     const multiplePoints = 10;
-    const finalCount = multiplePoints + (seconds * difficulty);
-    addScoreAction(score + finalCount);
-    this.setState({
-      score: score + finalCount,
-    });
-    const player = {
-      name: '',
-      assertions: '',
-      score: score + finalCount,
-      gravatarEmail: '',
-    };
+    const finalCount = multiplePoints + (seconds * difficulty) + score;
+    addScoreAction(finalCount);
 
-    localStorage.setItem('state', JSON.stringify(player));
+    this.setState({
+      score: finalCount,
+      assertions: assertions + 1,
+    });
+
+    const storage = JSON.parse(localStorage.getItem('state'));
+    storage.player.score = finalCount;
+    storage.player.assertions = assertions + 1;
+    localStorage.setItem('state', JSON.stringify(storage));
     this.clickButton();
   }
 
@@ -154,7 +154,6 @@ class Questions extends React.Component {
 
 const mapStateToProps = (state) => ({
   token: state.token.token,
-  score: state.user.score,
 });
 
 const mapDispatchToProps = (dispatch) => ({
