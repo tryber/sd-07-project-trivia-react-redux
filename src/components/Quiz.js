@@ -20,7 +20,8 @@ class Quiz extends React.Component {
           <button
             type="button"
             key={ incorrectAnswer }
-            data-testid={ `wrong-answer-${index }`}>
+            data-testid={ `wrong-answer-${index}` }
+          >
             { incorrectAnswer }
           </button>
         ))}

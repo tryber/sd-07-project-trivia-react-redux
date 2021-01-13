@@ -33,13 +33,13 @@ class GamePage extends React.Component {
     const { load, queries } = this.state;
 
     if (load) {
-      return <h2>Loading...</h2>
+      return <h2>Loading...</h2>;
     }
     const {
       category,
-      incorrect_answers,
+      incorrectAnswers,
       question,
-      correct_answer,
+      correctAnswer,
     } = queries[0];
 
     return (
@@ -47,8 +47,8 @@ class GamePage extends React.Component {
         <Quiz
           category={ category }
           question={ question }
-          correctAnswer={ correct_answer }
-          incorrectAnswers={ incorrect_answers }
+          correctAnswer={ correctAnswer }
+          incorrectAnswers={ incorrectAnswers }
         />
       </div>
     );
