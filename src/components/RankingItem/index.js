@@ -1,7 +1,7 @@
 import React from 'react';
 import './style.css';
 
-const Question = () => (
+const RankingItem = () => (
   <section className="ranking-section">
     <div className="ranking">
       <div className="name">1 - Eduardo</div>
@@ -30,4 +30,4 @@ const Question = () => (
   </section>
 );
 
-export default Question;
+export default RankingItem;
