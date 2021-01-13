@@ -2,15 +2,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { login, fetchToken } from '../actions';
-
+import { login, fetchToken, fetchQuestions } from '../actions';
 class Login extends Component {
   constructor(props) {
     super(props);
-
     this.saveToken = this.saveToken.bind(this);
     this.setToken = this.setToken.bind(this);
-
+    this.fetchQuestion = this.fetchQuestion.bind(this);
     this.state = {
       email: '',
       name: '',
@@ -19,9 +17,10 @@ class Login extends Component {
   }
 
   componentDidMount() {
-    const { fetchTokenAction } = this.props;
+    const { fetchTokenAction, getQuestions, token } = this.props;
     fetchTokenAction();
     this.setToken();
+    getQuestions(token);
   }
 
   async setToken() {
@@ -29,6 +28,11 @@ class Login extends Component {
     this.setState({
       token: token.token,
     });
+  }
+
+  async fetchQuestion() {
+    const { getQuestions, token } = this.props;
+    await getQuestions(token);
   }
 
   async saveToken() {
@@ -82,15 +86,18 @@ class Login extends Component {
     );
   }
 }
-
 Login.propTypes = {
   userLogin: PropTypes.func.isRequired,
   fetchTokenAction: PropTypes.func.isRequired,
+  getQuestions: PropTypes.func.isRequired,
+  token: PropTypes.string.isRequired,
 };
-
+const mapStateToProps = (state) => ({
+  questions: state.questionsReducer.questions,
+});
 const mapDispatchToProps = (dispatch) => ({
   fetchTokenAction: () => dispatch(fetchToken()),
   userLogin: (email, name) => dispatch(login(email, name)),
+  getQuestions: (token) => dispatch(fetchQuestions(token)),
 });
-
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

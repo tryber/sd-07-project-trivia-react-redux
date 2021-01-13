@@ -5,27 +5,10 @@ import { fetchQuestions } from '../actions/index';
 import Header from '../Components/Header';
 
 class Game extends Component {
-  constructor(props) {
-    super(props);
-    this.fetchQuestion = this.fetchQuestion.bind(this);
-    this.answerAnalyze = this.answerAnalyze.bind(this);
-  }
-
-  componentDidMount() {
-    this.fetchQuestion();
-  }
-
-  async fetchQuestion() {
-    const { getQuestions, token } = this.props;
-    await getQuestions(token);
-  }
-
-  answerAnalyze(event) {
-    console.log(event.target.value);
-  }
-
   render() {
     const { questions, isFetching } = this.props;
+    const options = [...questions[0].incorrect_answers, questions[0].correct_answer].sort();
+    console.log(options);
     if (isFetching) {
       return <p>Loading</p>;
     }
@@ -34,7 +17,7 @@ class Game extends Component {
         <Header />
         <section>
           <div>
-            { questions && (
+            {questions && (
               <div key={ Math.random() }>
                 <h5 data-testid="question-category">
                   { questions[0].category }
@@ -70,8 +53,6 @@ class Game extends Component {
 }
 
 Game.propTypes = {
-  getQuestions: PropTypes.func.isRequired,
-  token: PropTypes.string.isRequired,
   questions: PropTypes.arrayOf(PropTypes.object).isRequired,
   isFetching: PropTypes.bool.isRequired,
 };
