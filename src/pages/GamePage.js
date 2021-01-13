@@ -10,6 +10,7 @@ class GamePage extends Component {
     super();
     this.pergunta = this.pergunta.bind(this);
     this.select = this.select.bind(this);
+    this.localset = this.localset.bind(this);
     this.state = {
       indexx: 0,
       errado: { border: '2px solid rgb(0, 0, 0)' },
@@ -21,21 +22,41 @@ class GamePage extends Component {
   componentDidMount() {
     const { fetchHere } = this.props;
     fetchHere();
+    this.localset();
   }
 
-  select(pram) {
+  localset() {
+    const LS = JSON.parse(localStorage.getItem('state'));
+    this.setState({ obj: LS });
+  }
+
+  select(pram, dif) {
     const { obj } = this.state;
-    if (obj.key === undefined) {
-      const LS = JSON.parse(localStorage.getItem('state'));
-      this.setState({ obj: LS });
-    }
+    let PD = 0;
     this.setState({
       errado: { border: '3px solid rgb(255, 0, 0)' },
       certo: { border: '3px solid rgb(6, 240, 15)' },
     });
+    switch (dif) {
+    case 'easy':
+      PD = 1;
+      break;
+    case 'medium':
+      PD = 2;
+      break;
+    case 'hard':
+      PD = (1 + 2);
+      break;
+    default:
+      break;
+    }
     if (pram === 'certo') {
-      const pontos = 10;
-      console.log(pontos);
+      const pontos = (2 * 2 * 2 + 2) + (1 * PD);
+      const total = pontos + obj.player.score;
+      const objobj = obj;
+      objobj.player.score = total;
+      this.setState({ obj: objobj });
+      localStorage.setItem('state', JSON.stringify(objobj));
     }
   }
 
@@ -52,7 +73,7 @@ class GamePage extends Component {
             data-testid="correct-answer"
             type="button"
             style={ certo }
-            onClick={ () => this.select('certo') }
+            onClick={ () => this.select('certo', questao.difficulty) }
           >
             {questao.correct_answer}
           </button>
