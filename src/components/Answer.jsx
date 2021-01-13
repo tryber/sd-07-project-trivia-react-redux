@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+/* import React, { Component } from 'react';
 
 class Answer extends Component {
   constructor() {
@@ -16,3 +16,4 @@ class Answer extends Component {
 }
 
 export default Answer;
+*/

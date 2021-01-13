@@ -24,6 +24,7 @@ class Login extends Component {
     const expiredToken = 3;
     const callingApi = await callAPI.requestToken();
     if (callingApi.response_code === expiredToken) return console.log('Email expirado');
+    // incluir regra de negócio para token expirado
     const { token } = callingApi;
     localStorage.setItem('token', JSON.stringify(token));
     this.sendPlayerInfo(token);
@@ -36,7 +37,7 @@ class Login extends Component {
     const hash = md5(email).toString();
     const imageSrc = `https://www.gravatar.com/avatar/${hash}`;
     const playerInfo = { name, email, token, imageSrc };
-    sendoInfoToStore(playerInfo);
+    sendInfoToStore(playerInfo);
     return this.setState({ redirect: true });
   }
 

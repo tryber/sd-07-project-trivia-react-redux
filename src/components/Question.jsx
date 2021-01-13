@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import propTypes from 'prop-types';
 
 class Question extends Component {
   constructor() {
@@ -17,18 +18,18 @@ class Question extends Component {
 
   } */
 
-    /*
-    if (random === 0) {
+  /*
+  if (random === 0) {
       
-      this.renderCorrectAnswer(questions[random]);
-      const newQuestions = questions.filter((question) => question === questions[random]);
-      counter -= 1;
-      return this.renderAnswers(counter, newQuestions);
-    };
-    if (random === 1) {
+    this.renderCorrectAnswer(questions[random]);
+    const newQuestions = questions.filter((question) => question === questions[random]);
+    counter -= 1;
+    return this.renderAnswers(counter, newQuestions);
+  };
+  if (random === 1) {
       
-    }
-    this.renderAnswers(counter, array);
+  }
+  this.renderAnswers(counter, array);
   } */
 
   getAnswers(object) {
@@ -72,3 +73,10 @@ class Question extends Component {
 }
 
 export default Question;
+
+Question.propTypes = {
+  item: propTypes.shape({
+    category: propTypes.string,
+    question: propTypes.string,
+  })
+}.isRequired;
