@@ -1,15 +1,19 @@
 import React, { Component } from 'react';
 import { fetchQuestionNAnswer } from '../../services';
+import './Questions.css';
 
 class Questions extends Component {
   constructor() {
     super();
 
     this.fetchQuestions = this.fetchQuestions.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+
     this.state = {
       questions: [],
       isLoading: true,
       questionNumber: 0,
+      isDisabled: false,
     };
   }
 
@@ -23,8 +27,12 @@ class Questions extends Component {
     this.setState({ questions: result, isLoading: false });
   }
 
+  handleClick() {
+    this.setState({ isDisabled: true });
+  }
+
   render() {
-    const { questions, isLoading, questionNumber } = this.state;
+    const { questions, isLoading, questionNumber, isDisabled } = this.state;
     const questionToLoad = questions[questionNumber];
     if (isLoading) return <h1>Is Loading</h1>;
     return (
@@ -34,6 +42,9 @@ class Questions extends Component {
         <button
           data-testid="correct-answer"
           type="button"
+          className="correct-answer"
+          disabled={ isDisabled }
+          onClick={ this.handleClick }
         >
           { questionToLoad.correct_answer }
         </button>
@@ -42,6 +53,9 @@ class Questions extends Component {
             <button
               data-testid={ `wrong-answer-${index}` }
               type="button"
+              className="wrong-answer"
+              disabled={ isDisabled }
+              onClick={ this.handleClick }
               key={ index }
             >
               { answer }
