@@ -8,7 +8,7 @@ export default class Header extends Component {
   render() {
     return (
       <header>
-        <img src={ `https://www.gravatar.com/avatar/${md5('email')}` } className="App-logo" alt="logo" />
+        <img src={ `https://www.gravatar.com/avatar/${md5('email')}` } className="App-logo" alt="logo" width="50" height="50" />
         <p data-testid="header-player">Nome</p>
         <p data-testid="header-score">Score</p>
       </header>

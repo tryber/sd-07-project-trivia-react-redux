@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Timer from 'react-compound-timer';
+// https://www.npmjs.com/package/react-compound-timer
 import GridQuestions from './GridQuestions';
 import Header from './Header';
 
