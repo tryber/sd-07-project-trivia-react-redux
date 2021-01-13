@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import { fetchThunk } from '../redux/actions';
 
@@ -55,6 +56,8 @@ class GamePage extends Component {
       <div>
         <Header />
         { loading ? <p>loading</p> : this.pergunta() }
+        <Link to="/feedback">Feedback</Link>
+        <button type="button" data-testid="btn-next">Next</button>
       </div>
     );
   }
