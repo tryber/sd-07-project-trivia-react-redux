@@ -23,7 +23,7 @@ class Game extends Component {
     const { questions } = this.props;
     if (questions.results) {
       const correctAnswer = (
-        <button type="button" data-testid="correct-answer">
+        <button type="button" data-testid="correct-answer" key="correct_answer">
           { questions.results[questionIndex].correct_answer }
         </button>
       );
@@ -67,11 +67,9 @@ const mapDispatchToProps = (dispatch) => ({
   getQuestions: () => dispatch(fetchQuestions()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Game);
-
 Game.propTypes = {
-  questions: PropTypes.shape({
-    results: PropTypes.arrayOf(Object).isRequired,
-  }).isRequired,
+  questions: PropTypes.shape(PropTypes.objectOf(Object).isRequired).isRequired,
   getQuestions: PropTypes.func.isRequired,
 };
+
+export default connect(mapStateToProps, mapDispatchToProps)(Game);
