@@ -1,26 +1,43 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import Header from '../components';
+import Api from '../services/api';
+import Answers from '../components/Answers';
 
 class Game extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      questions: [],
+    };
+
+    this.requestAsks = this.requestAsks.bind(this);
+  }
+
+  componentDidMount() {
+    this.requestAsks();
+  }
+
+  async requestAsks() {
+    const { returnAsks } = Api;
+    const { token } = this.props;
+    console.log(token);
+    const resultAsks = await returnAsks(token);
+    this.setState({
+      questions: resultAsks.results,
+    });
+  }
+
   render() {
-    // Receber dados das perguntas via API do Trivia
-    // Fazer um map das alternativas
-    // Atribuir o ${index} = 0 nas alternativas incorretas
-    // Exibir as alternativas de forma aleatória
+    const { questions } = this.state;
+    console.log(questions);
+    if (questions === []) {
+      return <h1>Carregando...</h1>;
+    }
     return (
       <div>
-        <div>Comp. Header</div>
-        <h1>Joguinho</h1>
-        <div>
-          <div data-testid="question-category">Categoria da pergunta</div>
-          <div data-testid="question-text">Pergunta</div>
-        </div>
-        <div>
-          <div>
-            Alternativas
-            <button type="button" data-testid="correct-answer">Alt correta</button>
-            <button type="button" data-testid="wrong-answer-${index}">Alt incorreta</button>
-          </div>
-        </div>
+        <Header />
+        {/* <Answers questions={ questions } /> */}
         <div>Contagem regressiva</div>
         <button type="button">Próxima</button>
       </div>
@@ -28,4 +45,13 @@ class Game extends React.Component {
   }
 }
 
-export default Game;
+const mapStateToProps = (state) => ({
+  token: state.token.token,
+});
+
+// Header.propTypes = {
+//   email: PropTypes.string.isRequired,
+//   name: PropTypes.string.isRequired,
+// };
+
+export default connect(mapStateToProps)(Game);
