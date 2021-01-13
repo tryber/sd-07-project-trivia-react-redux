@@ -22,15 +22,14 @@ class Login extends React.Component {
 
   handleInputs({ target }) {
     const { value, name } = target;
-    const { changeName, changeGravatarEmail } = this.props;
+    const { newName, changeEmail } = this.props;
     this.setState({ [name]: value }, () => {
       const { email, name: nameState } = this.state;
       const validacaoByStackOf = /[\w.-]+@[\w-]+\.[\w-.]+/gi;
       const matchEmail = email.match(validacaoByStackOf);
       this.matchingEmail(matchEmail);
-      changeName(nameState);
-      changeGravatarEmail(email);
-
+      newName(nameState);
+      changeEmail(email);
     });
   }
 
@@ -99,23 +98,23 @@ class Login extends React.Component {
 
 const mapDispatchToProps = (dispatch) => ({
   requestAPI: () => dispatch(requestToken()),
-  changeGravatarEmail: (email) => dispatch(changeGravatarEmail(email)),
-  changeName: (name) => dispatch(changeName(name)),
+  changeEmail: (email) => dispatch(changeGravatarEmail(email)),
+  newName: (name) => dispatch(changeName(name)),
 });
 
 const mapStateToProps = (state) => ({
-  name: state.Header.name,
-  assertions: state.Header.assertions,
-  score: state.Header.score,
-  gravatarEmail: state.Header.gravatarEmail,
-  loading: state.Header.loading,
-  token: state.Header.token,
+  name: state.player.name,
+  assertions: state.player.assertions,
+  score: state.player.score,
+  gravatarEmail: state.player.gravatarEmail,
+  loading: state.player.loading,
+  token: state.player.token,
 });
 
 Login.propTypes = {
   requestAPI: PropTypes.func.isRequired,
-  changeName: PropTypes.func.isRequired,
-  changeGravatarEmail: PropTypes.func.isRequired,
+  newName: PropTypes.func.isRequired,
+  changeEmail: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

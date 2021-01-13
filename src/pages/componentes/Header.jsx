@@ -34,11 +34,11 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const mapStateToProps = (state) => ({
-  name: state.Header.name,
-  assertions: state.Header.assertions,
-  score: state.Header.score,
-  gravatarEmail: state.Header.gravatarEmail,
-  loading: state.Header.loading,
+  name: state.player.name,
+  assertions: state.player.assertions,
+  score: state.player.score,
+  gravatarEmail: state.player.gravatarEmail,
+  loading: state.player.loading,
 });
 
 Header.propTypes = {
