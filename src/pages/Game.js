@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchQuestions } from '../actions';
 import '../App.css';
+import GameHeader from '../components/GameHeader';
 
 class Game extends Component {
   constructor() {
@@ -56,6 +57,7 @@ class Game extends Component {
     const { questions } = this.props;
     return questions.results ? (
       <div>
+        <GameHeader />
         <h1>TELA DE JOGO</h1>
         <h3 data-testid="question-category">
           {questions.results[questionIndex].category}
@@ -80,11 +82,11 @@ const mapDispatchToProps = (dispatch) => ({
   getQuestions: () => dispatch(fetchQuestions()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Game);
-
 Game.propTypes = {
   questions: PropTypes.shape({
     results: PropTypes.array,
   }).isRequired,
   getQuestions: PropTypes.func.isRequired,
 };
+
+export default connect(mapStateToProps, mapDispatchToProps)(Game);
