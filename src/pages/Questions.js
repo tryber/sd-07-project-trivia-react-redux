@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
+import './Questions.css';
+
 class Questions extends React.Component {
   constructor() {
     super();
@@ -13,11 +15,12 @@ class Questions extends React.Component {
         incorrect_answers: [] }],
       index: 0,
       status: true,
+      showAnswers: false,
       seconds: 30,
     };
     this.fetchQuestions = this.fetchQuestions.bind(this);
     this.nextQuestion = this.nextQuestion.bind(this);
-    this.clickButton = this.clickButton.bind(this);
+    this.clickButtonAnswer = this.clickButtonAnswer.bind(this);
   }
 
   componentDidMount() {
@@ -53,14 +56,15 @@ class Questions extends React.Component {
     });
   }
 
-  clickButton() {
+  clickButtonAnswer() {
     this.setState({
       status: false,
+      showAnswers: true,
     });
   }
 
   render() {
-    const { questions, index, status, seconds } = this.state;
+    const { questions, index, status, showAnswers, seconds } = this.state;
     return (
       <div>
         <h3>
@@ -81,22 +85,24 @@ class Questions extends React.Component {
         </span>
         <div id="bloco-respostas">
           <button
+            onClick={ this.clickButtonAnswer }
             disabled={ seconds === 0 }
-            onClick={ this.clickButton }
             type="button"
             key="correct"
             data-testid="correct-answer"
+            className={ showAnswers ? 'correct' : '' }
           >
             {questions[index].correct_answer}
           </button>
           {questions[index].incorrect_answers
             .map((item, itemIndex) => (
               <button
+                onClick={ this.clickButtonAnswer }
                 disabled={ seconds === 0 }
-                onClick={ this.clickButton }
                 type="button"
                 key="incorrect"
                 data-testid={ `wrong-answer-${itemIndex}` }
+                className={ showAnswers ? 'incorrect' : '' }
               >
                 { item }
               </button>))}
