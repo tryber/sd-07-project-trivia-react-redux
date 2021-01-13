@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import callAPI from '../services/callAPI';
+import { Redirect, Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import md5 from 'crypto-js/md5';
+import { login } from '../actions';
+import * as callAPI from '../services/callAPI';
 
 class Login extends Component {
   constructor() {
@@ -9,15 +12,24 @@ class Login extends Component {
     this.state = {
       name: '',
       email: '',
+      redirect: false,
     };
     this.isDisabled = this.isDisabled.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   async handleSubmit(event) {
+    const { login } = this.props;
+    const { name, email } = this.state;
     event.preventDefault();
-    const callingApi = await callAPI();
-    localStorage.setItem('token', JSON.stringify(callingApi.token));
+    const callingApi = await callAPI.requestToken();
+    const { token } = callingApi;
+    localStorage.setItem('token', JSON.stringify(token));
+    const hash = md5(email).toString();
+    const imageSrc = `https://www.gravatar.com/avatar/${hash}`
+    const playerInfo = { name, email, token, imageSrc };
+    login(playerInfo);
+    this.setState({ redirect: true });
     return callingApi;
   }
 
@@ -30,6 +42,8 @@ class Login extends Component {
   }
 
   render() {
+    const { redirect } = this.state;
+    if (redirect) return (<Redirect to="/game" />);
     return (
       <div>
         <form onSubmit={ this.handleSubmit }>
@@ -63,4 +77,7 @@ class Login extends Component {
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  login: (object) => dispatch(login(object)) });
+
+export default connect(null, mapDispatchToProps)(Login);
