@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
 import { getTriviaQuestions } from '../services/API';
-import Queries from '../components/Queries';
+import Questions from '../components/Questions';
 
 class Game extends Component {
   constructor(props) {
@@ -12,14 +12,14 @@ class Game extends Component {
     this.state = {
 
     };
-    this.fetchQueries = this.fetchQueries.bind(this);
+    this.fetchQuestions = this.fetchQuestions.bind(this);
   }
 
   componentDidMount() {
-    this.fetchQueries();
+    this.fetchQuestions();
   }
 
-  async fetchQueries() {
+  async fetchQuestions() {
     const { dispatchTrivia } = this.props;
     const token = localStorage.getItem('token');
     await dispatchTrivia(token);
@@ -27,13 +27,10 @@ class Game extends Component {
 
   render() {
     const { isFetching } = this.props;
-    if (isFetching) {
-      return <div>Loading...</div>;
-    }
     return (
       <div>
         <Header />
-        <Queries />
+        { (isFetching) ? <div>Loading...</div> : <Questions /> }
       </div>
     );
   }

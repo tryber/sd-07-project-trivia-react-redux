@@ -1,20 +1,20 @@
 import {
-  REQUEST_QUERIES,
+  REQUEST_QUESTIONS,
   REQUEST_FAILED,
-  LIST_QUERIES,
+  LIST_QUESTIONS,
 } from './trivia.action';
 
 const INITIAL_STATE = {
-  isFetching: false,
+  isFetching: true,
   results: [],
   responseCode: 0,
 };
 
 const triviaReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-  case REQUEST_QUERIES:
+  case REQUEST_QUESTIONS:
     return { ...state, isFetching: true };
-  case LIST_QUERIES:
+  case LIST_QUESTIONS:
     return {
       ...state,
       results: action.payload.results,

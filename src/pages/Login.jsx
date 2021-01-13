@@ -41,14 +41,16 @@ class Login extends Component {
 
   saveLocalStorage({ token }) {
     const { name, email } = this.state;
-    const player = {
-      name,
-      assertions: 0,
-      score: 0,
-      gravatarEmail: email,
+    const objectPlayer = {
+        player: {
+        name,
+        assertions: 0,
+        score: 0,
+        gravatarEmail: email,
+      },
     };
     localStorage.setItem('token', token);
-    localStorage.setItem('state', JSON.stringify(player));
+    localStorage.setItem('state', JSON.stringify(objectPlayer));
     this.setState({
       isRedirect: true,
     });
@@ -111,13 +113,13 @@ class Login extends Component {
   }
 }
 
-/* const mapStateToProps = (state) => ({
+/* /* const mapStateToProps = (state) => ({
 
-});
+}); */
 
-const mapDispatchToProps = {
+/* const mapDispatchToProps = (dispatch) => ({
+  dispatchTrivia: (token) => dispatch(getTriviaQuestions(token)),
+}); */
 
-}; */
-
-/* export default connect(mapStateToProps, mapDispatchToProps)(Login) */
+/* export default connect(null, mapDispatchToProps)(Login) */
 export default Login;

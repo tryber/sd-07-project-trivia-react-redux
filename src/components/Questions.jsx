@@ -1,51 +1,30 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { queryCount } from '../store/reducer/user.action';
+import { questionCount } from '../store/reducer/user.action';
 
-class Queries extends Component {
+class Questions extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      queries: [
-        {
-          category: '',
-          question: '',
-          correct_answer: '',
-          incorrect_answers: [],
-        },
-      ],
-    };
-    this.handleState = this.handleState.bind(this);
     this.handleButtonClick = this.handleButtonClick.bind(this);
   }
-
-  componentDidMount() {
-    this.handleState();
-  }
-
-  handleState() {
-    const { queries } = this.props;
-    this.setState({
-      queries,
-    });
-  }
-
+  
   handleButtonClick() {
-    const { dispatchQueryCount } = this.props;
-    dispatchQueryCount();
+    const { dispatchQuestionCount } = this.props;
+    dispatchQuestionCount();
   }
 
   render() {
-    const { queryCounter } = this.props;
-    const { queries } = this.state;
+    const { questionCounter, questions } = this.props;
+    if (!questions) {
+      return <div>Loading...</div>
+    }
     const {
       category,
       question,
       correct_answer: correctAnswer,
       incorrect_answers: incorrectAnswers,
-    } = queries[queryCounter];
+    } = questions[questionCounter];
     return (
       <div>
         <p data-testid="question-category">{ category }</p>
@@ -65,26 +44,27 @@ class Queries extends Component {
               data-testid={ `wrong-answer-${index}` }
             >
               { answer }
-            </button>))}
+            </button>))
+        }
       </div>
     );
   }
 }
 
 const mapStateToProps = (state) => ({
-  queries: state.triviaReducer.results,
-  queryCounter: state.userReducer.queryCount,
+  questions: state.triviaReducer.results,
+  questionCounter: state.userReducer.questionCount,
   isFetching: state.triviaReducer.isFetching,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  dispatchQueryCount: () => dispatch(queryCount()),
+  dispatchQuestionCount: () => dispatch(questionCount()),
 });
 
-Queries.propTypes = {
-  queries: PropTypes.arrayOf(PropTypes.string).isRequired,
-  dispatchQueryCount: PropTypes.func.isRequired,
-  queryCounter: PropTypes.number.isRequired,
+Questions.propTypes = {
+  questions: PropTypes.arrayOf(PropTypes.string).isRequired,
+  dispatchQuestionCount: PropTypes.func.isRequired,
+  questionCounter: PropTypes.number.isRequired,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Queries);
+export default connect(mapStateToProps, mapDispatchToProps)(Questions);

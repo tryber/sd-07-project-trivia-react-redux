@@ -1,9 +1,9 @@
-export const REQUEST_QUERIES = 'REQUEST_QUERIES';
+export const REQUEST_QUESTIONS = 'REQUEST_QUESTIONS';
 export const REQUEST_FAILED = 'REQUEST_FAILED';
-export const LIST_QUERIES = 'LIST_QUERIES';
+export const LIST_QUESTIONS = 'LIST_QUESTIONS';
 
-export const requestQueries = () => ({
-  type: REQUEST_QUERIES,
+export const requestQuestions = () => ({
+  type: REQUEST_QUESTIONS,
 });
 
 export const failedRequest = (error) => ({
@@ -11,7 +11,7 @@ export const failedRequest = (error) => ({
   error,
 });
 
-export const listQueries = (Queries) => ({
-  type: LIST_QUERIES,
-  payload: Queries,
+export const listQuestions = (questions) => ({
+  type: LIST_QUESTIONS,
+  payload: questions,
 });
