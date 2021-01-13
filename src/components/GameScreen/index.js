@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { getQuestions } from '../../redux/actions/gameActions';
 
 class GameScreen extends Component {
@@ -24,7 +25,7 @@ class GameScreen extends Component {
     const { actual, correct } = this.state;
     let counter = 0;
 
-    const arrayDefault = [1, 2, 3, 4];
+    const arrayDefault = ['', '', '', ''];
 
     if (questions.length > 0) {
       return questions[actual].type === 'boolean' ? (
@@ -83,9 +84,6 @@ class GameScreen extends Component {
   }
 
   render() {
-    const { questions } = this.props;
-    const { actual } = this.state;
-
     return (
       <>
         <p data-testid="question-category">Categoria</p>
@@ -106,3 +104,9 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(GameScreen);
+
+GameScreen.propTypes = {
+  getQuest: PropTypes.func.isRequired,
+  playerToken: PropTypes.string.isRequired,
+  questions: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
