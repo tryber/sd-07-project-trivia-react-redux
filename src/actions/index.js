@@ -15,6 +15,10 @@ export const requestStarted = () => ({ type: REQUEST_STARTED });
 export const REQUEST_FAIL = 'REQUEST_FAIL';
 export const requestFail = (error) => ({ type: REQUEST_FAIL, error });
 
+export const FETCH_QUESTIONS_SUCCESS = 'FETCH_QUESTIONS_SUCCESS';
+export const fetchQuestionsSuccess = (payload) => (
+  { type: 'FETCH_QUESTIONS_SUCCESS', payload });
+
 export function fetchToken() {
   return async (dispatch) => {
     try {
@@ -27,3 +31,15 @@ export function fetchToken() {
     }
   };
 }
+
+export const fetchQuestions = (token) => async (dispatch) => {
+  const endpoint = `https://opentdb.com/api.php?amount=5&token=${token}`;
+  const response = await fetch(endpoint);
+  const data = await response.json();
+  dispatch(requestStarted());
+  try {
+    dispatch(fetchQuestionsSuccess(data));
+  } catch (error) {
+    dispatch(requestFail(error));
+  }
+};

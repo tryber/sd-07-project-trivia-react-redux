@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Login from './pages/Login';
 import Settings from './pages/Settings';
-import GamePage from './pages/GamePage';
+import Game from './pages/Game';
 
 function App() {
   return (
@@ -10,7 +10,7 @@ function App() {
       <Switch>
         <Route exact path="/" component={ Login } />
         <Route path="/settings" component={ Settings } />
-        <Route path="/gamepage" component={ GamePage } />
+        <Route path="/game" component={ Game } />
       </Switch>
     </div>
   );
