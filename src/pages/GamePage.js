@@ -10,7 +10,7 @@ class GamePage extends React.Component {
     this.state = {
       queries: [],
       load: true,
-    }
+    };
     this.getFetchQuestion = this.getFetchQuestion.bind(this);
   }
 
@@ -24,24 +24,23 @@ class GamePage extends React.Component {
     console.log(quiz);
     this.setState({
       queries: quiz,
-      load: false
+      load: false,
     });
   }
 
   render() {
     const { load, queries } = this.state;
-   
+
     if (load) {
       return <h2>Loading...</h2>
     }
-     const {
+    const {
       category,
       incorrect_answers,
       question,
-      correct_answer
-     } = queries[0];
-    
-     console.log(queries[0])
+      correct_answer,
+    } = queries[0];
+
     return (
       <div>
         <Quiz
@@ -51,7 +50,7 @@ class GamePage extends React.Component {
           incorrectAnswers={ incorrect_answers }
         />
       </div>
-    )
+    );
   }
 }
 
