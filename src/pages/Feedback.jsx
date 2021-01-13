@@ -14,7 +14,7 @@ class Feedback extends Component {
     if (assertions < parameter) {
       return (<h1 data-testid="feedback-text">Podia ser melhor...</h1>);
     }
-    return (<h1 data-testid="feedback-text">Mandou bem!!!</h1>);
+    return (<h1 data-testid="feedback-text">Mandou bem!</h1>);
   }
 
   render() {
