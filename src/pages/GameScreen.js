@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
 import requestQuest from '../store/ducks/QuestionsRequest/actions';
+import addScore from '../store/ducks/Score/actions'
 import './styles.css';
 
 class GameScreen extends Component {
@@ -14,8 +15,11 @@ class GameScreen extends Component {
       question: 'Loading...',
       // respCorrect: '',
       resps: [],
+      dificulty: '',
       right: '',
       wrong: '',
+      score: 0,
+      timer: 30,
     };
     this.handleQuest = this.handleQuest.bind(this);
     this.changeStyle = this.changeStyle.bind(this);
@@ -30,20 +34,46 @@ class GameScreen extends Component {
   handleQuest() {
     const { quest } = this.props;
     console.log(quest);
+    if (quest.length === 0) {
+      return null;
+    } 
     this.setState({
       category: quest[1].category,
       question: quest[1].question,
+      dificulty: quest[1].difficulty,
       // respCorrect: quest[1].correct_answer,
       resps: [quest[1].correct_answer, ...quest[1].incorrect_answers],
     });
   }
 
-  changeStyle() {
-    this.setState({ right: 'right', wrong: 'wrong' });
+  async changeStyle({ target }) {
+    const { timer, score } = this.state;
+    const { actionScore } = this.props;
+    await this.setState({ right: 'right', wrong: 'wrong' });
+
+    if(target.className === 'right' ){
+      this.setState({ 
+        score: score + (10 + 
+          (this.calcDificulty(target.name) * timer)),
+      });
+    }
+    const { score } = this.state;
+    actionScore(score);
+    const playerObj = { player: { score: score } };
+    localStorage.setItem('state', JSON.stringify(playerObj));
+  }
+
+  calcDificulty(dificulty) {
+    const um = 1;
+    const dois = 2;
+    const tres = 3;
+    if (dificulty === 'hard') return tres;
+    if (dificulty === 'medium') return dois;
+    return um;
   }
 
   render() {
-    const { category, question, resps, right, wrong } = this.state;
+    const { category, question, resps, right, wrong, dificulty } = this.state;
     return (
       <div>
         <div>
@@ -58,6 +88,7 @@ class GameScreen extends Component {
               className={ right }
               data-testid="correct-answer"
               type="button"
+              name={ dificulty }
               onClick={ this.changeStyle }
             >
               {resps[0]}
@@ -97,7 +128,7 @@ class GameScreen extends Component {
 const mapStateToProps = ({ QuestionRequest: { quest } }) => ({
   quest,
 });
-const mapDispatchToProps = { actionRequest: requestQuest };
+const mapDispatchToProps = { actionRequest: requestQuest, actionScore: addScore };
 
 export default connect(mapStateToProps, mapDispatchToProps)(GameScreen);
 
