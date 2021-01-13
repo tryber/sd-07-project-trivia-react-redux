@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import { ResultToken, generateHash } from '../services/Api';
 import PropTypes from 'prop-types';
+import { ResultToken, generateHash } from '../services/Api';
 
 class Login extends Component {
   constructor() {
