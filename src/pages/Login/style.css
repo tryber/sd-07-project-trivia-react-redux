@@ -1,5 +1,5 @@
 body {
-  background-color: #ff9914;
+  background-color: rgb(255, 153, 20);
   display: flex;
-  justify-content: space-around;
+  flex-direction: column;
 }

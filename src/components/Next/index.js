@@ -1,11 +1,14 @@
 import React from 'react';
-import './style.css'
+import './style.css';
+
 const Next = () => {
-  return(
-    <div className="circle">
-      <div className="triangle-right"/>
-    </div>
-  )
-}
+  return (
+    <section>
+      <div className="circle">
+        <div className="triangle-right" />
+      </div>
+    </section>
+  );
+};
 
 export default Next;

@@ -1,7 +1,7 @@
 .circle {
   position: absolute;
-  width: 125px;
-  height: 125px;
+  width: 150px;
+  height: 150px;
   background: rgba(0, 0, 0, 0.2);
   border: 5px solid white;
   border-radius: 50%;
@@ -16,6 +16,6 @@
   border-bottom-width: 50px;
   border-top-width: 50px;
   border-left: 86px solid white;
-  margin-top: 9px;
-  margin-left: 27px;
+  margin-top: 20px;
+  margin-left: 40px;
 }
