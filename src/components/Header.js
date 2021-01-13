@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import gravatarAPI from '../services/gravatarAPI';
+import './Header.css';
 
 class Header extends Component {
   render() {
@@ -10,12 +11,17 @@ class Header extends Component {
       <header>
         <div class="header-components-container">
         <img
+          class="header-component"
           src={ gravatarAPI(emailGravatar) }
           data-testid="header-profile-picture"
           alt="gravatar"
         />
-        <p data-testid="header-player-name">{name}</p>
-        <p data-testid="header-score">{score}</p>
+        <p class="header-component" data-testid="header-player-name">{name}</p>
+        <p class="header-component" data-testid="header-score">
+          pontuacão:
+          {' '}
+          {score}
+        </p>
         </div>
       </header>
     );
