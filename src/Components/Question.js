@@ -1,8 +1,36 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
+import { setStatePlayer } from '../actions';
 
 class Question extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.clickCorrectAnswer = this.clickCorrectAnswer.bind(this);
+  }
+
+  clickCorrectAnswer() {
+    const { timer, questions, currentQuestion, statePlayer } = this.props;
+    const { player } = JSON.parse(localStorage.getItem('state'));
+    player.assertions += 1;
+    const points = 10;
+    const hard = 3;
+    const medium = 2;
+    const easy = 1;
+    switch (questions[currentQuestion].difficulty) {
+    case ('hard'):
+      player.score += points + (timer * hard);
+      break;
+    case ('medium'):
+      player.score += points + (timer * medium);
+      break;
+    default: player.score += points + (timer * easy);
+    }
+    localStorage.setItem('state', JSON.stringify({ player }));
+    statePlayer({ player });
+  }
+
   render() {
     const { questions, currentQuestion, answered, clickAnswered } = this.props;
     return (
@@ -13,7 +41,10 @@ class Question extends React.Component {
           type="button"
           data-testid="correct-answer"
           className={ answered ? 'correct-answer' : 'answered' }
-          onClick={ () => clickAnswered() }
+          onClick={ () => {
+            this.clickCorrectAnswer();
+            clickAnswered();
+          } }
           disabled={ answered }
         >
           {questions[currentQuestion].correct_answer}
@@ -37,6 +68,10 @@ class Question extends React.Component {
   }
 }
 
+const mapDispatchToProps = (dispatch) => ({
+  statePlayer: (statePlayer) => dispatch(setStatePlayer(statePlayer)),
+});
+
 const mapStateToProps = (state) => ({
   questions: state.gameReducer.questions,
 });
@@ -55,6 +90,8 @@ Question.propTypes = {
   ).isRequired,
   answered: PropTypes.bool.isRequired,
   clickAnswered: PropTypes.func.isRequired,
+  timer: PropTypes.number.isRequired,
+  statePlayer: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps)(Question);
+export default connect(mapStateToProps, mapDispatchToProps)(Question);
