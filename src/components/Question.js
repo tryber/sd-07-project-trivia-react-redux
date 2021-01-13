@@ -72,13 +72,13 @@ class Questions extends Component {
       </button>);
     return (
       <article className="question-container">
-        <h2
+        <h4
           className="category"
           data-testid="question-category"
         >
           {actualQuestion.category}
-        </h2>
-        <h1 data-testid="question-text">{actualQuestion.question}</h1>
+        </h4>
+        <h3 data-testid="question-text">{actualQuestion.question}</h3>
         <div className="answers">
           {this.handleAnswers(actualQuestion)}
         </div>

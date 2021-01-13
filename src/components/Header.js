@@ -8,6 +8,7 @@ class Header extends Component {
     const { emailGravatar, name, score } = this.props;
     return (
       <header>
+        <div class="header-components-container">
         <img
           src={ gravatarAPI(emailGravatar) }
           data-testid="header-profile-picture"
@@ -15,6 +16,7 @@ class Header extends Component {
         />
         <p data-testid="header-player-name">{name}</p>
         <p data-testid="header-score">{score}</p>
+        </div>
       </header>
     );
   }

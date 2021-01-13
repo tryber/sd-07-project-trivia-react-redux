@@ -43,15 +43,14 @@ class Timer extends Component {
       <div
         className="timer"
       >
-        <h2
+        <h4
           style={ { background:
-            `
-              white ${(seconds / magicThirty) * 100}%,
+            ` white ${(seconds / magicThirty) * 100}%,
               white ${100 - (seconds * 100) / magicThirty}%,
               white ${100 - (seconds * 100) / magicThirty}%)` } }
         >
           { `Tempo restante: ${seconds}` }
-        </h2>
+        </h4>
       </div>
     );
   }
