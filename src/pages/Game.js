@@ -25,65 +25,60 @@ class Game extends React.Component {
   render() {
     const { questions } = this.props;
     if (questions === undefined) return <p>Loading...</p>;
+    const question = questions[0];
+    const {
+      correct_answer: correctAnswer,
+      incorrect_answers: incorrectAnswers,
+    } = question;
+    const answers = [correctAnswer, ...incorrectAnswers];
+    const taggedAnswers = question.type !== 'boolean' ? [{
+      correct: true,
+      answer: answers[0],
+    },
+    {
+      correct: false,
+      answer: answers[1],
+      index: 0,
+    },
+    {
+      correct: false,
+      answer: answers[2],
+      index: 1,
+    },
+    {
+      correct: false,
+      answer: answers[3],
+      index: 2,
+    }]
+      : [{
+        correct: true,
+        answer: answers[0],
+      },
+      {
+        correct: false,
+        answer: answers[1],
+        index: 0,
+      }];
+    const randomAnswers = this.shuffle(taggedAnswers);
     return (
-      <div>
-        {questions.map((question) => {
-          const {
-            correct_answer: correctAnswer,
-            incorrect_answers: incorrectAnswers,
-          } = question;
-          const answers = [correctAnswer, ...incorrectAnswers];
-          const taggedAnswers = question.type !== 'boolean' ? [{
-            correct: true,
-            answer: answers[0],
-          },
-          {
-            correct: false,
-            answer: answers[1],
-            index: 0,
-          },
-          {
-            correct: false,
-            answer: answers[2],
-            index: 1,
-          },
-          {
-            correct: false,
-            answer: answers[3],
-            index: 2,
-          }]
-            : [{
-              correct: true,
-              answer: answers[0],
-            },
-            {
-              correct: false,
-              answer: answers[1],
-              index: 0,
-            }];
-          const randomAnswers = this.shuffle(taggedAnswers);
-          return (
-            <div key={ question.question }>
-              <h4 key={ question.category } data-testid="question-category">
-                {question.category}
-              </h4>
-              <h3 data-testid="question-text">
-                {question.question}
-              </h3>
-              {randomAnswers.map((answer) => (
-                <button
-                  type="button"
-                  key={ answer.answer }
-                  data-testid={ answer.correct
-                    ? 'correct-answer'
-                    : `wrong-answer-${answer.index}` }
-                >
-                  {answer.answer}
-                </button>
-              ))}
-            </div>
-          );
-        })}
+      <div key={ question.question }>
+        <h4 key={ question.category } data-testid="question-category">
+          {question.category}
+        </h4>
+        <h3 data-testid="question-text">
+          {question.question}
+        </h3>
+        {randomAnswers.map((answer) => (
+          <button
+            type="button"
+            key={ answer.answer }
+            data-testid={ answer.correct
+              ? 'correct-answer'
+              : `wrong-answer-${answer.index}` }
+          >
+            {answer.answer}
+          </button>
+        ))}
       </div>
     );
   }
