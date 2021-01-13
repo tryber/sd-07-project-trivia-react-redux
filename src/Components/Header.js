@@ -10,14 +10,14 @@ class Header extends Component {
   }
 
   render() {
-    const { name } = this.props;
+    const { name, avatar } = this.props;
     const initialScore = 0;
     return (
       <header>
         <img
           alt="user-info"
           data-testid="header-profile-picture"
-          src="#"
+          src={ avatar }
         />
         <p>
           Player:
@@ -36,15 +36,17 @@ const mapDispatchToProps = (dispatch) => ({
   gravatarImage: (email) => dispatch(fetchGravatar({ email })),
 });
 
-const mapStateToProps = (state) => {
-  const { name, email } = state.login;
-  return ({ name, email });
-};
+const mapStateToProps = (state) => ({
+  name: state.login.name,
+  email: state.login.email,
+  avatar: state.login.avatar,
+});
 
 Header.propTypes = {
   name: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
   gravatarImage: PropTypes.func.isRequired,
+  avatar: PropTypes.string.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

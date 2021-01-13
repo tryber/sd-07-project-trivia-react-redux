@@ -1,5 +1,5 @@
 import md5 from 'crypto-js/md5';
-import { LOGIN, TOKEN } from './actionsTypes';
+import { AVATAR, LOGIN, TOKEN } from './actionsTypes';
 
 export const clickLogin = ({ email, name }) => ({
   type: LOGIN,
@@ -9,6 +9,11 @@ export const clickLogin = ({ email, name }) => ({
 export const clickToken = (token) => ({
   type: TOKEN,
   token,
+});
+
+export const clickAvatar = (avatar) => ({
+  type: AVATAR,
+  avatar,
 });
 
 export const fetchToken = () => {
@@ -29,15 +34,11 @@ export const fetchToken = () => {
 };
 
 export const fetchGravatar = (email) => {
-  const hashEmail = md5(email);
+  const hashEmail = md5(email).toString();
   const URL = `https://www.gravatar.com/avatar/${hashEmail}`;
-  return (/* dispatch */) => {
+  return (dispatch) => {
     fetch(URL)
-      .then((response) => response.json())
-      .then((obj) => {
-        console.log(obj);
-        /*         return dispatch(clickToken(token)); */
-      })
+      .then((response) => dispatch(clickAvatar(response.url)))
       .catch((error) => {
         console.log(error);
       });
