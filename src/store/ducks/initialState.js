@@ -8,7 +8,10 @@ const INITIAL_STATE = {
     },
   },
   ranking: [],
-  token: '',
+  triviaToken: {
+    token: '',
+    isLoading: false,
+  },
 };
 
 export default INITIAL_STATE;
