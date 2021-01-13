@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { userActions } from '../../actions';
+import { userActions, fetchApi } from '../../actions';
 import { LoginForm, ConfigButton } from './components';
 
 class Home extends Component {
@@ -38,10 +38,12 @@ class Home extends Component {
   }
 
   async handleClick() {
+    const { callApi } = this.props;
     const endpoint = await fetch('https://opentdb.com/api_token.php?command=request');
     const objct = await endpoint.json();
 
     localStorage.setItem('token', objct.token);
+    callApi();
   }
 
   render() {
@@ -63,6 +65,7 @@ class Home extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
+  callApi: () => dispatch(fetchApi()),
   updateEmail: (email) => dispatch(userActions.updateEmail(email)),
   updateName: (name) => dispatch(userActions.updateName(name)),
 });
@@ -72,4 +75,5 @@ export default connect(null, mapDispatchToProps)(Home);
 Home.propTypes = {
   updateEmail: PropTypes.func.isRequired,
   updateName: PropTypes.func.isRequired,
+  callApi: PropTypes.func.isRequired,
 };
