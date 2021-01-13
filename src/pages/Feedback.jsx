@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import propTypes from 'prop-types';
 import Header from '../components/Header';
 
@@ -26,16 +27,12 @@ class Feedback extends Component {
           <h3
             data-testid="feedback-total-quesiton"
           >
-            Você acertou
-            { correctQuestions }
-            questões!
+            { `Você acertou ${assertions} questões!` }
           </h3>
           <h3
             data-testid="feedback-total-score"
           >
-            Um total de
-            { score }
-            pontos!
+            { `Um total de ${score} pontos!` }
           </h3>
         </div>
       </div>
@@ -43,11 +40,11 @@ class Feedback extends Component {
   }
 }
 
-export default Feedback;
-
 Feedback.propTypes = {
   src: propTypes.string,
   name: propTypes.string,
   score: propTypes.number,
-  correctQuestions: propTypes.number,
+  assertions: propTypes.number,
 }.isRequired;
+
+export default Feedback;
