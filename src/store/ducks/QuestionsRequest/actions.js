@@ -12,9 +12,9 @@ export default function handleAsyncQuestion() {
     try {
       dispatch(requestQuestion());
       const quest = await fetchQuests();
-      return dispatch(receiveQuestion(quest))
+      return dispatch(receiveQuestion(quest));
     } catch (error) {
       return dispatch(failedRequest(error));
     }
   };
-} 
+}
