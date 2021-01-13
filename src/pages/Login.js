@@ -2,16 +2,14 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { fetchToken, requestSucessToken, login } from '../actions';
-import apiToken from '../services/api';
+import { login, fetchToken } from '../actions';
 
 class Login extends Component {
   constructor(props) {
     super(props);
 
     this.saveToken = this.saveToken.bind(this);
-    this.tokenObject = this.tokenObject.bind(this);
-    this.saveToken = this.saveToken.bind(this);
+    this.setToken = this.setToken.bind(this);
 
     this.state = {
       email: '',
@@ -20,25 +18,28 @@ class Login extends Component {
     };
   }
 
-  tokenObject(tokens) {
+  componentDidMount() {
+    const { fetchTokenAction } = this.props;
+    fetchTokenAction();
+    this.setToken();
+  }
+
+  async setToken() {
+    const { token } = this.state;
     this.setState({
-      token: tokens,
+      token: token.token,
     });
   }
 
   async saveToken() {
-    const tokenResponse = await apiToken();
-    this.tokenObject(tokenResponse);
     const { token, name, email } = this.state;
-    const { addToken, userLogin } = this.props;
+    const { userLogin } = this.props;
     userLogin(email, name);
     localStorage.setItem('token', JSON.stringify(token));
-    addToken(token);
   }
 
   render() {
     const { email, name } = this.state;
-
     return (
       <div>
         <Link to="/settings">
@@ -83,13 +84,12 @@ class Login extends Component {
 }
 
 Login.propTypes = {
-  addToken: PropTypes.func.isRequired,
   userLogin: PropTypes.func.isRequired,
+  fetchTokenAction: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  sendToken: (token) => dispatch(fetchToken(token)),
-  addToken: (token) => dispatch(requestSucessToken(token)),
+  fetchTokenAction: () => dispatch(fetchToken()),
   userLogin: (email, name) => dispatch(login(email, name)),
 });
 
