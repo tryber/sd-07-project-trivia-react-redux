@@ -107,13 +107,15 @@ class GameScreen extends Component {
               {resps[3]}
             </button>
           </div>
-          { buttonNext && <button
-            data-testid="btn-next"
-            type="button"
-            onClick={ this.nextQuestion }
-          >
-            Próxima
-          </button> }
+          {buttonNext && (
+            <button
+              data-testid="btn-next"
+              type="button"
+              onClick={ this.nextQuestion }
+            >
+              Próxima
+            </button>
+          )}
         </div>
       </div>
     );
