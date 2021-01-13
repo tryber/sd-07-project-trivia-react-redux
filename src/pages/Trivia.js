@@ -69,14 +69,14 @@ class Trivia extends React.Component {
 
   render() {
     const { emailSave, nameSave } = this.props;
-    const { urlImg, placar, questions, position, disabled } = this.state;
     const {
       urlImg,
       placar,
       questions,
       position,
       replyConfirmation,
-      clicked } = this.state;
+      clicked,
+      disabled } = this.state;
 
     const { results } = questions;
 
