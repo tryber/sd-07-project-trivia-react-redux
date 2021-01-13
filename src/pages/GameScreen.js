@@ -57,10 +57,8 @@ class GameScreen extends Component {
           (this.calcDificulty(target.name) * timer)),
       });
     }
-    const { score } = this.state;
-    actionScore(score);
-    const playerObj = { player: { score: score } };
-    localStorage.setItem('state', JSON.stringify(playerObj));
+    actionScore(this.state.score);
+    localStorage.setItem('state', JSON.stringify( { player: { score: this.state.score } }));
   }
 
   calcDificulty(dificulty) {
