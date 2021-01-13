@@ -75,7 +75,7 @@ describe('1 - [TELA DE LOGIN] Crie a tela de login, onde a pessoa que joga deve 
   });
 });
 
-describe.skip('2 - [TELA DE LOGIN] Crie o botão de iniciar o jogo', () => {
+describe('2 - [TELA DE LOGIN] Crie o botão de iniciar o jogo', () => {
   beforeEach(() => {
     cy.visit('http://localhost:3000/');
     cy.clearLocalStorage();
@@ -90,7 +90,7 @@ describe.skip('2 - [TELA DE LOGIN] Crie o botão de iniciar o jogo', () => {
   });
 });
 
-describe.skip('3 - [TELA DE LOGIN] Crie um botão na tela inicial que leve para a tela de configurações', () => {
+describe('3 - [TELA DE LOGIN] Crie um botão na tela inicial que leve para a tela de configurações', () => {
   beforeEach(() => {
     cy.visit('http://localhost:3000/');
   });
@@ -107,7 +107,7 @@ describe.skip('3 - [TELA DE LOGIN] Crie um botão na tela inicial que leve para 
 
 // game
 
-describe.skip('4 - [TELA DE JOGO] Crie um _header_ que deve conter as informações da pessoa jogadora', () => {
+describe('4 - [TELA DE JOGO] Crie um _header_ que deve conter as informações da pessoa jogadora', () => {
   beforeEach(() => {
     cy.visit('http://localhost:3000/');
     cy.clearLocalStorage();
@@ -130,7 +130,7 @@ describe.skip('4 - [TELA DE JOGO] Crie um _header_ que deve conter as informaç�
   });
 });
 
-describe.skip('5 - [TELA DE JOGO] Crie a página de jogo que deve conter as informações relacionadas à pergunta', () => {
+describe('5 - [TELA DE JOGO] Crie a página de jogo que deve conter as informações relacionadas à pergunta', () => {
   beforeEach(() => {
     cy.visit('http://localhost:3000/');
     cy.clearLocalStorage();
@@ -153,7 +153,7 @@ describe.skip('5 - [TELA DE JOGO] Crie a página de jogo que deve conter as info
   });
 });
 
-describe.skip('6 - [TELA DE JOGO] Desenvolva o jogo onde só deve ser possível escolher uma resposta correta por pergunta', () => {
+describe('6 - [TELA DE JOGO] Desenvolva o jogo onde só deve ser possível escolher uma resposta correta por pergunta', () => {
   beforeEach(() => {
     cy.visit('http://localhost:3000/');
     cy.clearLocalStorage();
@@ -252,7 +252,7 @@ describe.skip('9 - [TELA DE JOGO] Crie o placar com as seguintes característica
   });
 });
 
-describe.skip('10 - [TELA DE JOGO] Crie um botão de \"Próxima\" que apareça após a resposta ser dada', () => {
+describe('10 - [TELA DE JOGO] Crie um botão de \"Próxima\" que apareça após a resposta ser dada', () => {
   beforeEach(() => {
     cy.visit('http://localhost:3000/');
     cy.clearLocalStorage();
