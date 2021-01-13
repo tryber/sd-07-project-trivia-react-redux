@@ -5,7 +5,7 @@ function requestApi() {
   return { type: REQUEST_QUESTION, loading: true };
 }
 
-function requestSucces(payload) {
+function requestSuccess(payload) {
   return { type: REQUEST_SUCCESS, loading: false, payload };
 }
 
@@ -16,7 +16,7 @@ export function fetchThunk() {
       const token = localStorage.getItem('token');
       const response = await fetch(`https://opentdb.com/api.php?amount=5&token=${token}`);
       const questions = await response.json();
-      dispatch(requestSucces(questions));
+      dispatch(requestSuccess(questions));
     } catch (error) {
       console.log(error);
     }
