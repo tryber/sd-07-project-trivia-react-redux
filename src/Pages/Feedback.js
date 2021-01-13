@@ -5,6 +5,18 @@ import MessageFeedback from '../Components/MessageFeedback';
 import ScoreFeedback from '../Components/ScoreFeedback';
 
 class Feedback extends React.Component {
+  componentDidMount() {
+    const { player } = JSON.parse(localStorage.getItem('state'));
+    const ranking = JSON.parse(localStorage.getItem('ranking'));
+    const playerActual = {
+      name: player.nome,
+      score: player.score,
+      picture: player.gravatarEmail,
+    };
+    ranking.push(playerActual);
+    localStorage.setItem('ranking', JSON.stringify(ranking));
+  }
+
   render() {
     return (
       <>
