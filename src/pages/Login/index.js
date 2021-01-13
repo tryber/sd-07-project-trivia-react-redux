@@ -33,7 +33,7 @@ class Login extends Component {
     const {
       getToken: loginGetToken,
       setPlayer: loginSetPlayer,
-      history
+      history,
     } = this.props;
     await loginGetToken();
 
