@@ -11,8 +11,8 @@ export default function App() {
     <div>
       <Switch>
         <Route exact path="/" component={ Login } />
-        <Route exact path="/settings" component={ Settings } />
         <Route exact path="/questions-page" component={ QuestionsPage } />
+        <Route exact path="/settings" component={ Settings } />
       </Switch>
     </div>
   );

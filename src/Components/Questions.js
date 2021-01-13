@@ -11,13 +11,6 @@ class Questions extends React.Component {
     };
   }
 
-  // componentDidMount() {
-  //   const token = localStorage.getItem("token");
-  //   const { questionsGen } = this.props;
-
-  //   questionsGen(token);
-  // }
-
   incrementIndex() {
     // const { questionNumber } = this.state;
     // this.setState({ questionNumber: questionNumber + 1 });
@@ -28,10 +21,18 @@ class Questions extends React.Component {
 
   render() {
     const { questionNumber } = this.state;
-    const { questionsList } = this.props;
+    const { questionsList, isLoading } = this.props;
     const { questions } = questionsList;
+    console.log(questions);
     const five = 5;
-    if (questions.length > 0) {
+    console.log(isLoading);
+    // if (questions.length > 0) {
+    //   this.setState({
+    //     isLoading: true,
+    //   });
+    // }
+
+    if (isLoading === true) {
       if (questionNumber < five) {
         return (
           <div>
@@ -72,11 +73,14 @@ class Questions extends React.Component {
 
 const mapStateToProps = (state) => ({
   questionsList: state.questions,
+  isLoading: state.questions.loading,
 });
 
 Questions.propTypes = {
   questionsList: PropTypes.shape({
-    questions: PropTypes.objectOf(PropTypes.string, PropTypes.number).isRequired,
+    questions: PropTypes.objectOf(PropTypes.string, PropTypes.number)
+      .isRequired,
   }).isRequired,
+  isLoading: PropTypes.bool.isRequired,
 };
 export default connect(mapStateToProps, null)(Questions);

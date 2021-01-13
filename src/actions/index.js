@@ -16,9 +16,10 @@ export const clickAvatar = (avatar) => ({
   avatar,
 });
 
-export const questionsGen = (questions) => ({
+export const questionsGen = (questions, loading) => ({
   type: QUESTIONS,
   questions,
+  loading,
 });
 
 export const fetchToken = () => {
@@ -58,7 +59,8 @@ export const fetchQuestions = (token) => {
       .then((obj) => {
         if (obj.response_code === 0) {
           const questions = obj.results;
-          return dispatch(questionsGen(questions));
+          const loading = true;
+          return dispatch(questionsGen(questions, loading));
         }
       });
   };
