@@ -21,7 +21,7 @@ const LoginForm = ({ handleChange, handleClick, name, email, auth }) => (
       data-testid="input-gravatar-email"
     />
 
-    <Link to="/">
+    <Link to="/game">
       <button
         type="button"
         disabled={ !auth }

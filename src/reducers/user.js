@@ -13,7 +13,7 @@ const user = (state = INITIAL_STATE, action) => {
   case UPDATE_EMAIL:
     return { ...state, email: action.payload };
   case UPDATE_NAME:
-    return { ...state, name: action.name };
+    return { ...state, name: action.payload };
   default:
     return state;
   }
