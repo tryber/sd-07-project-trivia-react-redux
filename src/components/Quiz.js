@@ -1,7 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import '../App.css';
 
 class Quiz extends React.Component {
+  constructor() {
+    super();
+    this.showAnswer = this.showAnswer.bind(this);
+  }
+
+  showAnswer() {
+    const rightAnswer = document.querySelector('#rightAnswer');
+    const incorrectAnswers = document.querySelectorAll('#wrongAnswer');
+    rightAnswer.className = 'correct-answer';
+    incorrectAnswers.forEach((incorrectAnswer) => {
+      incorrectAnswer.className = 'incorrect-answer';
+    });
+  }
+
   render() {
     const {
       category,
@@ -11,6 +26,7 @@ class Quiz extends React.Component {
     } = this.props;
 
     const i = 0;
+    const { showAnswer } = this;
 
     return (
       <div>
@@ -19,6 +35,8 @@ class Quiz extends React.Component {
         {incorrectAnswers.map((incorrectAnswer, index) => (
           <button
             type="button"
+            id="wrongAnswer"
+            onClick={ showAnswer }
             key={ incorrectAnswer }
             data-testid={ `wrong-answer-${index}` }
           >
@@ -27,8 +45,10 @@ class Quiz extends React.Component {
         ))}
         <button
           type="button"
+          id="rightAnswer"
           data-testid="correct-answer"
           key={ correctAnswer }
+          onClick={ showAnswer }
         >
           { correctAnswer }
         </button>
