@@ -10,7 +10,6 @@ class Game extends Component {
     const options = [...questions[0].incorrect_answers,
       questions[0].correct_answer]
       .sort();
-    console.log(options);
     if (isFetching) {
       return <p>Loading</p>;
     }
@@ -27,19 +26,19 @@ class Game extends Component {
                 <h5 data-testid="question-text">
                   { questions[0].question }
                 </h5>
-                <button
+                {/* <button
                   data-testid="correct-answer"
                   value="correct"
                   type="button"
                   onClick={ (e) => this.answerAnalyze(e) }
                 >
                   {questions[0].correct_answer}
-                </button>
-                {questions[0].incorrect_answers
+                </button> */}
+                {options
                   .map((answer, index) => (
                     <button
                       key={ index }
-                      data-testid={ `wrong-answer-${index}` }
+                      data-testid={ answer === option[0].correct_answer ? 'correct-answer' : `wrong-answer-${index}` }
                       value="incorrect"
                       type="button"
                       onClick={ (e) => this.answerAnalyze(e) }
