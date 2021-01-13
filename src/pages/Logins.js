@@ -37,8 +37,6 @@ class Login extends React.Component {
         if (name && emaiOk) {
           this.setState({ buttonDisable: false });
         }
-      });const mapDispatchToProps = (dispatch) => ({
-        requestAPI: () => dispatch(requestToken()),
       });
     }
   }
@@ -76,6 +74,14 @@ class Login extends React.Component {
               onClick={ this.startGame }
             >
               Jogar
+            </button>
+          </Link>
+          <Link to="./config">
+            <button
+              type="button"
+              data-testid="btn-settings"
+            >
+              Configurações
             </button>
           </Link>
         </form>

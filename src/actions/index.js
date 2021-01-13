@@ -32,13 +32,13 @@ export const requestApiToken = () => ({
   type: 'REQUEST_TOKEN_API',
 });
 
-const gravatarToStoreSucess = (payload) => ({
+const gravatarToStoreSuccess = (payload) => ({
   type: 'CREATE_GRAVATAR_SUCCESS',
   payload,
 });
 
 const gravatarToStoreFail = (error) => ({
-  type: 'CREAT_GRAVATAR_FAIL',
+  type: 'CREATE_GRAVATAR_FAIL',
   error,
 });
 
@@ -64,7 +64,7 @@ export function requestGravatar(hash) {
     return fetch(`https://www.gravatar.com/avatar/${hash}`)
       .then((response) => {
         response.json().then(
-          (data) => dispatch(gravatarToStoreSucess(data)),
+          (data) => dispatch(gravatarToStoreSuccess(data)),
           (error) => dispatch(gravatarToStoreFail(error)),
         );
       });

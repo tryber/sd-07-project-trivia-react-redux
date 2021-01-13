@@ -5,6 +5,7 @@ const initialState = {
   gravatarEmail: '',
   loading: false,
   token: '',
+  avatar: '',
 };
 
 export default function (state = initialState, action) {
@@ -36,6 +37,16 @@ export default function (state = initialState, action) {
       token: action.payload,
     };
   case 'REQUEST_TOKEN_API':
+    return {
+      ...state,
+      loading: true,
+    };
+  case 'CREATE_GRAVATAR_SUCCESS':
+    return {
+      ...state,
+      avatar: action.payload,
+    };
+  case 'REQUEST_GRAVATAR_API':
     return {
       ...state,
       loading: true,
