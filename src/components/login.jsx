@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import getToken from '../services/trivia';
+import { getUserAvatar } from '../actions';
 
 class Login extends Component {
   constructor(props) {
@@ -33,9 +35,13 @@ class Login extends Component {
   }
 
   handleClick() {
+    // const { email } = this.state;
     // const requestToken = getToken().then((response) => console.log(response));
     getToken();
-    const { history } = this.props;
+    const { email, userName } = this.state;
+    const { history, loginAction } = this.props;
+    console.log(email);
+    loginAction(email, userName);
     history.push('/game');
   }
 
@@ -77,8 +83,17 @@ class Login extends Component {
   }
 }
 
+const mapStateToProps = (state) => ({
+  email: state.user,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  loginAction: (email, userName) => dispatch(getUserAvatar(email, userName)),
+});
+
 Login.propTypes = {
   history: PropTypes.objectOf.isRequired,
+  loginAction: PropTypes.func.isRequired,
 };
 
-export default withRouter(Login);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Login));
