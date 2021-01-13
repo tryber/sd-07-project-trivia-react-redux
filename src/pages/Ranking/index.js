@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Header, Question, RankingItem } from '../../components';
+import { Header, Title, RankingItem } from '../../components';
 import './style.css';
 
 class Ranking extends Component {
@@ -7,7 +7,7 @@ class Ranking extends Component {
     return (
       <div>
         <Header />
-        <Question />
+        <Title title="Ranking" />
         <RankingItem />
       </div>
     );

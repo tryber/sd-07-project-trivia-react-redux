@@ -5,7 +5,7 @@ import {
   Answer,
   ConfigButton,
   Next,
-  Question,
+  Title,
 } from '../../components';
 import getApi from '../../services/api';
 import './style.css';
@@ -45,7 +45,7 @@ class Game extends Component {
       <div>
         <Header />
         <Timer />
-        <Question />
+        <Title title="Aqui vai a pergunta" />
         <Answer />
         <ConfigButton />
         <Next />
