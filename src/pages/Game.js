@@ -11,7 +11,8 @@ class Game extends React.Component {
 
   async componentDidMount() {
     const { requestQuestions, token } = this.props;
-    requestQuestions(token);
+    await requestQuestions(token);
+    console.log(token);
   }
 
   shuffle(answers) {
@@ -95,9 +96,9 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const mapStateToProps = (state) => ({
-  isFetching: state.game.isFetching,
+  isLoading: state.game.isLoading,
   questions: state.game.questions.results,
-  token: state.fetch.token,
+  token: state.login.token,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);
