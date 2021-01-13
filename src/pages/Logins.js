@@ -37,6 +37,8 @@ class Login extends React.Component {
         if (name && emaiOk) {
           this.setState({ buttonDisable: false });
         }
+      });const mapDispatchToProps = (dispatch) => ({
+        requestAPI: () => dispatch(requestToken()),
       });
     }
   }
