@@ -58,11 +58,12 @@ class GameScreen extends Component {
   }
 
   timeOut() {
+    const ONE_SEC = 1000;
     setInterval(() => {
       this.setState((state) => ({
         timer: state.timer - 1,
       }), this.disableQuestion);
-    }, 1000);
+    }, ONE_SEC);
   }
 
   render() {
