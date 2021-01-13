@@ -12,6 +12,8 @@ class Game extends Component {
 
     this.state = {
       numberQuestion: 0,
+      alreadyAnswered: false,
+      shuffle: true,
     };
   }
 
@@ -20,29 +22,49 @@ class Game extends Component {
   }
 
   handleClick() {
+    this.setState({
+      alreadyAnswered: true,
+    });
+    /* console.log(target.innerText);
+    const { questions } = this.props;
+    const { results } = questions;
+    if (results[this.state.numberQuestion].correct_answer === target.innerText) {
+      target.className = 'green';
+    }
+    else {
+      target.className = 'red';
+    }
+
     const um = 1;
     this.setState((prevState) => {
-      const { questions } = this.props;
       if (prevState.numberQuestion < questions.results.length - um) {
         return ({
           numberQuestion: prevState.numberQuestion + um,
         });
       }
-    });
+    }); */
   }
 
   shuffle(a) {
-    for (let i = a.length - 1; i > 0; i -= 1) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [a[i], a[j]] = [a[j], a[i]];
+    const { shuffle } = this.state;
+    if (shuffle) {
+      for (let i = a.length - 1; i > 0; i -= 1) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      this.setState({
+        shuffle: false,
+      });
     }
     return a;
   }
 
   renderAlternatives(correctAnswer, incorrectAnswers) {
+    const { alreadyAnswered } = this.state;
     const alternatives = [];
     alternatives.push(
       <button
+        className={ alreadyAnswered ? 'green' : '' }
         type="button"
         data-testid="correct-answer"
         onClick={ () => this.handleClick() }
@@ -53,6 +75,7 @@ class Game extends Component {
     incorrectAnswers.forEach((answer, index) => {
       alternatives.push(
         <button
+          className={ alreadyAnswered ? 'red' : '' }
           type="button"
           data-testid={ `wrong-answer-${index}` }
           onClick={ () => this.handleClick() }
