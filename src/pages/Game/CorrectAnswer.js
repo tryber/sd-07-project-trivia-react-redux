@@ -11,6 +11,7 @@ class CorrectAnswer extends Component {
         <button
           type="button"
           data-testid="correct-answer"
+          disabled={ isAnswered }
           className={ isAnswered ? 'answer-button-correct' : 'answer-button' }
           onClick={ () => changeColor() }
         >
