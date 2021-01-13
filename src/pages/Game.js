@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Header from '../components/Header';
+import Trivia from '../components/Trivia';
+import { getQuestions } from '../helpers/index';
 
 class Game extends Component {
   // componentDidMount() {
@@ -13,7 +15,10 @@ class Game extends Component {
 
   render() {
     return (
-      <Header playerProfile={ this.getPlayerProfile() } />
+      <div>
+        <Header playerProfile={ this.getPlayerProfile() } />
+        <Trivia response={ getQuestions() } />
+      </div>
     );
   }
 }
