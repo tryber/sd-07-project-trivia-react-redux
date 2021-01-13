@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { getStorage, setStorage } from '../../services';
 import './style.css';
 
 class LoginForm extends Component {
@@ -10,6 +12,7 @@ class LoginForm extends Component {
       isDisabled: true,
     };
     this.handleInputChange = this.handleInputChange.bind(this);
+    // this.handleClick = this.handleClick.bind(this);
   }
 
   handleInputChange({ name, value }) {
@@ -26,6 +29,12 @@ class LoginForm extends Component {
         }
       },
     );
+  }
+
+  handleClick() {
+    const token = 'f00cb469ce38726ee00a7c6836761b0a4fb808181a125dcde6d50a9f3c9127b6';
+    setStorage('token', token);
+    console.log(getStorage('token'));
   }
 
   render() {
@@ -64,13 +73,16 @@ class LoginForm extends Component {
             </label>
           </div>
           <div className="field">
-            <button
-              type="submit"
-              disabled={ isDisabled }
-              data-testid="btn-play"
-            >
-              Jogar
-            </button>
+            <Link to="/game">
+              <button
+                type="submit"
+                disabled={ isDisabled }
+                data-testid="btn-play"
+                onClick={ this.handleClick }
+              >
+                Jogar
+              </button>
+            </Link>
           </div>
         </form>
       </main>

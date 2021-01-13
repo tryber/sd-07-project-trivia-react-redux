@@ -4,11 +4,12 @@ import './style.css';
 
 class Title extends Component {
   render() {
-    const { title, subTitle, dataTestid } = this.props;
+    const { title, subTitle1, subTitle2, dataTestid } = this.props;
     return (
       <div className="title-container">
         <h1 className="title-h1" data-testid={ dataTestid }>{ title }</h1>
-        {(subTitle) && <h2 className="title-h2">{ subTitle }</h2>}
+        {(subTitle1) && <span className="title-h2">{ subTitle1 }</span>}
+        {(subTitle2) && <span className="title-h2">{ subTitle2 }</span>}
       </div>
     );
   }
@@ -16,12 +17,14 @@ class Title extends Component {
 
 Title.propTypes = {
   title: PropTypes.string.isRequired,
-  subTitle: PropTypes.string,
+  subTitle1: PropTypes.string,
+  subTitle2: PropTypes.string,
   dataTestid: PropTypes.string,
 };
 
 Title.defaultProps = {
-  subTitle: '',
+  subTitle1: '',
+  subTitle2: '',
   dataTestid: '',
 };
 
