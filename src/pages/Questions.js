@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { addScore } from '../Redux/Actions';
 
+import './Questions.css';
+
 class Questions extends React.Component {
   constructor() {
     super();
@@ -17,12 +19,14 @@ class Questions extends React.Component {
       status: true,
       score: 0,
       assertions: 0,
+      showAnswers: false,
       seconds: 30,
     };
     this.fetchQuestions = this.fetchQuestions.bind(this);
     this.nextQuestion = this.nextQuestion.bind(this);
     this.clickButton = this.clickButton.bind(this);
     this.clickRightAnswer = this.clickRightAnswer.bind(this);
+    this.clickButtonAnswer = this.clickButtonAnswer.bind(this);
   }
 
   componentDidMount() {
@@ -87,14 +91,15 @@ class Questions extends React.Component {
     this.clickButton();
   }
 
-  clickButton() {
+  clickButtonAnswer() {
     this.setState({
       status: false,
+      showAnswers: true,
     });
   }
 
   render() {
-    const { questions, index, status, seconds } = this.state;
+    const { questions, index, status, showAnswers, seconds } = this.state;
     return (
       <div>
         <h3>
@@ -120,17 +125,19 @@ class Questions extends React.Component {
             type="button"
             key="correct"
             data-testid="correct-answer"
+            className={ showAnswers ? 'correct' : '' }
           >
             {questions[index].correct_answer}
           </button>
           {questions[index].incorrect_answers
             .map((item, itemIndex) => (
               <button
+                onClick={ this.clickButtonAnswer }
                 disabled={ seconds === 0 }
-                onClick={ this.clickButton }
                 type="button"
                 key="incorrect"
                 data-testid={ `wrong-answer-${itemIndex}` }
+                className={ showAnswers ? 'incorrect' : '' }
               >
                 { item }
               </button>))}
