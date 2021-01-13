@@ -14,9 +14,11 @@ class Trivia extends React.Component {
       placar: 0,
       questions: { results: [] },
       position: 0,
+      disabled: false,
     };
     this.clickHandler = this.clickHandler.bind(this);
     this.requestQuestions = this.requestQuestions.bind(this);
+    this.disable = this.disable.bind(this);
   }
 
   componentDidMount() {
@@ -49,9 +51,13 @@ class Trivia extends React.Component {
     });
   }
 
+  disable() {
+    this.setState({ disabled: true });
+  }
+
   render() {
     const { emailSave, nameSave } = this.props;
-    const { urlImg, placar, questions, position } = this.state;
+    const { urlImg, placar, questions, position, disabled } = this.state;
     const { results } = questions;
 
     return (
@@ -74,6 +80,8 @@ class Trivia extends React.Component {
                 key={ index }
                 type="button"
                 data-testid={ `wrong-answer-${index}` }
+                disabled={ disabled }
+
               >
                 {' '}
                 {answer}
@@ -85,6 +93,7 @@ class Trivia extends React.Component {
                 onClick={ this.clickHandler }
                 type="button"
                 data-testid="correct-answer"
+                disabled={ disabled }
               >
                 {' '}
                 {item.correct_answer}
@@ -109,7 +118,7 @@ class Trivia extends React.Component {
             );
           })[position]}
         </section>
-        <Timer />
+        <Timer disable={ this.disable } />
       </div>
     );
   }
