@@ -4,7 +4,7 @@ const initialState = {
   score: 0,
   gravatarEmail: '',
   loading: false,
-  token: '',
+  questions: {},
 };
 
 export default function (state = initialState, action) {
@@ -39,6 +39,20 @@ export default function (state = initialState, action) {
     return {
       ...state,
       loading: true,
+    };
+  case 'REQUEST_QUESTIONS_API':
+    return {
+      ...state,
+      loading: true,
+    };
+  case 'REQUEST_QUESTIONS_API_SUCCESS':
+    return {
+      ...state,
+      question: action.payload,
+    };
+  case 'REQUEST_QUESTIONS_API_FAIL':
+    return {
+      ...state,
     };
   default:
     return state;

@@ -32,6 +32,20 @@ export const requestApiToken = () => ({
   type: 'REQUEST_TOKEN_API',
 });
 
+export const requestApiQuestion = () => ({
+  type: 'REQUEST_QUESTIONS_API',
+});
+
+const requestApiQuestionSucess = (payload) => ({
+  type: 'REQUEST_QUESTIONS_API_SUCCESS',
+  payload,
+});
+
+const requestApiQuestionFail = (error) => ({
+  type: 'REQUEST_QUESTIONS_API_FAIL',
+  error,
+});
+
 export function requestToken() {
   return (dispatch) => {
     dispatch(requestApiToken());
@@ -40,6 +54,20 @@ export function requestToken() {
         response.json().then(
           (data) => dispatch(tokenToStoreSucess(data.token)),
           (error) => dispatch(tokenToStoreFail(error)),
+        );
+      });
+  };
+}
+
+export function requestQuestionAndAnsewrs(token) {
+  return (dispatch) => {
+    dispatch(requestApiQuestion());
+    console.log(token);
+    return fetch(`https://opentdb.com/api.php?amount=3&token=${token}`)
+      .then((response) => {
+        response.json().then(
+          (data) => dispatch(requestApiQuestionSucess(data)),
+          (error) => dispatch(requestApiQuestionFail(error)),
         );
       });
   };
