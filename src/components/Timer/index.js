@@ -1,15 +1,14 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './style.css';
 
-class Timer extends Component {
-  render() {
-    return (
-      <>
-        <h1>Timer component</h1>
-        <h3>developing</h3>
-      </>
-    );
-  }
-}
+const Timer = () => {
+  return (
+    <section className="timer-section">
+      <div className="timer-circle">
+        <div className="timer">0</div>
+      </div>
+    </section>
+  );
+};
 
 export default Timer;

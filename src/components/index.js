@@ -1,5 +1,5 @@
 export { default as LoginForm } from './LoginForm';
-export { default as Answers } from './Answers';
+export { default as Answer } from './Answer';
 export { default as ConfigForm } from './ConfigForm';
 export { default as Header } from './Header';
 export { default as Next } from './Next';

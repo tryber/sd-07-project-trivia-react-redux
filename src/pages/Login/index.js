@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import { LoginForm } from '../../components';
+import { Header, Question, LoginForm, RankingItem } from '../../components';
 import './style.css';
 
 class Login extends Component {
   render() {
     return (
-      <LoginForm />
+      <div>
+        <LoginForm />
+      </div>
     );
   }
 }

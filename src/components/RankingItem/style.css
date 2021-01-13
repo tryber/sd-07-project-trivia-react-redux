@@ -1,0 +1,56 @@
+.ranking-section {
+  display: flex;
+  flex-direction: column;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.ranking {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  box-sizing: border-box;
+  background-color: rgba(0, 0, 0, 0.2);
+  min-width: 85%;
+  height: 70px;
+  margin: 0;
+  padding: 0 10px;
+}
+
+.ranking:nth-child(even) {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.ranking:first-child {
+  border-radius: 20px 20px 0px 0px;
+}
+
+.ranking:last-child {
+  border-radius: 0px 0px 20px 20px;
+}
+
+.name {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 36px;
+  line-height: 42px;
+  display: flex;
+  align-items: center;
+  text-align: right;
+  color: white;
+}
+
+.score {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight:700;
+  font-size: 36px;
+  line-height: 42px;
+  display: flex;
+  align-items: center;
+  text-align: left;
+  color: white;
+}

@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import {
   Header,
   Timer,
-  Answers,
+  Answer,
   ConfigButton,
   Next,
   Question,
 } from '../../components';
 import getApi from '../../services/api';
+import './style.css';
 
 class Game extends Component {
   constructor(props) {
@@ -41,14 +42,14 @@ class Game extends Component {
     console.log(userToken);
     console.log(questions);
     return (
-      <>
+      <div>
         <Header />
         <Timer />
         <Question />
-        <Answers />
+        <Answer />
         <ConfigButton />
         <Next />
-      </>
+      </div>
     );
   }
 }
