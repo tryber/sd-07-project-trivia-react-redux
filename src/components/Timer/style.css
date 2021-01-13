@@ -4,6 +4,7 @@
   align-items: top;
   justify-content:flex-end
 }
+
 .timer-circle {
   position: absolute;
   width: 150px;
