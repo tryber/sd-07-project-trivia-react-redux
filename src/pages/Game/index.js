@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Header from './header';
+import Header from '../../components/Header';
 import Questions from './Questions';
 import Timer from './Timer';
 import './index.css';
