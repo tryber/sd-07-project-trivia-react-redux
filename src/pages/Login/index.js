@@ -41,10 +41,11 @@ class Login extends React.Component {
     const { tokenAction, history, logarPlayer } = this.props;
     tokenAction();
     const { email, name } = this.state;
-    const gravatarEmail = md5(email);
+    const gravatar = md5(email).toString();
+    console.log(gravatar);
     const player = {
       name,
-      gravatarEmail,
+      gravatarEmail:`https://www.gravatar.com/avatar/${gravatar}`,
     };
     logarPlayer(player);
     if (history) history.push('/login');
