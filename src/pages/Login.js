@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getStorage, setStorage } from '../services';
 import { CustomLogin } from '../components';
-import { addEmail, fetchToken, addName, fetchTrivia} from '../actions';
+import { addEmail, fetchToken, addName, fetchTrivia } from '../actions';
 
 class Login extends Component {
   constructor() {
@@ -28,16 +28,14 @@ class Login extends Component {
     }
   }
 
-   handleSubmit() {
-    const { dispatchEmail, dispatchToken, dispatchNome,dispatchTrivia } = this.props;
+  handleSubmit() {
+    const { dispatchEmail, dispatchToken, dispatchNome, dispatchTrivia } = this.props;
     const { email, nome } = this.state;
     dispatchEmail(email);
     dispatchNome(nome);
     dispatchToken(setStorage);
     dispatchTrivia(getStorage('token'));
-  }
-
-  
+  }  
 
   handleInputChange({ target: { name, value } }) {
     this.setState({ [name]: value }, this.validaInput);
@@ -71,4 +69,5 @@ Login.propTypes = {
   dispatchEmail: PropTypes.func.isRequired,
   dispatchNome: PropTypes.func.isRequired,
   dispatchToken: PropTypes.func.isRequired,
+  dispatchTrivia: PropTypes.func.isRequired,
 };

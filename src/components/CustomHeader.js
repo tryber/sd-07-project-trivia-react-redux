@@ -2,7 +2,6 @@ import React from 'react';
 import md5 from 'crypto-js/md5';
 import PropTypes from 'prop-types';
 
-
 export default function CustomHeader({ name, email }) {
   return (
     <div>

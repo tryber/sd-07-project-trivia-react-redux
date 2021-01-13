@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { CustomHeader, CustomGame } from '../components';
-import triviaReducer from '../reducers/triviaReducer';
-import { getStorage } from '../services/localStorage';
+// import triviaReducer from '../reducers/triviaReducer';
+// import { getStorage } from '../services/localStorage';
 
 class GameScreen extends Component {
   constructor() {
@@ -12,17 +12,17 @@ class GameScreen extends Component {
   correctSubimit() {
     alert('resposta_correta');
   }
-  
+
   render() {
     const { name, email, trivia, loading } = this.props;
     return (
       <div>
-        <CustomHeader name={name} email={email} />
-        {loading ? (
+        <CustomHeader name={ name } email={ email } />
+        { loading ? (
           <p>...Loading</p>
         ) : (
-          <CustomGame challenge={trivia} correct={this.correctSubimit} />
-        )}
+          <CustomGame challenge={ trivia } correct={ this.correctSubimit } />
+        ) }
       </div>
     );
   }

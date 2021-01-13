@@ -2,7 +2,7 @@ import {
   FAILED_REQUEST,
   RESULT_TRIVIA,
   REQUEST_TRIVIA,
-} from '../actions/fetchTrivia';
+} from "../actions/fetchTrivia";
 
 const INITIAL_STATE = {
   trivia: [],

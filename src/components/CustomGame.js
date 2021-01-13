@@ -15,11 +15,11 @@ const CustomGame = ({ challenge, correct }) => {
       {answersArray.map((item, index) => {
         return (
           <button
-            key={index}
-            onClick={correct}
+            key={ index }
+            onClick={ correct }
             data-testid={
               item === correct_answer
-                ? "correct-answer"
+                ? 'correct-answer'
                 : `wrong-answer-${index}`
             }
           >
@@ -33,6 +33,7 @@ const CustomGame = ({ challenge, correct }) => {
 
 CustomGame.propTypes = {
   challenge: PropTypes.shape(PropTypes.array).isRequired,
+  correct: PropTypes.func.isRequired,
 };
 
 export default CustomGame;
