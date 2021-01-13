@@ -14,7 +14,7 @@ class Header extends Component {
           <img src={ trivia } alt="TRIVIA" />
         </div>
         <div className="header-player">
-          <span data-testid="header-player-name">{name}</span>
+          <span data-testid="header-player-name">{ name }</span>
           <span data-testid="header-score">{ `${score} points` }</span>
         </div>
         <div className="header-gravatar">
