@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import { fetchQuestionNAnswer } from '../../services';
 import './Questions.css';
 
 class Questions extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.fetchQuestions = this.fetchQuestions.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.countdown = this.countdown.bind(this);
+    this.handleClickNextQuestion = this.handleClickNextQuestion.bind(this);
+    this.resetCounter = this.resetCounter.bind(this);
 
     this.state = {
       questions: [],
@@ -23,6 +26,12 @@ class Questions extends Component {
   componentDidMount() {
     this.fetchQuestions();
     const milisegundos = 1000;
+    setInterval(this.countdown, milisegundos);
+  }
+
+  resetCounter() {
+    const milisegundos = 1000;
+    this.setState({ counterInterval: 30, counter: 0 });
     setInterval(this.countdown, milisegundos);
   }
 
@@ -44,14 +53,27 @@ class Questions extends Component {
     this.setState({ isDisabled: true });
   }
 
+  handleClickNextQuestion() {
+    this.setState((prevState) => ({ ...prevState,
+      questionNumber: prevState.questionNumber + 1 }));
+    this.resetCounter();
+    this.setState({ isDisabled: false });
+  }
+
   render() {
     const { questions,
       isLoading,
       questionNumber,
       isDisabled,
       counterInterval } = this.state;
-    const questionToLoad = questions[questionNumber];
+
     if (isLoading) return <h1>Is Loading</h1>;
+
+    const numberOfQuestions = 4;
+    if (questionNumber > numberOfQuestions) return <Redirect to="/feedback" />;
+
+    const questionToLoad = questions[questionNumber];
+
     return (
       <div>
         <div>
@@ -87,6 +109,7 @@ class Questions extends Component {
             data-testid="btn-next"
             type="button"
             hidden={ !isDisabled }
+            onClick={ () => this.handleClickNextQuestion() }
           >
             Next Question
 
