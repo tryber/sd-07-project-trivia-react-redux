@@ -1,17 +1,16 @@
 .header-section {
-  background-color: #FF9914;
-  color: #F21B3F;
-  display: flex;
-  flex-direction: row;
-  flex-flow: row wrap;
   align-items: center;
+  background-color: #ff9914;
+  color: #f21b3f;
+  display: flex;
+  flex-flow: row wrap;
   justify-content: space-between;
   margin: 0;
 }
 
 .header {
-  background-color: #FF9914;
-  color: #F21B3F;
+  background-color: #ff9914;
+  color: #f21b3f;
   font-family: Roboto;
   font-size: 36px;
   font-style: normal;
@@ -27,24 +26,24 @@
 }
 
 .header-name {
+  align-items: center;
+  display: flex;
   font-family: Roboto;
   font-style: normal;
   font-weight: 400;
   font-size: 36px;
   line-height: 42px;
-  display: flex;
-  align-items: center;
   text-align: right;
 }
 
 .header-score {
+  align-items: center;
+  display: flex;
   font-family: Roboto;
   font-style: normal;
   font-weight:700;
   font-size: 36px;
   line-height: 42px;
-  display: flex;
-  align-items: center;
-  text-align: left;
   margin-right: 150px;
+  text-align: left;
 }

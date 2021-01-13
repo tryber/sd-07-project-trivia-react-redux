@@ -1,56 +1,56 @@
 .ranking-section {
+  align-items: center;
   display: flex;
   flex-direction: column;
   flex-flow: row wrap;
-  align-items: center;
   justify-content: center;
 }
 
 .ranking {
+  background-color: #00000033;
+  box-sizing: border-box;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-between;
-  box-sizing: border-box;
-  background-color: rgba(0, 0, 0, 0.2);
-  min-width: 85%;
   height: 70px;
+  justify-content: space-between;
   margin: 0;
+  min-width: 85%;
   padding: 0 10px;
 }
 
-.ranking:nth-child(even) {
-  background-color: rgba(0, 0, 0, 0.05);
+.ranking:nth-child( even ) {
+  background-color: #0000000d;
 }
 
 .ranking:first-child {
-  border-radius: 20px 20px 0px 0px;
+  border-radius: 20px 20px 0 0;
 }
 
 .ranking:last-child {
-  border-radius: 0px 0px 20px 20px;
+  border-radius: 0 0 20px 20px;
 }
 
 .name {
+  align-items: center;
+  display: flex;
+  color: white;
   font-family: Roboto;
+  font-size: 36px;
   font-style: normal;
   font-weight: 400;
-  font-size: 36px;
   line-height: 42px;
-  display: flex;
-  align-items: center;
   text-align: right;
-  color: white;
 }
 
 .score {
+  align-items: center;
+  color: white;
+  display: flex;
   font-family: Roboto;
+  font-size: 36px;
   font-style: normal;
   font-weight:700;
-  font-size: 36px;
   line-height: 42px;
-  display: flex;
-  align-items: center;
   text-align: left;
-  color: white;
 }
