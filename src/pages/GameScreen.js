@@ -16,9 +16,12 @@ class GameScreen extends Component {
       resps: [],
       right: '',
       wrong: '',
+      buttonNext: false,
+      id: 0,
     };
     this.handleQuest = this.handleQuest.bind(this);
     this.changeStyle = this.changeStyle.bind(this);
+    this.nextQuestion = this.nextQuestion.bind(this);
   }
 
   async componentDidMount() {
@@ -31,19 +34,32 @@ class GameScreen extends Component {
     const { quest } = this.props;
     console.log(quest);
     this.setState({
-      category: quest[1].category,
-      question: quest[1].question,
+      category: quest[0].category,
+      question: quest[0].question,
       // respCorrect: quest[1].correct_answer,
-      resps: [quest[1].correct_answer, ...quest[1].incorrect_answers],
+      resps: [quest[0].correct_answer, ...quest[0].incorrect_answers],
     });
   }
 
   changeStyle() {
-    this.setState({ right: 'right', wrong: 'wrong' });
+    this.setState({ right: 'right', wrong: 'wrong', buttonNext: true });
+  }
+
+  nextQuestion() {
+    const { quest } = this.props;
+    const { id } = this.state;
+    this.setState({ id: id + 1 });
+    this.setState({
+      category: quest[id].category,
+      question: quest[id].question,
+      // respCorrect: quest[1].correct_answer,
+      resps: [quest[id].correct_answer, ...quest[id].incorrect_answers],
+    });
   }
 
   render() {
-    const { category, question, resps, right, wrong } = this.state;
+    console.log('state:', this.state);
+    const { category, question, resps, right, wrong, buttonNext } = this.state;
     return (
       <div>
         <div>
@@ -87,9 +103,16 @@ class GameScreen extends Component {
               {resps[3]}
             </button>
           </div>
+          <button
+            disabled={ !buttonNext }
+            data-testid="btn-next"
+            type="button"
+            onClick={ this.nextQuestion }
+          >
+            Próxima
+          </button>
         </div>
       </div>
-
     );
   }
 }
