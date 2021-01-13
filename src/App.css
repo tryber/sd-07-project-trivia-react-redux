@@ -35,7 +35,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Rowdies&display=swap') ;
 
 .container-fluid {
-  background-image: url(./image/bg-image.jpg);
+  background-image: url('./image/bg-image.jpg');
   background-position: fixed;
   background-repeat: no-repeat;
   background-size: cover;
@@ -61,13 +61,13 @@
 }
 
 .form-login {
-  border-radius: 5px;
   background-color: white;
+  border-radius: 5px;
   box-shadow: 1px 4px 5px rgba(0, 0, 0, 0.5);
   display: flex;
   flex-direction: column;
-  min-height: 150px;
   margin: 50px;
+  min-height: 150px;
   padding: 10px;
   width: 250px;
 }
@@ -99,6 +99,7 @@
   margin-top: 20px;
   padding: 10px;
 }
+
 .btn-actions:hover {
   box-shadow: 1px 1px 4px rgba(11, 148, 182, 0.63);
 }
@@ -122,8 +123,8 @@
 
 .questions {
   background-color: #dbdada;
-  border-radius: 5px;
   border: none;
+  border-radius: 5px;
   margin: 5px;
   margin-bottom: 10px;
   padding: 5px;
@@ -136,7 +137,7 @@
   color: red;
   font-size: 10pt;
   font-weight: 700;
-  margin-top:10px;
+  margin-top: 10px;
   padding: 10px;
   text-align: center;
 }
