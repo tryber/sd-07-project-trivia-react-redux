@@ -10,7 +10,7 @@ class FeedBack extends Component {
     return (
       <div>
         <Header />
-        <p data-testid="feddback-text">
+        <p data-testid="feedback-text">
           { assertions >= threeAssertions
             ? 'Mandou bem!'
             : 'Podia ser melhor...'}

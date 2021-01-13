@@ -252,7 +252,7 @@ describe.skip('9 - [TELA DE JOGO] Crie o placar com as seguintes característica
   });
 });
 
-describe.skip('10 - [TELA DE JOGO] Crie um botão de \"Próxima\" que apareça após a resposta ser dada', () => {
+describe('10 - [TELA DE JOGO] Crie um botão de \"Próxima\" que apareça após a resposta ser dada', () => {
   beforeEach(() => {
     cy.visit('http://localhost:3000/');
     cy.clearLocalStorage();
@@ -277,7 +277,7 @@ describe.skip('10 - [TELA DE JOGO] Crie um botão de \"Próxima\" que apareça a
   });
 });
 
-describe.skip('11 - [TELA DE JOGO] Desenvolva o jogo de forma que a pessoa que joga deve responder 5 perguntas no total', () => {
+describe('11 - [TELA DE JOGO] Desenvolva o jogo de forma que a pessoa que joga deve responder 5 perguntas no total', () => {
   beforeEach(() => {
     cy.visit('http://localhost:3000/');
     cy.clearLocalStorage();
@@ -496,7 +496,7 @@ describe.skip('14 - [TELA DE FEEDBACK] Exiba as informações relacionadas aos r
   });
 });
 
-describe.skip('15 - [TELA DE FEEDBACK] Crie a opção para a pessoa jogadora poder jogar novamente', () => {
+describe('15 - [TELA DE FEEDBACK] Crie a opção para a pessoa jogadora poder jogar novamente', () => {
   beforeEach(() => {
     cy.visit('http://localhost:3000/');
     cy.clearLocalStorage();
