@@ -12,9 +12,9 @@ const INITIAL_STATE = {
 
 function playerReducer(state = INITIAL_STATE, action) {
   const { player, type } = action;
-  const { name, email, token, imageSrc } = player;
   switch (type) {
   case 'LOGIN':
+    const { name, email, token, imageSrc } = player;
     return {
       ...state,
       name,

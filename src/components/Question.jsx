@@ -38,8 +38,8 @@ class Question extends Component {
       { incorrectAnswer: obj.incorrect_answers },
     ];
     let counter = 1;
-    if (incorrect_answers.length > counter) {
-      counter += incorrect_answers.length;
+    if (obj.incorrect_answers.length > counter) {
+      counter += obj.incorrect_answers.length;
     } else counter = questions.length;
     this.renderAnswers(counter, questions);
   }
@@ -79,5 +79,3 @@ Question.propTypes = {
     question: propTypes.string,
   }),
 }.isRequired;
-
-// test
