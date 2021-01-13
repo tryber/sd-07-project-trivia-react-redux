@@ -48,7 +48,7 @@ class Login extends React.Component {
       gravatarEmail: `https://www.gravatar.com/avatar/${gravatar}`,
     };
     logarPlayer(player);
-    if (history) history.push('/login');
+    if (history) history.push('/game');
   }
 
   render() {
