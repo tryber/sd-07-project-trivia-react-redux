@@ -1,4 +1,4 @@
-import { fetchTokenAPI } from '../services/api';
+import { fetchTokenAPI } from '../services';
 
 export const REQUEST_TOKEN = 'REQUEST_TOKEN';
 export const RESULT_TOKEN = 'RESULT_TOKEN';

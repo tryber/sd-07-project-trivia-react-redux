@@ -8,10 +8,10 @@ const CustomGame = ({ challenge }) => (
         return (
           <div>
             <p data-testid="question-category">{category}</p>
-            <p data-testid="question-category">{question}</p>
-            <p data-testid="question-category">{correct_answer}</p>
-            {incorrect_answers.map((item) => (
-              <p data-testid="question-category">{item}</p>
+            <p data-testid="question-text">{question}</p>
+            <button data-testid="correct-answer">{correct_answer}</button>
+            {incorrect_answers.map((item,index) => (
+              <button key={ index } data-testid={`wrong-answer-${index}`}>{item}</button>
             ))}
           </div>
         );

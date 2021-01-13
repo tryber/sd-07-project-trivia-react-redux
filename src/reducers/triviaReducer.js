@@ -4,7 +4,7 @@ import {
 } from '../actions/fetchTrivia';
 
 const INITIAL_STATE = {
-  trivia: {}, // loading: false,
+  trivia: [], // loading: false,
 };
 
 export default function triviaReducer(state = INITIAL_STATE, action) {
@@ -12,14 +12,9 @@ export default function triviaReducer(state = INITIAL_STATE, action) {
     /* case REQUEST_TRIVIA:
     return { ...state.triviaReducer, loading: true }; */
     case RESULT_TRIVIA:
-      console.log('triviareducer', {
-        ...state.triviaReducer,
-        trivia: action.payload,
-        /* loading: false */
-      });
       return {
         ...state.triviaReducer,
-        trivia: action.payload,
+        trivia: [...action.payload.results],
         /* loading: false */
       };
     case FAILED_REQUEST:

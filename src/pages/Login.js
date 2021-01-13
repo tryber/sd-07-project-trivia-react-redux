@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { setStorage } from '../services/localStorage';
+import { getStorage, setStorage } from '../services';
 import { CustomLogin } from '../components';
 import { addEmail, fetchToken, addName, fetchTrivia} from '../actions';
 
@@ -34,7 +34,7 @@ class Login extends Component {
     dispatchEmail(email);
     dispatchNome(nome);
     await dispatchToken(setStorage);
-    await dispatchTrivia();
+    await dispatchTrivia(getStorage('token'));
 
   }
 
@@ -60,7 +60,7 @@ const mapDispatchToProps = (dispatch) => ({
   dispatchEmail: (e) => dispatch(addEmail(e)),
   dispatchNome: (e) => dispatch(addName(e)),
   dispatchToken: (callback) => dispatch(fetchToken(callback)),
-  dispatchTrivia: () => dispatch(fetchTrivia()),
+  dispatchTrivia: (a) => dispatch(fetchTrivia(a)),
 
 });
 
