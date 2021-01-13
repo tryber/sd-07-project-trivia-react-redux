@@ -16,34 +16,86 @@ class GameScreen extends Component {
       resps: [],
       right: '',
       wrong: '',
+      buttonNext: false,
+      id: 1,
+      disabledTimeOut: false,
+      timer: 25,
     };
     this.handleQuest = this.handleQuest.bind(this);
     this.changeStyle = this.changeStyle.bind(this);
+    this.timeOut = this.timeOut.bind(this);
+    this.disableQuestion = this.disableQuestion.bind(this);
+    this.nextQuestion = this.nextQuestion.bind(this);
   }
 
   async componentDidMount() {
     const { actionRequest } = this.props;
     await actionRequest();
     this.handleQuest();
+    this.timeOut();
   }
 
   handleQuest() {
     const { quest } = this.props;
-    console.log(quest);
+    console.log('q', quest);
+    if (quest.length === 0) {
+      return null;
+    }
     this.setState({
-      category: quest[1].category,
-      question: quest[1].question,
+      category: quest[0].category,
+      question: quest[0].question,
       // respCorrect: quest[1].correct_answer,
-      resps: [quest[1].correct_answer, ...quest[1].incorrect_answers],
+      resps: [quest[0].correct_answer, ...quest[0].incorrect_answers],
     });
   }
 
   changeStyle() {
-    this.setState({ right: 'right', wrong: 'wrong' });
+    this.setState({ right: 'right', wrong: 'wrong', buttonNext: true });
+  }
+
+  nextQuestion() {
+    const { quest } = this.props;
+    const { id } = this.state;
+    this.setState({ id: id + 1 });
+    this.setState({
+      category: quest[id].category,
+      question: quest[id].question,
+      // respCorrect: quest[1].correct_answer,
+      resps: [quest[id].correct_answer, ...quest[id].incorrect_answers],
+      buttonNext: false,
+    });
+  }
+
+  disableQuestion() {
+    const { timer } = this.state;
+    if (timer <= 0) {
+      this.setState({ disabledTimeOut: true });
+    }
+  }
+
+  timeOut() {
+    const ONE_SEC = 1000;
+    setInterval(() => {
+      this.setState((state) => ({
+        timer: state.timer - 1,
+      }), this.disableQuestion);
+    }, ONE_SEC);
   }
 
   render() {
-    const { category, question, resps, right, wrong } = this.state;
+    console.log('state:', this.state);
+
+    const {
+      category,
+      question,
+      resps,
+      right,
+      wrong,
+      disabledTimeOut,
+      timer,
+      buttonNext,
+    } = this.state;
+
     return (
       <div>
         <div>
@@ -59,6 +111,7 @@ class GameScreen extends Component {
               data-testid="correct-answer"
               type="button"
               onClick={ this.changeStyle }
+              disabled={ disabledTimeOut }
             >
               {resps[0]}
             </button>
@@ -67,6 +120,7 @@ class GameScreen extends Component {
               data-testid="wrong-answer-1"
               type="button"
               onClick={ this.changeStyle }
+              disabled={ disabledTimeOut }
             >
               {resps[1]}
             </button>
@@ -75,6 +129,7 @@ class GameScreen extends Component {
               data-testid="wrong-answer-2"
               type="button"
               onClick={ this.changeStyle }
+              disabled={ disabledTimeOut }
             >
               {resps[2]}
             </button>
@@ -83,13 +138,23 @@ class GameScreen extends Component {
               data-testid="wrong-answer-3"
               type="button"
               onClick={ this.changeStyle }
+              disabled={ disabledTimeOut }
             >
               {resps[3]}
             </button>
           </div>
+          {buttonNext && (
+            <button
+              data-testid="btn-next"
+              type="button"
+              onClick={ this.nextQuestion }
+            >
+              Próxima
+            </button>
+          )}
+          {!disabledTimeOut && timer}
         </div>
       </div>
-
     );
   }
 }
