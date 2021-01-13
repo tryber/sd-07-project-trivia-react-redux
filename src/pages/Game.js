@@ -12,10 +12,10 @@ class Game extends Component {
       key: 0,
     //  results: results,
     };
-    this.nextQuetion = this.nextQuetion.bind(this);
+    this.nextQuestion = this.nextQuestion.bind(this);
   }
 
-  nextQuetion() {
+  nextQuestion() {
     const { key } = this.state;
     const numberQuestion = 4;
     if (key < numberQuestion) {
@@ -39,7 +39,7 @@ class Game extends Component {
     return (
       <div>
         <Header />
-        <Quiz nextQuestion={ this.nextQuetion } results={ results[key] } />
+        <Quiz nextQuestion={ this.nextQuestion } results={ results[key] } />
       </div>
     );
   }

@@ -1,7 +1,7 @@
 .answer-correct {
-    border: 3px solid rgb(6, 240, 15);
+  border: 3px solid #06f00f;
 }
 
 .answer-wrong {
-    border: 3px solid rgb(255, 0, 0);
+  border: 3px solid #ff0000;
 }
