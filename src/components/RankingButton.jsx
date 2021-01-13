@@ -1,25 +1,33 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 
 class RankingButton extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      redirect: null,
+    };
+  }
+
   render() {
-    const { history } = this.props;
+    const { redirect } = this.state;
     return (
       <div>
-        <button
-          type="button"
-          data-testid="btn-ranking"
-          onClick={ history.push('/ranking') }
-        >
-          Ver Ranking
-        </button>
+        {(redirect
+          ? <Redirect to={ redirect } />
+          : (
+            <button
+              type="button"
+              data-testid="btn-ranking"
+              onClick={ () => this.setState({ redirect: '/ranking' }) }
+            >
+              Ver Ranking
+            </button>
+          )
+        )}
       </div>
     );
   }
 }
-
-RankingButton.propTypes = {
-  history: PropTypes.string.isRequired,
-};
 
 export default RankingButton;
