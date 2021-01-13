@@ -3,17 +3,23 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Questions from '../Components/Questions';
 import { fetchQuestions } from '../actions';
+import Header from '../Components/Header';
 
 class QuestionsPage extends React.Component {
-  componentDidMount() {
+  async componentDidMount() {
     const token = localStorage.getItem('token');
     const { questionsGen } = this.props;
 
-    questionsGen(token);
+    await questionsGen(token);
   }
 
   render() {
-    return <Questions />;
+    return (
+      <div>
+        <Header />
+        <Questions />
+      </div>
+    );
   }
 }
 

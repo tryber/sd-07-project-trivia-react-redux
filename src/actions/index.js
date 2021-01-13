@@ -1,5 +1,5 @@
 import md5 from 'crypto-js/md5';
-import {AVATAR, LOGIN, TOKEN, QUESTIONS } from './actionsTypes';
+import { AVATAR, LOGIN, TOKEN, QUESTIONS } from './actionsTypes';
 
 export const clickLogin = ({ email, name }) => ({
   type: LOGIN,
@@ -14,6 +14,7 @@ export const clickToken = (token) => ({
 export const clickAvatar = (avatar) => ({
   type: AVATAR,
   avatar,
+});
 
 export const questionsGen = (questions) => ({
   type: QUESTIONS,
@@ -37,7 +38,6 @@ export const fetchToken = () => {
   };
 };
 
-
 export const fetchGravatar = (email) => {
   const hashEmail = md5(email).toString();
   const URL = `https://www.gravatar.com/avatar/${hashEmail}`;
@@ -46,7 +46,10 @@ export const fetchGravatar = (email) => {
       .then((response) => dispatch(clickAvatar(response.url)))
       .catch((error) => {
         console.log(error);
-      
+      });
+  };
+};
+
 export const fetchQuestions = (token) => {
   const URL = `https://opentdb.com/api.php?amount=5&token=${token}`;
   return (dispatch) => {

@@ -69,7 +69,7 @@ class Login extends React.Component {
               onChange={ (e) => this.handleChange(e) }
             />
           </label>
-          <Link to="/game">
+          <Link to="/questions-page">
             <button
               data-testid="btn-play"
               type="button"
