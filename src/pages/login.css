@@ -1,6 +1,7 @@
 body {
   align-items: center;
   background-color: #333;
+  color: white;
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -44,6 +45,7 @@ button {
 }
 
 .btn-config {
+  color: white;
   height: 40px;
   width: 40px;
 }
@@ -55,4 +57,48 @@ h1 {
 .button-container {
   display: flex;
   justify-content: space-between;
+}
+
+.img-trivia {
+  animation: shake infinite 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+  margin-top: 30px;
+  width: 200px;
+}
+
+.header {
+  background-color: black;
+  display: flex;
+  flex-direction: row;
+  height: 100px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100vw;
+}
+
+.gamer-stats {
+  align-items: center;
+  display: flex;
+  height: 100%;
+  justify-content: space-around;
+  width: 200px;
+}
+
+.gamer-avatar {
+  border-radius: 30px;
+  height: 70px;
+  width: 70px;
+}
+
+.stats-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.wright-answer {
+  border: 3px solid rgb(6, 240, 15);
+}
+
+.wrong-answer {
+  border: 3px solid red;
 }
