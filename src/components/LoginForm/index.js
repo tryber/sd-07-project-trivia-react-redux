@@ -40,7 +40,7 @@ class LoginForm extends Component {
   render() {
     const { email, playerName, isDisabled } = this.state;
     return (
-      <main>
+      <section>
         <form onSubmit={ (e) => this.handleSubmit(e) }>
           <div className="field">
             <label htmlFor="email-input">
@@ -85,7 +85,7 @@ class LoginForm extends Component {
             </Link>
           </div>
         </form>
-      </main>
+      </section>
     );
   }
 }

@@ -1,0 +1,42 @@
+.answer-section {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.answer-box {
+  display: flex;
+  justify-content: space-around;
+  flex-flow: row wrap;
+  border: 3px solid white;
+  box-sizing: border-box;
+  border-radius: 30px;
+  height: 200px;
+  margin: 25px;
+  width: 45%;
+}
+
+.green {
+  background-color: #29bf12;
+}
+
+.pink {
+  background-color: #f21b3f;
+}
+
+.orange {
+  background-color: #ff9914;
+}
+
+.purple {
+  background-color: #824ab9;
+}
+
+.right {
+  border: 3px solid green;
+}
+
+.wrong {
+  border: 3px solid red;
+}

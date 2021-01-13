@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Title } from '../../components';
+import { Title, Header } from '../../components';
+import './style.css';
 
 class Feedback extends Component {
   render() {
     return (
       <div>
-        {/* <Header /> */}
+        <Header />
         <Title
           title="Mandou bem!"
           subTitle1="Você acertou 5 questões!"

@@ -1,0 +1,34 @@
+section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.field {
+  align-items: center;
+  margin: 25px 50px;
+  left: 50%;
+  width: 100%;
+}
+
+.field input {
+  text-align: center;
+  height: 50px;
+  width: 300px;
+  box-sizing: border-box;
+}
+
+button {
+  background: #333333;
+  color: white;
+  height: 50px;
+  width: 300px;
+}
+
+button:disabled {
+  background: #333333;
+  color: white;
+  opacity: 0.3;
+  width: 300px;
+}
