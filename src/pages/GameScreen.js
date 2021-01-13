@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
 import requestQuest from '../store/ducks/QuestionsRequest/actions';
+import './styles.css';
 
 class GameScreen extends Component {
   constructor() {
@@ -37,25 +38,45 @@ class GameScreen extends Component {
   render() {
     const { category, question, resps } = this.state;
     return (
-
       <div>
-        <div><Header /></div>
-
         <div>
-          <div data-testid="question-category">
-            {category}
-          </div>
-          <div data-testid="question-text">
-            {question}
-          </div>
-          <div>
-            <button data-testid="correct-answer" type="button">{resps[0]}</button>
-            <button data-testid="wrong-answer-1" type="button">{resps[1]}</button>
-            <button data-testid="wrong-answer-2" type="button">{resps[2]}</button>
-            <button data-testid="wrong-answer-3" type="button">{resps[3]}</button>
-          </div>
+          <Header />
         </div>
 
+        <div>
+          <div data-testid="question-category">{category}</div>
+          <div data-testid="question-text">{question}</div>
+          <div>
+            <button
+              className="right"
+              data-testid="correct-answer"
+              type="button"
+            >
+              {resps[0]}
+            </button>
+            <button
+              className="wrong"
+              data-testid="wrong-answer-1"
+              type="button"
+            >
+              {resps[1]}
+            </button>
+            <button
+              className="wrong"
+              data-testid="wrong-answer-2"
+              type="button"
+            >
+              {resps[2]}
+            </button>
+            <button
+              className="wrong"
+              data-testid="wrong-answer-3"
+              type="button"
+            >
+              {resps[3]}
+            </button>
+          </div>
+        </div>
       </div>
 
     );
