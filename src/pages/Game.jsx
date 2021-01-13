@@ -62,7 +62,7 @@ const Game = () => {
             value="incorrect"
             key={ answer }
             type="button"
-            data-testid={`wrong-answer-${ index }`}
+            data-testid={ `wrong-answer-${index}` }
             className={ color.style2 }
             onClick={ handleClickAnswer }
           >
