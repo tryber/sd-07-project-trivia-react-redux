@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { ResultToken } from '../services/Api';
+import resultToken from '../services/Api';
+import generateHash from '../utils';
 
 class Login extends Component {
   constructor() {
@@ -23,7 +24,9 @@ class Login extends Component {
   }
 
   handleClick() {
-    ResultToken();
+    const { username, email } = this.state;
+    resultToken();
+    generateHash(username, email);
     const { history } = this.props;
     history.push('/jogo');
   }
