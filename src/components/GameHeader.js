@@ -29,7 +29,7 @@ class GameHeader extends Component {
           src={ this.fetchGravatar() }
           alt={ getName }
         />
-        <p date-testid="header-player-name">{ getName }</p>
+        <p data-testid="header-player-name">{ getName }</p>
         <p data-testid="header-score">0</p>
       </header>
     );
