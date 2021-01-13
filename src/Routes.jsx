@@ -10,7 +10,7 @@ class Routes extends Component {
       <Switch>
         <Route exact path="/" component={ Login } />
         <Route path="/play" component={ Play } />
-        <Route path='/settings' component={ Settings } />
+        <Route path="/settings" component={ Settings } />
       </Switch>
     );
   }
