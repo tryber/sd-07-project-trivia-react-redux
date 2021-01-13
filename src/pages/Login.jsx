@@ -52,10 +52,10 @@ class Login extends React.Component {
 
   handleChange(event) {
     event.preventDefault();
-    // console.log(this.props);
+    const { history } = this.props;
+
     this.handleFetch();
-    // console.log(this.state); // deve trazer o estado name, email e token. doneName e doneEmail false
-    // this.loadTokenToLocalStorage(); //Logica para passar token do estado para localStorage
+    history.push('/play');
   }
 
   testEmail(value) {
@@ -71,8 +71,6 @@ class Login extends React.Component {
   }
 
   render() {
-    // console.log(this.props);
-    // console.log(this.props);
     const { email, name, doneEmail, doneName } = this.state;
     return (
       <form className="form">
@@ -136,6 +134,7 @@ Login.propTypes = {
   token: PropTypes.shape().isRequired,
   apiFetchToken: PropTypes.func.isRequired,
   apiFetchGravatar: PropTypes.func.isRequired,
+  history: PropTypes.shape().isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

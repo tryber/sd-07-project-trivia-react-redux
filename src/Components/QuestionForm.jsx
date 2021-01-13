@@ -8,6 +8,7 @@ class QuestionForm extends React.Component {
     return (
       <div className="form-login">
         <div className="question" />
+        <p>Categry</p>
         <Question />
         <label htmlFor="answer_1" className="label-form answer">
           <input type="radio" name="answer" id="answer_1" value="answer_5" />

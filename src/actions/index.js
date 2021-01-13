@@ -10,9 +10,9 @@ export const getToken = (token) => ({
   tokenData: token,
 });
 
-export const getQuestions = (question) => ({
+export const getQuestions = (questions) => ({
   type: 'fetchSucessQuestion',
-  question,
+  questions,
 });
 
 export const fetchToken = () => async (dispatch) => {
@@ -26,7 +26,7 @@ export const fetchToken = () => async (dispatch) => {
 export const fetchQuestions = () => async (dispatch) => {
   const request = await fetch(`https://opentdb.com/api.php?amount=5&token=${tokenUsed}`);
   const questionResponse = await request.json();
-  dispatch(getQuestions(questionResponse));
+  dispatch(getQuestions(questionResponse.results));
 };
 
 export const fetchGravatar = (value) => async (dispatch) => {
