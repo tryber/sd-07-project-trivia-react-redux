@@ -15,7 +15,7 @@ class QuestionsList extends React.Component {
   }
 
   componentDidMount() {
-    const noMagicNumber = 300;
+    const noMagicNumber = 600;
     setTimeout(() => { this.mountArrayOfAnswer(); }, noMagicNumber);
   }
 
