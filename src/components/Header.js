@@ -9,17 +9,17 @@ class Header extends Component {
     const { emailGravatar, name, score } = this.props;
     return (
       <header>
-        <div class="header-components-container">
-        <img
-          class="header-component"
-          src={ gravatarAPI(emailGravatar) }
-          data-testid="header-profile-picture"
-          alt="gravatar"
-        />
-        <p class="header-component" data-testid="header-player-name">{name}</p>
-        <p class="header-component" data-testid="header-score">
-          {score}
-        </p>
+        <div className="header-components-container">
+          <img
+            class="header-component"
+            src={ gravatarAPI(emailGravatar) }
+            data-testid="header-profile-picture"
+            alt="gravatar"
+          />
+          <p className="header-component" data-testid="header-player-name">{name}</p>
+          <p className="header-component" data-testid="header-score">
+            {score}
+          </p>
         </div>
       </header>
     );

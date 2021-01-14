@@ -6,7 +6,7 @@ import './Game.css';
 export default class Game extends Component {
   render() {
     return (
-      <div class="game-div">
+      <div className="game-div">
         <Header />
         <Question />
       </div>
