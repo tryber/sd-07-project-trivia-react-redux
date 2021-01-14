@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchQuestions, updateScore } from '../actions';
+import GameHeader from '../components/GameHeader';
 import '../style/game.css';
 
 class Game extends React.Component {
@@ -93,38 +94,41 @@ class Game extends React.Component {
       }];
     const randomAnswers = this.shuffle(taggedAnswers);
     return (
-      <div key={ question.question }>
-        <h4 key={ question.category } data-testid="question-category">
-          {question.category}
-        </h4>
-        <h3 data-testid="question-text">
-          {question.question}
-        </h3>
-        {randomAnswers.map((answer) => (
-          <button
-            className={ `hidden ${answer.correct ? 'rightGreen' : 'wrongRed'}` }
-            type="button"
-            key={ answer.answer }
-            name={ answer.correct
-              ? 'correct'
-              : 'wrong' }
-            data-testid={ answer.correct
-              ? 'correct-answer'
-              : `wrong-answer-${answer.index}` }
-            onClick={ (e) => this.handleAnswer(e) }
-          >
-            {answer.answer}
+      <div>
+        <GameHeader />
+        <div key={ question.question }>
+          <h4 key={ question.category } data-testid="question-category">
+            {question.category}
+          </h4>
+          <h3 data-testid="question-text">
+            {question.question}
+          </h3>
+          {randomAnswers.map((answer) => (
+            <button
+              className={ `hidden ${answer.correct ? 'rightGreen' : 'wrongRed'}` }
+              type="button"
+              key={ answer.answer }
+              name={ answer.correct
+                ? 'correct'
+                : 'wrong' }
+              data-testid={ answer.correct
+                ? 'correct-answer'
+                : `wrong-answer-${answer.index}` }
+              onClick={ (e) => this.handleAnswer(e) }
+            >
+              {answer.answer}
 
+            </button>
+          ))}
+          <button
+            type="button"
+            data-testid="btn-next"
+            onClick={ this.handleNext }
+            style={ nextQuestion ? { visibility: 'visible' } : { visibility: 'hidden' } }
+          >
+            Próxima pergunta
           </button>
-        ))}
-        <button
-          type="button"
-          data-testid="btn-next"
-          onClick={ this.handleNext }
-          style={ nextQuestion ? { visibility: 'visible' } : { visibility: 'hidden' } }
-        >
-          Próxima pergunta
-        </button>
+        </div>
       </div>
     );
   }
