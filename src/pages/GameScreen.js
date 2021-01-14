@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
-import requestQuest from '../store/ducks/QuestionsRequest/actions';
+import { handleAsyncQuestion,
+  assertionCauting,
+} from '../store/ducks/QuestionsRequest/actions';
 import addScore from '../store/ducks/Score/actions';
 import './styles.css';
 
@@ -20,9 +22,10 @@ class GameScreen extends Component {
       wrong: '',
       score: 0,
       buttonNext: false,
-      id: 1,
+      id: 0,
       disabledTimeOut: false,
       timer: 30,
+      assertions: 1,
     };
     this.handleNextQuest = this.handleNextQuest.bind(this);
     this.changeStyle = this.changeStyle.bind(this);
@@ -31,6 +34,7 @@ class GameScreen extends Component {
     // this.nextQuestion = this.nextQuestion.bind(this);
     this.handleRedirect = this.handleRedirect.bind(this);
     this.MAX_ALTERNATIVES = 4;
+    this.changeStyleCorrect = this.changeStyleCorrect.bind(this);
   }
 
   async componentDidMount() {
@@ -42,7 +46,6 @@ class GameScreen extends Component {
 
   handleRedirect() {
     const { history } = this.props;
-    console.log('redirect');
     history.push('/feedback');
   }
 
@@ -76,6 +79,25 @@ class GameScreen extends Component {
     const dez = 10;
     await this.setState({ right: 'right', wrong: 'wrong', buttonNext: true });
 
+    if (target.className === 'right') {
+      this.setState({
+        score: score + (dez + (this.calcDificulty(target.name) * timer)),
+      });
+      this.callActionScore();
+    }
+  }
+
+  async changeStyleCorrect({ target }) {
+    const { timer, score, assertions } = this.state;
+    const { correctAnswers } = this.props;
+    const dez = 10;
+    await this.setState({
+      right: 'right',
+      wrong: 'wrong',
+      buttonNext: true,
+      assertions: assertions + 1,
+    });
+    correctAnswers(assertions);
     if (target.className === 'right') {
       this.setState({
         score: score + (dez + (this.calcDificulty(target.name) * timer)),
@@ -120,7 +142,7 @@ class GameScreen extends Component {
 
   render() {
     console.log('state:', this.state);
-
+    console.log('props:', this.props);
     const {
       category,
       question,
@@ -148,7 +170,7 @@ class GameScreen extends Component {
               data-testid="correct-answer"
               type="button"
               name={ dificulty }
-              onClick={ this.changeStyle }
+              onClick={ this.changeStyleCorrect }
               disabled={ disabledTimeOut }
             >
               {resps[0]}
@@ -204,7 +226,10 @@ class GameScreen extends Component {
 const mapStateToProps = ({ QuestionRequest: { quest } }) => ({
   quest,
 });
-const mapDispatchToProps = { actionRequest: requestQuest, actionScore: addScore };
+const mapDispatchToProps = {
+  actionRequest: handleAsyncQuestion,
+  actionScore: addScore,
+  correctAnswers: assertionCauting };
 
 export default connect(mapStateToProps, mapDispatchToProps)(GameScreen);
 
@@ -212,5 +237,6 @@ GameScreen.propTypes = {
   actionRequest: PropTypes.func.isRequired,
   quest: PropTypes.arrayOf().isRequired,
   actionScore: PropTypes.func.isRequired,
+  correctAnswers: PropTypes.func.isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
 };
