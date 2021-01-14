@@ -64,13 +64,13 @@ const Game = (props) => {
   };
 
   const handleQuestion = async () => {
-    const { gameStatus } = props;
+    const { gameStatus, history } = props;
     await gameStatus(assertions, time);
     calculateScore();
 
     const maxQuestions = 4;
     if (counter === maxQuestions) {
-      setCounter(counter - maxQuestions);
+      history.push('/feedback');
     } else {
       setCounter(counter + 1);
     }
@@ -195,6 +195,9 @@ Game.propTypes = {
   user: PropTypes.shape({
     name: PropTypes.string.isRequired,
     email: PropTypes.string.isRequired,
+  }).isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func,
   }).isRequired,
 };
 
