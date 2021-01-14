@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import Header from '../components/header';
 
 class Feedback extends React.Component {
@@ -39,6 +40,7 @@ class Feedback extends React.Component {
         >
           Ver Ranking
         </button>
+        <Link data-testid="btn-play-again" to="/">Jogar novamente</Link>
       </div>
     );
   }
