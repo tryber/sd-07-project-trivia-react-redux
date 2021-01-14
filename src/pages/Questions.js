@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
-export default class componentName extends Component {
+export default class Questions extends Component {
   constructor() {
     super();
     this.state = {
@@ -27,7 +28,7 @@ export default class componentName extends Component {
     const sortedArr = concatAnswersArr.sort(() => Math.random() - magic);
 
     this.setState({
-      shuffled: true,
+      // shuffled: true,
       shuffledAnswers: sortedArr,
     });
   }
@@ -67,3 +68,7 @@ export default class componentName extends Component {
     );
   }
 }
+
+Questions.propTypes = {
+  question: PropTypes.arrayOf.isRequired,
+};
