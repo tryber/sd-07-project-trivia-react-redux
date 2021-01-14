@@ -19,6 +19,7 @@ class Answers extends React.Component {
     };
 
     this.nextButton = this.nextButton.bind(this);
+    this.mountAnswers = this.mountAnswers.bind(this);
     this.questionsSorted = this.questionsSorted.bind(this);
   }
 
@@ -44,7 +45,6 @@ class Answers extends React.Component {
   nextButton() {
     const { index, newCounter } = this.state;
 
-    if ( index === 5 ) return 'acabou';
     return (
       <button
         type="button"
@@ -63,10 +63,9 @@ class Answers extends React.Component {
       </button>);
   }
 
-  render() {
-    const { index, clicked, next, newCounter, nextUp } = this.state;
+  mountAnswers() {
+    const { index } = this.state;
     if (!this.props.questions[index]) return 'acabou';
-
 
     const {
       category,
@@ -76,9 +75,6 @@ class Answers extends React.Component {
 
     return (
       <div>
-        <Header />
-        <h1>Joguinho</h1>
-        <div>
           <div>
             <h3
               key={`category${index}`}
@@ -101,7 +97,7 @@ class Answers extends React.Component {
                       data-testid="correct-answer"
                       onClick={() => this.setState({ clicked: true, nextUp: true })}
                     >
-                      { correct}
+                      { correct }
                     </button>
                   );
                 }
@@ -113,13 +109,24 @@ class Answers extends React.Component {
                     data-testid={`wrong-answer-${'0'}`}
                     onClick={() => this.setState({ clicked: true, nextUp: true })}
                   >
-                    { element}
+                    { element }
                   </button>
                 );
               })}
             </div>
           </div>
         </div>
+    )
+  }
+
+  render() {
+    const { clicked, next, newCounter, nextUp } = this.state;
+
+    return (
+      <div>
+        <Header />
+        <h1>Joguinho</h1>
+        { this.mountAnswers() }
         <Counter key={newCounter} clicked={clicked} next={next} />
         { nextUp && this.nextButton()}
       </div>
