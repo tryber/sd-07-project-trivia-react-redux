@@ -21,6 +21,12 @@ class GameScreen extends Component {
   }
 
   submitAnswer() {
+    const correctAnswer = document.querySelector('.correct');
+    correctAnswer.style = 'border: 3px solid rgb(6, 240, 15)';
+    const incorrectAnswer = document.querySelectorAll('.incorrect');
+    for (let index = 0; index < incorrectAnswer.length; index += 1) {
+      incorrectAnswer[index].style = 'border: 3px solid red';
+    }
     // this.setState({ magicButton: true });
   }
 

@@ -20,6 +20,11 @@ const CustomGame = ({ challenge, correct }) => {
               ? 'correct-answer'
               : `wrong-answer-${index}`
           }
+          className={
+            item === correctAnswer
+              ? 'correct'
+              : 'incorrect'
+          }
         >
           {item}
         </button>
