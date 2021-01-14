@@ -25,6 +25,7 @@ class Questions extends React.Component {
     const { questionsList } = questions;
     const five = 5;
     if (questionsList < five) {
+      console.log(questionsList);
       return <div>Efetue o login novamente</div>;
     }
     return (
@@ -44,8 +45,8 @@ class Questions extends React.Component {
           </button>
           {questionsList[questionNumber].incorrect_answers.map((q, index) => (
             <button
-              key={ q }
-              data-testid={ `wrong-answer-${index}` }
+              key={q}
+              data-testid={`wrong-answer-${index}`}
               className="wrong-answer"
               type="button"
             >
@@ -53,7 +54,7 @@ class Questions extends React.Component {
             </button>
           ))}
         </div>
-        <button type="button" onClick={ () => this.incrementIndex() }>
+        <button type="button" onClick={() => this.incrementIndex()}>
           Próxima
         </button>
       </div>
