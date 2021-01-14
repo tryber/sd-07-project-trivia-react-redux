@@ -21,35 +21,38 @@ class Trivia extends Component {
   }
 
   render() {
-    const { questions } = this.props;
+    const { questions, currentQuestion } = this.props;
 
     return (
       <div>
         <span>TRIVIA</span>
-        {questions.map((item, index) => (
-          <div key={ index }>
+        {questions.length > 0 ? (
+          <div key={ currentQuestion.question }>
             <h1
               data-testid="question-category"
             >
-              { item.category }
+              { currentQuestion.category }
             </h1>
             <h2
               data-testid="question-text"
             >
-              { item.question }
+              { currentQuestion.question }
             </h2>
-            {this.randomArrayQuestions(item.correct_answer, item.incorrect_answers)
+            {this.randomArrayQuestions(currentQuestion
+              .correct_answer, currentQuestion.incorrect_answers)
               .map((element, indice) => (
                 <button
                   key={ indice }
                   type="button"
-                  data-testid={ element === item.correct_answer
+                  data-testid={ element === currentQuestion.correct_answer
                     ? 'correct-answer' : `wrong-answer-${indice}` }
                 >
                   { element }
                 </button>))}
           </div>
-        ))}
+        ) : (
+          <h3>Loading</h3>
+        )}
       </div>
     );
   }
@@ -57,6 +60,7 @@ class Trivia extends Component {
 
 const mapStateToProps = (state) => ({
   questions: state.play.questions,
+  currentQuestion: state.play.currentQuestion,
   status: state.play.status,
 });
 
@@ -64,4 +68,5 @@ export default connect(mapStateToProps)(Trivia);
 
 Trivia.propTypes = {
   questions: PropTypes.arrayOf(PropTypes.object).isRequired,
+  currentQuestion: PropTypes.objectOf(PropTypes.array).isRequired,
 };

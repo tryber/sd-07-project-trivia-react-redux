@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { requestToken } from '../services/api';
-import { fetchQuestions, login } from '../redux/actions/index';
+import { fetchQuestions, login } from '../redux/actions';
 
 class Login extends Component {
   constructor(props) {
@@ -23,7 +23,6 @@ class Login extends Component {
 
     await requestToken();
     fetchTrivia();
-    console.log('oi');
   }
 
   verifyLogin() {
