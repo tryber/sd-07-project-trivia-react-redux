@@ -10,6 +10,30 @@ class Quiz extends React.Component {
     this.showAnswer = this.showAnswer.bind(this);
     this.setScore = this.setScore.bind(this);
     this.nextQuestion = this.nextQuestion.bind(this);
+    this.setStorageRanking = this.setStorageRanking.bind(this);
+  }
+
+  setStorageRanking(index) {
+    const numberFour = 4;
+    if (index === numberFour) {
+      const { player } = this.props;
+      const newRanking = {
+        name: player.name,
+        score: player.score,
+        picture: player.gravatarEmail,
+      };
+      const ranking = JSON.parse(localStorage.getItem('ranking')) || [];
+      ranking.push(newRanking);
+      const rankingSorted = ranking.sort((a, b) => {
+        const number = -1;
+        if (a.score > b.score) return number;
+        if (a.score < b.score) return 1;
+        return 0;
+      });
+      localStorage.setItem('ranking', JSON.stringify([
+        ...rankingSorted,
+      ]));
+    }
   }
 
   setScore() {
@@ -49,25 +73,7 @@ class Quiz extends React.Component {
     updateIndex(index + 1);
     const buttonNext = document.querySelector('.button-next-active');
     buttonNext.className = 'button-next-deactive';
-    console.log(index)
-    if (index === 4) {
-      const { player } = this.props;
-      const newRanking = {
-        name: player.name,
-        score: player.score,
-        picture: player.gravatarEmail,
-      };
-      const ranking = JSON.parse(localStorage.getItem('ranking')) || [];
-      const rankingSorted = ranking.sort((a, b) => {
-        if (a.score > b.score) return -1;
-        if (a.score < b.score) return 1;
-        return 0;
-      });
-      localStorage.setItem('ranking', JSON.stringify([
-        ...rankingSorted,
-        newRanking,
-      ]));
-    }
+    this.setStorageRanking(index);
   }
 
   render() {
