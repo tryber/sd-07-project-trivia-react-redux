@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import isLoginOk from '../helpers/isLoginOk';
 import { loginAction } from '../action/index';
+import logo from '../trivia.png';
 
 // import { Container } from './styles';
 
@@ -27,30 +28,39 @@ class Login extends Component {
     const { email, userName } = this.state;
     const { userLoggin } = this.props;
     return (
-      <div>
-        <input
-          onChange={ this.onChangeHandler }
-          type="text"
-          name="email"
-          placeholder="Email"
-          data-testid="input-gravatar-email"
-        />
-        <input
-          onChange={ this.onChangeHandler }
-          type="text"
-          name="userName"
-          data-testid="input-player-name"
-          placeholder="Nome"
-        />
-        <button
-          disabled={ isLoginOk(email, userName) }
-          type="submit"
-          data-testid="btn-play"
-          onClick={ () => userLoggin({ email, userName }) }
-        >
-          Jogar
-        </button>
-      </div>
+      <header>
+        <div className="imputs">
+          <img src={ logo } className="App-logo" alt="logo" />
+          <div>
+            <input
+              onChange={ this.onChangeHandler }
+              type="text"
+              name="email"
+              placeholder="Email"
+              data-testid="input-gravatar-email"
+            />
+          </div>
+          <div>
+            <input
+              onChange={ this.onChangeHandler }
+              type="text"
+              name="userName"
+              data-testid="input-player-name"
+              placeholder="Nome"
+            />
+          </div>
+          <div>
+            <button
+              disabled={ isLoginOk(email, userName) }
+              type="submit"
+              data-testid="btn-play"
+              onClick={ () => userLoggin({ email, userName }) }
+            >
+              Jogar
+            </button>
+          </div>
+        </div>
+      </header>
     );
   }
 }
