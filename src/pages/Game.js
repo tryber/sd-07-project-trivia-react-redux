@@ -21,7 +21,7 @@ class Game extends React.Component {
   async requestAsks() {
     const { returnAsks } = Api;
     const { token } = this.props;
-    const resultAsks = await returnAsks(token);
+    let resultAsks = await returnAsks(token);
 
     this.setState({
       questions: resultAsks.results,

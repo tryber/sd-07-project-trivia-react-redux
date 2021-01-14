@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Header from './Header';
 import Counter from './Counter';
@@ -14,106 +15,113 @@ class Answers extends React.Component {
       next: true,
       newCounter: 0,
       nextUp: false,
+      sortedAnswers: [],
     };
 
-    this.mountQuestion = this.mountQuestion.bind(this);
+    this.nextButton = this.nextButton.bind(this);
+    this.questionsSorted = this.questionsSorted.bind(this);
   }
 
-  mountQuestion(quest, index) {
-    if (quest[index]) {
+  questionsSorted() {
+    const { questions } = this.props;
+    const { index } = this.state;
+    if (questions[index]) {
       const {
-        category,
         correct_answer: correct,
         incorrect_answers: wrong,
-        question,
-      } = quest[index];
+      } = questions[index];
       const correctAnswer = { correct, id: true };
       const arrayAnswers = [correctAnswer, ...wrong];
-      const { sort } = this.state;
-      if (sort) {
-        console.log('first', arrayAnswers);
-        for (let i = 0; i < arrayAnswers.length; i += 1) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [arrayAnswers[i], arrayAnswers[j]] = [arrayAnswers[j], arrayAnswers[i]];
-        } // Foi pego no stackOverFlow
-        this.setState({ sort: false });
-      }
-      console.log('second', arrayAnswers);
+      for (let i = 0; i < arrayAnswers.length; i += 1) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arrayAnswers[i], arrayAnswers[j]] = [arrayAnswers[j], arrayAnswers[i]];
+      } // Foi pego no stackOverFlow
+      return arrayAnswers;
+    }
+  }
 
-      return (
+
+  nextButton() {
+    const { index, newCounter } = this.state;
+
+    if ( index === 5 ) return 'acabou';
+    return (
+      <button
+        type="button"
+        onClick={() => {
+          this.setState({
+            index: index + 1,
+            clicked: false,
+            sort: true,
+            next: true,
+            newCounter: newCounter + 1,
+            nextUp: false,
+          });
+        }}
+      >
+        Próxima
+      </button>);
+  }
+
+  render() {
+    const { index, clicked, next, newCounter, nextUp } = this.state;
+    if (!this.props.questions[index]) return 'acabou';
+
+
+    const {
+      category,
+      correct_answer: correct,
+      question,
+    } = this.props.questions[index];
+
+    return (
+      <div>
+        <Header />
+        <h1>Joguinho</h1>
         <div>
           <div>
             <h3
-              key={ `category${index}` }
+              key={`category${index}`}
               data-testid="question-category"
             >
-              { category }
+              {category}
             </h3>
-            <h2 key={ `question${index}` } data-testid="question-text">{ question }</h2>
+            <h2 key={`question${index}`} data-testid="question-text">{question}</h2>
           </div>
           <div>
             <div>
-              {arrayAnswers.map((element, set) => {
+              {this.questionsSorted().map((element, set) => {
                 const { clicked } = this.state;
                 if (element.id) {
                   return (
                     <button
-                      className={ clicked ? 'wright-answer' : '' }
-                      key={ `correct${set}` }
+                      className={clicked ? 'wright-answer' : ''}
+                      key={`correct${set}`}
                       type="button"
                       data-testid="correct-answer"
-                      onClick={ () => this.setState({ clicked: true, nextUp: true }) }
+                      onClick={() => this.setState({ clicked: true, nextUp: true })}
                     >
-                      { correct }
+                      { correct}
                     </button>
                   );
                 }
                 return (
                   <button
-                    className={ clicked ? 'wrong-answer' : '' }
-                    key={ `wrong${set}` }
+                    className={clicked ? 'wrong-answer' : ''}
+                    key={`wrong${set}`}
                     type="button"
-                    data-testid={ `wrong-answer-${'0'}` }
-                    onClick={ () => this.setState({ clicked: true, nextUp: true }) }
+                    data-testid={`wrong-answer-${'0'}`}
+                    onClick={() => this.setState({ clicked: true, nextUp: true })}
                   >
-                    { element }
+                    { element}
                   </button>
                 );
               })}
             </div>
           </div>
         </div>
-      );
-    }
-  }
-
-  render() {
-    const { questions } = this.props;
-    const { index, clicked, next, newCounter, nextUp } = this.state;
-    const nextButton = (
-      <button
-        type="button"
-        onClick={ () => {
-          this.setState({
-            index: index + 1,
-            clicked: false,
-            sort: false,
-            next: true,
-            newCounter: newCounter + 1,
-            nextUp: false,
-          });
-        } }
-      >
-        Próxima
-      </button>);
-
-    return (
-      <div>
-        <Header />
-        <h1>Joguinho</h1>
-        { this.mountQuestion(questions, index) }
-        <Counter key={ newCounter } clicked={ clicked } next={ next } />
-        { nextUp && nextButton }
+        <Counter key={newCounter} clicked={clicked} next={next} />
+        { nextUp && this.nextButton()}
       </div>
     );
   }
