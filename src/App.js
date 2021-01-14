@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import './App.css';
-import { Settings, LoginPage, Game } from './pages';
+import { Settings, LoginPage, Game, Feedback } from './pages';
 import store from './store';
 
 export default function App() {
@@ -13,6 +13,7 @@ export default function App() {
           <Route path="/settings" component={ Settings } />
           <Route exact path="/" component={ LoginPage } />
           <Route exact path="/game" component={ Game } />
+          <Route exact path="/feedback" component={ Feedback } />
         </Switch>
       </BrowserRouter>
     </Provider>
