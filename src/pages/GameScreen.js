@@ -19,7 +19,7 @@ class GameScreen extends Component {
       buttonNext: false,
       id: 1,
       disabledTimeOut: false,
-      timer: 25,
+      timer: 30,
     };
     this.handleQuest = this.handleQuest.bind(this);
     this.changeStyle = this.changeStyle.bind(this);
@@ -63,6 +63,7 @@ class GameScreen extends Component {
       // respCorrect: quest[1].correct_answer,
       resps: [quest[id].correct_answer, ...quest[id].incorrect_answers],
       buttonNext: false,
+      timer: 30,
     });
   }
 
