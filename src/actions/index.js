@@ -2,7 +2,8 @@ import * as api from '../services/api';
 
 const SIGN_IN = 'SIGN_IN';
 const GAME_DATA = 'GAME_DATA';
-// const GAME_STATUS = 'GAME_STATUS';
+const GAME_STATUS = 'GAME_STATUS';
+const GAME_SCORE = 'GAME_SCORE';
 
 export const signIn = (name, email) => ({
   type: SIGN_IN,
@@ -28,7 +29,13 @@ export function fetchApi() {
 
 //--------------------------------------------------------
 
-// export const gameStatus = (assertions) => ({
-//   type: GAME_STATUS,
-//   assertions,
-// });
+export const gameStatus = (assertions2, time) => ({
+  type: GAME_STATUS,
+  assertions2,
+  time,
+});
+
+export const gameScore = (score) => ({
+  type: GAME_SCORE,
+  score,
+});

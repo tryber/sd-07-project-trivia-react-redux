@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, connect } from 'react-redux';
 import Header from '../components/Header';
+import * as Actions from '../actions';
 
-const Game = () => {
+const Game = (props) => {
   const [counter, setCounter] = useState(0);
   const [isEnable, setIsEnable] = useState(false);
   const [color, setColor] = useState({
@@ -13,7 +14,41 @@ const Game = () => {
   const tempMax = 30;
   const [time, setTime] = useState(tempMax);
 
-  const handleQuestion = () => {
+  const calculateScore = () => {
+    let i = 0;
+    const three = 3;
+    const two = 2;
+    const one = 1;
+    const ten = 10;
+    const { game, gameScore } = props;
+    const { data, assertions2, time } = game;
+    const { difficulty } = data.results[i];
+    // console.log(difficulty);
+    // console.log(assertions);
+    let convertedDifficulty;
+    let score = 0;
+    if (difficulty === 'hard') {
+      convertedDifficulty = three;
+    } else if (difficulty === 'medium') {
+      convertedDifficulty = two;
+    } else {
+      convertedDifficulty = one;
+    }
+    if (assertions2) {
+      score += ten + ((time) * convertedDifficulty);
+    }
+    // console.log(score);
+    gameScore(score);
+    i += 1;
+  };
+
+  const handleQuestion = async () => {
+    const { gameStatus } = props;
+    await gameStatus(assertions, time);
+    const { game } = props;
+    console.log(game.assertions2);
+    console.log(game.time);
+    calculateScore();
     const maxQuestions = 4;
     if (counter === maxQuestions) {
       setCounter(counter - maxQuestions);
@@ -117,4 +152,13 @@ const Game = () => {
   );
 };
 
-export default Game;
+const mapDispatchToProps = {
+  gameStatus: Actions.gameStatus,
+  gameScore: Actions.gameScore,
+};
+
+const mapStateToProps = (state) => ({
+  game: state.game,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Game);
