@@ -17,3 +17,12 @@
   border-radius: 50%;
   margin-right: 10px;
 }
+
+.header__score__container {
+  align-items: center;
+  display: flex;
+}
+
+.header__score {
+  margin-left: 5px;
+}
