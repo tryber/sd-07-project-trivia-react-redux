@@ -35,18 +35,22 @@ class Ranking extends React.Component {
       playersList = JSON.parse(localStorage.getItem('players'));
     }
 
-    const playerListDescendingOrder = playersList.sort(function (a, b) {
-      return b.score - a.score;
-    });
+    const playerListDescendingOrder = playersList.sort((a, b) => (b.score - a.score));
 
     return (
       <div>
         <h2>RANKING</h2>
         {/* Índice inicia com 0 */}
-        {playerListDescendingOrder.map((player, indice) => (
-          <p key={player.name}>
-            <span>{player.img} | </span>
-            <span data-testid-player-name={indice}>{player.name} |</span>
+        { playerListDescendingOrder.map((player, indice) => (
+          <p key={ player.name }>
+            <span>
+              { player.img }
+            </span>
+            <span
+              data-testid-player-name={ indice }
+            >
+              { player.name }
+            </span>
             <span data-testid-score>{player.score}</span>
           </p>
         ))}

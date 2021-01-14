@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { thunkApiQuestions } from '../actions';
 
 class Questions extends React.Component {
@@ -61,5 +62,11 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   getQuestion: (token) => dispatch(thunkApiQuestions(token)),
 });
+
+Questions.propTypes = {
+  getQuestion: PropTypes.func.isRequired,
+  questions: PropTypes.instanceOf(Object).isRequired,
+  token: PropTypes.func.isRequired,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Questions);

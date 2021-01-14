@@ -20,6 +20,7 @@ const initialState = {
 };
 
 function player(state = initialState, action) {
+  const gravatarUrl = `https://www.gravatar.com/avatar/${action.payload}`;
   switch (action.type) {
   case ADD_TOKEN:
     localStorage.setItem('token', action.token);
@@ -35,7 +36,6 @@ function player(state = initialState, action) {
   case SET_SCORE:
     return { ...state, score: action.payload.score };
   case SET_GRAVATAR:
-    const gravatarUrl = `https://www.gravatar.com/avatar/${action.payload}`;
     return { ...state, gravatar: gravatarUrl };
   case FAILED_REQUEST:
     return { ...state, error: action.payload, isFetching: false };
@@ -45,5 +45,3 @@ function player(state = initialState, action) {
 }
 
 export default player;
-
-
