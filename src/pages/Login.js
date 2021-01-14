@@ -10,8 +10,6 @@ class Login extends Component {
     this.state = {
       name: '',
       gravatarEmail: '',
-      // assertions: '',
-      score: 0,
     };
     this.handleChange = this.handleChange.bind(this);
     this.validateImputs = this.validateImputs.bind(this);
@@ -20,9 +18,8 @@ class Login extends Component {
   }
 
   validateImputs() {
-    const { gravatarEmail, name, score } = this.state;
+    const { gravatarEmail, name } = this.state;
     const emailValidator = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    console.log(score);
     if (emailValidator.test(gravatarEmail) && name.length) {
       return false;
     }

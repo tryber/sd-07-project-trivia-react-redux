@@ -8,13 +8,16 @@ class Game extends Component {
   constructor(props) {
     super(props);
     this.renderAlternatives = this.renderAlternatives.bind(this);
-    this.handleClick = this.handleClick.bind(this);
+    this.handleClickCorrect = this.handleClickCorrect.bind(this);
+    this.handleClickWrong = this.handleClickWrong.bind(this);
 
     this.state = {
       numberQuestion: 0,
       alreadyAnswered: false,
       shuffle: true,
       timer: 30,
+      // assertions: '',
+      score: 0,
     };
   }
 
@@ -23,6 +26,10 @@ class Game extends Component {
     setInterval(() => {
       this.setTimer();
     }, temp);
+    const state = this.getPlayerProfile();
+    const { score } = this.state;
+    state.player.score = score;
+    localStorage.setItem('state', JSON.stringify(state));
   }
 
   setTimer() {
@@ -39,21 +46,41 @@ class Game extends Component {
     return JSON.parse(localStorage.getItem('state'));
   }
 
-  handleClick() {
-    this.setState({
-      alreadyAnswered: true,
-    });
-    /* console.log(target.innerText);
-    const { questions } = this.props;
-    const { results } = questions;
-    if (results[this.state.numberQuestion].correct_answer === target.innerText) {
-      target.className = 'green';
-    }
-    else {
-      target.className = 'red';
+  handleClickCorrect() {
+    const { timer, numberQuestion } = this.state;
+    let score = 0;
+    const { questions: { results } } = this.props;
+    const { difficulty } = results[numberQuestion];
+
+    const easy = 1;
+    const medium = 2;
+    const hard = 3;
+    const dez = 10;
+
+    switch (difficulty) {
+    case 'easy':
+      score = dez + (timer * easy);
+      break;
+    case 'medium':
+      score = dez + (timer * medium);
+      break;
+    case 'hard':
+      score = dez + (timer * hard);
+      break;
+    default:
+      score = 0;
     }
 
-    const um = 1;
+    this.setState({
+      alreadyAnswered: true,
+      score,
+    });
+
+    const state = this.getPlayerProfile();
+    state.player.score = score;
+    localStorage.setItem('state', JSON.stringify(state));
+    // console.log(localStorage)
+    /* const um = 1;
     this.setState((prevState) => {
       if (prevState.numberQuestion < questions.results.length - um) {
         return ({
@@ -61,6 +88,12 @@ class Game extends Component {
         });
       }
     }); */
+  }
+
+  handleClickWrong() {
+    this.setState({
+      alreadyAnswered: true,
+    });
   }
 
   shuffle(a) {
@@ -85,7 +118,7 @@ class Game extends Component {
         className={ alreadyAnswered ? 'green' : '' }
         type="button"
         data-testid="correct-answer"
-        onClick={ () => this.handleClick() }
+        onClick={ () => this.handleClickCorrect() }
         disabled={ timer === 0 }
       >
         {correctAnswer}
@@ -97,7 +130,7 @@ class Game extends Component {
           className={ alreadyAnswered ? 'red' : '' }
           type="button"
           data-testid={ `wrong-answer-${index}` }
-          onClick={ () => this.handleClick() }
+          onClick={ () => this.handleClickWrong() }
           disabled={ timer === 0 }
         >
           {answer}
@@ -110,10 +143,11 @@ class Game extends Component {
 
   render() {
     const { questions } = this.props;
-    const { numberQuestion, timer } = this.state;
+    const { numberQuestion, timer, score } = this.state;
+    console.log(score);
     return (
       <div>
-        <Header playerProfile={ this.getPlayerProfile() } />
+        <Header playerProfile={ this.getPlayerProfile() } score={ score } />
         <Trivia
           numberQuestion={ numberQuestion }
           renderAlternatives={ this.renderAlternatives }
