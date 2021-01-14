@@ -31,6 +31,7 @@ class Trivia extends Component {
 
 Trivia.propTypes = {
   renderAlternatives: PropTypes.func.isRequired,
+  timer: PropTypes.number.isRequired,
   numberQuestion: PropTypes.number.isRequired,
   questions: PropTypes.shape({
     results: PropTypes.shape({

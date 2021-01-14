@@ -82,11 +82,11 @@ class Game extends Component {
     const alternatives = [];
     alternatives.push(
       <button
-        className={alreadyAnswered ? 'green' : ''}
+        className={ alreadyAnswered ? 'green' : '' }
         type="button"
         data-testid="correct-answer"
-        onClick={() => this.handleClick()}
-        disabled={timer === 0}
+        onClick={ () => this.handleClick() }
+        disabled={ timer === 0 }
       >
         {correctAnswer}
       </button>,
@@ -94,11 +94,11 @@ class Game extends Component {
     incorrectAnswers.forEach((answer, index) => {
       alternatives.push(
         <button
-          className={alreadyAnswered ? 'red' : ''}
+          className={ alreadyAnswered ? 'red' : '' }
           type="button"
-          data-testid={`wrong-answer-${index}`}
-          onClick={() => this.handleClick()}
-          disabled={timer === 0}
+          data-testid={ `wrong-answer-${index}` }
+          onClick={ () => this.handleClick() }
+          disabled={ timer === 0 }
         >
           {answer}
         </button>,
@@ -113,12 +113,12 @@ class Game extends Component {
     const { numberQuestion, timer } = this.state;
     return (
       <div>
-        <Header playerProfile={this.getPlayerProfile()} />
+        <Header playerProfile={ this.getPlayerProfile() } />
         <Trivia
-          numberQuestion={numberQuestion}
-          renderAlternatives={this.renderAlternatives}
-          questions={questions}
-          timer={timer}
+          numberQuestion={ numberQuestion }
+          renderAlternatives={ this.renderAlternatives }
+          questions={ questions }
+          timer={ timer }
         />
       </div>
     );
