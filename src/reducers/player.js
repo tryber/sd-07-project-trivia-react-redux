@@ -8,8 +8,8 @@ const initialState = {
 
 export default function player(state = initialState, action) {
   switch (action.type) {
-  case 'TOKEN':
-    localStorage.setItem('TOKEN', action.payload);
+  case 'token':
+    localStorage.setItem('token', action.payload);
     return {
       ...state,
       token: action.payload,

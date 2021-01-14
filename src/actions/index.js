@@ -6,7 +6,7 @@ export function user(email) {
 }
 
 export const tokenAPI = (dataToken) => ({
-  type: 'TOKEN',
+  type: 'token',
   payload: dataToken,
 });
 
