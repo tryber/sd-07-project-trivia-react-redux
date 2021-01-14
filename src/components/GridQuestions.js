@@ -5,7 +5,7 @@ import Question from './Question';
 export default class GridQuestions extends Component {
   render() {
     return (
-      <div>
+      <div className="gridQuestions">
         <Question />
         <Answer />
         <br />
