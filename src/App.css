@@ -64,3 +64,11 @@
 .incorrect-answer {
   border: 3px solid red;
 }
+
+.button-next-deactive {
+  display: none;
+}
+
+.button-next-active {
+  display: inline;
+}

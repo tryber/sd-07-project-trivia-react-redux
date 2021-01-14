@@ -15,10 +15,10 @@ export default function App() {
     <div className="App">
       <Switch>
         <Route path="/" component={ Login } exact />
-        <Route path="/game" component={ GamePage } />
-        <Route path="/ranking" component={ Ranking } />
-        <Route path="/settings" component={ Settings } exact />
+        <Route path="/game" component={ GamePage } exact />
         <Route path="/feedback" component={ Feedback } exact />
+        <Route path="/ranking" component={ Ranking } exact />
+        <Route path="/settings" component={ Settings } exact />
       </Switch>
     </div>
   );
