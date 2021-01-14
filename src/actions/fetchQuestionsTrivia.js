@@ -8,7 +8,7 @@ export const requestQuestions = () => ({
 
 export const requestQuestionsSuccess = (questions) => ({
   type: REQUEST_QUESTIONS_SUCCESS,
-  questions: questions.results,
+  questions: questions,
 });
 
 const requestQuestionFail = (error) => ({

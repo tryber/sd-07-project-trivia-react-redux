@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Questions } from '../components';
+import { Questions, Header } from '../components';
 import { fetchQuestionsTrivia } from '../actions/fetchQuestionsTrivia';
+
 
 class Game extends React.Component {
   constructor() {
@@ -23,37 +24,20 @@ class Game extends React.Component {
 
   }
   render() {
-    const { questions, isFetching } = this.props;
     return (
       <div>
-        {isFetching ? (
-          <p>Loading</p>
-        ) : (
+         <Header />
           <div>
-            {questions.map((question) => (
-               <Questions 
-               category={question.category}
-               question={question.question}
-               difficulty={question.difficulty}
-               correct_answer={question.correct_answer}
-               incorrect_answers={question.incorrect_answers}
-               />
-            ))}
+               <Questions />
             <button onclick={this.handleRequest}>Próxima</button>
           </div>
-        )}
       </div>
     );
   }
 }
 
-const mapStateToProps = (state) => ({
-  questions: state.receiveQuestions.questions,
-  isFetching: state.receiveQuestions.isFetching,
-});
-
 const mapDispatchToProps = (dispatch) => ({
   questionsAction: (questions) => dispatch(fetchQuestionsTrivia(questions)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Game);
+export default connect(null, mapDispatchToProps)(Game);
