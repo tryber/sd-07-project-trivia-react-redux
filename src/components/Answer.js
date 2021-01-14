@@ -57,7 +57,7 @@ class Answer extends React.Component {
 Answer.propTypes = {
   resAnswer: PropTypes.shape({}).isRequired,
   fetchAnswers: PropTypes.func.isRequired,
-  resQuest: PropTypes.arrayOf([]).isRequired,
+  resQuest: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
