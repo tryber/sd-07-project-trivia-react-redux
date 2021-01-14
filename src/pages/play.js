@@ -24,10 +24,12 @@ class Play extends Component {
   }
 
   next() {
+    const four = 4;
     const { index } = this.state;
-    if (index < 4) {
-      this.setState(({ index }) => ({ index: index + 1 }));
+    if (index < four) {
+      this.setState(({ index: index + 1 }));
       this.setState({ timer: 30 });
+      this.setState({ disabled: false });
     } else {
       const { history } = this.props;
       history.push('/feedback');
@@ -39,7 +41,7 @@ class Play extends Component {
     setInterval(() => {
       const { timer } = this.state;
       if (timer > 0) {
-        this.setState(({ timer }) => ({ timer: timer - 1 }));
+        this.setState(({ timer: timer - 1 }));
       }
       if (timer <= 0) {
         this.setState({ disabled: true });
@@ -120,6 +122,7 @@ Play.propTypes = {
   name: PropTypes.string.isRequired,
   score: PropTypes.number.isRequired,
   token: PropTypes.string.isRequired,
+  history: PropTypes.shape(PropTypes.object).isRequired,
 };
 
 export default connect(mapStateToProps)(Play);
