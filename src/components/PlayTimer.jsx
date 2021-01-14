@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { CountDownAction, freezeTimeAction, nextQuestion, resetTimer } from '../redux/actions';
+import PropTypes from 'prop-types';
+import {
+  CountDownAction,
+  freezeTimeAction,
+  nextQuestion,
+  resetTimer,
+} from '../redux/actions';
 
 class PlayTimer extends Component {
   constructor() {
@@ -18,7 +24,7 @@ class PlayTimer extends Component {
     const { timer, freezeTime, countDown } = this.props;
 
     if (timer === 0) {
-      freezeTime()
+      freezeTime();
       this.disableBtns();
     } else {
       countDown();
@@ -65,3 +71,9 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PlayTimer);
+
+PlayTimer.propTypes = {
+  timer: PropTypes.number.isRequired,
+  freezeTime: PropTypes.func.isRequired,
+  countDown: PropTypes.func.isRequired,
+};

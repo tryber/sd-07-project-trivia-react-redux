@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { nextQuestion, resetTimer } from '../redux/actions/index';
+import { freezeTimeAction, nextQuestion, resetTimer } from '../redux/actions/index';
 import PlayTimer from './PlayTimer';
 
 class Trivia extends Component {
@@ -10,7 +10,7 @@ class Trivia extends Component {
     this.enableBtnsQuestions = this.enableBtnsQuestions.bind(this);
     this.changeBorderColor = this.changeBorderColor.bind(this);
     this.randomArrayQuestions = this.randomArrayQuestions.bind(this);
-    this.nextQuestion = this.nextQuestion.bind(this);
+    this.nextQuestionComponent = this.nextQuestionComponent.bind(this);
     this.showNextQuestionBtn = this.showNextQuestionBtn.bind(this);
   }
 
@@ -30,10 +30,10 @@ class Trivia extends Component {
     nextQuestionBtn.style.display = 'block';
   }
 
-  nextQuestion() {
-    const { nextQuestion, resetTimer } = this.props;
-    nextQuestion();
-    resetTimer();
+  nextQuestionComponent() {
+    const { nextQuestionDispatch, resetTimerDispatch } = this.props;
+    nextQuestionDispatch();
+    resetTimerDispatch();
   }
 
   enableBtnsQuestions() {
@@ -58,7 +58,7 @@ class Trivia extends Component {
   }
 
   render() {
-    const { questions, currentQuestion } = this.props;
+    const { questions, currentQuestion, nextQuestionDispatch, freezeTime } = this.props;
 
     return (
       <div>
@@ -90,6 +90,7 @@ class Trivia extends Component {
                   onClick={ () => {
                     this.changeBorderColor();
                     this.showNextQuestionBtn();
+                    freezeTime();
                   } }
                 >
                   { element }
@@ -97,9 +98,9 @@ class Trivia extends Component {
             <button
               type="button"
               onClick={ () => {
-                this.nextQuestion();
+                nextQuestionDispatch();
                 this.enableBtnsQuestions();
-              }}
+              } }
               className="next-question"
               data-testid="btn-next"
             >
@@ -121,8 +122,9 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  nextQuestion: () => dispatch(nextQuestion()),
-  resetTimer: () => dispatch(resetTimer()),
+  nextQuestionDispatch: () => dispatch(nextQuestion()),
+  resetTimerDispatch: () => dispatch(resetTimer()),
+  freezeTime: () => dispatch(freezeTimeAction()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Trivia);
@@ -130,4 +132,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(Trivia);
 Trivia.propTypes = {
   questions: PropTypes.arrayOf(PropTypes.object).isRequired,
   currentQuestion: PropTypes.objectOf(PropTypes.array).isRequired,
+  nextQuestionDispatch: PropTypes.func.isRequired,
+  resetTimerDispatch: PropTypes.func.isRequired,
+  freezeTime: PropTypes.func.isRequired,
 };
