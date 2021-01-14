@@ -21,53 +21,52 @@ class Questions extends React.Component {
 
   render() {
     const { questionNumber } = this.state;
-    const { questionsList, isLoading } = this.props;
+    const { questionsList } = this.props;
     const { questions } = questionsList;
-    console.log(questions);
     const five = 5;
-    console.log(isLoading);
+
     // if (questions.length > 0) {
     //   this.setState({
     //     isLoading: true,
     //   });
     // }
 
-    if (isLoading === true) {
-      if (questionNumber < five) {
-        return (
+    if (questionNumber < five) {
+      return (
+        <div>
+          {`Questão número ${questionNumber + 1}`}
           <div>
-            {`Questão número ${questionNumber + 1}`}
-            <div>
-              <p data-testid="question-category">
-                {questions[questionNumber].category}
-              </p>
-              <p data-testid="question-text">
-                {questions[questionNumber].question}
-              </p>
-            </div>
-            <div>
-              <button type="button" data-testid="correct-answer">
-                {questions[questionNumber].correct_answer}
-              </button>
-              {questions[questionNumber].incorrect_answers.map((resposta) => (
-                <button
-                  type="button"
-                  data-testid={ `wrong-answer-${questionNumber}` }
-                  key={ resposta }
-                >
-                  {resposta}
-                </button>
-              ))}
-            </div>
-            <button type="button" onClick={ () => this.incrementIndex() }>
-              Próxima
-            </button>
+            <p data-testid="question-category">
+              {questions.length > 0 && questions[questionNumber].category}
+            </p>
+            <p data-testid="question-text">
+              {questions.length > 0 && questions[questionNumber].question}
+            </p>
           </div>
-        );
-      }
-      return <h1>Tente novamente</h1>;
+          <div>
+            <button type="button" data-testid="correct-answer">
+              {questions.length > 0 && questions[questionNumber].correct_answer}
+            </button>
+            {questions.length > 0
+              && questions[questionNumber].incorrect_answers.map(
+                (resposta, index) => (
+                  <button
+                    type="button"
+                    data-testid={ `wrong-answer-${index}` }
+                    key={ resposta }
+                  >
+                    {resposta}
+                  </button>
+                ),
+              )}
+          </div>
+          <button type="button" onClick={ () => this.incrementIndex() }>
+            Próxima
+          </button>
+        </div>
+      );
     }
-    return <p>Loading...</p>;
+    return <h1>Tente novamente</h1>;
   }
 }
 
@@ -81,6 +80,5 @@ Questions.propTypes = {
     questions: PropTypes.objectOf(PropTypes.string, PropTypes.number)
       .isRequired,
   }).isRequired,
-  isLoading: PropTypes.bool.isRequired,
 };
 export default connect(mapStateToProps, null)(Questions);
