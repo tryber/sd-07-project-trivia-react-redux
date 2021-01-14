@@ -34,7 +34,7 @@ const mapDispatchToProps = (state) => ({
   player: state.player,
 });
 
-HomeButton.propTypes = {
+Ranking.propTypes = {
   player: PropTypes.shape(PropTypes.string).isRequired,
 };
 export default connect(mapDispatchToProps)(Ranking);
