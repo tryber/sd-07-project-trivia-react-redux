@@ -25,7 +25,7 @@ class Ranking extends React.Component {
     localStorage.setItem('ranking', JSON.stringify(rank));
 
     const localRanking = JSON.parse(localStorage.getItem('ranking'))
-      .sort((a, b) => a.score - b.score);
+      .sort((a, b) => b.score - a.score);
 
     if (login) return <Redirect to="/" />;
     return (
