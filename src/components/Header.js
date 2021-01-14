@@ -11,10 +11,7 @@ class Header extends Component {
           alt={ localStorage.username }
         />
         <h2 data-testid="header-player-name">{localStorage.username}</h2>
-        <h2>
-          Placar:
-          <span data-testid="header-score">0</span>
-        </h2>
+        <h2 data-testid="header-score">{`Placar: ${0}`}</h2>
       </header>
     );
   }
