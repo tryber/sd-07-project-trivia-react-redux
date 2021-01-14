@@ -1,6 +1,5 @@
 import triviaToken from './reducers';
-import fetchTriviaToken from './operations';
 
-export { fetchTriviaToken };
+export { default as fetchTriviaToken } from './operations';
 
 export default triviaToken;
