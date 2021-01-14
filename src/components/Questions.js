@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 class Questions extends Component {
   constructor() {
@@ -8,26 +9,26 @@ class Questions extends Component {
   }
 
   randomChoice(arr) {
-    return arr.sort((a,b) => 0.5 - Math.random());
+    const random = 0.5;
+    return arr.sort(() => Math.random() - random);
   }
 
-  renderQuestions(correct_answer, incorrect_answers){
-
-    let incorreta = [];
+  renderQuestions(correct_answer, incorrect_answers) {
+    const incorreta = [];
     const correta = (
-      <button data-testid="correct-answer">{correct_answer}</button>
+      <button type="button" data-testid="correct-answer">
+        {correct_answer}
+      </button>
     );
-      
-    incorrect_answers.map((incorrect, index) =>
-      incorreta.push(
-        <button key={index} data-testid={`wrong-answer-${index}`}>
-          {incorrect}
-        </button>
-      )
-    );
+
+    incorrect_answers.map((incorrect, index) => incorreta.push(
+      <button type="button" key={ index } data-testid={ `wrong-answer-${index}` }>
+        {incorrect}
+      </button>,
+    ));
     const answers = [correta, ...incorreta];
     const answersRandom = this.randomChoice(answers);
-    return answersRandom
+    return answersRandom;
   }
 
   render() {
@@ -44,22 +45,29 @@ class Questions extends Component {
 
       return (
         <div>
-          <div data-testid="question-category">Categoria: {category}</div>
-          <div data-testid="question-text"> Pergunta: {question}</div>
-          <div>
-            { this.renderQuestions(correct_answer, incorrect_answers )}
+          <div data-testid="question-category">
+            Categoria:
+            {category}
           </div>
+          <div data-testid="question-text">
+            {' '}
+            Pergunta:
+            {question}
+          </div>
+          <div>{this.renderQuestions(correct_answer, incorrect_answers)}</div>
         </div>
       );
-    } else {
-      return <p>Loading... </p>;
     }
+    return <p>Loading... </p>;
   }
 }
 
+Questions.propTypes = {
+  questions: PropTypes.objectOf.isRequired,
+};
+
 const mapStateToProps = (state) => ({
   questions: state.receiveQuestions.questions,
-  isFetching: state.receiveQuestions.isFetching,
 });
 
 export default connect(mapStateToProps, null)(Questions);

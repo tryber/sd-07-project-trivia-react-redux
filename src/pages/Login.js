@@ -60,30 +60,30 @@ class Login extends React.Component {
           id="nameInput"
           name="nameInput"
           type="text"
-          value={nameInput}
+          value={ nameInput }
           data-testid="input-player-name"
-          onChange={(event) => this.handleChange(event)}
+          onChange={ (event) => this.handleChange(event) }
         />
         <input
           id="emailInput"
           name="emailInput"
           type="email"
-          value={emailInput}
+          value={ emailInput }
           data-testid="input-gravatar-email"
-          onChange={(event) => this.handleChange(event)}
+          onChange={ (event) => this.handleChange(event) }
         />
         <button
           type="button"
-          disabled={disabled}
+          disabled={ disabled }
           data-testid="btn-play"
-          onClick={(event) => this.handleClick(event)}
+          onClick={ (event) => this.handleClick(event) }
         >
           Jogar
         </button>
         <button
           type="button"
           data-testid="btn-settings"
-          onClick={(event) => this.goToSettings(event)}
+          onClick={ (event) => this.goToSettings(event) }
         >
           Configurações
         </button>

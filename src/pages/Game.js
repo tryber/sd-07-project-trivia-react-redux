@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { Questions, Header } from '../components';
 import { fetchQuestionsTrivia } from '../actions/fetchQuestionsTrivia';
-
 
 class Game extends React.Component {
   constructor() {
@@ -20,21 +20,28 @@ class Game extends React.Component {
     const { questionsAction } = this.props;
     questionsAction();
   }
-  handleRequest(){
 
+  handleRequest() {
+    const index = 0;
+    return index;
   }
+
   render() {
     return (
       <div>
-         <Header />
-          <div>
-               <Questions />
-            <button onclick={this.handleRequest}>Próxima</button>
-          </div>
+        <Header />
+        <div>
+          <Questions />
+          <button type="button" onClick={ this.handleRequest }>Próxima</button>
+        </div>
       </div>
     );
   }
 }
+
+Game.propTypes = {
+  questionsAction: PropTypes.func.isRequired,
+};
 
 const mapDispatchToProps = (dispatch) => ({
   questionsAction: (questions) => dispatch(fetchQuestionsTrivia(questions)),

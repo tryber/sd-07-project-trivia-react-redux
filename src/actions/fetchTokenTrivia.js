@@ -5,7 +5,6 @@ export const REQUEST_TOKEN = 'REQUEST_TOKEN';
 export const REQUEST_TOKEN_SUCCESS = 'REQUEST_TOKEN_SUCCESS';
 export const REQUEST_TOKEN_FAIL = 'REQUEST_TOKEN_FAIL';
 
-
 export const requestToken = () => ({
   type: REQUEST_TOKEN,
 });

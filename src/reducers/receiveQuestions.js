@@ -1,4 +1,8 @@
-import { REQUEST_QUESTIONS, REQUEST_QUESTIONS_SUCCESS, REQUEST_QUESTIONS_FAIL } from '../actions/fetchQuestionsTrivia';
+import {
+  REQUEST_QUESTIONS,
+  REQUEST_QUESTIONS_SUCCESS,
+  REQUEST_QUESTIONS_FAIL,
+} from '../actions/fetchQuestionsTrivia';
 
 const INITIAL_STATE = {
   isFetching: false,
@@ -18,12 +22,12 @@ const receiveQuestions = (state = INITIAL_STATE, action) => {
       ...state,
       isFetching: true,
     };
-    case REQUEST_QUESTIONS_FAIL:
-      return {
-        ...state,
-        isFetching: false,
-        error: action.error,
-      };
+  case REQUEST_QUESTIONS_FAIL:
+    return {
+      ...state,
+      isFetching: false,
+      error: action.error,
+    };
   default:
     return state;
   }
