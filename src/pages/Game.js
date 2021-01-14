@@ -10,6 +10,7 @@ class Game extends Component {
     this.renderAlternatives = this.renderAlternatives.bind(this);
     this.handleClickCorrect = this.handleClickCorrect.bind(this);
     this.handleClickWrong = this.handleClickWrong.bind(this);
+    this.renderNextBtn = this.renderNextBtn.bind(this);
 
     this.state = {
       numberQuestion: 0,
@@ -110,6 +111,21 @@ class Game extends Component {
     return a;
   }
 
+  renderNextBtn() {
+    const { alreadyAnswered } = this.state;
+    if (alreadyAnswered) {
+      return (
+        <button
+          type="button"
+          data-testid="btn-next"
+        >
+          Próxima pergunta
+        </button>
+      );
+    }
+    return <div />;
+  }
+
   renderAlternatives(correctAnswer, incorrectAnswers) {
     const { alreadyAnswered, timer } = this.state;
     const alternatives = [];
@@ -149,6 +165,7 @@ class Game extends Component {
       <div>
         <Header playerProfile={ this.getPlayerProfile() } score={ score } />
         <Trivia
+          renderNextBtn={ this.renderNextBtn }
           numberQuestion={ numberQuestion }
           renderAlternatives={ this.renderAlternatives }
           questions={ questions }

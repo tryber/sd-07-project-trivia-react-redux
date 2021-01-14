@@ -3,7 +3,13 @@ import PropTypes from 'prop-types';
 
 class Trivia extends Component {
   render() {
-    const { renderAlternatives, questions, numberQuestion, timer } = this.props;
+    const {
+      renderAlternatives,
+      questions,
+      numberQuestion,
+      timer,
+      renderNextBtn,
+    } = this.props;
     const { results } = questions;
     if (results) {
       const {
@@ -19,6 +25,9 @@ class Trivia extends Component {
             <div>
               {renderAlternatives(correctAnswer, incorrectAnswers)}
             </div>
+            <div>
+              {renderNextBtn()}
+            </div>
           </div>
         </div>
       );
@@ -30,6 +39,7 @@ class Trivia extends Component {
 }
 
 Trivia.propTypes = {
+  renderNextBtn: PropTypes.func.isRequired,
   renderAlternatives: PropTypes.func.isRequired,
   timer: PropTypes.number.isRequired,
   numberQuestion: PropTypes.number.isRequired,
