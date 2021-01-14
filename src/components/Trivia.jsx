@@ -5,8 +5,19 @@ import PropTypes from 'prop-types';
 class Trivia extends Component {
   constructor(props) {
     super(props);
-
+    this.changeBorderColor = this.changeBorderColor.bind(this);
     this.randomArrayQuestions = this.randomArrayQuestions.bind(this);
+  }
+
+  changeBorderColor() {
+    const correctAnswer = document.querySelector('.correct-answer');
+    const wrongAnswers = document.querySelectorAll('.wrong-answer');
+
+    correctAnswer.style.border = '3px solid rgb(6, 240, 15)';
+
+    for (let index = 0; index < wrongAnswers.length; index += 1) {
+      wrongAnswers[index].style.border = '3px solid rgb(255, 0, 0)';
+    }
   }
 
   randomArrayQuestions(string, array) {
@@ -46,6 +57,10 @@ class Trivia extends Component {
                   type="button"
                   data-testid={ element === currentQuestion.correct_answer
                     ? 'correct-answer' : `wrong-answer-${indice}` }
+                  className={ element === currentQuestion.correct_answer
+                    ? 'correct-answer'
+                    : 'wrong-answer' }
+                  onClick={ () => this.changeBorderColor() }
                 >
                   { element }
                 </button>))}
