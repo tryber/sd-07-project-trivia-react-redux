@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
-import { userNameAction } from '../Actions';
+import actions from '../Actions';
 import settingsIcon from './images/setting2.png';
 
 class LoginForm extends Component {
@@ -18,10 +18,11 @@ class LoginForm extends Component {
   }
 
   async handleSubmit() {
-    const { history, userNameDispatch } = this.props;
-    const { name } = this.state;
-    userNameDispatch(name);
+    const { history, userNameDispatch, gravatarDispatch } = this.props;
+    const { name, email } = this.state;
     history.push('/game');
+    userNameDispatch(name);
+    gravatarDispatch(email);
     const endpoint = 'https://opentdb.com/api_token.php?command=request';
     const fetchAPI = await fetch(endpoint);
     const data = await fetchAPI.json();
@@ -38,7 +39,6 @@ class LoginForm extends Component {
 
   render() {
     const { history } = this.props;
-    console.log(this.props);
     return (
       <div>
         <button
@@ -85,13 +85,15 @@ class LoginForm extends Component {
 }
 
 const mapDispatchToProps = {
-  userNameDispatch: (name) => userNameAction(name),
+  userNameDispatch: (name) => actions.userNameAction(name),
+  gravatarDispatch: (email) => actions.fetchGravatar(email),
 };
 
 LoginForm.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired }).isRequired,
   userNameDispatch: PropTypes.func.isRequired,
+  gravatarDispatch: PropTypes.func.isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(LoginForm);

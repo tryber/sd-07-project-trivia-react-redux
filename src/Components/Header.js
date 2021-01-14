@@ -2,14 +2,18 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-class User extends Component {
+class Header extends Component {
   render() {
-    const { name } = this.props;
+    const { name, gravatar } = this.props;
     const score = 0;
     return (
       <div>
         <header>
-          {/* <p data-testid="header-profile-picture">{img}</p> */}
+          <img
+            src={ gravatar }
+            alt="Avatar do usuário"
+            data-testid="header-profile-picture"
+          />
           <p data-testid="header-player-name">
             Nome:
             { name }
@@ -26,10 +30,12 @@ class User extends Component {
 
 const mapStateToProps = (state) => ({
   name: state.user.name,
+  gravatar: state.gravatar.gravatar,
 });
 
-User.propTypes = {
+Header.propTypes = {
   name: PropTypes.string.isRequired,
+  gravatar: PropTypes.string.isRequired,
 };
 
-export default connect(mapStateToProps)(User);
+export default connect(mapStateToProps)(Header);

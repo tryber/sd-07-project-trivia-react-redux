@@ -1,4 +1,4 @@
-import { USER_NAME } from '../Actions/index';
+import actions from '../Actions';
 
 const INITIAL_STATE = {
   name: '',
@@ -6,7 +6,7 @@ const INITIAL_STATE = {
 
 function userReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
-  case USER_NAME:
+  case actions.USER_NAME:
     return {
       ...state,
       name: action.name,

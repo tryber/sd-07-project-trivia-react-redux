@@ -1,6 +1,16 @@
-export const USER_NAME = 'USER_NAME';
+import { userNameAction, USER_NAME } from './user';
+import {
+  REQUEST,
+  SUCCESS,
+  ERROR,
+  fetchGravatar,
+} from './gravatar';
 
-export const userNameAction = (name) => ({
-  type: USER_NAME,
-  name,
-});
+export default {
+  userNameAction,
+  USER_NAME,
+  REQUEST,
+  SUCCESS,
+  ERROR,
+  fetchGravatar,
+};

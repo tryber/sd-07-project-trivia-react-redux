@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import User from '../Components/User';
+import Header from '../Components/Header';
 
 class PlayGame extends Component {
   render() {
     return (
       <div>
-        <User />
+        <Header />
       </div>
     );
   }
