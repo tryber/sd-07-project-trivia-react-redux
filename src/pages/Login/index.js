@@ -3,6 +3,7 @@ import md5 from 'crypto-js/md5';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import './Login.css';
 import * as PlayerActions from '../../store/ducks/player/actions';
 
 class Login extends Component {
@@ -48,7 +49,8 @@ class Login extends Component {
   render() {
     const { name, gravatarEmail, isButtonAble } = this.state;
     return (
-      <>
+
+      <div className="login-page">
         <Link to="/settings" data-testid="btn-settings">
           Configurações
         </Link>
@@ -79,7 +81,8 @@ class Login extends Component {
             Jogar
           </button>
         </form>
-      </>
+
+      </div>
     );
   }
 }
