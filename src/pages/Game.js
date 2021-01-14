@@ -36,7 +36,7 @@ class Game extends Component {
     const lastSecondDisableButton = 0;
     if (timer > 1) {
       setTimeout(() => {
-        this.setState(( prevState ) => ({
+        this.setState((prevState) => ({
           timer: prevState.timer - 1,
         }));
       }, secondTimerFunction);
