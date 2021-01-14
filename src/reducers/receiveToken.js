@@ -1,4 +1,4 @@
-import { REQUEST_TOKEN, REQUEST_TOKEN_SUCCESS } from '../actions';
+import { REQUEST_TOKEN, REQUEST_TOKEN_SUCCESS } from '../actions/fetchTokenTrivia';
 
 const INITIAL_STATE = {
   isFetching: false,
@@ -7,6 +7,7 @@ const INITIAL_STATE = {
 const receiveToken = (state = INITIAL_STATE, action) => {
   switch (action.type) {
   case REQUEST_TOKEN_SUCCESS:
+    localStorage.setItem('token', JSON.stringify(action.token));
     return {
       ...state,
       token: action.token,

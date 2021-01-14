@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Trivia from '../components/Trivia';
-import { fetchTokenTrivia } from '../actions';
+import Trivia from '../components';
+import { fetchTokenTrivia } from '../actions/fetchTokenTrivia';
 
 class Login extends React.Component {
   constructor() {
@@ -39,7 +39,6 @@ class Login extends React.Component {
   handleClick() {
     const { token, history } = this.props;
     token();
-    localStorage.setItem('token', JSON.stringify(token));
     history.push('./game');
   }
 
