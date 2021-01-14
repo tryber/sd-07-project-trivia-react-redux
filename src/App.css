@@ -149,9 +149,10 @@
 }
 
 .wrong-answer {
-  border: 3px solid rgb(255, 0, 0);
+  border: 3px solid rgb(255,0,0);
   border-radius: 5px;
 }
+
 .category {
   font-weight: 700;
   margin-bottom: 10px;
