@@ -83,6 +83,7 @@ const mapStateToProps = ({ token }) => ({
 
 GamePage.propTypes = {
   token: PropTypes.string.isRequired,
+  history: PropTypes.shape().isRequired,
 };
 
 export default connect(mapStateToProps)(GamePage);

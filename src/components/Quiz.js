@@ -13,12 +13,12 @@ class Quiz extends React.Component {
   }
 
   setScore() {
-    const { count, difficulty, player, setPlayer} = this.props;
+    const { count, difficulty, player, setPlayer } = this.props;
     let score = player.score || 0;
     const difficult = {
-      'easy': 1,
-      'medium': 2,
-      'hard': 3,
+      easy: 1,
+      medium: 2,
+      hard: 3,
     };
     const num = 10;
     score += count * difficult[difficulty] + num;
@@ -117,7 +117,7 @@ const mapStateToProps = ({ player }) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  setPlayer: (player) => dispatch(playerAction(player))
+  setPlayer: (player) => dispatch(playerAction(player)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Quiz);
