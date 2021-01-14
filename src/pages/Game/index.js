@@ -29,6 +29,7 @@ class Game extends Component {
     const apiTokenResult = await getApi(tokenUrl);
     const { token } = apiTokenResult;
     this.setState({ userToken: token });
+    
 
     const { userToken } = this.state;
     const questionUrl = `https://opentdb.com/api.php?amount=5&token=${userToken}`;
@@ -39,8 +40,8 @@ class Game extends Component {
 
   render() {
     const { userToken, questions } = this.state;
-    console.log(userToken);
-    console.log(questions);
+    // console.log(userToken);
+    // console.log(questions);
     return (
       <div>
         <Header />

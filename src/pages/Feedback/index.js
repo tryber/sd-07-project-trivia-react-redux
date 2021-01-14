@@ -5,14 +5,29 @@ import './style.css';
 
 class Feedback extends Component {
   render() {
+    const rightAnswer = 2;
+    const min = 3;
     return (
       <div>
         <Header />
-        <Title
-          title="Mandou bem!"
-          subTitle1="Você acertou 5 questões!"
-          subTitle2="Um total de 50 pontos"
-        />
+        {
+          (rightAnswer >= min)
+            ? (
+              <Title
+                title="Mandou bem!"
+                subTitle1="Você acertou 5 questões!"
+                subTitle2="Um total de 50 pontos"
+                data-testid="feedback-text"
+              />
+            ) : (
+              <Title
+                title="Podia ser melhor..."
+                subTitle1="Você acertou 5 questões!"
+                subTitle2="Um total de 50 pontos"
+                data-testid="feedback-text"
+              />
+            )
+        }
         <Link to="ranking">
           <button type="button">Ver Ranking</button>
         </Link>

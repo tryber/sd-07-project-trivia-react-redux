@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { getStorage, setStorage } from '../../services';
+import { setStorage, getStorage } from '../../services';
+import getApi from '../../services/api';
 import './style.css';
 
 class LoginForm extends Component {
@@ -12,7 +13,8 @@ class LoginForm extends Component {
       isDisabled: true,
     };
     this.handleInputChange = this.handleInputChange.bind(this);
-    // this.handleClick = this.handleClick.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+    this.requestToken = this.requestToken.bind(this);
   }
 
   handleInputChange({ name, value }) {
@@ -31,10 +33,38 @@ class LoginForm extends Component {
     );
   }
 
-  handleClick() {
-    const token = 'f00cb469ce38726ee00a7c6836761b0a4fb808181a125dcde6d50a9f3c9127b6';
+  async requestToken() {
+    const tokenUrl = 'https://opentdb.com/api_token.php?command=request';
+    const apiTokenResult = await getApi(tokenUrl);
+    const { token } = apiTokenResult;
+    return token;
+  }
+
+  async handleClick() {
+    const { email, playerName } = this.state;
+
+    const token = await this.requestToken();
+
+    const player = {
+      name: playerName,
+      assertions: 0,
+      score: 0,
+      gravatarEmail: email,
+    };
+
+    const ranking = {
+      name: playerName,
+      score: 0,
+      picture: 'url-da-foto-no-gravatar',
+    };
+
+    const oldRanking = getStorage('ranking');
+    const newRanking = [...oldRanking];
+    newRanking.push(ranking);
+
+    setStorage('player', player);
     setStorage('token', token);
-    console.log(getStorage('token'));
+    setStorage('ranking', newRanking);
   }
 
   render() {
