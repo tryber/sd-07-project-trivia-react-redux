@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import * as triviaAPI from '../../services/triviaAPI';
-
+import { nextQuestion } from '../../redux/actions';
 import CorrectAnswer from './CorrectAnswer';
 import WrongAnswer from './WrongAnswer';
+import Timer from './Timer';
 
 class Questions extends Component {
   constructor() {
@@ -10,6 +13,7 @@ class Questions extends Component {
     this.fetchTriviaAPI = this.fetchTriviaAPI.bind(this);
     this.shuffleArray = this.shuffleArray.bind(this);
     this.randomizeAnswers = this.randomizeAnswers.bind(this);
+    this.handleNextQuestion = this.handleNextQuestion.bind(this);
 
     this.state = {
       questions: [],
@@ -30,6 +34,7 @@ class Questions extends Component {
     this.setState({
       questions: requestQuestions.results,
       isLoading: false,
+      setRestart: false,
     });
     this.randomizeAnswers();
   }
@@ -55,11 +60,33 @@ class Questions extends Component {
     this.setState({ numberArray: array });
   }
 
+  handleNextQuestion() {
+    const { questions, currentQuestion } = this.state;
+    const { nextQuestion: actionNextQuestion, history } = this.props;
+
+    if (currentQuestion < questions.length - 1) {
+      this.setState(
+        ({ currentQuestion: prevValue }) => ({
+          currentQuestion: prevValue + 1,
+          setRestart: true,
+        }),
+        () => {
+          this.setState({ setRestart: false });
+          actionNextQuestion();
+          this.randomizeAnswers();
+        },
+      );
+    } else {
+      history.push('/feedback');
+    }
+  }
+
   render() {
     const { isLoading } = this.state;
     if (isLoading) return '';
-    const { currentQuestion, questions, numberArray } = this.state;
+    const { currentQuestion, questions, numberArray, setRestart } = this.state;
     const { difficulty } = questions[currentQuestion];
+    const { isAnswered } = this.props;
     return (
       <div>
         <div data-testid="question-category">
@@ -70,7 +97,6 @@ class Questions extends Component {
         </div>
         <div>
           { numberArray.map((value) => {
-            console.log(`Valor: ${value}`);
             if (value === Math.max(...numberArray)) {
               return (
                 <CorrectAnswer
@@ -89,9 +115,37 @@ class Questions extends Component {
             );
           })}
         </div>
+        <Timer restart={ setRestart } />
+        {
+          isAnswered && (
+            <button
+              type="button"
+              data-testid="btn-next"
+              onClick={ () => this.handleNextQuestion() }
+            >
+              Próxima
+            </button>
+          )
+        }
       </div>
     );
   }
 }
 
-export default Questions;
+const mapStateToProps = (state) => ({
+  isAnswered: state.questionAnswererd.isAnswered,
+});
+
+const mapDispatchToProps = {
+  nextQuestion,
+};
+
+Questions.propTypes = {
+  isAnswered: PropTypes.bool.isRequired,
+  nextQuestion: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Questions);
