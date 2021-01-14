@@ -6,13 +6,15 @@ class Questions extends React.PureComponent {
     const { questions, clicked, disabled, position } = this.props;
     const { clickHandler } = this.props;
     const { results } = questions;
+    console.log(results[0]);
     return (
+
       <div>
         {results.map((item, index1) => {
           const quatro = 4;
           const answers = item.incorrect_answers.map((answer, index) => (
             <button
-              onClick={ ({ target }) => clickHandler(target) }
+              onClick={ ({ target }) => clickHandler(target, item.difficulty) }
               key={ index }
               type="button"
               className={ clicked ? 'wrongRed' : '' }
@@ -27,7 +29,7 @@ class Questions extends React.PureComponent {
           ));
           const answerCorrect = (
             <button
-              onClick={ ({ target }) => clickHandler(target) }
+              onClick={ ({ target }) => clickHandler(target, item.difficulty) }
               id="rightAnswer"
               type="button"
               className={ clicked ? 'rightGreen' : '' }
