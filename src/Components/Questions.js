@@ -27,7 +27,6 @@ class Questions extends React.Component {
   }
 
   render() {
-
     const { questions, timer } = this.props;
     const { questionsList } = questions;
     const { questionNumber, wrongAnswer, correctAnswer } = this.state;
