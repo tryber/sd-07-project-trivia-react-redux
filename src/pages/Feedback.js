@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Header from '../components/header';
 
 class Feedback extends React.Component {
@@ -18,6 +19,9 @@ class Feedback extends React.Component {
         <div className="feedback-header">
           <Header />
         </div>
+        <div data-testid="feedback-text">
+          Text
+        </div>
         <button
           onClick={ this.handleClick }
           data-testid="btn-ranking"
@@ -31,3 +35,9 @@ class Feedback extends React.Component {
 }
 
 export default Feedback;
+
+Feedback.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+};
