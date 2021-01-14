@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import CryptoJs from 'crypto-js';
 import { connect } from 'react-redux';
 import { login, fetchToken, fetchQuestions } from '../actions';
 
@@ -37,8 +38,10 @@ class Login extends Component {
   }
 
   async fetchQuestion() {
+    const { email } = this.state;
     const { getQuestions, token } = this.props;
-    await getQuestions(token);
+    const hash = CryptoJs.MD5(email).toString().trim().toLowerCase();
+    await getQuestions(token, hash);
   }
 
   async saveToken() {
@@ -107,7 +110,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   fetchTokenAction: () => dispatch(fetchToken()),
   userLogin: (email, name) => dispatch(login(email, name)),
-  getQuestions: (token) => dispatch(fetchQuestions(token)),
+  getQuestions: (hash, token) => dispatch(fetchQuestions(hash, token)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

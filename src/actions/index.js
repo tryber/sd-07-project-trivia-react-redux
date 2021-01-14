@@ -27,14 +27,20 @@ export const requestQuestions = () => ({
   type: 'REQUEST_QUESTIONS',
 });
 
-export const requestSucessQuestion = (questions) => ({
+export const requestSucessQuestion = (questions, hash) => ({
   type: 'SUCCESS',
   questions,
+  hash,
 });
 
 export const requestErrorQuestion = (error) => ({
   type: 'ERROR',
   error,
+});
+
+export const updateScore = (score) => ({
+  type: 'UPDATE_SCORE',
+  score,
 });
 
 export const fetchToken = () => async (dispatch) => {
