@@ -10,25 +10,48 @@ class Game extends Component {
     super();
     this.renderAllDataQuestion = this.renderAllDataQuestion.bind(this);
     this.handleUserAnswer = this.handleUserAnswer.bind(this);
+    this.nextQuestion = this.nextQuestion.bind(this);
+    this.handleClasses = this.handleClasses.bind(this);
+
+
     this.state = {
       questionIndex: 0,
+      showBtn: false,
     };
   }
 
   componentDidMount() {
     const { getQuestions } = this.props;
+    
     getQuestions();
   }
 
-  handleUserAnswer() {
-    document.querySelectorAll('button').forEach((button) => {
+ handleClasses(type){
+  document.querySelectorAll('.btnQuestion').forEach((button) => {
+    if(type === "add"){
       const { id } = button;
       if (id === 'ok') {
         button.classList.add('btnColorGreen');
       }
       button.classList.add('btnColorRed');
-    });
+    }else{
+      button.classList.remove('btnColorGreen')
+      button.classList.remove('btnColorRed')
+    }
+   
+  });
+ }
+  handleUserAnswer() {
+    this.handleClasses('add')
+    this.setState({...this.state, showBtn: true })
   }
+
+  nextQuestion(){
+    const { getQuestions} = this.props;
+    this.handleClasses('remove')
+    getQuestions();
+  }
+
 
   renderAllDataQuestion() {
     // console.log()
@@ -38,6 +61,7 @@ class Game extends Component {
     if (questions.results) {
       const correctAnswer = (
         <button
+          className="btnQuestion"
           type="button"
           data-testid="correct-answer"
           onClick={ this.handleUserAnswer }
@@ -50,6 +74,7 @@ class Game extends Component {
       const wrongAnswer = questions.results[questionIndex].incorrect_answers
         .map((answer, index) => (
           <button
+          className="btnQuestion"
             onClick={ this.handleUserAnswer }
             type="button"
             key={ answer }
@@ -63,8 +88,9 @@ class Game extends Component {
     }
   }
 
+ 
   render() {
-    const { questionIndex } = this.state;
+    const { questionIndex , showBtn } = this.state;
     const { questions } = this.props;
     return questions.results ? (
       <div>
@@ -77,6 +103,9 @@ class Game extends Component {
           {questions.results[questionIndex].question}
         </h2>
         <div>{this.renderAllDataQuestion()}</div>
+        { showBtn && (
+          <button data-testid="btn-next" onClick={this.nextQuestion}>Próxima pergunta</button>
+        )}        
       </div>
     ) : (
       <p>loading</p>
