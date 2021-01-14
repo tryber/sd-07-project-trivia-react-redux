@@ -15,6 +15,7 @@ class Questions extends Component {
       questions: [],
       currentQuestion: 0,
       isLoading: true,
+      numberArray: [],
     };
   }
 
@@ -30,6 +31,7 @@ class Questions extends Component {
       questions: requestQuestions.results,
       isLoading: false,
     });
+    this.randomizeAnswers();
   }
 
   // shuffleArray from https://stackoverflow.com/a/12646864
@@ -41,22 +43,23 @@ class Questions extends Component {
     return array;
   }
 
-  randomizeAnswers(lenth) {
-    const array = [];
-    for (let i = 0; i <= lenth; i += 1) {
+  randomizeAnswers() {
+    const { currentQuestion, questions } = this.state;
+    console.log(questions);
+    const maxAnswers = questions[currentQuestion].incorrect_answers.length;
+    let array = [];
+    for (let i = 0; i <= maxAnswers; i += 1) {
       array.push(i);
     }
-    return this.shuffleArray(array);
+    array = this.shuffleArray(array);
+    this.setState({ numberArray: array });
   }
 
   render() {
     const { isLoading } = this.state;
     if (isLoading) return '';
-
-    const { currentQuestion, questions } = this.state;
-    console.log(questions[currentQuestion]);
-    const maxAnswers = questions[currentQuestion].incorrect_answers.length;
-    const numberArray = this.randomizeAnswers(maxAnswers);
+    const { currentQuestion, questions, numberArray } = this.state;
+    const { difficulty } = questions[currentQuestion];
     return (
       <div>
         <div data-testid="question-category">
@@ -72,6 +75,7 @@ class Questions extends Component {
               return (
                 <CorrectAnswer
                   key={ value }
+                  difficulty={ difficulty }
                   answer={ questions[currentQuestion].correct_answer }
                 />
               );
