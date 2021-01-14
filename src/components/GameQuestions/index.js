@@ -14,6 +14,8 @@ class GameQuestions extends Component {
       revealAnswer: false,
     };
     this.timeOver = this.timeOver.bind(this);
+    this.timer = React.createRef();
+    this.clickAnswer = this.clickAnswer.bind(this);
   }
 
   async componentDidMount() {
@@ -23,6 +25,11 @@ class GameQuestions extends Component {
 
   timeOver() {
     this.setState({ revealAnswer: true });
+  }
+
+  clickAnswer() {
+    this.setState({ revealAnswer: true });
+    this.timer.current.stopTimer();
   }
 
   render() {
@@ -57,14 +64,18 @@ class GameQuestions extends Component {
                       && (answer.correct ? 'correctAnswer' : 'wrongAnswer')).toString() }
                     key={ answer.text }
                     data-testid={ answer.dataTestid }
-                    onClick={ () => this.setState({ revealAnswer: true }) }
+                    onClick={ () => this.clickAnswer() }
                   >
                     {answer.text}
                   </button>))
             }
           </span>
         </h3>
-        <Timer stopTimer={ revealAnswer } handleTimeOver={ this.timeOver } />
+        <Timer
+          stopTimer={ revealAnswer }
+          handleTimeOver={ this.timeOver }
+          ref={ this.timer }
+        />
       </>
     );
   }

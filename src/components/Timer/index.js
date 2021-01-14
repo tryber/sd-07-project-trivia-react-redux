@@ -30,13 +30,19 @@ class Timer extends Component {
     }
   }
 
+  stopTimer() {
+    clearInterval(this.timer);
+    const { seconds } = this.state;
+    return seconds;
+  }
+
   countDown() {
     // Remove one second, set state so a re-render happens.
     const { seconds } = this.state;
     const { handleTimeOver } = this.props;
 
     if (seconds === 0) {
-      clearInterval(this.timer);
+      this.stopTimer();
       handleTimeOver();
     } else {
       const newSeconds = seconds - 1;
