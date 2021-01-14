@@ -61,11 +61,9 @@ class Questions extends React.Component {
             <button
               key={ q }
               data-testid={ `wrong-answer-${index}` }
-              className="wrong-answer"
               type="button"
               disabled={ timer }
               className={ wrongAnswer }
-              type="button"
               onClick={ () => this.buttonColor() }
             >
               {q}
