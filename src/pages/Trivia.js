@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import md5 from 'crypto-js/md5';
 import fetchQuestions from '../services/questionsApi';
 import Questions from '../components/Questions';
+import { counterTime } from '../redux/actions/index';
 
 class Trivia extends React.Component {
   constructor(props) {
@@ -35,6 +36,15 @@ class Trivia extends React.Component {
     this.interval = setInterval(() => {
       this.countDown();
     }, second);
+    localStorage.setItem('state', JSON.stringify({
+      player:
+      {
+        score: 0,
+        name: '',
+        assertions: 0,
+        gravatarEmail: '',
+      },
+    }));
   }
 
   async requestQuestions(number, token) {
@@ -53,7 +63,31 @@ class Trivia extends React.Component {
     });
   }
 
-  clickHandler() {
+  clickHandler(target, difficulty) {
+    const { counter } = this.state;
+    const um = 1;
+    const dois = 2;
+    const tres = 3;
+    const dez = 10;
+    let points;
+    if (difficulty === 'hard') {
+      points = tres;
+    } else if (difficulty === 'medium') {
+      points = dois;
+    } else if (difficulty === 'easy') {
+      points = um;
+    }
+    if (target.id === 'rightAnswer') {
+      this.setState((previus) => ({
+        placar: dez + (points * counter) + previus.placar,
+      }), () => {
+        const { placar } = this.state;
+        localStorage.setItem('state', JSON.stringify({ player: { score: placar } }));
+      });
+    } else {
+      const { placar } = this.state;
+      localStorage.setItem('state', JSON.stringify({ player: { score: placar } }));
+    }
     this.setState({
       replyConfirmation: true,
 
@@ -81,6 +115,8 @@ class Trivia extends React.Component {
 
   countDown() {
     const { counter } = this.state;
+    const { timerDispatch } = this.props;
+    timerDispatch(counter);
     if (counter > 0) {
       this.setState({ counter: counter - 1 });
     } else {
@@ -89,7 +125,8 @@ class Trivia extends React.Component {
   }
 
   render() {
-    const { emailSave, nameSave } = this.props;
+    const { emailSave, nameSave, timer } = this.props;
+    console.log(timer);
     const {
       urlImg,
       placar,
@@ -139,12 +176,19 @@ Trivia.propTypes = {
   nameSave: PropTypes.string.isRequired,
   tokenValue: PropTypes.string.isRequired,
   history: PropTypes.shape({ push: PropTypes.func }).isRequired,
+  timerDispatch: PropTypes.func.isRequired,
+  timer: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   emailSave: state.infoPlayer.emailPlayer,
   nameSave: state.infoPlayer.namePlayer,
   tokenValue: state.token.token,
+  timer: state.timer.timer,
 });
 
-export default connect(mapStateToProps)(Trivia);
+const mapDispatchToProps = (dispatch) => ({
+  timerDispatch: (timer) => dispatch(counterTime(timer)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Trivia);
