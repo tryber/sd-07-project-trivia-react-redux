@@ -19,51 +19,56 @@ class GameScreen extends Component {
       buttonNext: false,
       id: 1,
       disabledTimeOut: false,
-      timer: 25,
+      timer: 30,
     };
-    this.handleQuest = this.handleQuest.bind(this);
+    this.handleNextQuest = this.handleNextQuest.bind(this);
     this.changeStyle = this.changeStyle.bind(this);
     this.timeOut = this.timeOut.bind(this);
     this.disableQuestion = this.disableQuestion.bind(this);
-    this.nextQuestion = this.nextQuestion.bind(this);
+    // this.nextQuestion = this.nextQuestion.bind(this);
+    this.handleRedirect = this.handleRedirect.bind(this);
+    this.MAX_ALTERNATIVES = 4;
   }
 
   async componentDidMount() {
     const { actionRequest } = this.props;
     await actionRequest();
-    this.handleQuest();
+    this.handleNextQuest();
     this.timeOut();
   }
 
-  handleQuest() {
+  handleRedirect() {
+    const { history } = this.props;
+    console.log('redirect');
+    history.push('/feedback');
+  }
+
+  handleNextQuest() {
     const { quest } = this.props;
-    console.log('q', quest);
+    const { id } = this.state;
+    const MAX_QUESTIONS = 5;
     if (quest.length === 0) {
       return null;
     }
-    this.setState({
-      category: quest[0].category,
-      question: quest[0].question,
-      // respCorrect: quest[1].correct_answer,
-      resps: [quest[0].correct_answer, ...quest[0].incorrect_answers],
-    });
-  }
-
-  changeStyle() {
-    this.setState({ right: 'right', wrong: 'wrong', buttonNext: true });
-  }
-
-  nextQuestion() {
-    const { quest } = this.props;
-    const { id } = this.state;
     this.setState({ id: id + 1 });
+    if (id >= MAX_QUESTIONS) {
+      return this.handleRedirect();
+    }
     this.setState({
       category: quest[id].category,
       question: quest[id].question,
       // respCorrect: quest[1].correct_answer,
       resps: [quest[id].correct_answer, ...quest[id].incorrect_answers],
       buttonNext: false,
+      timer: 30,
+      right: '',
+      wrong: '',
+      disabledTimeOut: false,
     });
+  }
+
+  changeStyle() {
+    this.setState({ right: 'right', wrong: 'wrong', buttonNext: true });
   }
 
   disableQuestion() {
@@ -76,9 +81,12 @@ class GameScreen extends Component {
   timeOut() {
     const ONE_SEC = 1000;
     setInterval(() => {
-      this.setState((state) => ({
-        timer: state.timer - 1,
-      }), this.disableQuestion);
+      this.setState(
+        (state) => ({
+          timer: state.timer - 1,
+        }),
+        this.disableQuestion,
+      );
     }, ONE_SEC);
   }
 
@@ -124,30 +132,34 @@ class GameScreen extends Component {
             >
               {resps[1]}
             </button>
-            <button
-              className={ wrong }
-              data-testid="wrong-answer-2"
-              type="button"
-              onClick={ this.changeStyle }
-              disabled={ disabledTimeOut }
-            >
-              {resps[2]}
-            </button>
-            <button
-              className={ wrong }
-              data-testid="wrong-answer-3"
-              type="button"
-              onClick={ this.changeStyle }
-              disabled={ disabledTimeOut }
-            >
-              {resps[3]}
-            </button>
+            {resps.length === this.MAX_ALTERNATIVES && (
+              <div>
+                <button
+                  className={ wrong }
+                  data-testid="wrong-answer-2"
+                  type="button"
+                  onClick={ this.changeStyle }
+                  disabled={ disabledTimeOut }
+                >
+                  {resps[2]}
+                </button>
+                <button
+                  className={ wrong }
+                  data-testid="wrong-answer-3"
+                  type="button"
+                  onClick={ this.changeStyle }
+                  disabled={ disabledTimeOut }
+                >
+                  {resps[3]}
+                </button>
+              </div>
+            )}
           </div>
           {buttonNext && (
             <button
               data-testid="btn-next"
               type="button"
-              onClick={ this.nextQuestion }
+              onClick={ this.handleNextQuest }
             >
               Próxima
             </button>
@@ -168,5 +180,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(GameScreen);
 
 GameScreen.propTypes = {
   actionRequest: PropTypes.func.isRequired,
-  quest: PropTypes.arrayOf().isRequired,
+  quest: PropTypes.arrayOf(PropTypes.any).isRequired,
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
 };
