@@ -4,7 +4,14 @@ const initialState = {
   score: 0,
   gravatarEmail: '',
   loading: false,
-  question: {},
+  question: {
+    results: [{
+      category: '',
+      question: '',
+      correct_answer: '',
+      incorrect_answers: [],
+    }]
+  },
 };
 
 export default function (state = initialState, action) {

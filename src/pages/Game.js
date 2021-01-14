@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { requestQuestionAndAnsewrs } from '../actions';
+import QuestionsList from './componentes/QuestionsList';
 
 class Game extends React.Component {
   constructor() {
@@ -14,16 +15,9 @@ class Game extends React.Component {
   render() {
     return (
       <div>
-        <h2 data-testid="question-category" >Category</h2>
-
-        <h2 data-testid="question-text" >Question</h2>
-        <button
-          type="button"
-          disabled={ this.props.loading === false }
-          onClick={ this.testApi }
-        >
-          Certos e Erraddos
-        </button>
+        <h3 data-testid="question-category" >{ this.props.question.results[0].category }</h3>
+        <p data-testid="question-text" >{ this.props.question.results[0].question }</p>
+        <QuestionsList />
       </div>
     );
   }
