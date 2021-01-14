@@ -38,21 +38,6 @@ class Trivia extends Component {
             >
               { item.question }
             </h2>
-            <button
-              type="button"
-              data-testid="correct-answer"
-            >
-              { item.correct_answer }
-            </button>
-            {item.incorrect_answers.map((element, indice) => (
-              <button
-                key={ indice }
-                type="button"
-                data-testid={ `wrong-answer-${indice}` }
-              >
-                { element }
-              </button>
-            ))}
             {this.randomArrayQuestions(item.correct_answer, item.incorrect_answers)
               .map((element, indice) => (
                 <button
