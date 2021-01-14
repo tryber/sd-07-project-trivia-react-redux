@@ -19,9 +19,14 @@ class Questions extends React.Component {
     this.nextQuestion = this.nextQuestion.bind(this);
     this.clickRightAnswer = this.clickRightAnswer.bind(this);
     this.clickButtonAnswer = this.clickButtonAnswer.bind(this);
+    this.setTimer = this.setTimer.bind(this);
   }
 
   componentDidMount() {
+    this.setTimer();
+  }
+
+  setTimer() {
     const oneSecond = 1000;
     const myInterval = setInterval(() => {
       const { seconds } = this.state;
@@ -53,6 +58,7 @@ class Questions extends React.Component {
       const { push } = this.props;
       push('/feedback');
     }
+    this.setTimer();
   }
 
   clickRightAnswer() {
@@ -88,6 +94,7 @@ class Questions extends React.Component {
     this.setState({
       status: false,
       showAnswers: true,
+      seconds: 0,
     });
   }
 
