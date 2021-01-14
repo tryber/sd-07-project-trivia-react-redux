@@ -37,11 +37,11 @@ class Login extends React.Component {
     }
   }
 
-  handleClick() {
+  async handleClick() {
     const { token, history, createPlayer } = this.props;
     const { nameInput, emailInput } = this.state;
     const score = 0;
-    token();
+    await token();
     history.push('./game');
     createPlayer(nameInput, emailInput, score);
   }
