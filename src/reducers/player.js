@@ -45,3 +45,4 @@ function player(state = initialState, action) {
 }
 
 export default player;
+
