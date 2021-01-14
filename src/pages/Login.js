@@ -2,27 +2,24 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import CryptoJs from 'crypto-js';
 import { connect } from 'react-redux';
-import { login, fetchToken, fetchQuestions } from '../actions';
+import { login, fetchToken, hashAction } from '../actions';
 
 class Login extends Component {
   constructor(props) {
     super(props);
     this.saveToken = this.saveToken.bind(this);
-    this.setToken = this.setToken.bind(this);
-    this.fetchQuestion = this.fetchQuestion.bind(this);
     this.settingsButton = this.settingsButton.bind(this);
+    this.getHash = this.getHash.bind(this);
     this.state = {
       email: '',
       name: '',
-      token: '',
     };
   }
 
   componentDidMount() {
-    const { fetchTokenAction, getQuestions, token } = this.props;
+    const { fetchTokenAction } = this.props;
     fetchTokenAction();
-    this.setToken();
-    getQuestions(token);
+    this.getHash();
   }
 
   settingsButton() {
@@ -30,23 +27,24 @@ class Login extends Component {
     history.push('/settings');
   }
 
-  async setToken() {
-    const { token } = this.state;
-    this.setState({
-      token: token.token,
-    });
-  }
+  // async setToken() {
+  //   const { token } = this.state;
+  //   this.setState({
+  //     token: token.token,
+  //   });
+  // }
 
-  async fetchQuestion() {
+  getHash() {
     const { email } = this.state;
-    const { getQuestions, token } = this.props;
+    const { getHashAction } = this.props;
     const hash = CryptoJs.MD5(email).toString().trim().toLowerCase();
-    await getQuestions(token, hash);
+    getHashAction(hash);
   }
 
   async saveToken() {
-    const { token, name, email } = this.state;
-    const { userLogin, history } = this.props;
+    const { name, email } = this.state;
+    const { userLogin, history, token } = this.props;
+    console.log(token);
     userLogin(email, name);
     localStorage.setItem('token', JSON.stringify(token));
     history.push('/game');
@@ -96,7 +94,7 @@ class Login extends Component {
 Login.propTypes = {
   userLogin: PropTypes.func.isRequired,
   fetchTokenAction: PropTypes.func.isRequired,
-  getQuestions: PropTypes.func.isRequired,
+  getHashAction: PropTypes.func.isRequired,
   token: PropTypes.string.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func,
@@ -110,7 +108,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   fetchTokenAction: () => dispatch(fetchToken()),
   userLogin: (email, name) => dispatch(login(email, name)),
-  getQuestions: (hash, token) => dispatch(fetchQuestions(hash, token)),
+  getHashAction: (hash) => dispatch(hashAction(hash)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

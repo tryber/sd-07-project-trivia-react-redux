@@ -1,13 +1,6 @@
-const endpointToken = 'https://opentdb.com/api_token.php?command=request';
+function fetchQuestions(token) {
+  return fetch(`https://opentdb.com/api.php?amount=5&token=${token}`)
+    .then((response) => response.json());
+}
 
-const apiToken = async () => {
-  try {
-    const request = await fetch(endpointToken);
-    const response = await request.json();
-    return response;
-  } catch (error) {
-    return error;
-  }
-};
-
-export default apiToken;
+export default fetchQuestions;
