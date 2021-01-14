@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import * as triviaAPI from '../../services/triviaAPI';
-
+import { nextQuestion } from '../../redux/actions';
 import CorrectAnswer from './CorrectAnswer';
 import WrongAnswer from './WrongAnswer';
+import Timer from './Timer';
 
 class Questions extends Component {
   constructor() {
@@ -10,11 +13,13 @@ class Questions extends Component {
     this.fetchTriviaAPI = this.fetchTriviaAPI.bind(this);
     this.shuffleArray = this.shuffleArray.bind(this);
     this.randomizeAnswers = this.randomizeAnswers.bind(this);
+    this.handleNextQuestion = this.handleNextQuestion.bind(this);
 
     this.state = {
       questions: [],
       currentQuestion: 0,
       isLoading: true,
+      numberArray: [],
     };
   }
 
@@ -29,7 +34,9 @@ class Questions extends Component {
     this.setState({
       questions: requestQuestions.results,
       isLoading: false,
+      setRestart: false,
     });
+    this.randomizeAnswers();
   }
 
   // shuffleArray from https://stackoverflow.com/a/12646864
@@ -41,22 +48,45 @@ class Questions extends Component {
     return array;
   }
 
-  randomizeAnswers(lenth) {
-    const array = [];
-    for (let i = 0; i <= lenth; i += 1) {
+  randomizeAnswers() {
+    const { currentQuestion, questions } = this.state;
+    console.log(questions);
+    const maxAnswers = questions[currentQuestion].incorrect_answers.length;
+    let array = [];
+    for (let i = 0; i <= maxAnswers; i += 1) {
       array.push(i);
     }
-    return this.shuffleArray(array);
+    array = this.shuffleArray(array);
+    this.setState({ numberArray: array });
+  }
+
+  handleNextQuestion() {
+    const { questions, currentQuestion } = this.state;
+    const { nextQuestion: actionNextQuestion, history } = this.props;
+
+    if (currentQuestion < questions.length - 1) {
+      this.setState(
+        ({ currentQuestion: prevValue }) => ({
+          currentQuestion: prevValue + 1,
+          setRestart: true,
+        }),
+        () => {
+          this.setState({ setRestart: false });
+          actionNextQuestion();
+          this.randomizeAnswers();
+        },
+      );
+    } else {
+      history.push('/feedback');
+    }
   }
 
   render() {
     const { isLoading } = this.state;
     if (isLoading) return '';
-
-    const { currentQuestion, questions } = this.state;
-    console.log(questions[currentQuestion]);
-    const maxAnswers = questions[currentQuestion].incorrect_answers.length;
-    const numberArray = this.randomizeAnswers(maxAnswers);
+    const { currentQuestion, questions, numberArray, setRestart } = this.state;
+    const { difficulty } = questions[currentQuestion];
+    const { isAnswered } = this.props;
     return (
       <div>
         <div data-testid="question-category">
@@ -67,11 +97,11 @@ class Questions extends Component {
         </div>
         <div>
           { numberArray.map((value) => {
-            console.log(`Valor: ${value}`);
             if (value === Math.max(...numberArray)) {
               return (
                 <CorrectAnswer
                   key={ value }
+                  difficulty={ difficulty }
                   answer={ questions[currentQuestion].correct_answer }
                 />
               );
@@ -85,9 +115,37 @@ class Questions extends Component {
             );
           })}
         </div>
+        <Timer restart={ setRestart } />
+        {
+          isAnswered && (
+            <button
+              type="button"
+              data-testid="btn-next"
+              onClick={ () => this.handleNextQuestion() }
+            >
+              Próxima
+            </button>
+          )
+        }
       </div>
     );
   }
 }
 
-export default Questions;
+const mapStateToProps = (state) => ({
+  isAnswered: state.questionAnswererd.isAnswered,
+});
+
+const mapDispatchToProps = {
+  nextQuestion,
+};
+
+Questions.propTypes = {
+  isAnswered: PropTypes.bool.isRequired,
+  nextQuestion: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Questions);

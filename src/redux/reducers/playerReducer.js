@@ -1,4 +1,4 @@
-import { SET_PLAYER } from '../actions';
+import { SET_PLAYER, SET_SCORE } from '../actions';
 
 const playerInitialState = {
   name: '',
@@ -11,6 +11,11 @@ function playerReducer(state = playerInitialState, action) {
   switch (action.type) {
   case SET_PLAYER:
     return action.payload;
+  case SET_SCORE:
+    return {
+      ...state,
+      score: state.score + action.payload,
+    };
   default:
     return state;
   }

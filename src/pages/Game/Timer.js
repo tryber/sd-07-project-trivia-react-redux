@@ -1,50 +1,53 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { throwTime, questionAnswered } from '../../redux/actions';
+import { throwTime, setScore } from '../../redux/actions';
 
 class Timer extends Component {
   constructor() {
     super();
-
     this.displayTime = this.displayTime.bind(this);
     this.timerDecrement = this.timerDecrement.bind(this);
-
-    this.state = {
-      timerValue: 30,
-    };
   }
 
   componentDidMount() {
     this.displayTime();
   }
 
-  timerDecrement() {
-    const { timerValue } = this.state;
-    const newTimer = timerValue - 1;
-    this.setState({
-      timerValue: newTimer,
-    });
+  componentDidUpdate() {
+    const { restart } = this.props;
+    if (restart) {
+      console.log('atualizei');
+      this.displayTime();
+    }
   }
 
-  // const a = this; https://stackoverflow.com/questions/26348557/issue-accessing-state-inside-setinterval-in-react-js/26348653
+  timerDecrement() {
+    const { timerValue, sendThrowTime } = this.props;
+    const newTimer = timerValue - 1;
+    sendThrowTime(newTimer);
+  }
+
   displayTime() {
     const interval = 1000;
     // const a = this;
     const secondCounter = setInterval(() => {
-      this.timerDecrement();
-      const { timerValue } = this.state;
-      const { isAnswered, sendThrowTime, disableAnswer } = this.props;
-      if (timerValue === 0 || isAnswered) {
+      const { timerValue } = this.props;
+      const { isAnswered, actionSetScore } = this.props;
+      if (isAnswered || timerValue === 0) {
         clearInterval(secondCounter);
-        sendThrowTime(timerValue);
-        disableAnswer();
+      }
+      if (timerValue === 0) {
+        actionSetScore(true, false, 0, 'none');
+      }
+      if (!isAnswered && timerValue !== 0) {
+        this.timerDecrement();
       }
     }, interval);
   }
 
   render() {
-    const { timerValue } = this.state;
+    const { timerValue } = this.props;
     return (
       <div>
         { `Tempo restante: ${timerValue}` }
@@ -55,17 +58,20 @@ class Timer extends Component {
 
 const mapStateToProps = (state) => ({
   isAnswered: state.questionAnswererd.isAnswered,
+  timerValue: state.throwTimer,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   sendThrowTime: (time) => dispatch(throwTime(time)),
-  disableAnswer: () => dispatch(questionAnswered()),
+  actionSetScore: (a, b, c) => dispatch(setScore(a, b, c)),
 });
 
 Timer.propTypes = {
   isAnswered: PropTypes.bool.isRequired,
   sendThrowTime: PropTypes.func.isRequired,
-  disableAnswer: PropTypes.func.isRequired,
+  actionSetScore: PropTypes.func.isRequired,
+  timerValue: PropTypes.number.isRequired,
+  restart: PropTypes.bool.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Timer);

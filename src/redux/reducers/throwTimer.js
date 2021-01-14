@@ -1,8 +1,8 @@
 import { THROW_TIME } from '../actions';
 
-const sessionInitialState = '';
+const initialState = 30;
 
-function throwTimer(state = sessionInitialState, action) {
+function throwTimer(state = initialState, action) {
   switch (action.type) {
   case THROW_TIME:
     return action.payload;
