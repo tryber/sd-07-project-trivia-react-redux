@@ -43,7 +43,7 @@ const Game = (props) => {
     if (assertions2) {
       score += ten + time2 * convertedDifficulty;
     }
-    console.log(score);
+    // console.log(score);
     gameScore(score);
     i += 1;
   };

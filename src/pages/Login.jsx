@@ -39,6 +39,17 @@ class Login extends React.Component {
   }
 
   render() {
+    localStorage.setItem(
+      'state',
+      JSON.stringify({
+        player: {
+          name: '',
+          assertions: 0,
+          score: 0,
+          email: '',
+        },
+      }),
+    );
     const { nome, email } = this.state;
     return (
       <div>
