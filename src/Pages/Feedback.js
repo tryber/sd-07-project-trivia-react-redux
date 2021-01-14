@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import Header from '../components/Header';
 
 class Feedback extends Component {
-  constructor(props) {
+  /* constructor(props) {
     super(props);
     this.state = {
       mensagem: '',
     };
-  }
+  } */
 
   render() {
     return (

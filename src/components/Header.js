@@ -40,7 +40,7 @@ const mapStateToProps = (state) => ({
 });
 
 Header.propTypes = {
-  email: PropTypes.string.isRequired,
+  gravatar: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   score: PropTypes.number.isRequired,
 };
