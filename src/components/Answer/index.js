@@ -3,32 +3,31 @@ import './style.css';
 
 class Answer extends React.Component {
   render() {
-    const { p } = this.props;
     return (
       <section className="answer-section">
-        <div className={ `answer-box green wrong ${p}` }>
+        <div className="answer-box green">
           <p className="message">
             Pergunta meus colegas alguma coisarada escriyta! pode ser maior ou menor
           </p>
         </div>
-        <div className={ `answer-box pink right ${p}` }>
+        <div className="answer-box pink">
           <p className="message">
             Pergunta meus colegas alguma coisarada escriyta! pode ser maior ou menor
           </p>
         </div>
-        <div className={ `answer-box orange ${p}` }>
+        <div className="answer-box orange">
           <p className="message">
             Pergunta meus colegas alguma coisarada escriyta! pode ser maior ou menor
           </p>
         </div>
-        <div className={ `answer-box purple ${p}` }>
+        <div className="answer-box purple">
           <p className="message">
-            Pergunta meus colegas alguma coisarada escriyta! pode ser maior ou 
+            Pergunta meus colegas alguma coisarada escriyta! pode ser maior ou
           </p>
         </div>
       </section>
     );
   }
-};
+}
 
 export default Answer;
