@@ -130,6 +130,7 @@ class GameScreen extends Component {
       disabledTimeOut,
       timer,
       buttonNext,
+      dificulty,
     } = this.state;
 
     return (
