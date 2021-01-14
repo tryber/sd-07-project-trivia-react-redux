@@ -3,6 +3,7 @@ const ADD_EMAIL = 'ADD_EMAIL';
 const ADD_NAME = 'ADD_NAME';
 const ADD_POINT = 'ADD_POINT';
 const SET_COUNTER = 'SET_COUNTER';
+const RESET_COUNTER = 'RESET_COUNTER';
 
 const INITIAL_STATE = {
   token: '',
@@ -40,6 +41,8 @@ const tokenReducer = (state = INITIAL_STATE, action) => {
     return { ...state, points: point, assertions: assertion };
   case SET_COUNTER:
     return { ...state, count: count - 1 };
+  case RESET_COUNTER:
+    return { ...state, count: 30 };
   default:
     return state;
   }

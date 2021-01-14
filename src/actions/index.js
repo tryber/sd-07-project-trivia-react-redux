@@ -3,6 +3,7 @@ const ADD_EMAIL = 'ADD_EMAIL';
 const ADD_NAME = 'ADD_NAME';
 const ADD_POINT = 'ADD_POINT';
 const SET_COUNTER = 'SET_COUNTER';
+const RESET_COUNTER = 'RESET_COUNTER';
 
 export const addEmailAction = (email) => ({
   type: ADD_EMAIL,
@@ -23,4 +24,8 @@ export const addPoint = (difficulty) => ({
 
 export const setCounter = () => ({
   type: SET_COUNTER,
+});
+
+export const resetCounter = () => ({
+  type: RESET_COUNTER,
 });

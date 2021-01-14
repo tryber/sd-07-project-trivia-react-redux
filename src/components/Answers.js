@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from './Header';
 import Counter from './Counter';
-import { addPoint } from '../actions';
+import { addPoint, resetCounter } from '../actions';
 
 class Answers extends React.Component {
   constructor(props) {
@@ -14,7 +14,6 @@ class Answers extends React.Component {
       next: true,
       newCounter: 0,
       nextUp: false,
-      count: 0,
     };
 
     this.nextButton = this.nextButton.bind(this);
@@ -23,22 +22,23 @@ class Answers extends React.Component {
     this.handleCorrectClick = this.handleCorrectClick.bind(this);
   }
 
-  isClicked(count) {
+  isClicked() {
     this.setState({
       clicked: true,
       nextUp: true,
-      count: count,
     });
   }
 
   nextButton() {
     const { newCounter } = this.state;
-    const { increaseIndex } = this.props;
+    const { increaseIndex, reset } = this.props;
 
     return (
       <button
+        data-testid="btn-next"
         type="button"
         onClick={ () => {
+          reset();
           increaseIndex();
           this.setState({
             clicked: false,
@@ -54,16 +54,19 @@ class Answers extends React.Component {
 
   handleCorrectClick(difficulty) {
     this.isClicked();
-    const { addPoint } = this.props;
+    const { add } = this.props;
     let difficultyValue = 0;
+    const easy = 1;
+    const medium = 2;
+    const hard = 3;
     if (difficulty === 'easy') {
-      difficultyValue = 1;
+      difficultyValue = easy;
     } else if (difficulty === 'medium') {
-      difficultyValue = 2;
+      difficultyValue = medium;
     } else {
-      difficultyValue = 3;
+      difficultyValue = hard;
     }
-    addPoint(difficultyValue);
+    add(difficultyValue);
   }
 
   mountAnswers() {
@@ -92,7 +95,6 @@ class Answers extends React.Component {
           <div>
             { sortedAnswers.map((element, set) => {
               if (element.id) {
-                console.log( correct );
                 return (
                   <button
                     className={ clicked ? 'wright-answer' : '' }
@@ -150,8 +152,9 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  addPoint: (value) => dispatch(addPoint(value)),
-})
+  add: (value) => dispatch(addPoint(value)),
+  reset: () => dispatch(resetCounter()),
+});
 
 Answers.propTypes = {
   questions: PropTypes.arrayOf(PropTypes.shape({
@@ -159,10 +162,13 @@ Answers.propTypes = {
     correct_answer: PropTypes.string.isRequired,
     incorrect_answers: PropTypes.arrayOf(PropTypes.string),
     question: PropTypes.string.isRequired,
+    difficulty: PropTypes.string.isRequired,
   })).isRequired,
   increaseIndex: PropTypes.func.isRequired,
   sortedAnswers: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   index: PropTypes.number.isRequired,
+  add: PropTypes.func.isRequired,
+  reset: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Answers);
