@@ -21,7 +21,7 @@ class Header extends Component {
           />
           <p data-testid="header-player-name">{ `Jogador: ${name}` }</p>
         </div>
-        <p className="header__score" data-testid="header-score">{ `Pontos: ${score}` }</p>
+        <p className="header__score" data-testid="header-score">{ score }</p>
       </header>
     );
   }

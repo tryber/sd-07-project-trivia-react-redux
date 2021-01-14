@@ -15,6 +15,7 @@ function playerReducer(state = playerInitialState, action) {
     return {
       ...state,
       score: state.score + action.payload,
+      assertions: action.payload !== 0 ? state.assertions + 1 : state.assertions,
     };
   default:
     return state;
