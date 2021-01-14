@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import md5 from 'crypto-js/md5';
 import PropTypes from 'prop-types';
 import './question.css';
+import { assertion, scores } from '../actions';
 
 class Play extends Component {
   constructor() {
@@ -17,11 +18,13 @@ class Play extends Component {
       btclass: 'answer',
       btclassw: 'answer',
       btnext: 'btnexthi',
+      sum: 0,
     };
     this.triviaApi = this.triviaApi.bind(this);
     this.counter = this.counter.bind(this);
     this.next = this.next.bind(this);
     this.chosen = this.chosen.bind(this);
+    this.somapontos = this.somapontos.bind(this);
   }
 
   componentDidMount() {
@@ -81,7 +84,27 @@ class Play extends Component {
       btclassw: 'incorrect',
       btnext: 'answer',
     });
-    if (answer === trivia[index].correct_answer) console.log('foi');
+    if (answer === trivia[index].correct_answer) this.somapontos();
+  }
+
+  somapontos() {
+    const { scoreDispatch, assertionsDispatch } = this.props;
+    const { trivia, index, timer, sum } = this.state;
+    const ten = 10;
+    const lvl1 = 1;
+    const lvl2 = 2;
+    const lvl3 = 3;
+    let lvl = 0;
+    if (trivia[index].difficulty === 'easy') lvl = lvl1;
+    if (trivia[index].difficulty === 'medium') lvl = lvl2;
+    if (trivia[index].difficulty === 'hard') lvl = lvl3;
+    const point = (ten + (timer * lvl));
+    console.log(point);
+    scoreDispatch(point);
+    this.setState({
+      sum: (sum + lvl1),
+    });
+    assertionsDispatch(sum);
   }
 
   trivia() {
@@ -142,7 +165,7 @@ class Play extends Component {
   }
 
   render() {
-    const { name, score = 0 } = this.props;
+    const { name, score = 0, assertions = 0 } = this.props;
     const { isLoading } = this.state;
     return (
       <div>
@@ -150,6 +173,7 @@ class Play extends Component {
           <img src={ this.hash() } alt="avatar" data-testid="header-profile-picture" />
           <h1 data-testid="header-player-name">{name}</h1>
           <p data-testid="header-score">{score}</p>
+          <p>{ assertions }</p>
         </header>
         { isLoading ? this.trivia() : <p>Carregando</p> }
       </div>
@@ -162,6 +186,12 @@ const mapStateToProps = (state) => ({
   email: state.login.email,
   name: state.player.name,
   score: state.player.score,
+  assertions: state.player.assertions,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  scoreDispatch: (score) => dispatch(scores(score)),
+  assertionsDispatch: (assertions) => dispatch(assertion(assertions)),
 });
 
 Play.propTypes = {
@@ -170,6 +200,9 @@ Play.propTypes = {
   score: PropTypes.number.isRequired,
   token: PropTypes.string.isRequired,
   history: PropTypes.shape(PropTypes.object).isRequired,
+  scoreDispatch: PropTypes.func.isRequired,
+  assertionsDispatch: PropTypes.func.isRequired,
+  assertions: PropTypes.number.isRequired,
 };
 
-export default connect(mapStateToProps)(Play);
+export default connect(mapStateToProps, mapDispatchToProps)(Play);
