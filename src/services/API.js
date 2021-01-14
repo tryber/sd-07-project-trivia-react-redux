@@ -11,9 +11,10 @@ export const fetchToken = async () => {
   const response = await request.json();
   const { token } = response;
   localStorage.setItem('token', token);
-  return token;
 };
 
-export const console = (c) => {
-  console.log(c);
+export const fetchQ = async () => {
+  const token = localStorage.getItem('token');
+  const questions = await fetchQuestions(token);
+  return questions;
 };

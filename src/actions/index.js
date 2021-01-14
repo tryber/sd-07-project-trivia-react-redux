@@ -11,10 +11,9 @@ export const clickAvatar = (avatar) => ({
   avatar,
 });
 
-export const questionsGen = (questions, loading) => ({
+export const questionsGen = (questions) => ({
   type: QUESTIONS,
   questions,
-  loading,
 });
 
 export const fetchGravatar = (email) => {

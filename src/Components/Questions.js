@@ -1,26 +1,14 @@
 import React from 'react';
-import * as API from '../services/API';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 class Questions extends React.Component {
   constructor() {
     super();
     this.incrementIndex = this.incrementIndex.bind(this);
-    this.fetchQ = this.fetchQ.bind(this);
     this.state = {
       questionNumber: 0,
-      questions: [],
-      isLoading: true,
     };
-  }
-
-  componentDidMount() {
-    this.fetchQ();
-  }
-
-  async fetchQ() {
-    const token = localStorage.getItem('token');
-    const questions = await API.fetchQuestions(token);
-    this.setState({ questions, isLoading: false });
   }
 
   incrementIndex() {
@@ -32,37 +20,38 @@ class Questions extends React.Component {
   }
 
   render() {
-    const { questionNumber, isLoading } = this.state;
-    if (isLoading === true) {
-      return <div>Carregando...</div>;
+    const { questionNumber } = this.state;
+    const { questions } = this.props;
+    const { questionsList } = questions;
+    const five = 5;
+    if (questionsList < five) {
+      return <div>Efetue o login novamente</div>;
     }
-    const { questions } = this.state;
     return (
       <div>
         {`Questão número ${questionNumber + 1}`}
         <div>
           <h2 data-testid="question-category">
-            {questions.length > 0 && questions[questionNumber].category}
+            {questionsList[questionNumber].category}
           </h2>
           <p data-testid="question-text">
-            {questions.length > 0 && questions[questionNumber].question}
+            {questionsList[questionNumber].question}
           </p>
         </div>
         <div>
           <button type="button" data-testid="correct-answer">
-            {questions.length > 0 && questions[questionNumber].correct_answer}
+            {questionsList[questionNumber].correct_answer}
           </button>
-          {questions.length > 0
-            && questions[questionNumber].incorrect_answers.map((q, index) => (
-              <button
-                key={ q }
-                data-testid={ `wrong-answer-${index}` }
-                className="wrong-answer"
-                type="button"
-              >
-                {q}
-              </button>
-            ))}
+          {questionsList[questionNumber].incorrect_answers.map((q, index) => (
+            <button
+              key={ q }
+              data-testid={ `wrong-answer-${index}` }
+              className="wrong-answer"
+              type="button"
+            >
+              {q}
+            </button>
+          ))}
         </div>
         <button type="button" onClick={ () => this.incrementIndex() }>
           Próxima
@@ -72,4 +61,8 @@ class Questions extends React.Component {
   }
 }
 
-export default Questions;
+const mapStateToProps = (state) => ({
+  questions: state.questions.questions,
+});
+
+export default connect(mapStateToProps, null)(Questions);

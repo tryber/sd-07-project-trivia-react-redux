@@ -1,9 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import { clickLogin } from '../actions';
-import { fetchToken } from '../services/API';
+import { fetchQ, fetchToken } from '../services/API';
+import { clickLogin, questionsGen } from '../actions';
 
 import SettingsButton from '../Components/SettingsButton';
 
@@ -16,9 +15,10 @@ class Login extends React.Component {
       name: '',
       validate: true,
     };
+
     this.handleChange = this.handleChange.bind(this);
     this.validInputs = this.validInputs.bind(this);
-    this.textsToProps = this.textsToProps.bind(this);
+    this.login = this.login.bind(this);
   }
 
   validInputs() {
@@ -35,11 +35,16 @@ class Login extends React.Component {
     this.setState({ [name]: value }, this.validInputs);
   }
 
-  textsToProps() {
+  async login() {
     const { email, name } = this.state;
-    const { texts } = this.props;
+    const { texts, questionsGenerator, history } = this.props;
     texts(email, name);
     fetchToken();
+    const questionsList = await fetchQ();
+    questionsGenerator(questionsList);
+    setTimeout(() => {
+      history.push('/questions-page');
+    }, 5000);
   }
 
   render() {
@@ -70,16 +75,14 @@ class Login extends React.Component {
               onChange={ (e) => this.handleChange(e) }
             />
           </label>
-          <Link to="/questions-page">
-            <button
-              data-testid="btn-play"
-              type="button"
-              disabled={ validate }
-              onClick={ this.textsToProps }
-            >
-              Jogar
-            </button>
-          </Link>
+          <button
+            data-testid="btn-play"
+            type="button"
+            disabled={ validate }
+            onClick={ this.login }
+          >
+            Jogar
+          </button>
         </form>
       </div>
     );
@@ -88,10 +91,15 @@ class Login extends React.Component {
 
 const mapDispatchToProps = (dispatch) => ({
   texts: (email, name) => dispatch(clickLogin({ email, name })),
+  questionsGenerator: (questionsList) => dispatch(questionsGen({ questionsList })),
 });
 
 Login.propTypes = {
   texts: PropTypes.func.isRequired,
+  questionsGenerator: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(Login);
