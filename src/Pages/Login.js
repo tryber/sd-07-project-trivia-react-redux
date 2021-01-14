@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { thunkApiToken, setName, addGravatar } from '../actions';
 import { connect } from 'react-redux';
 import crypto from 'crypto-js';
+import { thunkApiToken, setName, addGravatar } from '../actions';
 
 class Login extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {  
+    this.state = {
       name: '',
       email: '',
       buttonDisable: true,
@@ -61,6 +61,7 @@ class Login extends React.Component {
       <div>
         <button
           type="button"
+          data-testid="btn-settings"
           onClick={ this.routeChangeConfig }
         >
           Configurações
@@ -108,4 +109,3 @@ Login.propTypes = {
 };
 
 export default connect(null, mapDispatchToProps)(Login);
-

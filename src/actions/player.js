@@ -28,4 +28,4 @@ export function thunkApiToken() {
     const json = await resolve.json();
     return dispatch(addToken(json.token));
   };
-};
+}

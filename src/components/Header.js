@@ -23,7 +23,7 @@ class Header extends Component {
             <span>
               Score:
               <span data-testid="header-score">
-              { score === undefined ? 0 : score }
+                { score === undefined ? 0 : score }
               </span>
             </span>
           </div>
@@ -37,7 +37,7 @@ const mapStateToProps = (state) => ({
   name: state.player.name,
   score: state.player.score,
   gravatar: state.player.gravatar,
-})
+});
 
 Header.propTypes = {
   email: PropTypes.string.isRequired,
