@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 
 class Question extends Component {
   render() {
@@ -10,6 +9,7 @@ class Question extends Component {
       <div className="questions">
         <p data-testid="question-category">{ category }</p>
         <p data-testid="question-text">{ question }</p>
+
       </div>
     );
   }
