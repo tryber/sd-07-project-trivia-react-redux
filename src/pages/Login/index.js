@@ -46,6 +46,8 @@ class Login extends Component {
     loginSetPlayer({
       name,
       gravatarEmail: email,
+      assertions: 0,
+      score: 0,
     });
 
     history.push('game');

@@ -13,13 +13,7 @@ export const getToken = () => async (dispatch) => {
   return dispatch(logIn(token));
 };
 
-export const setPlayer = (data) => {
-  const player = {
-    ...data,
-    assertions: 0,
-    score: 0,
-  };
-
+export const setPlayer = (player) => {
   localStorage.setItem('state', JSON.stringify({ player }));
   return {
     type: SET_PLAYER,
@@ -49,9 +43,12 @@ export const setScore = (isAnswered, isCorrect, time, diff) => (dispatch) => {
   };
   const baseScore = 10;
   const newScore = isCorrect ? baseScore + difficulty[diff] * time : 0;
+
   const state = JSON.parse(localStorage.getItem('state'));
+  if (isCorrect) state.player.assertions += 1;
   state.player.score += newScore;
-  localStorage.setItem('state', JSON.stringify(state));
+
+  dispatch(setPlayer(state.player));
   dispatch(questionAnswered(isAnswered, isCorrect));
   return dispatch(changeScore(newScore));
 };

@@ -9,6 +9,7 @@ class Feedback extends Component {
   render() {
     const { assertions } = this.props;
     const sufficientAssertion = 3;
+    console.log(assertions);
     return (
       <main className="wrapper">
         <Header />

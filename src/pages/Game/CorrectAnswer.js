@@ -7,17 +7,15 @@ class CorrectAnswer extends Component {
   render() {
     const { answer, isAnswered, timerValue, actionSetScore, difficulty } = this.props;
     return (
-      <div>
-        <button
-          type="button"
-          data-testid="correct-answer"
-          disabled={ isAnswered }
-          className={ isAnswered ? 'answer-button-correct' : 'answer-button' }
-          onClick={ () => actionSetScore(true, true, timerValue, difficulty) }
-        >
-          { answer }
-        </button>
-      </div>
+      <button
+        type="button"
+        data-testid="correct-answer"
+        disabled={ isAnswered }
+        className={ isAnswered ? 'answer-button-correct' : 'answer-button' }
+        onClick={ () => actionSetScore(true, true, timerValue, difficulty) }
+      >
+        { answer }
+      </button>
     );
   }
 }
