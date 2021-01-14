@@ -11,18 +11,21 @@ class Game extends Component {
     this.renderAllDataQuestion = this.renderAllDataQuestion.bind(this);
     this.handleUserAnswer = this.handleUserAnswer.bind(this);
     this.timer = this.timer.bind(this);
-    // this.shuffle = this.shuffle.bind(this);
+    this.renderTime = this.renderTime.bind(this);
+    this.shuffle = this.shuffle.bind(this);
 
     this.state = {
       questionIndex: 0,
       timer: 30,
       disableButton: true,
+      shuffle: true,
     };
   }
 
   componentDidMount() {
     const { getQuestions } = this.props;
     getQuestions();
+    this.renderTime();
   }
 
   componentDidUpdate() {
@@ -31,16 +34,8 @@ class Game extends Component {
 
   timer() {
     const { timer } = this.state;
-    const secondTimerFunction = 1000;
     const initialSecondEnableButton = 25;
     const lastSecondDisableButton = 0;
-    if (timer > 1) {
-      setTimeout(() => {
-        this.setState((prevState) => ({
-          timer: prevState.timer - 1,
-        }));
-      }, secondTimerFunction);
-    }
     if (timer === lastSecondDisableButton) {
       this.handleUserAnswer();
       this.setState({
@@ -49,10 +44,11 @@ class Game extends Component {
       });
     }
     if (timer === initialSecondEnableButton) {
-      this.setState({
+      this.setState((prevState) => ({
+        ...prevState,
         timer: 24,
         disableButton: false,
-      });
+      }));
     }
   }
 
@@ -66,25 +62,39 @@ class Game extends Component {
     });
   }
 
-  // shuffle(array) {
-  //   let currentIndex = array.length, temporaryValue, randomIndex;
-  //   // While there remain elements to shuffle...
-  //   while (0 !== currentIndex) {
-  //     // Pick a remaining element...
-  //     randomIndex = Math.floor(Math.random() * currentIndex);
-  //     currentIndex -= 1;
-  //     // And swap it with the current element.
-  //     temporaryValue = array[currentIndex];
-  //     array[currentIndex] = array[randomIndex];
-  //     array[randomIndex] = temporaryValue;
-  //   }
-  //   return array;
-  // }
+  shuffle(array) {
+    // let currentIndex = array.length, temporaryValue, randomIndex;
+    // // While there remain elements to shuffle...
+    // while (currentIndex !== 0) {
+    //   // Pick a remaining element...
+    //   randomIndex = Math.floor(Math.random() * currentIndex);
+    //   currentIndex -= 1;
+    //   // And swap it with the current element.
+    //   temporaryValue = array[currentIndex];
+    //   array[currentIndex] = array[randomIndex];
+    //   array[randomIndex] = temporaryValue;
+    // }
+    return array;
+  }
+
+  renderTime() {
+    const secondTimerFunction = 1000;
+    const lastSecondDisableButton = 0;
+    const { timer } = this.state;
+    setInterval(() => {
+      if (timer > lastSecondDisableButton) {
+        this.setState((prevState) => ({
+          timer: prevState.timer - 1,
+        }));
+      }
+    }, secondTimerFunction);
+  }
 
   renderAllDataQuestion() {
     // console.log()
     const { questionIndex, disableButton } = this.state;
     const { questions } = this.props;
+    console.log(questions);
 
     if (questions.results) {
       const correctAnswer = (
@@ -113,7 +123,7 @@ class Game extends Component {
           </button>
         ));
 
-      const arrayAnswers = [correctAnswer, ...wrongAnswer];
+      const arrayAnswers = [...wrongAnswer, correctAnswer];
       return arrayAnswers;
     }
   }
