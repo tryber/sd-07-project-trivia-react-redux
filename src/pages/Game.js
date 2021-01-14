@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchQuestions } from '../actions';
+import { fetchQuestions, getScore } from '../actions';
 import '../App.css';
 import GameHeader from '../components/GameHeader';
 
@@ -10,6 +10,7 @@ class Game extends Component {
     super();
     this.renderAllDataQuestion = this.renderAllDataQuestion.bind(this);
     this.handleUserAnswer = this.handleUserAnswer.bind(this);
+    this.calculateScore = this.calculateScore.bind(this);
     this.timer = this.timer.bind(this);
     this.state = {
       questionIndex: 0,
@@ -29,12 +30,14 @@ class Game extends Component {
 
   timer() {
     const { timer } = this.state;
+    const thousand = 1000;
+    const twentyFive = 25;
     if (timer > 1) {
       setTimeout(() => {
         this.setState(({ timer }) => ({
-          timer: timer -1,
-        }))
-      }, 1000);
+          timer: timer - 1,
+        }));
+      }, thousand);
     }
     if (timer === 0) {
       this.handleUserAnswer();
@@ -43,7 +46,7 @@ class Game extends Component {
         disableButton: true,
       });
     }
-    if (timer === 25) {
+    if (timer === twentyFive) {
       this.setState({
         timer: 24,
         disableButton: false,
@@ -56,13 +59,29 @@ class Game extends Component {
       const { id } = button;
       if (id === 'ok') {
         button.classList.add('btnColorGreen');
+        this.calculateScore();
       }
       button.classList.add('btnColorRed');
     });
   }
 
+  calculateScore() {
+    const { questions, score, sendScore } = this.props;
+    const { timer } = this.state;
+    const questionLevel = questions.results[0].difficulty;
+    let multiplier = 1;
+    if (questionLevel === 'easy') multiplier = 1;
+    if (questionLevel === 'medium') multiplier = 2;
+    if (questionLevel === 'hard') multiplier = 3;
+    const finalScore = score + (10 + timer * multiplier);
+    sendScore(finalScore);
+  }
+
+  handleClick({ target }) {
+    if (target.className === 'btnColorGreen') this.calculateScore();
+  }
+
   renderAllDataQuestion() {
-    // console.log()
     const { questionIndex, disableButton } = this.state;
     const { questions } = this.props;
 
@@ -118,13 +137,15 @@ class Game extends Component {
   }
 }
 
-const mapStateToProps = ({ gameReducer }) => ({
+const mapStateToProps = ({ gameReducer, scoreReducer }) => ({
   questions: gameReducer.questions,
   isFetching: gameReducer.isFetching,
+  score: scoreReducer.score,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   getQuestions: () => dispatch(fetchQuestions()),
+  sendScore: (score) => dispatch(getScore(score)),
 });
 
 Game.propTypes = {

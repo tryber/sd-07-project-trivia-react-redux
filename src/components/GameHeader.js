@@ -21,7 +21,7 @@ class GameHeader extends Component {
   }
 
   render() {
-    const { getName } = this.props;
+    const { getName, getScore } = this.props;
     return (
       <header>
         <img
@@ -30,20 +30,22 @@ class GameHeader extends Component {
           alt={ getName }
         />
         <p data-testid="header-player-name">{ getName }</p>
-        <p data-testid="header-score">0</p>
+        <p data-testid="header-score">{ getScore }</p>
       </header>
     );
   }
 }
 
-const mapStateToProps = ({ userReducer }) => ({
+const mapStateToProps = ({ userReducer, scoreReducer }) => ({
   getEmail: userReducer.email,
   getName: userReducer.name,
+  getScore: scoreReducer.score,
 });
 
 GameHeader.propTypes = {
   getEmail: PropTypes.string.isRequired,
   getName: PropTypes.string.isRequired,
+  getScore: PropTypes.number.isRequired,
 };
 
 export default connect(mapStateToProps)(GameHeader);
