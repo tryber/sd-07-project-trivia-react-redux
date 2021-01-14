@@ -41,11 +41,13 @@ class GameScreen extends Component {
 const mapStateToProps = ({
   loginReducer: { name, email },
   triviaReducer: { trivia, loading },
+  tokenReducer: { loadingToken },
 }) => ({
   name,
   email,
   trivia,
   loading,
+  loadingToken,
 });
 const mapDispatchToProps = (dispatch) => ({
   dispatchTrivia: (a) => dispatch(fetchTrivia(a)),
@@ -53,10 +55,10 @@ const mapDispatchToProps = (dispatch) => ({
 
 GameScreen.propTypes = {
   dispatchTrivia: PropTypes.func.isRequired,
-  trivia: PropTypes.func.isRequired,
+  trivia: PropTypes.arrayOf(PropTypes.string).isRequired,
   name: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
-  loading: PropTypes.string.isRequired,
+  loading: PropTypes.bool.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(GameScreen);

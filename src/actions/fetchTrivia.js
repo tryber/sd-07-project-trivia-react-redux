@@ -21,7 +21,7 @@ export default function fetchTrivia(token) {
     dispatch(requestTrivia());
     try {
       const trivia = await fetchTriviaAPI(token);
-      dispatch(resultTrivia(trivia));
+      await dispatch(resultTrivia(trivia));
     } catch (err) { dispatch(failedRequest(err)); }
   };
 }
