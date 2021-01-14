@@ -3,14 +3,11 @@ export const getQuestion = (payload) => ({
   payload,
 });
 
-export const requestQuestion = () => ({
-  type: 'REQUEST_QUESTIONS',
-});
-
-export function thunkApiQuestions(questions, token) {
+export function thunkApiQuestions(token) {
   return async (dispatch) => {
-    const resolve = await fetch(`https://opentdb.com/api.php?amount=${questions}&token=${token}`);
+    const resolve = await fetch(`https://opentdb.com/api.php?amount=5&token=${token}`);
     const json = await resolve.json();
-    return dispatch(getQuestion(json));
+    console.log(json.results);
+    return dispatch(getQuestion(json.results));
   };
 }
