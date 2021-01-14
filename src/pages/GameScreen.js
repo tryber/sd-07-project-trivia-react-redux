@@ -63,33 +63,13 @@ class GameScreen extends Component {
       timer: 30,
       right: '',
       wrong: '',
+      disabledTimeOut: false,
     });
   }
 
   changeStyle() {
     this.setState({ right: 'right', wrong: 'wrong', buttonNext: true });
   }
-
-  // nextQuestion() {
-  //   const { quest } = this.props;
-  //   const { id } = this.state;
-  //   const MAX_QUESTIONS = 5;
-  //   if (quest.length === 0) {
-  //     return null;
-  //   }
-  //   this.setState({ id: id + 1 });
-  //   if (id >= MAX_QUESTIONS) {
-  //     return this.handleRedirect();
-  //   }
-  //   this.setState({
-  //     category: quest[id].category,
-  //     question: quest[id].question,
-  //     // respCorrect: quest[1].correct_answer,
-  //     resps: [quest[id].correct_answer, ...quest[id].incorrect_answers],
-  //     buttonNext: false,
-  //     timer: 30,
-  //   });
-  // }
 
   disableQuestion() {
     const { timer } = this.state;
