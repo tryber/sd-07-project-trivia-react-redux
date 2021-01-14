@@ -15,6 +15,12 @@
   width: 100%;
 }
 
+.feedback__result__container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
 .feedback__content {
   align-items: center;
   background: white;
