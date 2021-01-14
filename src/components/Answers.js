@@ -8,7 +8,6 @@ class Answers extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      index: 0,
       clicked: false,
       next: true,
       newCounter: 0,
@@ -17,26 +16,7 @@ class Answers extends React.Component {
 
     this.nextButton = this.nextButton.bind(this);
     this.mountAnswers = this.mountAnswers.bind(this);
-    this.questionsSorted = this.questionsSorted.bind(this);
     this.isClicked = this.isClicked.bind(this);
-  }
-
-  questionsSorted() {
-    const { questions } = this.props;
-    const { index } = this.state;
-    if (questions[index]) {
-      const {
-        correct_answer: correct,
-        incorrect_answers: wrong,
-      } = questions[index];
-      const correctAnswer = { correct, id: true };
-      const arrayAnswers = [correctAnswer, ...wrong];
-      for (let i = 0; i < arrayAnswers.length; i += 1) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [arrayAnswers[i], arrayAnswers[j]] = [arrayAnswers[j], arrayAnswers[i]];
-      } // Foi pego no stackOverFlow
-      return arrayAnswers;
-    }
   }
 
   isClicked() {
@@ -47,14 +27,15 @@ class Answers extends React.Component {
   }
 
   nextButton() {
-    const { index, newCounter } = this.state;
+    const { newCounter } = this.state;
+    const { increaseIndex } = this.props;
 
     return (
       <button
         type="button"
         onClick={ () => {
+          increaseIndex();
           this.setState({
-            index: index + 1,
             clicked: false,
             next: true,
             newCounter: newCounter + 1,
@@ -67,10 +48,10 @@ class Answers extends React.Component {
   }
 
   mountAnswers() {
-    const { index, clicked } = this.state;
-    const { questions } = this.props;
+    const { clicked } = this.state;
+    const { questions, sortedAnswers, index } = this.props;
     if (!questions[index]) return 'acabou';
-
+    console.log(sortedAnswers);
     const {
       category,
       correct_answer: correct,
@@ -90,7 +71,7 @@ class Answers extends React.Component {
         </div>
         <div>
           <div>
-            { this.questionsSorted().map((element, set) => {
+            { sortedAnswers.map((element, set) => {
               if (element.id) {
                 return (
                   <button
@@ -131,7 +112,7 @@ class Answers extends React.Component {
       <div>
         <Header />
         <h1>Joguinho</h1>
-        { this.mountAnswers() }
+        { this.mountAnswers()}
         <Counter
           key={ newCounter }
           clicked={ clicked }
@@ -155,6 +136,9 @@ Answers.propTypes = {
     incorrect_answers: PropTypes.arrayOf(PropTypes.string),
     question: PropTypes.string.isRequired,
   })).isRequired,
+  increaseIndex: PropTypes.func.isRequired,
+  sortedAnswers: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  index: PropTypes.number.isRequired,
 };
 
 export default connect(mapStateToProps)(Answers);

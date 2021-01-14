@@ -9,14 +9,34 @@ class Game extends React.Component {
   constructor() {
     super();
     this.state = {
+      index: 0,
       questions: [],
     };
 
+    this.increaseIndex = this.increaseIndex.bind(this);
     this.requestAsks = this.requestAsks.bind(this);
   }
 
   componentDidMount() {
     this.requestAsks();
+  }
+
+  questionsSorted() {
+    const { questions, index } = this.state;
+
+    if (questions[index]) {
+      const {
+        correct_answer: correct,
+        incorrect_answers: wrong,
+      } = questions[index];
+      const correctAnswer = { correct, id: true };
+      const arrayAnswers = [correctAnswer, ...wrong];
+      for (let i = 0; i < arrayAnswers.length; i += 1) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arrayAnswers[i], arrayAnswers[j]] = [arrayAnswers[j], arrayAnswers[i]];
+      } // Foi pego no stackOverFlow
+      return arrayAnswers;
+    }
   }
 
   async requestAsks() {
@@ -29,14 +49,23 @@ class Game extends React.Component {
     });
   }
 
+  increaseIndex() {
+    this.setState(({ index }) => ({ index: index + 1 }));
+  }
+
   render() {
-    const { questions } = this.state;
+    const { questions, index } = this.state;
 
     if (questions.length === 0) return <p>Carregando...</p>;
     return (
       <div>
         <Header />
-        <Answers questions={ questions } />
+        <Answers
+          index={ index }
+          questions={ questions }
+          increaseIndex={ this.increaseIndex }
+          sortedAnswers={ this.questionsSorted() }
+        />
       </div>
     );
   }
