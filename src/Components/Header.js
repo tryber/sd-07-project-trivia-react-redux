@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import '../App.css';
 
 class Header extends Component {
   render() {
     const { name, hash } = this.props;
     return (
-      <header>
+      <header className="App-header">
         <img
           alt="Imagem do Gravatar"
           data-testid="header-profile-picture"
@@ -34,6 +35,7 @@ const mapStateToProps = (state) => ({
 
 Header.propTypes = {
   name: PropTypes.string.isRequired,
+  hash: PropTypes.string.isRequired,
 };
 
 export default connect(mapStateToProps)(Header);

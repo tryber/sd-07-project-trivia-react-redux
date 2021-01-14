@@ -1,30 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import Header from '../Components/Header';
 
 class Feedback extends Component {
   render() {
-    const { name } = this.props;
+    const { score } = this.props;
+    const goodMessage = <p data-testid="feedback-text">Podia ser melhor...</p>;
+    const badMessage = <p data-testid="feedback-text">Mandou bem!</p>;
+    const three = 3;
+    console.log(score);
     return (
       <div>
-        <header>
-          <img
-            data-testid="header-profile-picture"
-            alt="Imagem do Perfil"
-            src="https://img.ibxk.com.br/2014/06/06/06165614150388.jpg?w=1120&h=420&mode=crop&scale=both"
-          />
-          <h2
-            data-testid="header-player-name"
-          >
-            { name }
-          </h2>
-          <h2
-            data-testid="header-score"
-          >
-            0
-          </h2>
-        </header>
+        <h1>FeedBack</h1>
+        <Header />
         <Link to="/settings">
           <button
             type="button"
@@ -33,18 +23,18 @@ class Feedback extends Component {
             Ver Ranking
           </button>
         </Link>
-
+        { score > three ? badMessage : goodMessage }
       </div>
     );
   }
 }
 
 Feedback.propTypes = {
-  name: PropTypes.string.isRequired,
+  score: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  name: state.userReducer.name,
+  score: state.userReducer.actualScore,
 });
 
 export default connect(mapStateToProps)(Feedback);

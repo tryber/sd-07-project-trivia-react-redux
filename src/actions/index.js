@@ -38,6 +38,11 @@ export const requestErrorQuestion = (error) => ({
   error,
 });
 
+export const updateScore = (score) => ({
+  type: 'UPDATE_SCORE',
+  score,
+});
+
 export const fetchToken = () => async (dispatch) => {
   const endPoint = 'https://opentdb.com/api_token.php?command=request';
   try {
