@@ -16,25 +16,26 @@ const INITIAL_STATE = {
 const tokenReducer = (state = INITIAL_STATE, action) => {
   const { value, email, name, difficulty } = action;
   const { count, points } = state;
+  const assertValue = 10;
+  const point = points + assertValue + (count * difficulty);
+  const assertion = state.assertions + 1;
 
   switch (action.type) {
   case ADD_TOKEN:
     return { ...state, token: value };
   case ADD_EMAIL:
-    return { ...state, email: email };
+    return { ...state, email };
   case ADD_NAME:
-    return { ...state, name: name };
+    return { ...state, name };
   case ADD_POINT:
-    const point = points + 10 + (count * difficulty);
-    let assertion = state.assertions + 1
     localStorage.setItem('state',
       JSON.stringify({
         player: {
           name: state.name,
           assertions: assertion,
           score: point,
-          gravatarEmail: state.email
-        }
+          gravatarEmail: state.email,
+        },
       }));
     return { ...state, points: point, assertions: assertion };
   case SET_COUNTER:
