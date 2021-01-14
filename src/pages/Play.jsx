@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import Header from '../Components/Header';
+// import Header from '../Components/Header';
+
 import { fetchQuestions } from '../actions';
 import '../App.css';
 import QuestionForm from '../Components/QuestionForm';
