@@ -1,4 +1,7 @@
-const INITIAL_STATE = { click: '' };
+const INITIAL_STATE = {
+  click: '',
+  clicked: false,
+};
 
 function colorReducer(state = INITIAL_STATE, action) {
   const { type } = action;
@@ -7,6 +10,7 @@ function colorReducer(state = INITIAL_STATE, action) {
     return {
       ...state,
       click: '-clicked',
+      clicked: true,
     };
   default:
     return state;
