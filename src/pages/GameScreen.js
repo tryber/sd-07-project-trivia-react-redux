@@ -26,6 +26,7 @@ class GameScreen extends Component {
     this.timeOut = this.timeOut.bind(this);
     this.disableQuestion = this.disableQuestion.bind(this);
     this.nextQuestion = this.nextQuestion.bind(this);
+    this.handleRedirect = this.handleRedirect.bind(this);
   }
 
   async componentDidMount() {
@@ -33,6 +34,12 @@ class GameScreen extends Component {
     await actionRequest();
     this.handleQuest();
     this.timeOut();
+  }
+
+  handleRedirect() {
+    const { history } = this.props;
+    console.log('redirect');
+    history.push('/feedback');
   }
 
   handleQuest() {
@@ -56,7 +63,11 @@ class GameScreen extends Component {
   nextQuestion() {
     const { quest } = this.props;
     const { id } = this.state;
+    const MAX_QUESTIONS = 5;
     this.setState({ id: id + 1 });
+    if (id >= MAX_QUESTIONS) {
+      return this.handleRedirect();
+    }
     this.setState({
       category: quest[id].category,
       question: quest[id].question,
@@ -170,4 +181,5 @@ export default connect(mapStateToProps, mapDispatchToProps)(GameScreen);
 GameScreen.propTypes = {
   actionRequest: PropTypes.func.isRequired,
   quest: PropTypes.arrayOf().isRequired,
+  history: PropTypes.func.isRequired,
 };
