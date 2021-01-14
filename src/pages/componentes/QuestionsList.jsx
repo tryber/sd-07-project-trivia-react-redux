@@ -9,14 +9,31 @@ class QuestionsList extends React.Component {
       array: [],
       nameClassCorrect: '',
       nameClassWrong: '',
+      time: 30,
+      disableButon: false,
     };
 
     this.shuffle = this.shuffle.bind(this);
     this.mountArrayOfAnswer = this.mountArrayOfAnswer.bind(this);
+    this.handleButton = this.handleButton.bind(this);
   }
 
   componentDidMount() {
+    const { disableButon } = this.state;
+    let { time } = this.state;
+    const interval = 1000;
+    const timeOut = 30000;
     this.mountArrayOfAnswer();
+    setInterval(() => {
+      if (!disableButon && time > 0) {
+        this.setState({ time: (time -= 1) });
+      }
+    }, interval);
+    setTimeout(() => { this.setState({ disableButon: true }); }, timeOut);
+  }
+
+  handleButton() {
+    this.setState({ disableButon: true });
   }
 
   shuffle(array) {
@@ -42,7 +59,7 @@ class QuestionsList extends React.Component {
   }
 
   render() {
-    const { array, nameClassCorrect, nameClassWrong } = this.state;
+    const { array, nameClassCorrect, nameClassWrong, time, disableButon  } = this.state;
     const { question } = this.props;
     const correto = question.results[0].correct_answer;
     const numberForIterat = -1;
@@ -57,6 +74,10 @@ class QuestionsList extends React.Component {
                 data-testid="correct-answer"
                 className={ nameClassCorrect }
                 onClick={ () => this.answers() }
+                onClick={ this.handleButton }
+                disabled={ disableButon }
+                type="button"
+                data-testid="correct-answer"
               >
                 { answers }
               </button>
@@ -70,11 +91,19 @@ class QuestionsList extends React.Component {
               data-testid={ `wrong-answer-${index}` }
               className={ nameClassWrong }
               onClick={ () => this.answers() }
+              onClick={ this.handleButton }
+              disabled={ disableButon }
+              key={ index }
+              type="button"
+              data-testid={ `wrong-answer-${index}` }
             >
               { answers }
             </button>
           );
         })}
+        <span>
+          {time}
+        </span>
       </div>
     );
   }
