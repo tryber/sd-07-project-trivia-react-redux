@@ -17,13 +17,14 @@ class Header extends React.Component {
   }
 
   render() {
-    const { name, score } = this.props;
+    const { name, score, hash } = this.props;
+    const avatar = `https://www.gravatar.com/avatar/${hash}`;
     return (
       <header>
         {console.log('Name em Header: ', name)}
-        <img data-testid="header-profile-picture" src={ this.geraImagem } alt="avatar" />
-        <h3 data-testid="header-player-name">{ name }</h3>
-        <h3 data-testid="header-score">{ score }</h3>
+        <img data-testid="header-profile-picture" src={ avatar } alt="avatar" />
+        <h3 data-testid="header-player-name">{`Player: ${name}`}</h3>
+        <h3 data-testid="header-score">{`Score: ${score}`}</h3>
       </header>
     );
   }
@@ -46,6 +47,7 @@ Header.propTypes = {
   gravatarEmail: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   score: PropTypes.string.isRequired,
+  hash: PropTypes.string.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);
