@@ -9,8 +9,8 @@ class Ranking extends React.Component {
           <thead>
             <tr>
               <th>Avatar</th>
-              <th data-testid="player-name-${index}">Nome</th>
-              <th data-testid="player-score-${index}">Pontuação</th>
+              {/* <th data-testid="player-name-${index}">Nome</th> */}
+              {/* <th data-testid="player-score-${index}">Pontuação</th> */}
             </tr>
           </thead>
         </table>
