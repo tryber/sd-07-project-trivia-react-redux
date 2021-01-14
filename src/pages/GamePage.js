@@ -39,6 +39,7 @@ class GamePage extends React.Component {
   }
 
   myTime() {
+    const number = 1000;
     const timerResponse = setInterval(() => {
       this.setState((prevSate) => ({
         count: prevSate.count - 1,
@@ -48,8 +49,7 @@ class GamePage extends React.Component {
         this.disableButton();
         clearInterval(timerResponse);
       }
-      // eslint-disable-next-line no-magic-numbers
-    }, 1000);
+    }, number);
   }
 
   disableButton() {
