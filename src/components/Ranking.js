@@ -26,7 +26,6 @@ class Ranking extends React.Component {
             name:'Lauro',
             score: 5,
         }
-      ];
 
      localStorage.setItem('players', JSON.stringify(players));
       */
