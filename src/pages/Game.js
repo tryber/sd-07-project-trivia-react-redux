@@ -15,6 +15,7 @@ class Game extends React.Component {
     const { question } = this.props;
     return (
       <div>
+        <Header />
         <h3 data-testid="question-category">{ question.results[0].category }</h3>
         <p data-testid="question-text">{ question.results[0].question }</p>
         <QuestionsList />

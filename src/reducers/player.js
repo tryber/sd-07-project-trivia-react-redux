@@ -62,7 +62,7 @@ export default function (state = initialState, action) {
   case 'REQUEST_QUESTIONS_API_FAIL':
     return {
       ...state,
-      
+    };
   case 'CREATE_GRAVATAR_SUCCESS':
     return {
       ...state,
