@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import './question.css';
 import PropTypes from 'prop-types';
 
 class Question extends Component {
   constructor(props) {
     super(props);
     this.shuffle = this.shuffle.bind(this);
+
+    this.state = {
+      markAnswers: false,
+    };
   }
 
   shuffle(array) {
@@ -26,13 +31,16 @@ class Question extends Component {
   }
 
   render() {
+    const { markAnswers } = this.state;
     const { questions, questionSelected } = this.props;
     const question = questions[questionSelected];
     const arr = question.incorrect_answers.map((answer, index) => (
       <button
         type="button"
         key={ answer }
+        className={ markAnswers && 'wrong-answer' }
         data-testid={ `wrong-answer-${index}` }
+        onClick={ () => { this.setState({ markAnswers: true }); } }
       >
         { answer }
       </button>));
@@ -40,7 +48,9 @@ class Question extends Component {
       <button
         type="button"
         key={ question.correct_answer }
+        className={ markAnswers && 'correct-answer' }
         data-testid="correct-answer"
+        onClick={ () => { this.setState({ markAnswers: true }); } }
       >
         {question.correct_answer}
       </button>));
