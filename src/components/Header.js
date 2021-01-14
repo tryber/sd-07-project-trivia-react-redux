@@ -12,7 +12,6 @@ class Header extends Component {
       .getItem('state')).player;
 
     return (
-<<<<<<< HEAD
       <header className="header">
         <div className="perfil">
           {' '}
@@ -30,19 +29,6 @@ class Header extends Component {
             { score }
           </p>
         </div>
-=======
-      <header>
-        <img
-          src={ `https://www.gravatar.com/avatar/${md5(email)}` }
-          className="App-logo"
-          data-testid="header-profile-picture"
-          alt="logo"
-          width="50"
-          height="50"
-        />
-        <p data-testid="header-player">{ nome }</p>
-        <p data-testid="header-score">Score: 0</p>
->>>>>>> 4bd2365145c5796b67c662f8aac132fab021a931
       </header>
     );
   }
