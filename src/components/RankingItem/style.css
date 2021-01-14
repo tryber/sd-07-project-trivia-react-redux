@@ -7,7 +7,7 @@
 }
 
 .ranking {
-  background-color: #00000033;
+  background-color: rgba(0, 0, 0, 0.2);
   box-sizing: border-box;
   display: flex;
   flex-flow: row wrap;
@@ -19,7 +19,7 @@
 }
 
 .ranking:nth-child( even ) {
-  background-color: #0000000d;
+  background-color: rgba(0, 0, 0, 0.051);
 }
 
 .ranking:first-child {
@@ -32,9 +32,9 @@
 
 .name {
   align-items: center;
-  display: flex;
   color: white;
-  font-family: Roboto, sans-serif;
+  display: flex;
+  font-family: Roboto , sans-serif;
   font-size: 36px;
   font-style: normal;
   font-weight: 400;
@@ -46,10 +46,10 @@
   align-items: center;
   color: white;
   display: flex;
-  font-family: Roboto, sans-serif;
+  font-family: Roboto , sans-serif;
   font-size: 36px;
   font-style: normal;
-  font-weight:700;
+  font-weight: 700;
   line-height: 42px;
   text-align: left;
 }
