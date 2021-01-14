@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
 import Header from '../components/Header';
 import Quiz from '../components/Quiz';
 
@@ -58,4 +57,7 @@ export default connect(mapStateToProps)(Game);
 Game.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   results: PropTypes.arrayOf(PropTypes.object).isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
 };

@@ -19,7 +19,7 @@ class Timer extends Component {
 
   reloadTimer() {
     const { timer } = this.state;
-    const { answerColor, nextButton } = this.props;
+    const { answerColor } = this.props;
     if (timer > 0) {
       this.setState((prevState) => ({
         timer: prevState.timer - 1,
@@ -54,6 +54,8 @@ class Timer extends Component {
 
 Timer.propTypes = {
   answerColor: PropTypes.func.isRequired,
+  restoreTimer: PropTypes.func.isRequired,
+  resetTimer: PropTypes.bool.isRequired,
 };
 
 export default Timer;
