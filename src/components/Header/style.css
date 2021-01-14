@@ -11,7 +11,7 @@
 .header {
   background-color: #ff9914;
   color: #f21b3f;
-  font-family: Roboto;
+  font-family: 'Roboto';
   font-size: 36px;
   font-style: normal;
   font-weight: 900;
@@ -28,10 +28,10 @@
 .header-name {
   align-items: center;
   display: flex;
-  font-family: Roboto;
+  font-family: 'Roboto', sans-serif;
+  font-size: 36px;
   font-style: normal;
   font-weight: 400;
-  font-size: 36px;
   line-height: 42px;
   text-align: right;
 }
@@ -39,10 +39,10 @@
 .header-score {
   align-items: center;
   display: flex;
-  font-family: Roboto;
+  font-family: 'Roboto', sans-serif;
+  font-size: 36px;
   font-style: normal;
   font-weight:700;
-  font-size: 36px;
   line-height: 42px;
   margin-right: 150px;
   text-align: left;

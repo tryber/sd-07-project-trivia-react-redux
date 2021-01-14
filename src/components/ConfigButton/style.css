@@ -5,7 +5,7 @@
 
 .configButton-icon:hover {
   cursor: pointer;
-  filter: drop-shadow(2px 2px 2px rgb(34, 34, 34));
+  filter: drop-shadow(2px 2px 2px #222222);
   transition: 0.4s;
 }
 

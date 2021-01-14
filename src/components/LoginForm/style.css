@@ -15,8 +15,8 @@
 .field input {
   box-sizing: border-box;
   height: 50px;
-  width: 300px;
   text-align: center;
+  width: 300px;
 }
 
 button {
