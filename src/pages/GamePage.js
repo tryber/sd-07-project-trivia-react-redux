@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { getQuestions } from '../services/api';
 
 import Quiz from '../components/Quiz';
+import Timer from '../components/Timer';
 import Header from '../components/Header';
 
 class GamePage extends React.Component {
@@ -14,8 +15,10 @@ class GamePage extends React.Component {
     this.state = {
       queries: [],
       load: true,
+      disableButton: false,
     };
     this.getFetchQuestion = this.getFetchQuestion.bind(this);
+    this.disableButton = this.disableButton.bind(this);
   }
 
   async componentDidMount() {
@@ -32,8 +35,12 @@ class GamePage extends React.Component {
     });
   }
 
+  disableButton() {
+    this.setState({ disableButton: true });
+  }
+
   render() {
-    const { load, queries } = this.state;
+    const { load, queries, disableButton } = this.state;
 
     if (load) {
       return <h2>Loading...</h2>;
@@ -48,7 +55,11 @@ class GamePage extends React.Component {
     return (
       <div>
         <Header />
+        <Timer
+          disable={ this.disableButton }
+        />
         <Quiz
+          disabledButton={ disableButton }
           category={ category }
           question={ question }
           correctAnswer={ correctAnswer }

@@ -23,6 +23,7 @@ class Quiz extends React.Component {
       question,
       correctAnswer,
       incorrectAnswers,
+      disabledButton,
     } = this.props;
 
     const i = 0;
@@ -34,6 +35,7 @@ class Quiz extends React.Component {
         <p data-testid="question-text" key={ `question${i}` }>{ question }</p>
         {incorrectAnswers.map((incorrectAnswer, index) => (
           <button
+            disabled={ disabledButton }
             type="button"
             id="wrongAnswer"
             onClick={ showAnswer }
@@ -44,6 +46,7 @@ class Quiz extends React.Component {
           </button>
         ))}
         <button
+          disabled={ disabledButton }
           type="button"
           id="rightAnswer"
           data-testid="correct-answer"
@@ -58,6 +61,7 @@ class Quiz extends React.Component {
 }
 
 Quiz.propTypes = {
+  disabledButton: PropTypes.bool.isRequired,
   category: PropTypes.string.isRequired,
   question: PropTypes.string.isRequired,
   correctAnswer: PropTypes.string.isRequired,
