@@ -34,11 +34,6 @@ class Login extends React.Component {
 
     const { game } = this.props;
     localStorage.setItem('token', game.token);
-
-    history.push('/game');
-  }
-
-  render() {
     localStorage.setItem(
       'state',
       JSON.stringify({
@@ -50,6 +45,11 @@ class Login extends React.Component {
         },
       }),
     );
+
+    history.push('/game');
+  }
+
+  render() {
     const { nome, email } = this.state;
     return (
       <div>

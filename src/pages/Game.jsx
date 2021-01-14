@@ -46,6 +46,19 @@ const Game = (props) => {
     // console.log(score);
     gameScore(score);
     i += 1;
+
+    const { user } = props;
+    localStorage.setItem(
+      'state',
+      JSON.stringify({
+        player: {
+          name: user.name,
+          assertions: sum,
+          score,
+          email: user.email,
+        },
+      }),
+    );
   };
 
   const handleQuestion = async () => {
@@ -70,7 +83,6 @@ const Game = (props) => {
 
   let intervalId;
   const handleClickAnswer = ({ target }) => {
-    const { user, game } = props;
     setColor({
       style1: 'border-correct',
       style2: 'border-incorrect',
@@ -80,17 +92,6 @@ const Game = (props) => {
       setAssertion(true);
 
       sum += 1;
-      localStorage.setItem(
-        'state',
-        JSON.stringify({
-          player: {
-            name: user.name,
-            assertions: sum,
-            score: game.score,
-            email: user.email,
-          },
-        }),
-      );
     } else {
       setAssertion(false);
     }
