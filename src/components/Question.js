@@ -1,18 +1,29 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
-/* fetch('https://opentdb.com/api_token.php?command=request')
-  .then((response) => response.json())
-  .then((data) => this.setState({ token: data.token })); */
-
-export default class Question extends Component {
+class Question extends Component {
   render() {
+    const { question, category } = this.props;
 
-    // const token = request
-    // const questions = new Request(`https://opentdb.com/api.php?amount=5&token=${token}`);
     return (
       <div className="questions">
-        Question
+        <p data-testid="question-category">{ category }</p>
+        <p data-testid="question-text">{ question }</p>
+
       </div>
     );
   }
 }
+
+Question.propTypes = {
+  question: PropTypes.node.isRequired,
+  category: PropTypes.node.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  question: state.question.resQuestion,
+  category: state.question.categoryRes,
+});
+
+export default connect(mapStateToProps)(Question);

@@ -1,7 +1,9 @@
-import { ADD_ANSWERS } from '../actions';
+import { ADD_ANSWERS, ADD_QUESTIONS, ADD_CATEGORYS } from '../actions';
 
 const INITIAL_STATE = {
   responses: {},
+  resQuestion: '',
+  categoryRes: '',
 };
 
 function question(state = INITIAL_STATE, action) {
@@ -10,6 +12,14 @@ function question(state = INITIAL_STATE, action) {
     return {
       ...state,
       responses: { ...action.payload } };
+  case ADD_QUESTIONS:
+    return {
+      ...state,
+      resQuestion: action.question };
+  case ADD_CATEGORYS:
+    return {
+      ...state,
+      categoryRes: action.category };
   default:
     return state;
   }

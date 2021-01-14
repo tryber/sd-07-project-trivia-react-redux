@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { fetchQuestionAnswers } from '../actions';
+import { fetchQuestionAnswers, resQuestionAction, resCategoryAction } from '../actions';
 
 let countWrong = 0;
 function createDataTestId([answer, isCorrect]) {
@@ -35,8 +35,15 @@ class Answer extends React.Component {
 
   render() {
     const { count } = this.state;
-    const { resAnswer } = this.props;
-    countWrong = 0;
+    const { resAnswer, resQuest, resCategory } = this.props;
+
+    const categorys = Object.values(resAnswer).map(({ category: cat }) => cat);
+
+    resCategory(categorys[count]);
+
+    const questions = Object.values(resAnswer).map(({ question: quest }) => quest);
+
+    resQuest(questions[count]);
 
     const answersResponse = Object.values(resAnswer)
       .map(({
@@ -44,6 +51,7 @@ class Answer extends React.Component {
         ...incorrect.map((answer) => [answer, 'wrong']), [correct, 'correct']]
         .sort());
 
+    countWrong = 0;
     const answers = Object.values({ ...answersResponse[count] })
       .map(createDataTestId);
     console.log(answers);
@@ -67,14 +75,18 @@ class Answer extends React.Component {
 Answer.propTypes = {
   resAnswer: PropTypes.shape({}).isRequired,
   fetchAnswers: PropTypes.func.isRequired,
+  resQuest: PropTypes.func.isRequired,
+  resCategory: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   resAnswer: state.question.responses,
 });
 
-const mapDispatchToProps = (dispacht) => ({
-  fetchAnswers: () => dispacht(fetchQuestionAnswers()),
+const mapDispatchToProps = (dispatch) => ({
+  fetchAnswers: () => dispatch(fetchQuestionAnswers()),
+  resQuest: (quest) => dispatch(resQuestionAction(quest)),
+  resCategory: (cat) => dispatch(resCategoryAction(cat)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Answer);
