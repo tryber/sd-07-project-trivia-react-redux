@@ -28,6 +28,13 @@ export const requestTokenSuccess = (token) => (
   }
 );
 
+export const scoreUpdate = (payload) => (
+  {
+    type: types.SCORE_UPDATE,
+    payload,
+  }
+);
+
 export function fetchApiTrivia(token) {
   return async (dispatch) => {
     dispatch(isFetching());

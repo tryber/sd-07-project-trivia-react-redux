@@ -15,7 +15,7 @@ class Feedback extends Component {
           {
             assertions >= minAssertions
               ? 'Mandou bem!'
-              : 'Podia ser melhor'
+              : 'Podia ser melhor...'
           }
         </p>
         <h4>Placar Final</h4>

@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import './Quiz.css';
 import Timer from './Timer';
+import { scoreUpdate } from '../redux/actions';
 
 class Quiz extends Component {
   constructor() {
@@ -57,12 +59,13 @@ class Quiz extends Component {
 
   render() {
     const { answered, colorCorrect, colorIncorrect, resetTimer } = this.state;
-    const { results, nextQuestion } = this.props;
+    const { results, nextQuestion, updateScore } = this.props;
     const { correct_answer: correctAnswer } = results;
     const { incorrect_answers: incorrectAnswers } = results;
     const { question, category, difficulty } = results;
     const allQuestions = [correctAnswer, ...incorrectAnswers];
     const magicNumber = 0.5;
+    const magicNumberTwo = 5;
     const allIndex = allQuestions
       .map((anyQuestion) => allQuestions
         .indexOf(anyQuestion))
@@ -76,7 +79,7 @@ class Quiz extends Component {
             key={ number }
             data-testid="correct-answer"
             type="button"
-            onClick={ this.answerColor }
+            onClick={ () => { this.answerColor(); updateScore(magicNumberTwo); } }
             disabled={ answered }
           >
             { correctAnswer }
@@ -121,9 +124,15 @@ class Quiz extends Component {
   }
 }
 
-export default Quiz;
+// const mapStateToProps = ({ player: { score, assertions }})
+const mapDispatchToProps = (dispatch) => ({
+  updateScore: (info) => dispatch(scoreUpdate(info)),
+});
+
+export default connect(null, mapDispatchToProps)(Quiz);
 
 Quiz.propTypes = {
   results: PropTypes.arrayOf(PropTypes.object).isRequired,
   nextQuestion: PropTypes.func.isRequired,
+  updateScore: PropTypes.func.isRequired,
 };
