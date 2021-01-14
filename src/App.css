@@ -119,6 +119,7 @@
 .answer {
   display: block;
   margin-bottom: 5px;
+  font-size: 13pt;
 }
 
 .questions {
@@ -150,4 +151,9 @@
 .wrong-answer {
   border: 3px solid rgb(255, 0, 0);
   border-radius: 5px;
+}
+.category {
+  font-weight: 700;
+  margin-bottom: 10px;
+  padding-left: 5px;
 }

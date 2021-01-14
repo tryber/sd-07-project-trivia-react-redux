@@ -3,20 +3,20 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { fetchQuestions } from '../actions';
 import '../App.css';
-// import QuestionForm from '../Components/QuestionForm';
+import QuestionForm from '../Components/QuestionForm';
 
 class Play extends React.Component {
   constructor(props) {
     super(props);
     this.getQuestions = this.getQuestions.bind(this);
     this.setQuestions = this.setQuestions.bind(this);
+    this.createArray = this.createArray.bind(this);
+    this.shuffle = this.shuffle.bind(this);
     this.state = {
       currentLevel: 0,
-      // questionsData: [],
       category: '',
       questionText: '',
-      currentAnswers: [],
-      // template: [],
+      answers: [],
     };
   }
 
@@ -29,14 +29,14 @@ class Play extends React.Component {
     if (previous.game !== game) {
       const { questions } = game;
       const { currentLevel } = this.state;
+      const arrayOfAnswers = this.createArray(
+        questions[currentLevel].correct_answer,
+        questions[currentLevel].incorrect_answers,
+      );
       const newState = {
         category: questions[currentLevel].category,
         questionText: questions[currentLevel].question,
-        currentAnswers:
-          [questions[currentLevel].correct_answer,
-            ...questions[currentLevel].incorrect_answers],
-        template:
-          ['correct', 'wrong', 'wrong', 'wrong'],
+        answers: arrayOfAnswers,
       };
       this.setQuestions(newState);
     }
@@ -51,34 +51,63 @@ class Play extends React.Component {
     await apiFetchQuestions();
   }
 
-  render() {
-    const { category, questionText } = this.state;
-    const { currentAnswers } = this.state;
+  // An implementation of Fisher-Yates (aka Knuth) Shuffle algorithm
+  // https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
+  shuffle(array) {
+    // console.log(array);
+    let currentIndex = array.length; let temporaryValue; let
+      randomIndex;
 
+    // While there remain elements to shuffle...
+    while (currentIndex !== 0) {
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+
+      // And swap it with the current element.
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+    // console.log(array);
+    return array;
+  }
+
+  createArray(correct, incorrect) {
+    const newArray = [];
+    const correctValue = {
+      answer: correct,
+      status: 'correct',
+    };
+    newArray.push(correctValue);
+    for (let i = 0; i < incorrect.length; i += 1) {
+      const wrong = {
+        answer: incorrect[i],
+        status: 'wrong',
+      };
+      newArray.push(wrong);
+    }
+
+    const shuffledArray = this.shuffle(newArray);
+
+    return shuffledArray;
+  }
+
+  render() {
+    const { category, questionText, answers } = this.state;
     return (
-      <div>
-        <h1>Play</h1>
-        <p>{category}</p>
-        <p>{questionText}</p>
-        { currentAnswers.map((answer) => (
-          <button
-            key={ answer }
-            type="button"
-          >
-            {answer}
-          </button>
-        ))}
-      </div>
-      /*
       <div className="container-fluid">
         <div className="container-form">
-          <QuestionForm />
+          <QuestionForm
+            category={ category }
+            questionText={ questionText }
+            answer={ answers }
+          />
         </div>
         <div className="bottom-content">
           <p>Todos os direitos reservados </p>
         </div>
       </div>
-      */
     );
   }
 }
