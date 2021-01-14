@@ -17,14 +17,14 @@ class Counter extends React.Component {
     const second = 1000;
 
     this.timer = setInterval(() => {
-      const { clicked, isClicked, setCounter, count } = this.props;
+      const { clicked, isClicked, set, count } = this.props;
 
       if (count === 0 || clicked) {
         clearInterval(this.timer);
         isClicked();
-        return
+        return;
       }
-      setCounter();
+      set();
     }, second);
   }
 
@@ -39,13 +39,15 @@ const mapStateToProps = (state) => ({
   count: state.token.count,
 });
 
-const mapDispatchToProps = dispatch => ({
-  setCounter: () => dispatch(setCounter()),
+const mapDispatchToProps = (dispatch) => ({
+  set: () => dispatch(setCounter()),
 });
 
 Counter.propTypes = {
   clicked: PropTypes.bool.isRequired,
   isClicked: PropTypes.func.isRequired,
+  count: PropTypes.number.isRequired,
+  set: PropTypes.number.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Counter);
