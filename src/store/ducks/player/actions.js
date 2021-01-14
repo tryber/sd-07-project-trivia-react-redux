@@ -11,6 +11,12 @@ export const includeToken = (token) => ({
   token,
 });
 
+export const addScore = (score, assertions) => ({
+  type: PlayerTypes.ADD_SCORE,
+  score,
+  assertions,
+});
+
 export function getToken() {
   return async (dispatch) => {
     const response = await fetchToken();

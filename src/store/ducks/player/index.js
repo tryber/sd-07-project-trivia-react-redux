@@ -13,6 +13,10 @@ const player = (state = INITIAL_STATE, action) => {
     const { token } = action;
     return { ...state, token };
   }
+  case PlayerTypes.ADD_SCORE: {
+    const { score, assertions } = action;
+    return { ...state, score, assertions };
+  }
   default:
     return state;
   }

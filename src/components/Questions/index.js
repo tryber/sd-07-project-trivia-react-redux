@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { fetchQuestionNAnswer } from '../../services';
+import { addScore } from '../../store/ducks/player/actions';
 import './Questions.css';
 
 class Questions extends Component {
@@ -12,6 +15,7 @@ class Questions extends Component {
     this.countdown = this.countdown.bind(this);
     this.handleClickNextQuestion = this.handleClickNextQuestion.bind(this);
     this.resetCounter = this.resetCounter.bind(this);
+    this.calculateScore = this.calculateScore.bind(this);
 
     this.state = {
       questions: [],
@@ -49,8 +53,29 @@ class Questions extends Component {
       : this.setState({ counterInterval: 0, isDisabled: true });
   }
 
-  handleClick() {
+  calculateScore() {
+    const { questions, questionNumber, counterInterval } = this.state;
+    const { scoreProps, assertionsProps, addScoreAction } = this.props;
+    const questionLevel = questions[questionNumber].difficulty;
+    let levelScore = 1;
+    const hardLevelScore = 3;
+    const defaultPoint = 10;
+
+    if (questionLevel === 'easy') {
+      levelScore = 1;
+    } else if (questionLevel === 'medium') {
+      levelScore = 2;
+    } else {
+      levelScore = hardLevelScore;
+    }
+
+    const totalScore = scoreProps + (defaultPoint + counterInterval * levelScore);
+    addScoreAction(totalScore, assertionsProps + 1);
+  }
+
+  handleClick({ target }) {
     this.setState({ isDisabled: true });
+    if (target.className === 'correct-answer') this.calculateScore();
   }
 
   handleClickNextQuestion() {
@@ -121,4 +146,17 @@ class Questions extends Component {
   }
 }
 
-export default Questions;
+const mapStateToProps = (state) => ({
+  scoreProps: state.player.score,
+  assertionsProps: state.player.assertions,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  addScoreAction: (score, assertions) => dispatch(addScore(score, assertions)),
+});
+
+Questions.propTypes = {
+  scoreProps: PropTypes.number.isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Questions);

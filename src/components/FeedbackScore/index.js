@@ -1,25 +1,26 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 class FeedBackScore extends Component {
   render() {
-    const { assertions, score } = this.props;
+    const { assertionsProps, scoreProps } = this.props;
     const threeAssertions = 3;
     return (
       <div>
         <p data-testid="feedback-text">
-          { assertions >= threeAssertions
+          { assertionsProps >= threeAssertions
             ? 'Mandou bem!'
             : 'Podia ser melhor...'}
         </p>
         <p>Pontuação: </p>
         <p data-testid="feedback-total-score">
-          {score}
+          {scoreProps}
         </p>
         <p> Acertos: </p>
         <p data-testid="feedback-total-question">
-          {assertions}
+          {assertionsProps}
         </p>
         <Link to="/">
           <button
@@ -42,9 +43,14 @@ class FeedBackScore extends Component {
   }
 }
 
+const mapStateToProps = (state) => ({
+  scoreProps: state.player.score,
+  assertionsProps: state.player.assertions,
+});
+
 FeedBackScore.propTypes = {
   assertions: PropTypes.number.isRequired,
-  score: PropTypes.number.isRequired,
+  scoreProps: PropTypes.number.isRequired,
 };
 
-export default FeedBackScore;
+export default connect(mapStateToProps)(FeedBackScore);
