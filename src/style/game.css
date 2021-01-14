@@ -5,3 +5,7 @@
 .wrongRed {
   border: 3px solid red;
 }
+
+.hidden {
+  border: 1px solid black;
+}

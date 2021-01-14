@@ -1,14 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchQuestions } from '../actions';
+import { fetchQuestions, updateScore } from '../actions';
+import GameHeader from '../components/GameHeader';
 import '../style/game.css';
 
 class Game extends React.Component {
   constructor() {
     super();
+    this.state = {
+      currentQuestion: 0,
+      nextQuestion: false,
+    };
     this.shuffle = this.shuffle.bind(this);
-    // this.applyColor = this.applyColor.bind(this);
+    this.handleAnswer = this.handleAnswer.bind(this);
+    this.handleNext = this.handleNext.bind(this);
   }
 
   async componentDidMount() {
@@ -25,19 +31,34 @@ class Game extends React.Component {
     return answers;
   }
 
-  // applyColor(randomAnswers) {
-  //   randomAnswers.map((answer) => {
-  //     const a = '';
-  //     const color = answer.correct ? 'rightGreen' : 'wrongRed';
-  //     document.getElementById('button-choice').className = color;
-  //     return a;
-  //   });
-  // }
+  handleAnswer({ target: { name } }) {
+    const { scoreAction } = this.props;
+    const answerButtons = document.querySelectorAll('.hidden');
+    answerButtons.forEach((button) => button.classList.remove('hidden'));
+    if (name === 'correct') scoreAction();
+    this.setState({
+      nextQuestion: true,
+    });
+  }
+
+  handleNext() {
+    const { questions, history } = this.props;
+    const { currentQuestion } = this.state;
+    if (currentQuestion !== questions.length - 1) {
+      this.setState((prevSate) => ({
+        currentQuestion: prevSate.currentQuestion + 1,
+        nextQuestion: false,
+      }));
+    } else {
+      history.push('/feedbacks');
+    }
+  }
 
   render() {
     const { questions } = this.props;
+    const { currentQuestion, nextQuestion } = this.state;
     if (questions === undefined) return <p>Loading...</p>;
-    const question = questions[0];
+    const question = questions[currentQuestion];
     const {
       correct_answer: correctAnswer,
       incorrect_answers: incorrectAnswers,
@@ -72,45 +93,62 @@ class Game extends React.Component {
         index: 0,
       }];
     const randomAnswers = this.shuffle(taggedAnswers);
-    // let btnClass = '';
     return (
-      <div key={ question.question }>
-        <h4 key={ question.category } data-testid="question-category">
-          {question.category}
-        </h4>
-        <h3 data-testid="question-text">
-          {question.question}
-        </h3>
-        {randomAnswers.map((answer) => (
-          <button
-            id="button-choice"
-            className={ answer.correct ? 'rightGreen' : 'wrongRed' }
-            type="button"
-            key={ answer.answer }
-            // onClick={
-            //   this.applyColor(randomAnswers)
-            // }
-            data-testid={ answer.correct
-              ? 'correct-answer'
-              : `wrong-answer-${answer.index}` }
-          >
-            {answer.answer}
+      <div>
+        <GameHeader />
+        <div key={ question.question }>
+          <h4 key={ question.category } data-testid="question-category">
+            {question.category}
+          </h4>
+          <h3 data-testid="question-text">
+            {question.question}
+          </h3>
+          {randomAnswers.map((answer) => (
+            <button
+              className={ `hidden ${answer.correct ? 'rightGreen' : 'wrongRed'}` }
+              type="button"
+              key={ answer.answer }
+              name={ answer.correct
+                ? 'correct'
+                : 'wrong' }
+              data-testid={ answer.correct
+                ? 'correct-answer'
+                : `wrong-answer-${answer.index}` }
+              onClick={ (e) => this.handleAnswer(e) }
+            >
+              {answer.answer}
 
+            </button>
+          ))}
+          <button
+            type="button"
+            data-testid="btn-next"
+            onClick={ this.handleNext }
+            style={ nextQuestion ? { visibility: 'visible' } : { visibility: 'hidden' } }
+          >
+            Próxima pergunta
           </button>
-        ))}
+        </div>
       </div>
     );
   }
 }
 
 Game.propTypes = {
-  questions: PropTypes.arrayOf(PropTypes.object).isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+  questions: PropTypes.shape({
+    length: PropTypes.number.isRequired,
+  }).isRequired,
   requestQuestions: PropTypes.func.isRequired,
+  scoreAction: PropTypes.func.isRequired,
   token: PropTypes.string.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
   requestQuestions: (questions) => dispatch(fetchQuestions(questions)),
+  scoreAction: () => dispatch(updateScore()),
 });
 
 const mapStateToProps = (state) => ({

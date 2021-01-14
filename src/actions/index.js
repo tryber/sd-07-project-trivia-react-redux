@@ -1,9 +1,15 @@
 // support provided by group 25-thx!
 export const LOGIN = 'LOGIN';
-export const login = (nome, email) => ({
+export const login = (name, email) => ({
   type: LOGIN,
-  nome,
+  name,
   email,
+});
+
+export const EMAIL_HASH = 'EMAIL_HASH';
+export const hashRequest = (emailHash) => ({
+  type: EMAIL_HASH,
+  hash: emailHash,
 });
 
 export const TOKEN_REQUEST = 'TOKEN_REQUEST';
@@ -20,7 +26,7 @@ export const fetchQuestionsSuccess = (payload) => (
   { type: 'FETCH_QUESTIONS_SUCCESS', payload });
 
 export const UPDATE_SCORE = 'UPDATE_SCORE';
-export const updateScore = (score) => ({ type: UPDATE_SCORE, score });
+export const updateScore = () => ({ type: UPDATE_SCORE });
 
 export function fetchToken() {
   return async (dispatch) => {
