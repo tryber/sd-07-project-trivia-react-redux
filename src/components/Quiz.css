@@ -1,9 +1,9 @@
 .answer-correct {
-  color: #06f00f;
   border: 3px solid #06f00f;
+  color: #06f00f;
 }
 
 .answer-wrong {
-  color: red;
   border: 3px solid red;
+  color: red;
 }
