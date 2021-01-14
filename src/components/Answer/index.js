@@ -3,9 +3,6 @@ import PropTypes from 'prop-types';
 import './style.css';
 
 class Answer extends React.Component {
-
-  handleResponseClick();
-
   render() {
     const { curQuestion } = this.props;
     const answers = [...curQuestion.incorrect_answers, curQuestion.correct_answer];
@@ -22,7 +19,6 @@ class Answer extends React.Component {
                 ? ('correct-answer')
                 : (`wrong-answer ${incorrectAnswers.indexOf(answers[index])}`)
             }
-            onClick={ handleResponseClick }
           >
             <p className="message">{ answers[index] }</p>
           </div>
