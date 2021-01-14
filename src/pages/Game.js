@@ -28,6 +28,7 @@ class Game extends Component {
 
   render() {
     const { questionsArray, currentQuestion } = this.state;
+    console.log(questionsArray);
     return (
       <div>
         <header>
@@ -45,9 +46,8 @@ class Game extends Component {
         </header>
         <h1>Token da requisição</h1>
         {localStorage.token}
-        {questionsArray[currentQuestion] && 
-          <Questions question={ questionsArray[currentQuestion] } />
-        }
+        {questionsArray[currentQuestion]
+          && <Questions question={ questionsArray[currentQuestion] } />}
       </div>
     );
   }

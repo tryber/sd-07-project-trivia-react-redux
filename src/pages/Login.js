@@ -28,7 +28,7 @@ class Login extends Component {
     resultToken();
     generateHash(username, email);
     const { history } = this.props;
-    history.push('/jogo');
+    setTimeout(() => history.push('/jogo'), 1000);
   }
 
   handleClickSettingsBtn() {
