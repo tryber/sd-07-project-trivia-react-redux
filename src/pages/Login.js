@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Trivia from '../components/Trivia';
+import { Trivia } from '../components';
 import { fetchTokenTrivia } from '../actions/fetchTokenTrivia';
 import signIn from '../actions/signIn';
 
@@ -37,12 +37,11 @@ class Login extends React.Component {
     }
   }
 
-  handleClick() {
+  async handleClick() {
     const { token, history, createPlayer } = this.props;
     const { nameInput, emailInput } = this.state;
     const score = 0;
-    token();
-    localStorage.setItem('token', JSON.stringify(token));
+    await token();
     history.push('./game');
     createPlayer(nameInput, emailInput, score);
   }
