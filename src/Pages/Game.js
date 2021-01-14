@@ -1,6 +1,7 @@
 import React from 'react';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 import thunkApiQuestions from '../actions'
+import Header from '../components/Header'
 
 class Game extends React.Component {
   constructor(props) {
@@ -14,18 +15,19 @@ class Game extends React.Component {
   render() {
     return (
       <div>
+        <Header />
         CONGRATULATIONS!! YOU WIN!!!
       </div>
     )
   }
 }
 
-const mapStateToProps = (state) => {
+// const mapStateToProps = (state) => {
 
-};
+// };
 
-const mapDispatchToProps = (dispatch) => {
+// const mapDispatchToProps = (dispatch) => {
 
-};
+// };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Game);
+export default Game;
