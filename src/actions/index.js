@@ -1,4 +1,4 @@
-import { thunkApiQuestions } from './question';
+import { thunkApiQuestions, getQuestion } from './question';
 import { thunkApiToken, setName, addGravatar } from './player';
 
 export {
@@ -6,4 +6,5 @@ export {
   thunkApiToken,
   setName,
   addGravatar,
+  getQuestion,
 };
