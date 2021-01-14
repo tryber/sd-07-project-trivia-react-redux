@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
-import md5 from 'crypto-js/md5';
 import isLoginOk from '../helpers/isLoginOk';
 import { loginAction } from '../action';
 import logo from '../trivia.png';
@@ -38,18 +37,16 @@ class Login extends Component {
     );
   }
 
-  redirectTo(email) {
+  redirectTo(email, username) {
     const { userLoggin } = this.props;
     this.setState({
       login: true,
     });
-    userLoggin(email);
+    userLoggin(email, username);
   }
 
   render() {
     const { email, userName, login, setting } = this.state;
-    const gravatar = md5(email);
-    console.log(`gravatar: ${gravatar}`);
     if (login) return <Redirect to="/playgame" />;
     if (setting) return <Redirect to="/settings" />;
     return (
@@ -79,7 +76,7 @@ class Login extends Component {
               disabled={ isLoginOk(email, userName) }
               type="submit"
               data-testid="btn-play"
-              onClick={ () => this.redirectTo(email) }
+              onClick={ () => this.redirectTo(email, userName) }
             >
               Jogar
             </button>
@@ -101,7 +98,7 @@ class Login extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  userLoggin: (email) => dispatch(loginAction(email)),
+  userLoggin: (email, username) => dispatch(loginAction(email, username)),
 });
 
 Login.propTypes = {
