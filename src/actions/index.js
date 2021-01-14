@@ -27,9 +27,10 @@ export const requestQuestions = () => ({
   type: 'REQUEST_QUESTIONS',
 });
 
-export const requestSucessQuestion = (questions) => ({
+export const requestSucessQuestion = (questions, hash) => ({
   type: 'SUCCESS',
   questions,
+  hash,
 });
 
 export const requestErrorQuestion = (error) => ({

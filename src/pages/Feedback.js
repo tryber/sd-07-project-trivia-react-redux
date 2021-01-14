@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 class Feedback extends Component {
   render() {
@@ -24,6 +25,15 @@ class Feedback extends Component {
             0
           </h2>
         </header>
+        <Link to="/settings">
+          <button
+            type="button"
+            data-testiid="btn-ranking"
+          >
+            Ver Ranking
+          </button>
+        </Link>
+
       </div>
     );
   }

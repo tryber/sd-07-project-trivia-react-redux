@@ -4,13 +4,13 @@ import PropTypes from 'prop-types';
 
 class Header extends Component {
   render() {
-    const { name } = this.props;
+    const { name, hash } = this.props;
     return (
       <header>
         <img
           alt="Imagem do Gravatar"
           data-testid="header-profile-picture"
-          src="https://img.ibxk.com.br/2014/06/06/06165614150388.jpg?w=1120&h=420&mode=crop&scale=both"
+          src={ `https://www.gravatar.com/avatar/${hash}` }
         />
         <h2
           data-testid="header-player-name"
@@ -29,6 +29,7 @@ class Header extends Component {
 
 const mapStateToProps = (state) => ({
   name: state.userReducer.name,
+  hash: state.questionsReducer.hash,
 });
 
 Header.propTypes = {

@@ -38,7 +38,10 @@ class Game extends Component {
                   .map((answer, index) => (
                     <button
                       key={ index }
-                      data-testid={ answer === option[0].correct_answer ? 'correct-answer' : `wrong-answer-${index}` }
+                      data-testid={
+                        answer === answer[0].correct_answer ? 'correct-answer'
+                          : `wrong-answer-${index}`
+                      }
                       value="incorrect"
                       type="button"
                       onClick={ (e) => this.answerAnalyze(e) }
