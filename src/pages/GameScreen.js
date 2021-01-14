@@ -131,7 +131,7 @@ class GameScreen extends Component {
       timer,
       buttonNext,
     } = this.state;
-    
+
     return (
       <div>
         <div>
