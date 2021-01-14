@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { addScore } from '../Redux/Actions';
-import './Questions.css';
+import '../styles/questions.css';
 
 class Questions extends React.Component {
   constructor(props) {
