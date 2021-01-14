@@ -22,7 +22,6 @@ export default function fetchToken(callback) {
     try {
       const { token } = await fetchTokenAPI();
       dispatch(resultToken(token));
-      console.log(token)
       callback('token', token);
     } catch (err) { dispatch(failedRequest(err)); }
   };

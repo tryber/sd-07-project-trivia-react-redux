@@ -13,9 +13,9 @@ function loginReducer(state = INITIAL_STATE, action) {
     return { ...state, email: action.email };
   case ADD_NOME:
     console.log({ ...state.name, name: action.name });
-      return {...state, name: action.name };
-    default:
-      return state;
+    return { ...state, name: action.name };
+  default:
+    return state;
   }
 }
 export default loginReducer;

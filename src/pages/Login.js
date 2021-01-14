@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getStorage, setStorage } from '../services';
+import { setStorage } from '../services';
 import { CustomLogin } from '../components';
-import { addEmail, fetchToken, addName, fetchTrivia} from '../actions';
+import { addEmail, fetchToken, addName, fetchTrivia } from '../actions';
 
 class Login extends Component {
   constructor() {
@@ -20,7 +20,7 @@ class Login extends Component {
 
   validaInput() {
     const { email, nome } = this.state;
-    const number = 5;
+    const number = 1;
     if (email.match(/\S+@\S+\.\S+/) && nome.length > number) {
       this.setState({ permitir: false });
     } else {
@@ -28,16 +28,14 @@ class Login extends Component {
     }
   }
 
-   handleSubmit() {
-    const { dispatchEmail, dispatchToken, dispatchNome,dispatchTrivia } = this.props;
+  handleSubmit() {
+    const { dispatchEmail, dispatchToken, dispatchNome, history } = this.props;
     const { email, nome } = this.state;
     dispatchEmail(email);
     dispatchNome(nome);
     dispatchToken(setStorage);
-    dispatchTrivia(getStorage('token'));
+    history.push('/gamescreen');
   }
-
-  
 
   handleInputChange({ target: { name, value } }) {
     this.setState({ [name]: value }, this.validaInput);
@@ -71,4 +69,5 @@ Login.propTypes = {
   dispatchEmail: PropTypes.func.isRequired,
   dispatchNome: PropTypes.func.isRequired,
   dispatchToken: PropTypes.func.isRequired,
+  history: PropTypes.func.isRequired,
 };

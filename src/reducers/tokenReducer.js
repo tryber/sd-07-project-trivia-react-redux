@@ -1,13 +1,14 @@
-import { FAILED_REQUEST, RESULT_TOKEN /* REQUEST_TOKEN */ } from '../actions/fetchToken';
+import { FAILED_REQUEST, RESULT_TOKEN, REQUEST_TOKEN } from '../actions/fetchToken';
 
 const INITIAL_STATE = {
-  token: '', // loading: false,
+  token: '',
+  loading: false,
 };
 
 export default function tokenReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
-  /* case REQUEST_TOKEN:
-    return { ...state.tokenReducer, loading: true }; */
+  case REQUEST_TOKEN:
+    return { ...state, loading: true };
   case RESULT_TOKEN:
     return { ...state.tokenReducer, token: action.payload };
   case FAILED_REQUEST:

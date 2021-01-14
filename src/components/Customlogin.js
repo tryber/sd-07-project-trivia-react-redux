@@ -11,7 +11,6 @@ export default function CustomLogin({ onInputChange, onHandleSubmit, validate })
         maxLength="40"
         placeholder="User Name"
         name="nome"
-        // onChange={(e) => onInputChange(e)}
         onChange={ onInputChange }
       />
       <input
@@ -19,19 +18,16 @@ export default function CustomLogin({ onInputChange, onHandleSubmit, validate })
         maxLength="50"
         placeholder="E-mail address"
         name="email"
-        // onChange={(e) => onInputChange(e)}
         onChange={ onInputChange }
       />
-      <Link to="/gamescreen">
-        <button
-          type="button"
-          onClick={ onHandleSubmit }
-          data-testid="btn-play"
-          disabled={ validate }
-        >
-          Jogar
-        </button>
-      </Link>
+      <button
+        type="button"
+        onClick={ onHandleSubmit }
+        data-testid="btn-play"
+        disabled={ validate }
+      >
+        Jogar
+      </button>
       <Link to="/settings">
         <button
           type="button"
