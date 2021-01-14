@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import fetchQuestions from '../services/api';
 
 class QuestionCard extends Component {
   constructor() {
@@ -9,7 +10,8 @@ class QuestionCard extends Component {
       indexQuestion: 0,
       buttonColorVisible: false,
       seconds: 30,
-      optionsArray: [],
+      questions: [],
+      isLoading: true,
     };
     this.timer = 0;
     this.oneQuestion = this.oneQuestion.bind(this);
@@ -17,70 +19,58 @@ class QuestionCard extends Component {
     this.startTimer = this.startTimer.bind(this);
     this.countDown = this.countDown.bind(this);
     // this.nextQuestion = this.nextQuestion.bind(this);
-    this.optionsRandom = this.optionsRandom.bind(this);
+    this.getQuestions = this.getQuestions.bind(this);
   }
 
   componentDidMount() {
     // this.startTimer();
-    this.optionsRandom();
+    this.getQuestions();
   }
 
   oneQuestion(indexQuestion) {
-    const { questions } = this.props;
-
-    const { buttonColorVisible, optionsArray } = this.state;
+    const { buttonColorVisible, questions } = this.state;
+    const options = [...questions[indexQuestion].incorrect_answers,
+      questions[indexQuestion].correct_answer].sort();
+    console.log(questions);
 
     return (
       <div>
-        { questions && (
-          <div key={ Math.random() }>
-            <h5 data-testid="question-category">
-              { questions[indexQuestion].category }
-            </h5>
-            <h5 data-testid="question-text">
-              { questions[indexQuestion].question }
-            </h5>
-            {optionsArray
-              .map((answer, index) => (
-                <button
-                  key={ index }
-                  data-testid={
-                    answer === questions[indexQuestion].correct_answer
-                      ? 'correct-answer' : `wrong-answer-${index}`
-                  }
-                  className={ buttonColorVisible
-                    && (answer === questions[indexQuestion].correct_answer
-                      ? 'correctAnswer' : 'incorrectAnswer') }
-                  value={ answer === questions[indexQuestion].correct_answer
-                    ? 'correct' : 'incorrect' }
-                  type="button"
-                  onClick={ () => this.answerAnalyze() }
-                >
-                  { answer }
-                </button>))}
-          </div>)}
+        <div key={ Math.random() }>
+          <h5 data-testid="question-category">
+            { questions[indexQuestion].category }
+          </h5>
+          <h5 data-testid="question-text">
+            { questions[indexQuestion].question }
+          </h5>
+          {options
+            .map((answer, index) => (
+              <button
+                key={ index }
+                data-testid={
+                  answer === questions[indexQuestion].correct_answer
+                    ? 'correct-answer' : `wrong-answer-${index}`
+                }
+                className={ buttonColorVisible
+                  && (answer === questions[indexQuestion].correct_answer
+                    ? 'correctAnswer' : 'incorrectAnswer') }
+                value={ answer === questions[indexQuestion].correct_answer
+                  ? 'correct' : 'incorrect' }
+                type="button"
+                onClick={ () => this.answerAnalyze() }
+              >
+                { answer }
+              </button>))}
+        </div>
       </div>
     );
   }
 
-  optionsRandom() {
-    const { questions } = this.props;
-    const { indexQuestion } = this.state;
-    const options = [...questions[indexQuestion].incorrect_answers,
-      questions[indexQuestion].correct_answer];
-
-    let actualIndex = options.length;
-    let tempValue;
-    let randomIndex;
-    while (actualIndex !== 0) {
-      randomIndex = Math.floor(Math.random() * actualIndex);
-      actualIndex -= 1;
-      tempValue = options[actualIndex];
-      options[actualIndex] = options[randomIndex];
-      options[randomIndex] = tempValue;
-    }
-
-    this.setState({ optionsArray: options });
+  async getQuestions() {
+    const { token } = this.props;
+    const questionsResponse = await fetchQuestions(token);
+    const questions = questionsResponse.results;
+    console.log(questions);
+    this.setState({ questions, isLoading: false });
   }
 
   // Referência p/ timer: https://stackoverflow.com/questions/40885923/countdown-timer-in-react
@@ -111,9 +101,9 @@ class QuestionCard extends Component {
   }
 
   render() {
-    const { indexQuestion, seconds } = this.state;
+    const { indexQuestion, seconds, isLoading } = this.state;
 
-    return (
+    return isLoading ? <p>Loading</p> : (
       <div>
         <section>
           <div>
@@ -130,11 +120,12 @@ class QuestionCard extends Component {
 }
 
 QuestionCard.propTypes = {
-  questions: PropTypes.arrayOf(PropTypes.object).isRequired,
+  token: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   questions: state.questionsReducer.questions,
+  token: state.tokenReducer.token,
 });
 
 export default connect(mapStateToProps)(QuestionCard);

@@ -43,6 +43,11 @@ export const updateScore = (score) => ({
   score,
 });
 
+export const hashAction = (hash) => ({
+  type: 'HASH_ACTION',
+  hash,
+});
+
 export const fetchToken = () => async (dispatch) => {
   const endPoint = 'https://opentdb.com/api_token.php?command=request';
   try {
