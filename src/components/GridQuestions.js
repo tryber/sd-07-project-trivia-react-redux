@@ -8,6 +8,7 @@ export default class GridQuestions extends Component {
       <div className="gridQuestions">
         <Question />
         <Answer />
+        <br />
       </div>
     );
   }

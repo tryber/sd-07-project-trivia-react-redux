@@ -5,6 +5,7 @@ export const RECEIVE_TOKEN = 'RECEIVE_TOKEN';
 export const FAILED_REQUEST = 'FAILED_REQUEST';
 export const ADD_ANSWERS = 'ADD_ANSWERS';
 export const ADD_QUESTIONS = 'ADD_QUESTIONS';
+export const ADD_CATEGORYS = 'ADD_CATEGORYS';
 
 const requestToken = () => ({ type: REQUEST_TOKEN });
 const failedRequest = (error) => ({ type: FAILED_REQUEST, error });
@@ -34,7 +35,9 @@ export const login = ({ name, email }) => async (dispatch) => {
   }
 };
 
-export const resQuestion = (question) => ({ type: ADD_QUESTIONS, question });
+export const resCategoryAction = (category) => ({ type: ADD_CATEGORYS, category });
+
+export const resQuestionAction = (question) => ({ type: ADD_QUESTIONS, question });
 
 export const questionUpdate = (json) => ({ type: ADD_ANSWERS, payload: json });
 
