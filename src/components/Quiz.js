@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import './Quiz.css';
+import Timer from './Timer';
 
 class Quiz extends Component {
   constructor() {
@@ -10,10 +11,12 @@ class Quiz extends Component {
       answered: false,
       colorCorrect: '',
       colorIncorrect: '',
+      resetTimer: false,
     };
 
     this.answerColor = this.answerColor.bind(this);
     this.nextButton = this.nextButton.bind(this);
+    this.restoreTimer = this.restoreTimer.bind(this);
   }
 
   handleClick() {
@@ -42,11 +45,18 @@ class Quiz extends Component {
       answered: false,
       colorCorrect: '',
       colorIncorrect: '',
+      resetTimer: true,
+    });
+  }
+
+  restoreTimer() {
+    this.setState({
+      resetTimer: false,
     });
   }
 
   render() {
-    const { answered, colorCorrect, colorIncorrect } = this.state;
+    const { answered, colorCorrect, colorIncorrect, resetTimer } = this.state;
     const { results, nextQuestion } = this.props;
     const { correct_answer: correctAnswer } = results;
     const { incorrect_answers: incorrectAnswers } = results;
@@ -86,18 +96,26 @@ class Quiz extends Component {
     };
     return (
       <div>
-        <p data-testid="question-text">{ question }</p>
-        <p>{ difficulty }</p>
-        <p data-testid="question-category">{ category }</p>
-        {shuffledArray.map((oneQuestion, index) => renderQuestions(oneQuestion, index))}
-        <button
-          type="button"
-          onClick={ () => { this.nextButton(); nextQuestion(); } }
-          hidden={ !answered }
-          data-testid="btn-next"
-        >
-          Próxima
-        </button>
+        <div>
+          <p data-testid="question-text">{ question }</p>
+          <p>{ difficulty }</p>
+          <p data-testid="question-category">{ category }</p>
+          {shuffledArray.map((oneQuestion, index) => renderQuestions(oneQuestion, index))}
+          <button
+            type="button"
+            onClick={ () => { this.nextButton(); nextQuestion(); } }
+            hidden={ !answered }
+            data-testid="btn-next"
+          >
+            Próxima
+          </button>
+        </div>
+        <Timer
+          answerColor={ this.answerColor }
+          nextButton={ this.nextButton }
+          resetTimer={ resetTimer }
+          restoreTimer={ this.restoreTimer }
+        />
       </div>
     );
   }

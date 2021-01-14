@@ -17,8 +17,12 @@ class Game extends Component {
 
   nextQuestion() {
     const { key } = this.state;
+    const { history } = this.props;
     const numberQuestion = 4;
-    if (key < numberQuestion) {
+    if (key === numberQuestion) {
+      console.log('chegou');
+      history.push('/feedback');
+    } if (key < numberQuestion) {
       this.setState({
         key: key + 1,
       });
@@ -53,4 +57,7 @@ export default connect(mapStateToProps)(Game);
 Game.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   results: PropTypes.arrayOf(PropTypes.object).isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
 };
