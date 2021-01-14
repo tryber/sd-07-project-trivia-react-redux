@@ -16,16 +16,16 @@ const player = (state = LOGIN_INITIAL_STATE, action) => {
       name: action.payload.name,
       gravatarEmail: action.payload.email,
     });
-  // case types.IS_FETCHING:
-  //   return ({
-  //     ...state,
-  //     isLoading: true,
-  //   });
   case types.REQUEST_TOKEN_SUCCESS:
     return ({
       ...state,
-      // isLoading: false,
       tokenString: action.token,
+    });
+  case types.SCORE_UPDATE:
+    return ({
+      ...state,
+      score: state.score + action.payload,
+      assertions: state.assertions + 1,
     });
   default:
     return state;
