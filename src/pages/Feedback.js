@@ -25,6 +25,12 @@ class FeedBack extends React.Component {
     });
   }
 
+  jogarNovamente() {
+    const { history } = this.props;
+
+    history.push('/');
+  }
+
   render() {
     const state = JSON.parse(localStorage.getItem('state'));
     const { player } = state;
@@ -43,6 +49,13 @@ class FeedBack extends React.Component {
 
         </header>
         <h1 data-testid="feedback-text">FeedBack</h1>
+        <button
+          type="button"
+          data-testid="btn-play-again"
+          onClick={ () => this.jogarNovamente() }
+        >
+          Jogar novamente
+        </button>
       </div>
     );
   }
@@ -51,6 +64,7 @@ class FeedBack extends React.Component {
 FeedBack.propTypes = {
   emailSave: PropTypes.string.isRequired,
   nameSave: PropTypes.string.isRequired,
+  history: PropTypes.shape.isRequired,
 };
 
 const mapStateToProps = (state) => ({
