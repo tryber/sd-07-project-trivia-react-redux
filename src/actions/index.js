@@ -50,18 +50,3 @@ export const fetchGravatar = (email) => {
       });
   };
 };
-
-export const fetchQuestions = (token) => {
-  const URL = `https://opentdb.com/api.php?amount=5&token=${token}`;
-  return (dispatch) => {
-    fetch(URL)
-      .then((response) => response.json())
-      .then((obj) => {
-        if (obj.response_code === 0) {
-          const questions = obj.results;
-          const loading = true;
-          return dispatch(questionsGen(questions, loading));
-        }
-      });
-  };
-};
