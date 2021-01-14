@@ -33,7 +33,7 @@ class FeedBack extends React.Component {
 
           <h2>{emailSave}</h2>
           <h2 data-testid="header-score">{score}</h2>
-          <img data-testid="header-profile-picture" src={urlImg} alt="Gravatar" />
+          <img data-testid="header-profile-picture" src={ urlImg } alt="Gravatar" />
 
         </header>
         <h1>FeedBack</h1>
