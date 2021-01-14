@@ -24,6 +24,7 @@ class Trivia extends React.Component {
       replyConfirmation: false,
       clicked: false,
       counter: 30,
+      acertos: 0,
     };
   }
 
@@ -79,13 +80,18 @@ class Trivia extends React.Component {
     if (target.id === 'rightAnswer') {
       this.setState((previus) => ({
         placar: dez + (points * counter) + previus.placar,
+        acertos: previus.acertos + 1,
       }), () => {
         const { placar } = this.state;
-        localStorage.setItem('state', JSON.stringify({ player: { score: placar } }));
+        const { acertos } = this.state;
+        localStorage.setItem('state',
+          JSON.stringify({ player: { score: placar, acertos } }));
       });
     } else {
       const { placar } = this.state;
-      localStorage.setItem('state', JSON.stringify({ player: { score: placar } }));
+      const { acertos } = this.state;
+      localStorage.setItem('state',
+        JSON.stringify({ player: { score: placar, acertos } }));
     }
     this.setState({
       replyConfirmation: true,

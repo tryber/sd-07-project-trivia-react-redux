@@ -6,7 +6,7 @@ import md5 from 'crypto-js/md5';
 class FeedBack extends React.Component {
   constructor(props) {
     super(props);
-
+    this.messagePlayer = this.messagePlayer.bind(this);
     this.state = {
       urlImg: '',
     };
@@ -31,6 +31,17 @@ class FeedBack extends React.Component {
     history.push('/');
   }
 
+  messagePlayer() {
+    const state = JSON.parse(localStorage.getItem('state'));
+    const tres = 3;
+    const { player } = state;
+    const { acertos } = player;
+    if (acertos >= tres) {
+      return 'Mandou bem!';
+    }
+    return 'Podia ser melhor...';
+  }
+
   render() {
     const state = JSON.parse(localStorage.getItem('state'));
     const { player } = state;
@@ -46,6 +57,7 @@ class FeedBack extends React.Component {
           <h1 data-testid="header-player-name">{nameSave}</h1>
           <h2>{emailSave}</h2>
           <h2 data-testid="header-score">{score}</h2>
+          <p data-testid="feedback-text">{this.messagePlayer()}</p>
           <img data-testid="header-profile-picture" src={ urlImg } alt="Gravatar" />
 
         </header>
