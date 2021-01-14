@@ -34,6 +34,14 @@ class Feedback extends Component {
             { `Um total de ${score} pontos!` }
           </h3>
         </div>
+        <Link to="/">
+          <button
+            type="button"
+            data-testid="btn-play-again"
+          >
+            Jogar novamente
+          </button>
+        </Link>
       </div>
     );
   }
