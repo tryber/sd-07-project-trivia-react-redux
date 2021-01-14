@@ -2,7 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Trivia from '../components/Trivia';
-import { fetchTokenTrivia } from '../actions';
+import { fetchTokenTrivia } from '../actions/fetchTokenTrivia';
+import signIn from '../actions/signIn';
 
 class Login extends React.Component {
   constructor() {
@@ -37,10 +38,13 @@ class Login extends React.Component {
   }
 
   handleClick() {
-    const { token, history } = this.props;
+    const { token, history, createPlayer } = this.props;
+    const { nameInput, emailInput } = this.state;
+    const score = 0;
     token();
     localStorage.setItem('token', JSON.stringify(token));
     history.push('./game');
+    createPlayer(nameInput, emailInput, score);
   }
 
   goToSettings() {
@@ -92,6 +96,7 @@ class Login extends React.Component {
 
 const mapDispatchToProps = (dispatch) => ({
   token: (key) => dispatch(fetchTokenTrivia(key)),
+  createPlayer: (name, email, score) => dispatch(signIn(name, email, score)),
 });
 
 Login.propTypes = {
@@ -99,6 +104,7 @@ Login.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,
+  createPlayer: PropTypes.func.isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(Login);
