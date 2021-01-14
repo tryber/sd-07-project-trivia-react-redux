@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 
 class Header extends Component {
   render() {
@@ -39,10 +39,10 @@ const mapStateToProps = (state) => ({
   gravatar: state.player.gravatar,
 })
 
-Header.propTypes = {
-  email: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  score: PropTypes.number.isRequired,
-};
+// Header.propTypes = {
+//   email: PropTypes.string.isRequired,
+//   name: PropTypes.string.isRequired,
+//   score: PropTypes.number.isRequired,
+// };
 
 export default connect(mapStateToProps, null)(Header);

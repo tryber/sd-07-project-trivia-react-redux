@@ -61,6 +61,7 @@ class Login extends React.Component {
       <div>
         <button
           type="button"
+          data-testid="btn-settings"
           onClick={ this.routeChangeConfig }
         >
           Configurações
