@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { PropTypes } from 'prop-types';
 import { getAPIToken } from '../actions';
 
 class Login extends React.Component {
@@ -73,5 +74,9 @@ function mapDispatchToProps(dispatch) {
     getToken: () => dispatch(getAPIToken()),
   };
 }
+
+Login.propTypes = {
+  getToken: PropTypes.func.isRequired,
+};
 
 export default connect(null, mapDispatchToProps)(Login);
