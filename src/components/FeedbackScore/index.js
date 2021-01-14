@@ -49,7 +49,7 @@ const mapStateToProps = (state) => ({
 });
 
 FeedBackScore.propTypes = {
-  assertions: PropTypes.number.isRequired,
+  assertionsProps: PropTypes.number.isRequired,
   scoreProps: PropTypes.number.isRequired,
 };
 

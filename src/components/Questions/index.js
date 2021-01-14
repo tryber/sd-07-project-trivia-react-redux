@@ -157,6 +157,8 @@ const mapDispatchToProps = (dispatch) => ({
 
 Questions.propTypes = {
   scoreProps: PropTypes.number.isRequired,
+  assertionsProps: PropTypes.number.isRequired,
+  addScoreAction: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Questions);
