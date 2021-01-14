@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { savePlayer } from '../actions';
+import { savePlayer, scores, assertion } from '../actions';
 
 class RankingButton extends React.Component {
   constructor() {
@@ -14,7 +14,7 @@ class RankingButton extends React.Component {
   }
 
   click() {
-    const { name, score, picture, toPlayer } = this.props;
+    const { name, score, picture, toPlayer, zeroScore, zeroAssertions } = this.props;
     const objeto = {
       name,
       score,
@@ -22,6 +22,8 @@ class RankingButton extends React.Component {
     };
     toPlayer(objeto);
     this.setState({ redirect: '/ranking' });
+    zeroScore(0);
+    zeroAssertions(0);
   }
 
   render() {
@@ -47,6 +49,8 @@ class RankingButton extends React.Component {
 
 const mapDispatchToProps = (dispatch) => ({
   toPlayer: (rank) => dispatch(savePlayer(rank)),
+  zeroScore: (score) => dispatch(scores(score)),
+  zeroAssertions: (assertions) => dispatch(assertion(assertions)),
 });
 
 const mapStateToProps = (state) => ({
@@ -60,6 +64,8 @@ RankingButton.propTypes = {
   score: PropTypes.number.isRequired,
   picture: PropTypes.string.isRequired,
   toPlayer: PropTypes.func.isRequired,
+  zeroScore: PropTypes.func.isRequired,
+  zeroAssertions: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RankingButton);

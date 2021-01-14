@@ -18,7 +18,6 @@ class Play extends Component {
       btclass: 'answer',
       btclassw: 'answer',
       btnext: 'btnexthi',
-      sum: 0,
     };
     this.triviaApi = this.triviaApi.bind(this);
     this.counter = this.counter.bind(this);
@@ -90,8 +89,8 @@ class Play extends Component {
   }
 
   somapontos() {
-    const { scoreDispatch, assertionsDispatch } = this.props;
-    const { trivia, index, timer, sum } = this.state;
+    const { scoreDispatch, assertionsDispatch, score, assertions } = this.props;
+    const { trivia, index, timer } = this.state;
     const ten = 10;
     const lvl1 = 1;
     const lvl2 = 2;
@@ -100,13 +99,11 @@ class Play extends Component {
     if (trivia[index].difficulty === 'easy') lvl = lvl1;
     if (trivia[index].difficulty === 'medium') lvl = lvl2;
     if (trivia[index].difficulty === 'hard') lvl = lvl3;
-    const point = (ten + (timer * lvl));
+    const point = (Number(score) + (ten + (timer * lvl)));
     console.log(point);
     scoreDispatch(point);
-    this.setState({
-      sum: (sum + lvl1),
-    });
-    assertionsDispatch(sum);
+    // this.setState({ sum: assertions + lvl1 });
+    assertionsDispatch(assertions + lvl1);
   }
 
   trivia() {
@@ -167,14 +164,16 @@ class Play extends Component {
   }
 
   render() {
-    const { name, score = 0, assertions = 0 } = this.props;
+    const { name, score = Number(0), assertions = 0 } = this.props;
     const { isLoading } = this.state;
     return (
       <div>
         <header>
           <img src={ this.hash() } alt="avatar" data-testid="header-profile-picture" />
           <h1 data-testid="header-player-name">{name}</h1>
-          <p data-testid="header-score">{score}</p>
+          {!score
+            ? (<p data-testid="header-score">0</p>)
+            : (<p data-testid="header-score">{score}</p>)}
           <p>{ assertions }</p>
         </header>
         { isLoading ? this.trivia() : <p>Carregando</p> }
