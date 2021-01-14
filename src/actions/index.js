@@ -3,6 +3,7 @@ import md5 from 'crypto-js/md5';
 export const REQUEST_TOKEN = 'REQUEST_TOKEN';
 export const RECEIVE_TOKEN = 'RECEIVE_TOKEN';
 export const FAILED_REQUEST = 'FAILED_REQUEST';
+export const ADD_ANSWERS = 'ADD_ANSWERS';
 
 const requestToken = () => ({ type: REQUEST_TOKEN });
 const failedRequest = (error) => ({ type: FAILED_REQUEST, error });
@@ -31,3 +32,16 @@ export const login = ({ name, email }) => async (dispatch) => {
     dispatch(failedRequest(error));
   }
 };
+
+export const questionUpdate = (json) => ({ type: ADD_ANSWERS, payload: json });
+
+export function fetchQuestionAnswers() {
+  return async (dispatch) => {
+    dispatch(questionUpdate());
+    const token = localStorage.getItem('token');
+    const questionResponse = await fetch(`https://opentdb.com/api.php?amount=5&token=${token}`);
+    const questionJson = await questionResponse.json();
+
+    return dispatch(questionUpdate(questionJson.results));
+  };
+}
