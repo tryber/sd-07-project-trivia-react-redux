@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import logo from '../trivia.png';
+import '../App.css';
 
 class Header extends Component {
   render() {
     const { name } = this.props;
     return (
-      <header>
+      <header className="App-header">
         <img
           alt="Imagem do Gravatar"
           data-testid="header-profile-picture"
-          src="https://img.ibxk.com.br/2014/06/06/06165614150388.jpg?w=1120&h=420&mode=crop&scale=both"
+          className="App-logo"
+          src={ logo }
         />
         <h2
           data-testid="header-player-name"
