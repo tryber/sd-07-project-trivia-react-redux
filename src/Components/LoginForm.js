@@ -58,6 +58,7 @@ class LoginForm extends Component {
             type="email"
             required="required"
             name="email"
+            placeholder="E-mail"
             data-testid="input-gravatar-email"
             onChange={ (e) => this.setState({ email: e.target.value }) }
           />
@@ -65,6 +66,7 @@ class LoginForm extends Component {
             type="text"
             required="required"
             name="name"
+            placeholder="Name"
             data-testid="input-player-name"
             onChange={ (e) => this.setState({ name: e.target.value }) }
           />
