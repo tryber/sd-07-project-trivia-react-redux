@@ -46,6 +46,10 @@ class Trivia extends React.Component {
         gravatarEmail: '',
       },
     }));
+    const rankingPlayer = localStorage.getItem('ranking');
+    if (rankingPlayer === null) {
+      localStorage.setItem('ranking', JSON.stringify([]));
+    }
   }
 
   async requestQuestions(number, token) {
@@ -82,22 +86,38 @@ class Trivia extends React.Component {
         placar: dez + (points * counter) + previus.placar,
         acertos: previus.acertos + 1,
       }), () => {
-        const { placar } = this.state;
-        const { acertos } = this.state;
+        const { placar, acertos, urlImg } = this.state;
+        const { nameSave } = this.props;
         localStorage.setItem('state',
-          JSON.stringify({ player: { score: placar, assertions: acertos } }));
+          JSON.stringify({
+            player:
+            {
+              score: placar,
+              assertions: acertos,
+              name: nameSave,
+              gravatarEmail: urlImg,
+            },
+          }));
       });
     } else {
-      const { placar } = this.state;
-      const { acertos } = this.state;
+      const { placar, acertos, urlImg } = this.state;
+      const { nameSave } = this.props;
       localStorage.setItem('state',
-        JSON.stringify({ player: { score: placar, assertions: acertos } }));
+        JSON.stringify({
+          player:
+          {
+            score: placar,
+            assertions: acertos,
+            name: nameSave,
+            gravatarEmail: urlImg,
+          },
+        }));
     }
     this.setState({
       replyConfirmation: true,
 
       clicked: true,
-
+      disabled: true,
     });
   }
 
@@ -105,13 +125,21 @@ class Trivia extends React.Component {
     const { position } = this.state;
     const { history } = this.props;
     const maxLength = 4;
-    return position === maxLength ? history.push('/feedback')
-      : this.setState({
+    if (position === maxLength) {
+      const playerInfo = JSON.parse(localStorage.getItem('state'));
+      const raking = JSON.parse(localStorage.getItem('ranking'));
+
+      localStorage.setItem('ranking', JSON.stringify([...raking, playerInfo.player]));
+      history.push('/feedback');
+    } else {
+      this.setState({
         position: position + 1,
         replyConfirmation: false,
         clicked: false,
         counter: 30,
+        disabled: false,
       });
+    }
   }
 
   disable() {
