@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { login, fetchToken, fetchQuestions } from '../actions';
 
@@ -10,6 +9,7 @@ class Login extends Component {
     this.saveToken = this.saveToken.bind(this);
     this.setToken = this.setToken.bind(this);
     this.fetchQuestion = this.fetchQuestion.bind(this);
+    this.settingsButton = this.settingsButton.bind(this);
     this.state = {
       email: '',
       name: '',
@@ -22,6 +22,11 @@ class Login extends Component {
     fetchTokenAction();
     this.setToken();
     getQuestions(token);
+  }
+
+  settingsButton() {
+    const { history } = this.props;
+    history.push('/settings');
   }
 
   async setToken() {
@@ -38,23 +43,23 @@ class Login extends Component {
 
   async saveToken() {
     const { token, name, email } = this.state;
-    const { userLogin } = this.props;
+    const { userLogin, history } = this.props;
     userLogin(email, name);
     localStorage.setItem('token', JSON.stringify(token));
+    history.push('/game');
   }
 
   render() {
     const { email, name } = this.state;
     return (
       <div>
-        <Link to="/settings">
-          <button
-            type="button"
-            data-testid="btn-settings"
-          >
-            Settings
-          </button>
-        </Link>
+        <button
+          type="button"
+          data-testid="btn-settings"
+          onClick={ this.settingsButton }
+        >
+          Settings
+        </button>
         <form>
           <input
             value={ name }
@@ -73,16 +78,14 @@ class Login extends Component {
             onChange={ (e) => this.setState({ email: e.target.value }) }
           />
         </form>
-        <Link to="/game">
-          <button
-            type="button"
-            data-testid="btn-play"
-            disabled={ !email || !name }
-            onClick={ this.saveToken }
-          >
-            Jogar
-          </button>
-        </Link>
+        <button
+          type="button"
+          data-testid="btn-play"
+          disabled={ !email || !name }
+          onClick={ this.saveToken }
+        >
+          Jogar
+        </button>
       </div>
     );
   }
@@ -92,13 +95,19 @@ Login.propTypes = {
   fetchTokenAction: PropTypes.func.isRequired,
   getQuestions: PropTypes.func.isRequired,
   token: PropTypes.string.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
 };
+
 const mapStateToProps = (state) => ({
   questions: state.questionsReducer.questions,
 });
+
 const mapDispatchToProps = (dispatch) => ({
   fetchTokenAction: () => dispatch(fetchToken()),
   userLogin: (email, name) => dispatch(login(email, name)),
   getQuestions: (token) => dispatch(fetchQuestions(token)),
 });
+
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
