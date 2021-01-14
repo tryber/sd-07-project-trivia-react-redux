@@ -21,7 +21,6 @@ class Header extends React.Component {
     const avatar = `https://www.gravatar.com/avatar/${hash}`;
     return (
       <header>
-        {console.log('Name em Header: ', name)}
         <img data-testid="header-profile-picture" src={ avatar } alt="avatar" />
         <h3 data-testid="header-player-name">{`Player: ${name}`}</h3>
         <h3 data-testid="header-score">{`Score: ${score}`}</h3>

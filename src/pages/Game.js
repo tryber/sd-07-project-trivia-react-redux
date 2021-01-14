@@ -8,15 +8,14 @@ import Loading from './componentes/Loading';
 
 class Game extends React.Component {
   componentDidMount() {
-    const { requestQuestions } = this.props;
+    const { requestQuestions, name, score } = this.props;
     requestQuestions(localStorage.token);
+    localStorage.setItem('playerName', name);
+    localStorage.setItem('playerScore', score);
   }
 
   render() {
     const { question, loading } = this.props;
-    console.log(question);
-    console.log(question.results);
-    console.log(loading);
     return (
       loading ? <Loading />
         : (
