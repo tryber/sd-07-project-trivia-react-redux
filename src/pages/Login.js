@@ -37,7 +37,7 @@ class Login extends React.Component {
 
   textsToProps() {
     const { email, name } = this.state;
-    const { texts, token } = this.props;
+    const { texts } = this.props;
     texts(email, name);
     fetchToken();
   }
