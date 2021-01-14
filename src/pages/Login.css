@@ -1,4 +1,4 @@
-.login {
+.main {
   align-items: center;
   display: flex;
   height: 100vh;
@@ -28,10 +28,15 @@
 }
 
 .settings {
-  clear: both;
-  float: right;
-  margin: 0 10px 10px 0;
-  position: absolute;
+  font-size: 3em;
+  margin: 0 50px 30px 0;
   text-decoration: none;
-  z-index: 10;
+}
+
+.footer {
+  align-items: flex-end;
+  display: flex;
+  flex-direction: row-reverse;
+  height: 0;
+  width: 100vw;
 }
