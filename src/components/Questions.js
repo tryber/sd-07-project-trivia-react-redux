@@ -6,12 +6,10 @@ class Questions extends React.PureComponent {
     const { questions, clicked, disabled, position } = this.props;
     const { clickHandler } = this.props;
     const { results } = questions;
-    console.log(results[0]);
     return (
 
       <div>
         {results.map((item, index1) => {
-          const quatro = 4;
           const answers = item.incorrect_answers.map((answer, index) => (
             <button
               onClick={ ({ target }) => clickHandler(target, item.difficulty) }
@@ -27,6 +25,8 @@ class Questions extends React.PureComponent {
               {' '}
             </button>
           ));
+
+          const lengthMaisUm = answers.length + 1;
           const answerCorrect = (
             <button
               onClick={ ({ target }) => clickHandler(target, item.difficulty) }
@@ -41,7 +41,7 @@ class Questions extends React.PureComponent {
               {' '}
             </button>
           );
-          answers.splice(Math.floor(Math.random() * quatro), 0, answerCorrect);
+          answers.splice(Math.floor(Math.random() * lengthMaisUm), 0, answerCorrect);
           return (
             <div key={ index1 }>
               <p data-testid="question-category">
@@ -65,8 +65,8 @@ class Questions extends React.PureComponent {
 
 Questions.propTypes = {
   questions: PropTypes.shape().isRequired,
-  clicked: PropTypes.string.isRequired,
-  disabled: PropTypes.string.isRequired,
+  clicked: PropTypes.bool.isRequired,
+  disabled: PropTypes.bool.isRequired,
   position: PropTypes.number.isRequired,
   clickHandler: PropTypes.func.isRequired,
 };

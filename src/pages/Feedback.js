@@ -42,13 +42,13 @@ class FeedBack extends React.Component {
 
       <div>
         <header>
+          <h1 data-testid="feedback-text">FeedBack</h1>
           <h1 data-testid="header-player-name">{nameSave}</h1>
           <h2>{emailSave}</h2>
           <h2 data-testid="header-score">{score}</h2>
           <img data-testid="header-profile-picture" src={ urlImg } alt="Gravatar" />
 
         </header>
-        <h1 data-testid="feedback-text">FeedBack</h1>
         <button
           type="button"
           data-testid="btn-play-again"
