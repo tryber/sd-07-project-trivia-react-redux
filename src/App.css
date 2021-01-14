@@ -118,8 +118,8 @@
 
 .answer {
   display: block;
-  margin-bottom: 5px;
   font-size: 13pt;
+  margin-bottom: 5px;
 }
 
 .questions {
@@ -144,7 +144,7 @@
 }
 
 .correct-answer {
-  border:3px solid rgb(6, 240, 15);
+  border: 3px solid rgb(6, 240, 15);
   border-radius: 5px;
 }
 
