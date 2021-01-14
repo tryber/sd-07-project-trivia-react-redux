@@ -45,8 +45,10 @@ class FeedBack extends React.Component {
   render() {
     const state = JSON.parse(localStorage.getItem('state'));
     const { player } = state;
+
     const { score, assertions } = player;
-    const { emailSave, nameSave } = this.props;
+    const { emailSave, nameSave, history } = this.props;
+
     const { urlImg } = this.state;
     console.log(urlImg);
     return (
@@ -71,6 +73,13 @@ class FeedBack extends React.Component {
           onClick={ () => this.jogarNovamente() }
         >
           Jogar novamente
+        </button>
+        <button
+          type="button"
+          data-testid="btn-ranking"
+          onClick={ () => history.push('/ranking') }
+        >
+          Ver Ranking
         </button>
       </div>
     );
