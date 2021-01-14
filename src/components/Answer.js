@@ -28,7 +28,6 @@ class Answer extends React.Component {
     const { resAnswer, resQuest } = this.props;
 
     const questions = Object.values(resAnswer).map(({ question: quest }) => quest);
-    console.log(questions[count])
 
     resQuest(questions[count]);
 
