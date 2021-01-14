@@ -6,8 +6,11 @@ class Question extends Component {
   constructor() {
     super();
 
+    this.state = { clicked: '' };
+
     this.getAnswers = this.getAnswers.bind(this);
     this.renderAnswers = this.renderAnswers.bind(this);
+    this.changeColor = this.changeColor.bind(this);
   }
 
   getAnswers(obj) {
@@ -22,6 +25,10 @@ class Question extends Component {
       counter += obj.incorrect_answers.length;
     } else counter = questions.length;
     return this.renderAnswers(counter, index, questions, randomQuestions);
+  }
+
+  changeColor() {
+    this.setState({ clicked: '-clicked' });
   }
 
   renderAnswers(counter, index, questions, randomQuestions) {
@@ -61,6 +68,7 @@ class Question extends Component {
   render() {
     const { item } = this.props;
     const { category, question } = item;
+    const { clicked } = this.state;
     const randomQuestions = this.getAnswers(item);
     return (
       <div className="question-container">
@@ -75,6 +83,8 @@ class Question extends Component {
             <Answer
               key={ answer.value }
               item={ answer }
+              click={ clicked }
+              changeColor={ this.changeColor }
             />
           ))}
         </div>
