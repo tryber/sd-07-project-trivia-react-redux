@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
+import { connect } from 'react-redux';
+import { userNameAction } from '../Actions';
 import settingsIcon from './images/setting2.png';
 
 class LoginForm extends Component {
@@ -16,7 +18,9 @@ class LoginForm extends Component {
   }
 
   async handleSubmit() {
-    const { history } = this.props;
+    const { history, userNameDispatch } = this.props;
+    const { name } = this.state;
+    userNameDispatch(name);
     history.push('/game');
     const endpoint = 'https://opentdb.com/api_token.php?command=request';
     const fetchAPI = await fetch(endpoint);
@@ -78,9 +82,14 @@ class LoginForm extends Component {
   }
 }
 
+const mapDispatchToProps = {
+  userNameDispatch: (name) => userNameAction(name),
+};
+
 LoginForm.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired }).isRequired,
+  userNameDispatch: PropTypes.func.isRequired,
 };
 
-export default LoginForm;
+export default connect(null, mapDispatchToProps)(LoginForm);
