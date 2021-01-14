@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux';
 import player from './playerInfo';
 import timer from './timer';
-import color from './changeColor';
+import questions from './questions';
 
 const rootReducer = {
   player,
   timer,
-  color,
+  questions,
 };
 
 export default combineReducers(rootReducer);

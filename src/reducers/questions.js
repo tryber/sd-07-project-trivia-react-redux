@@ -1,10 +1,11 @@
 const INITIAL_STATE = {
+  questions: [],
   click: '',
   clicked: false,
 };
 
-function colorReducer(state = INITIAL_STATE, action) {
-  const { type } = action;
+function questionsReducer(state = INITIAL_STATE, action) {
+  const { type, newQuestions } = action;
   switch (type) {
   case 'CLICK':
     return {
@@ -17,10 +18,11 @@ function colorReducer(state = INITIAL_STATE, action) {
       ...state,
       click: '',
       clicked: false,
+      questions: newQuestions,
     };
   default:
     return state;
   }
 }
 
-export default colorReducer;
+export default questionsReducer;
