@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 class Header extends Component {
   constructor() {
     super();
+    this.fetchAvatarFunc = this.fetchAvatarFunc.bind(this)
     this.state = {
       avatar: '',
     };
@@ -15,7 +16,7 @@ class Header extends Component {
     const { email } = this.props;
     const hash = md5(email);
     const fetchAvatar = await fetch(`https://www.gravatar.com/avatar/${hash}`);
-    fetchAvatar(fetchAvatar.url);
+    this.fetchAvatarFunc(fetchAvatar.url);
   }
 
   fetchAvatarFunc(avatarUrl) {
