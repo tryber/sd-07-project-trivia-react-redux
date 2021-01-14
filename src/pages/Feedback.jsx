@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+// import { connect } from 'react-redux';
 import propTypes from 'prop-types';
 import Header from '../components/Header';
 
