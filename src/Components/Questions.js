@@ -6,30 +6,41 @@ class Questions extends React.Component {
   constructor() {
     super();
     this.incrementIndex = this.incrementIndex.bind(this);
-    // this.buttonColor = this.buttonColor.bind(this);
+    this.buttonColor = this.buttonColor.bind(this);
+    this.renderNextButton = this.renderNextButton.bind(this);
+
     this.state = {
       questionNumber: 0,
       correctAnswer: 'neutral',
       wrongAnswer: 'neutral',
+      visibleClick: false,
     };
   }
 
   incrementIndex() {
-    // const { questionNumber } = this.state;
-    // this.setState({ questionNumber: questionNumber + 1 });
     this.setState((anterior) => ({
       questionNumber: anterior.questionNumber + 1,
+      visibleClick: false,
     }));
+  }
+
+  allFunctionsOfButton() {
+    this.buttonColor();
+    this.renderNextButton();
   }
 
   buttonColor() {
     this.setState({ correctAnswer: 'correctAnswer', wrongAnswer: 'wrongAnswer' });
   }
 
+  renderNextButton() {
+    this.setState({ visibleClick: true });
+  }
+
   render() {
     const { questions, timer } = this.props;
     const { questionsList } = questions;
-    const { questionNumber, wrongAnswer, correctAnswer } = this.state;
+    const { questionNumber, wrongAnswer, correctAnswer, visibleClick } = this.state;
     const five = 5;
     if (questionsList < five) {
       console.log(questionsList);
@@ -50,7 +61,7 @@ class Questions extends React.Component {
           <button
             type="button"
             data-testid="correct-answer"
-            onClick={ () => this.buttonColor() }
+            onClick={ () => this.allFunctionsOfButton() }
             className={ correctAnswer }
             disabled={ timer }
           >
@@ -63,15 +74,23 @@ class Questions extends React.Component {
               type="button"
               disabled={ timer }
               className={ wrongAnswer }
-              onClick={ () => this.buttonColor() }
+              onClick={ () => this.allFunctionsOfButton() }
             >
               {q}
             </button>
           ))}
         </div>
-        <button type="button" onClick={ () => this.incrementIndex() }>
-          Próxima
-        </button>
+        {
+          visibleClick || timer
+          ? <button
+              data-testid="btn-next"
+              type="button"
+              onClick={ () => this.incrementIndex() }
+            >
+              Próxima
+            </button>
+          : null
+        }
       </div>
     );
   }
