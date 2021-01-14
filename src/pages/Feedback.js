@@ -13,6 +13,16 @@ class Feedback extends React.Component {
     history.push('/ranking');
   }
 
+  messageFeedback() {
+    const { player: { assertions } } = JSON.parse(localStorage.getItem('state'));
+    const controlMessage = 3;
+    if (assertions < controlMessage) {
+      return 'Podia ser melhor...';
+    }
+
+    return 'Mandou bem!';
+  }
+
   render() {
     return (
       <div className="feedback-screen">
@@ -20,7 +30,7 @@ class Feedback extends React.Component {
           <Header />
         </div>
         <div data-testid="feedback-text">
-          Text
+          { this.messageFeedback() }
         </div>
         <button
           onClick={ this.handleClick }
