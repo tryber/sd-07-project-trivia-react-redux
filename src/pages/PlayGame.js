@@ -12,6 +12,8 @@ class PlayGame extends React.Component {
   }
 
   render() {
+    const { token } = this.props;
+    localStorage.setItem('token', token);
     return <PlayGameHeader />;
   }
 }

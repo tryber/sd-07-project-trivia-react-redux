@@ -1,7 +1,8 @@
-import { LOGIN, REQUEST_TOKEN, REQUEST_API_SUCCESS } from '../action/index';
+import { LOGIN, REQUEST_TOKEN,
+  REQUEST_API_SUCCESS } from '../action/index';
 
 const INITIAL_STATE = {
-  user: [],
+  user: {},
   apiToken: [],
   isFetching: true,
 };
@@ -10,9 +11,9 @@ export default function userReducer(state = INITIAL_STATE, action) {
   console.log(action.type);
   switch (action.type) {
   case LOGIN:
-    return ({
-      ...state, user: [...state.user, action.value],
-    });
+    return {
+      ...state, user: { email: action.email, username: action.username },
+    };
   // estou fazendo a requisição, espere...
   case REQUEST_TOKEN:
     return { ...state,

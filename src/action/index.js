@@ -4,9 +4,10 @@ export const LOGIN = 'LOGIN';
 export const REQUEST_API_SUCCESS = 'REQUEST_API_SUCCESS';
 export const REQUEST_TOKEN = 'REQUEST_TOKEN';
 
-export const loginAction = (value) => ({
+export const loginAction = (email, username) => ({
   type: LOGIN,
-  value,
+  email,
+  username,
 });
 
 export const requestToken = (value) => ({
