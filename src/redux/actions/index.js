@@ -41,8 +41,6 @@ export const throwTime = (time) => ({
 export const changeScore = (value) => ({ type: SET_SCORE, payload: value });
 
 export const setScore = (isAnswered, isCorrect, time, diff) => (dispatch) => {
-  console.log(isAnswered, isCorrect, time, diff);
-  // calcula score e salva no localStorage e faz um dispatch para a store
   const difficulty = {
     hard: 3,
     medium: 2,
@@ -56,4 +54,10 @@ export const setScore = (isAnswered, isCorrect, time, diff) => (dispatch) => {
   localStorage.setItem('state', JSON.stringify(state));
   dispatch(questionAnswered(isAnswered, isCorrect));
   return dispatch(changeScore(newScore));
+};
+
+export const nextQuestion = () => (dispatch) => {
+  const initialTimer = 30;
+  dispatch(questionAnswered(false, false));
+  return dispatch(throwTime(initialTimer));
 };

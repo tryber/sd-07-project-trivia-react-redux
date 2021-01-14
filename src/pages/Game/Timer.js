@@ -14,6 +14,14 @@ class Timer extends Component {
     this.displayTime();
   }
 
+  componentDidUpdate() {
+    const { restart } = this.props;
+    if (restart) {
+      console.log('atualizei');
+      this.displayTime();
+    }
+  }
+
   timerDecrement() {
     const { timerValue, sendThrowTime } = this.props;
     const newTimer = timerValue - 1;
@@ -63,6 +71,7 @@ Timer.propTypes = {
   sendThrowTime: PropTypes.func.isRequired,
   actionSetScore: PropTypes.func.isRequired,
   timerValue: PropTypes.number.isRequired,
+  restart: PropTypes.bool.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Timer);
