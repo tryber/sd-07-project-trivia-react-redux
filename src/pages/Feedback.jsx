@@ -10,10 +10,10 @@ class Feedback extends Component {
 
   renderMessage(assertions) {
     const parameter = 3;
-    if (assertions < parameter) {
-      return (<h1 data-testid="feedback-text">Podia ser melhor...</h1>);
+    if (assertions >= parameter) {
+      return (<h1 data-testid="feedback-text">Mandou bem!</h1>);
     }
-    return (<h1 data-testid="feedback-text">Mandou bem!</h1>);
+    return (<h1 data-testid="feedback-text">Podia ser melhor...</h1>);
   }
 
   render() {
