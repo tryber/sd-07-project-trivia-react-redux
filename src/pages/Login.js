@@ -62,7 +62,7 @@ class Login extends Component {
             type="text"
             name="email"
             placeholder="email"
-            data-testid="email-input"
+            data-testid="input-gravatar-email"
             value={ email }
             onChange={ this.handleInputChange }
           />
@@ -81,7 +81,7 @@ class Login extends Component {
         {redirect && (
           <Redirect to="/game" />
         )}
-        <Link className="settings" to="/settings">
+        <Link className="settings" data-testid="btn-settings" to="/settings">
           +
         </Link>
       </div>
