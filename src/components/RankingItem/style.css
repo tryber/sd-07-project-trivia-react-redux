@@ -1,56 +1,55 @@
 .ranking-section {
-  display: flex;
-  flex-direction: column;
-  flex-flow: row wrap;
   align-items: center;
+  display: flex;
+  flex-flow: column wrap;
   justify-content: center;
+  margin-top: 5px;
 }
 
 .ranking {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  box-sizing: border-box;
   background-color: rgba(0, 0, 0, 0.2);
-  min-width: 85%;
+  box-sizing: border-box;
+  display: flex;
+  flex-flow: row wrap;
   height: 70px;
+  justify-content: space-between;
   margin: 0;
+  min-width: 90%;
   padding: 0 10px;
 }
 
-.ranking:nth-child(even) {
-  background-color: rgba(0, 0, 0, 0.05);
+.ranking:nth-child( even ) {
+  background-color: rgba(0, 0, 0, 0.051);
 }
 
 .ranking:first-child {
-  border-radius: 20px 20px 0px 0px;
+  border-radius: 20px 20px 0 0;
 }
 
 .ranking:last-child {
-  border-radius: 0px 0px 20px 20px;
+  border-radius: 0 0 20px 20px;
 }
 
 .name {
-  font-family: Roboto;
+  align-items: center;
+  color: white;
+  display: flex;
+  font-family: Roboto , sans-serif;
+  font-size: 36px;
   font-style: normal;
   font-weight: 400;
-  font-size: 36px;
   line-height: 42px;
-  display: flex;
-  align-items: center;
   text-align: right;
-  color: white;
 }
 
 .score {
-  font-family: Roboto;
-  font-style: normal;
-  font-weight:700;
-  font-size: 36px;
-  line-height: 42px;
-  display: flex;
   align-items: center;
-  text-align: left;
   color: white;
+  display: flex;
+  font-family: Roboto , sans-serif;
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 42px;
+  text-align: left;
 }
