@@ -46,4 +46,5 @@ class Ranking extends React.Component {
   }
 }
 
+
 export default Ranking;
