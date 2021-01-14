@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import questionsRequest from '../services/QuestionsRequest';
-
+import Header from '../components/Header';
 import Questions from './Questions';
 
 class Game extends Component {
@@ -31,23 +31,17 @@ class Game extends Component {
     console.log(questionsArray);
     return (
       <div>
-        <header>
-          <h1>Player Info</h1>
-          <img
-            data-testid="header-profile-picture"
-            src={ localStorage.email }
-            alt={ localStorage.username }
-          />
-          <h2 data-testid="header-player-name">{localStorage.username}</h2>
-          <h2>
-            Placar:
-            <span data-testid="header-score">0</span>
-          </h2>
-        </header>
+        <Header />
         <h1>Token da requisição</h1>
         {localStorage.token}
         {questionsArray[currentQuestion]
           && <Questions question={ questionsArray[currentQuestion] } />}
+        <button
+          data-testid="btn-next"
+          type="button"
+        >
+          Próxima
+        </button>
       </div>
     );
   }
