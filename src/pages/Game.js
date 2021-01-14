@@ -27,7 +27,7 @@ class Game extends Component {
   }
 
  handleClasses(type){
-  document.querySelectorAll('.btnQuestion').forEach((button) => {
+  document.querySelectorAll('.btnAnswer').forEach((button) => {
     if(type === "add"){
       const { id } = button;
       if (id === 'ok') {
@@ -36,7 +36,8 @@ class Game extends Component {
       button.classList.add('btnColorRed');
     }else{
       button.classList.remove('btnColorGreen')
-      button.classList.remove('btnColorRed')
+      button.classList.remove('btnColorRed');
+
     }
    
   });
@@ -47,9 +48,10 @@ class Game extends Component {
   }
 
   nextQuestion(){
-    const { getQuestions} = this.props;
+    this.setState((previous)=>({
+      questionIndex: previous.questionIndex + 1,
+    }))
     this.handleClasses('remove')
-    getQuestions();
   }
 
 
@@ -61,7 +63,7 @@ class Game extends Component {
     if (questions.results) {
       const correctAnswer = (
         <button
-          className="btnQuestion"
+          className="btnAnswer"
           type="button"
           data-testid="correct-answer"
           onClick={ this.handleUserAnswer }
@@ -74,7 +76,7 @@ class Game extends Component {
       const wrongAnswer = questions.results[questionIndex].incorrect_answers
         .map((answer, index) => (
           <button
-          className="btnQuestion"
+          className="btnAnswer"
             onClick={ this.handleUserAnswer }
             type="button"
             key={ answer }
