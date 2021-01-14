@@ -11,7 +11,7 @@ class Header extends Component {
       <header>
         <div className="header-components-container">
           <img
-            class="header-component"
+            className="header-component"
             src={ gravatarAPI(emailGravatar) }
             data-testid="header-profile-picture"
             alt="gravatar"
