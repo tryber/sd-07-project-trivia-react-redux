@@ -67,7 +67,7 @@ export function requestToken() {
       .then((response) => {
         response.json().then(
           (data) => {
-            dispatch(tokenToStoreSucess(data.token)); 
+            dispatch(tokenToStoreSucess(data.token));
             localStorage.setItem('token', data.token);
           },
           (error) => dispatch(tokenToStoreFail(error)),

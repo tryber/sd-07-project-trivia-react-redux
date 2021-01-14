@@ -9,9 +9,7 @@ import Loading from './componentes/Loading';
 class Game extends React.Component {
   componentDidMount() {
     const { requestQuestions } = this.props;
-    console.log(localStorage.token);
     requestQuestions(localStorage.token);
-    console.log(localStorage.token);
   }
 
   render() {
@@ -21,15 +19,16 @@ class Game extends React.Component {
     console.log(loading);
     return (
       loading ? <Loading />
-      :
-      (
-        <div>
-          <Header />
-          <h3 data-testid="question-category">{ question.results[0].category }</h3>
-          <p data-testid="question-text">{ question.results[0].question }</p>
-          <QuestionsList question={ question } />
-        </div>)
-      );
+        : (
+          <div>
+            <Header />
+            <h3>Category:</h3>
+            <p data-testid="question-category">{ question.results[0].category }</p>
+            <h3>Question:</h3>
+            <p data-testid="question-text">{ question.results[0].question }</p>
+            <QuestionsList question={ question } />
+          </div>)
+    );
   }
 }
 
