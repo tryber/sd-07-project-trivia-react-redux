@@ -14,6 +14,7 @@ class Game extends Component {
       questions: [],
     };
     this.getQuestions = this.getQuestions.bind(this);
+    this.renderButton = this.renderButton.bind(this);
   }
 
   componentDidMount() {
@@ -26,13 +27,21 @@ class Game extends Component {
     this.setState({ questions: requestQuestions.results });
   }
 
+  renderButton() {
+    return (
+      <button type="button" data-testid="btn-next">Próxima pergunta</button>
+    );
+  }
+
   render() {
     const { questions } = this.state;
+    const { clicked } = this.props;
     return (
       <div>
         <Header />
         <Timer />
         { questions[0] ? <Question item={ questions[0] } /> : null }
+        { clicked ? this.renderButton() : null }
       </div>
     );
   }
@@ -40,6 +49,7 @@ class Game extends Component {
 
 const mapStateToProps = (state) => ({
   token: state.player.token,
+  clicked: state.color.clicked,
 });
 
 export default connect(mapStateToProps)(Game);
