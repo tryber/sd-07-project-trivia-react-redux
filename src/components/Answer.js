@@ -3,6 +3,16 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { fetchQuestionAnswers, resQuestionAction, resCategoryAction } from '../actions';
 
+let countWrong = 0;
+function createDataTestId([answer, isCorrect]) {
+  if (isCorrect === 'wrong') {
+    const testId = `wrong-answer-${countWrong}`;
+    countWrong += 1;
+    return [answer, testId];
+  }
+  return [answer, 'correct-answer'];
+}
+
 class Answer extends React.Component {
   constructor(props) {
     super(props);
@@ -38,16 +48,20 @@ class Answer extends React.Component {
     const answersResponse = Object.values(resAnswer)
       .map(({
         incorrect_answers: incorrect, correct_answer: correct }) => [
-        ...incorrect, correct].sort());
+        ...incorrect.map((answer) => [answer, 'wrong']), [correct, 'correct']]
+        .sort());
 
-    const answers = { ...answersResponse[count] };
+    countWrong = 0;
+    const answers = Object.values({ ...answersResponse[count] })
+      .map(createDataTestId);
+    console.log(answers);
 
     return (
       <div>
-        {Object.values(answers).map((answer, index) => (
+        {answers.map(([answer, testId], index) => (
           <div key={ index }>
             <br />
-            <button type="button">{ answer }</button>
+            <button type="button" data-testid={ testId }>{ answer }</button>
             <br />
           </div>
         ))}
