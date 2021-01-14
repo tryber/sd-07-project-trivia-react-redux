@@ -21,18 +21,18 @@ class GameScreen extends Component {
       disabledTimeOut: false,
       timer: 30,
     };
-    this.handleQuest = this.handleQuest.bind(this);
+    this.handleNextQuest = this.handleNextQuest.bind(this);
     this.changeStyle = this.changeStyle.bind(this);
     this.timeOut = this.timeOut.bind(this);
     this.disableQuestion = this.disableQuestion.bind(this);
-    this.nextQuestion = this.nextQuestion.bind(this);
+    // this.nextQuestion = this.nextQuestion.bind(this);
     this.handleRedirect = this.handleRedirect.bind(this);
   }
 
   async componentDidMount() {
     const { actionRequest } = this.props;
     await actionRequest();
-    this.handleQuest();
+    this.handleNextQuest();
     this.timeOut();
   }
 
@@ -42,28 +42,13 @@ class GameScreen extends Component {
     history.push('/feedback');
   }
 
-  handleQuest() {
-    const { quest } = this.props;
-    console.log('q', quest);
-    if (quest.length === 0) {
-      return null;
-    }
-    this.setState({
-      category: quest[0].category,
-      question: quest[0].question,
-      // respCorrect: quest[1].correct_answer,
-      resps: [quest[0].correct_answer, ...quest[0].incorrect_answers],
-    });
-  }
-
-  changeStyle() {
-    this.setState({ right: 'right', wrong: 'wrong', buttonNext: true });
-  }
-
-  nextQuestion() {
+  handleNextQuest() {
     const { quest } = this.props;
     const { id } = this.state;
     const MAX_QUESTIONS = 5;
+    if (quest.length === 0) {
+      return null;
+    }
     this.setState({ id: id + 1 });
     if (id >= MAX_QUESTIONS) {
       return this.handleRedirect();
@@ -77,6 +62,31 @@ class GameScreen extends Component {
       timer: 30,
     });
   }
+
+  changeStyle() {
+    this.setState({ right: 'right', wrong: 'wrong', buttonNext: true });
+  }
+
+  // nextQuestion() {
+  //   const { quest } = this.props;
+  //   const { id } = this.state;
+  //   const MAX_QUESTIONS = 5;
+  //   if (quest.length === 0) {
+  //     return null;
+  //   }
+  //   this.setState({ id: id + 1 });
+  //   if (id >= MAX_QUESTIONS) {
+  //     return this.handleRedirect();
+  //   }
+  //   this.setState({
+  //     category: quest[id].category,
+  //     question: quest[id].question,
+  //     // respCorrect: quest[1].correct_answer,
+  //     resps: [quest[id].correct_answer, ...quest[id].incorrect_answers],
+  //     buttonNext: false,
+  //     timer: 30,
+  //   });
+  // }
 
   disableQuestion() {
     const { timer } = this.state;
@@ -159,7 +169,7 @@ class GameScreen extends Component {
             <button
               data-testid="btn-next"
               type="button"
-              onClick={ this.nextQuestion }
+              onClick={ this.handleNextQuest }
             >
               Próxima
             </button>
@@ -180,6 +190,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(GameScreen);
 
 GameScreen.propTypes = {
   actionRequest: PropTypes.func.isRequired,
-  quest: PropTypes.arrayOf().isRequired,
-  history: PropTypes.func.isRequired,
+  quest: PropTypes.arrayOf(PropTypes.any).isRequired,
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
 };
