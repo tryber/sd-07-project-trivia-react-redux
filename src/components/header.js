@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import md5 from 'crypto-js/md5';
 import PropTypes from 'prop-types';
-import '../styles/header.css';
+import '../styles/index.scss';
 
 class Header extends React.Component {
   render() {

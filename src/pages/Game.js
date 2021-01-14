@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Questions from './Questions';
 import Header from '../components/header';
+import '../styles/index.scss';
 
 class Game extends React.Component {
   constructor() {

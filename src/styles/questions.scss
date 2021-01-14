@@ -1,0 +1,19 @@
+button {
+  margin: 5px;
+  border-radius: 5px;
+  min-width: 120px;
+  height: 30px;
+}
+
+.correct {
+  border: 3px solid rgb(6, 240, 15);
+  background-color:  #008148;
+  color: white;
+}
+
+.incorrect {
+  border: 3px solid red;
+  margin: 5px;
+  background-color: #990000;
+  color: white;
+}

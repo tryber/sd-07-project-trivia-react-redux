@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { addScore } from '../Redux/Actions';
-import '../styles/questions.css';
+import '../styles/index.scss';
 
 class Questions extends React.Component {
   constructor(props) {
@@ -32,6 +32,9 @@ class Questions extends React.Component {
       }
       if (seconds === 0) {
         clearInterval(myInterval);
+        this.setState({
+          status: false,
+        });
       }
     }, oneSecond);
   }
@@ -44,6 +47,7 @@ class Questions extends React.Component {
         index: index + 1,
         seconds: 30,
         status: true,
+        showAnswers: false,
       });
     } else {
       const { push } = this.props;
@@ -89,7 +93,6 @@ class Questions extends React.Component {
 
   render() {
     const { questions, index, status, showAnswers, seconds } = this.state;
-
     return (
       <div>
         <h3>
@@ -111,7 +114,7 @@ class Questions extends React.Component {
         <div id="bloco-respostas">
           <button
             onClick={ this.clickRightAnswer }
-            disabled={ seconds === 0 }
+            disabled={ (seconds === 0 || !status) }
             type="button"
             key="correct"
             data-testid="correct-answer"
@@ -123,10 +126,10 @@ class Questions extends React.Component {
             .map((item, itemIndex) => (
               <button
                 onClick={ this.clickButtonAnswer }
-                disabled={ seconds === 0 }
+                disabled={ (seconds === 0 || !status) }
                 type="button"
                 key={ itemIndex }
-                data-testid={ `wrong-answer-${itemIndex}` }
+                data-testid="wrong-answer"
                 className={ showAnswers ? 'incorrect' : '' }
               >
                 { item}
