@@ -27,7 +27,7 @@ const mapDispatchToProps = (dispatch) => ({
   saveTrivia: (data) => dispatch(getApiTrivia(data)),
 });
 
-Login.propTypes = {
+Container.propTypes = {
   saveTrivia: PropTypes.func.isRequired,
 };
 
