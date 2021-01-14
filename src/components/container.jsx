@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import fetchTrivia from '../services/triviaLocalStorage';
 import { getApiTrivia } from '../actions';
 
@@ -25,5 +26,9 @@ class Container extends Component {
 const mapDispatchToProps = (dispatch) => ({
   saveTrivia: (data) => dispatch(getApiTrivia(data)),
 });
+
+Login.propTypes = {
+  saveTrivia: PropTypes.func.isRequired,
+};
 
 export default connect(null, mapDispatchToProps)(Container);
