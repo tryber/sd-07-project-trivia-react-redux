@@ -27,9 +27,9 @@ class Questions extends React.Component {
   }
 
   render() {
-    const { questionNumber, wrongAnswer, correctAnswer } = this.state;
-    const { questions } = this.props;
+    const { questions, timer } = this.props;
     const { questionsList } = questions;
+    const { questionNumber, wrongAnswer, correctAnswer } = this.state;
     console.log(questionsList);
     const five = 5;
     if (questionsList < five) {
@@ -53,6 +53,7 @@ class Questions extends React.Component {
             data-testid="correct-answer"
             onClick={ () => this.buttonColor() }
             className={ correctAnswer }
+            disabled={ timer }
           >
             {questionsList[questionNumber].correct_answer}
           </button>
@@ -60,6 +61,7 @@ class Questions extends React.Component {
             <button
               key={ q }
               data-testid={ `wrong-answer-${index}` }
+              disabled={ timer }
               className={ wrongAnswer }
               type="button"
               onClick={ () => this.buttonColor() }
@@ -78,6 +80,7 @@ class Questions extends React.Component {
 
 const mapStateToProps = (state) => ({
   questions: state.questions.questions,
+  timer: state.questions.timer,
 });
 
 Questions.propTypes = {
@@ -85,5 +88,7 @@ Questions.propTypes = {
     questionsList: PropTypes.arrayOf(PropTypes.string, PropTypes.array)
       .isRequired,
   }).isRequired,
+  timer: PropTypes.bool.isRequired,
 };
+
 export default connect(mapStateToProps, null)(Questions);
