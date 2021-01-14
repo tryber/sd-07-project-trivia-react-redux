@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 class Trivia extends Component {
   render() {
-    const { renderAlternatives, questions, numberQuestion } = this.props;
+    const { renderAlternatives, questions, numberQuestion, timer } = this.props;
     const { results } = questions;
     if (results) {
       const {
@@ -12,10 +12,13 @@ class Trivia extends Component {
       } = results[numberQuestion];
       return (
         <div>
-          <p data-testid="question-category">{results[numberQuestion].category}</p>
-          <p data-testid="question-text">{results[numberQuestion].question}</p>
+          <h3>{timer}</h3>
           <div>
-            { renderAlternatives(correctAnswer, incorrectAnswers) }
+            <p data-testid="question-category">{results[numberQuestion].category}</p>
+            <p data-testid="question-text">{results[numberQuestion].question}</p>
+            <div>
+              {renderAlternatives(correctAnswer, incorrectAnswers)}
+            </div>
           </div>
         </div>
       );

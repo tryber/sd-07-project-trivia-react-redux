@@ -14,7 +14,25 @@ class Game extends Component {
       numberQuestion: 0,
       alreadyAnswered: false,
       shuffle: true,
+      timer: 30,
     };
+  }
+
+  componentDidMount() {
+    const temp = 1000;
+    setInterval(() => {
+      this.setTimer();
+    }, temp);
+  }
+
+  setTimer() {
+    this.setState((prevState) => {
+      if (prevState.timer > 0) {
+        return ({
+          timer: prevState.timer - 1,
+        });
+      }
+    });
   }
 
   getPlayerProfile() {
@@ -60,14 +78,15 @@ class Game extends Component {
   }
 
   renderAlternatives(correctAnswer, incorrectAnswers) {
-    const { alreadyAnswered } = this.state;
+    const { alreadyAnswered, timer } = this.state;
     const alternatives = [];
     alternatives.push(
       <button
-        className={ alreadyAnswered ? 'green' : '' }
+        className={alreadyAnswered ? 'green' : ''}
         type="button"
         data-testid="correct-answer"
-        onClick={ () => this.handleClick() }
+        onClick={() => this.handleClick()}
+        disabled={timer === 0}
       >
         {correctAnswer}
       </button>,
@@ -75,10 +94,11 @@ class Game extends Component {
     incorrectAnswers.forEach((answer, index) => {
       alternatives.push(
         <button
-          className={ alreadyAnswered ? 'red' : '' }
+          className={alreadyAnswered ? 'red' : ''}
           type="button"
-          data-testid={ `wrong-answer-${index}` }
-          onClick={ () => this.handleClick() }
+          data-testid={`wrong-answer-${index}`}
+          onClick={() => this.handleClick()}
+          disabled={timer === 0}
         >
           {answer}
         </button>,
@@ -90,14 +110,15 @@ class Game extends Component {
 
   render() {
     const { questions } = this.props;
-    const { numberQuestion } = this.state;
+    const { numberQuestion, timer } = this.state;
     return (
       <div>
-        <Header playerProfile={ this.getPlayerProfile() } />
+        <Header playerProfile={this.getPlayerProfile()} />
         <Trivia
-          numberQuestion={ numberQuestion }
-          renderAlternatives={ this.renderAlternatives }
-          questions={ questions }
+          numberQuestion={numberQuestion}
+          renderAlternatives={this.renderAlternatives}
+          questions={questions}
+          timer={timer}
         />
       </div>
     );
