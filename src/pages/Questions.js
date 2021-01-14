@@ -37,34 +37,39 @@ export default class Questions extends Component {
     const { question } = this.props;
     const { shuffledAnswers } = this.state;
     console.log(shuffledAnswers);
-    return (
-      <div>
-        <h3 data-testid="question-category">{question.category}</h3>
-        <h4 data-testid="question-text">{question.question}</h4>
-        {shuffledAnswers && shuffledAnswers.map((answer, index) => {
-          if (answer === question.correct_answer) {
+    if (question) {
+      return (
+        <div>
+          <h3 data-testid="question-category">{question.category}</h3>
+          <h4 data-testid="question-text">{question.question}</h4>
+          {shuffledAnswers && shuffledAnswers.map((answer, index) => {
+            if (answer === question.correct_answer) {
+              return (
+                <button
+                  type="button"
+                  key={ index }
+                  data-testid="correct-answer"
+                >
+                  {answer}
+                </button>
+
+              );
+            }
             return (
               <button
                 type="button"
                 key={ index }
-                data-testid="correct-answer"
+                data-testid={ `wrong-answer-${index}` }
               >
                 {answer}
               </button>
-
             );
-          }
-          return (
-            <button
-              type="button"
-              key={ index }
-              data-testid={ `wrong-answer-${index}` }
-            >
-              {answer}
-            </button>
-          );
-        })}
-      </div>
+          })}
+        </div>
+      );
+    }
+    return (
+      <h2>Loading...</h2>
     );
   }
 }
