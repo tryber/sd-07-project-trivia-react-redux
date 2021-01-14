@@ -6,8 +6,11 @@ class Questions extends React.Component {
   constructor() {
     super();
     this.incrementIndex = this.incrementIndex.bind(this);
+    // this.buttonColor = this.buttonColor.bind(this);
     this.state = {
       questionNumber: 0,
+      correctAnswer: 'neutral',
+      wrongAnswer: 'neutral',
     };
   }
 
@@ -19,10 +22,14 @@ class Questions extends React.Component {
     }));
   }
 
+  buttonColor() {
+    this.setState({ correctAnswer: 'correctAnswer', wrongAnswer: 'wrongAnswer' });
+  }
+
   render() {
-    const { questionNumber } = this.state;
-    const { questions } = this.props;
+    const { questions, timer } = this.props;
     const { questionsList } = questions;
+    const { questionNumber, wrongAnswer, correctAnswer } = this.state;
     const five = 5;
     if (questionsList < five) {
       console.log(questionsList);
@@ -40,15 +47,23 @@ class Questions extends React.Component {
           </p>
         </div>
         <div>
-          <button type="button" data-testid="correct-answer">
+          <button
+            type="button"
+            data-testid="correct-answer"
+            onClick={ () => this.buttonColor() }
+            className={ correctAnswer }
+            disabled={ timer }
+          >
             {questionsList[questionNumber].correct_answer}
           </button>
           {questionsList[questionNumber].incorrect_answers.map((q, index) => (
             <button
               key={ q }
               data-testid={ `wrong-answer-${index}` }
-              className="wrong-answer"
               type="button"
+              disabled={ timer }
+              className={ wrongAnswer }
+              onClick={ () => this.buttonColor() }
             >
               {q}
             </button>
@@ -64,6 +79,7 @@ class Questions extends React.Component {
 
 const mapStateToProps = (state) => ({
   questions: state.questions.questions,
+  timer: state.questions.timer,
 });
 
 Questions.propTypes = {
@@ -71,5 +87,6 @@ Questions.propTypes = {
     questionsList: PropTypes.arrayOf(PropTypes.string, PropTypes.array)
       .isRequired,
   }).isRequired,
+  timer: PropTypes.bool.isRequired,
 };
 export default connect(mapStateToProps, null)(Questions);
