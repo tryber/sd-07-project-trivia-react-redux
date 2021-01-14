@@ -9,37 +9,45 @@ class Questions extends React.Component {
     this.givesIfFalse = this.givesIfFalse.bind(this);
   }
 
-  givesIfTrue() {
-    return <div>Carregando</div>;
+  componentDidMount() {
+    const { getQuestion, token } = this.props;
+    getQuestion(token);
   }
 
   givesIfFalse(question) {
     return (
       <div>
-        <div data-testid="question-category">{ question.category }</div>
+        <div data-testid="question-category">{question.category}</div>
         <div>
           Pergunta:
           <div data-testid="question-text">{ question.question }</div>
         </div>
         <div>
           Alternativas:
-          <button data-testid="correct-answer">{ question.correct_answer }</button>
-          {question.incorrect_answers.map((wrong, index) => {
-            return <button data-testid={`wrong-answer-${index}`}>{wrong}</button>
-          })}
+          <button type="button" data-testid="correct-answer">
+            { question.correct_answer }
+          </button>
+          { question.incorrect_answers.map((wrong, index) => (
+            <button
+              key={ index }
+              type="button"
+              data-testid={ `wrong-answer-${index}` }
+            >
+              { wrong }
+            </button>
+          ))}
         </div>
       </div>
     );
   }
 
-  componentDidMount() {
-    const { getQuestion, token } = this.props;
-    getQuestion(token);
+  givesIfTrue() {
+    return <div>Carregando</div>;
   }
 
   render() {
     const { questions } = this.props;
-    return (questions === undefined || questions.length === 0)
+    return questions === undefined || questions.length === 0
       ? this.givesIfTrue()
       : this.givesIfFalse(questions[0]);
   }

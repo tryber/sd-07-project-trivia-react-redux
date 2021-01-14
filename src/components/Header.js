@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 class Header extends Component {
   render() {
@@ -23,7 +23,7 @@ class Header extends Component {
             <span>
               Score:
               <span data-testid="header-score">
-              { score === undefined ? 0 : score }
+                { score === undefined ? 0 : score }
               </span>
             </span>
           </div>
@@ -37,12 +37,12 @@ const mapStateToProps = (state) => ({
   name: state.player.name,
   score: state.player.score,
   gravatar: state.player.gravatar,
-})
+});
 
-// Header.propTypes = {
-//   email: PropTypes.string.isRequired,
-//   name: PropTypes.string.isRequired,
-//   score: PropTypes.number.isRequired,
-// };
+Header.propTypes = {
+  email: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  score: PropTypes.number.isRequired,
+};
 
 export default connect(mapStateToProps, null)(Header);

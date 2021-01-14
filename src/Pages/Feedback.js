@@ -8,7 +8,7 @@ class Feedback extends Component {
       mensagem: '',
     };
   }
-  
+
   render() {
     return (
       <div>
@@ -18,5 +18,3 @@ class Feedback extends Component {
   }
 }
 export default Feedback;
-
-
