@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Header from './Header';
 import Counter from './Counter';
@@ -38,7 +39,6 @@ class Answers extends React.Component {
         data-testid="btn-next"
         type="button"
         onClick={ () => {
-          reset();
           increaseIndex();
           this.setState({
             clicked: false,
@@ -46,6 +46,7 @@ class Answers extends React.Component {
             newCounter: newCounter + 1,
             nextUp: false,
           });
+          reset();
         } }
       >
         Próxima
@@ -72,7 +73,9 @@ class Answers extends React.Component {
   mountAnswers() {
     const { clicked } = this.state;
     const { questions, sortedAnswers, index } = this.props;
-    if (!questions[index]) return 'acabou';
+    if (!questions[index]) {
+      return <Redirect to="/feedback" />;
+    }
     const {
       category,
       correct_answer: correct,
