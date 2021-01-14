@@ -1,30 +1,44 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Header from '../components/Header';
+import PropTypes from 'prop-types';
+import { Questions, Header } from '../components';
+import { fetchQuestionsTrivia } from '../actions/fetchQuestionsTrivia';
 
 class Game extends React.Component {
   constructor() {
     super();
-    this.state = {
-    };
+    this.state = {};
+    this.fetchAPI = this.fetchAPI.bind(this);
+  }
+
+  componentDidMount() {
+    this.fetchAPI();
+  }
+
+  fetchAPI() {
+    const { questionsAction } = this.props;
+    questionsAction();
   }
 
   render() {
-    /* const { token } = this.props; */
     return (
       <div>
         <Header />
+        <div>
+          <Questions />
+          <button type="button">Próxima</button>
+        </div>
       </div>
     );
   }
 }
 
-const mapStateToProps = (state) => ({
-  token: state.receiveToken.token,
+Game.propTypes = {
+  questionsAction: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  questionsAction: (questions) => dispatch(fetchQuestionsTrivia(questions)),
 });
 
-/* Game.propTypes = {
-  token: PropTypes.string.isRequired,
-}; */
-
-export default connect(mapStateToProps/* , mapDispatchToProps */)(Game);
+export default connect(null, mapDispatchToProps)(Game);

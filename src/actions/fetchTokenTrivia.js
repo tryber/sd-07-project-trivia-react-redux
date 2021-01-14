@@ -1,14 +1,9 @@
-import getToken from '../services/triviaAPI';
+import getToken from '../services/triviaTokenAPI';
 
 /* export const RECEIVE_TOKEN = 'RECEIVE_TOKEN'; */
 export const REQUEST_TOKEN = 'REQUEST_TOKEN';
 export const REQUEST_TOKEN_SUCCESS = 'REQUEST_TOKEN_SUCCESS';
 export const REQUEST_TOKEN_FAIL = 'REQUEST_TOKEN_FAIL';
-
-/* export const receiveToken = (token) => ({
-  type: RECEIVE_TOKEN,
-  token,
-}); */
 
 export const requestToken = () => ({
   type: REQUEST_TOKEN,
