@@ -3,21 +3,66 @@ import React, { Component } from 'react';
 export default class componentName extends Component {
   constructor() {
     super();
-    // this.state = {
-    //   questionNumber: 0,
-    // };
+    this.state = {
+      // shuffled: false,
+      shuffledAnswers: [],
+    };
 
-    // this.handleQuestions = this.handleQuestions.bind(this);
+    this.shuffleAnswers = this.shuffleAnswers.bind(this);
   }
 
-  // handleQuestions() {
-  // }
+  componentDidMount() {
+    this.shuffleAnswers();
+  }
+
+  shuffleAnswers() {
+    const { question } = this.props;
+    // define keys to new array
+    const correctAnswer = question.correct_answer;
+    const incorrectAnswer = question.incorrect_answers;
+    const concatAnswersArr = [correctAnswer, ...incorrectAnswer];
+    // lint purpose - magic number
+    const magic = 0.5;
+    // sort concataned array to shuffle answers
+    const sortedArr = concatAnswersArr.sort(() => Math.random() - magic);
+
+    this.setState({
+      shuffled: true,
+      shuffledAnswers: sortedArr,
+    });
+  }
 
   render() {
     const { question } = this.props;
-    console.log(question);
+    const { shuffledAnswers } = this.state;
+    console.log(shuffledAnswers);
     return (
       <div>
+        <h3 data-testid="question-category">{question.category}</h3>
+        <h4 data-testid="question-text">{question.question}</h4>
+        {shuffledAnswers && shuffledAnswers.map((answer, index) => {
+          if (answer === question.correct_answer) {
+            return (
+              <button
+                type="button"
+                key={ index }
+                data-testid="correct-answer"
+              >
+                {answer}
+              </button>
+
+            );
+          }
+          return (
+            <button
+              type="button"
+              key={ index }
+              data-testid={ `wrong-answer-${index}` }
+            >
+              {answer}
+            </button>
+          );
+        })}
       </div>
     );
   }

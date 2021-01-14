@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import resultToken from '../services/Api';
 import generateHash from '../utils';
-import questionsRequest from '../services/QuestionsRequest';
 
 class Login extends Component {
   constructor() {

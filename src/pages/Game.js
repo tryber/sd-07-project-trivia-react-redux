@@ -45,7 +45,9 @@ class Game extends Component {
         </header>
         <h1>Token da requisição</h1>
         {localStorage.token}
-        <Questions question={ questionsArray[currentQuestion] } />
+        {questionsArray[currentQuestion] && 
+          <Questions question={ questionsArray[currentQuestion] } />
+        }
       </div>
     );
   }
