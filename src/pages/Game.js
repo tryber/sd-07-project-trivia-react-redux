@@ -12,16 +12,21 @@ class Game extends Component {
     this.handleUserAnswer = this.handleUserAnswer.bind(this);
     this.calculateScore = this.calculateScore.bind(this);
     this.timer = this.timer.bind(this);
+    this.renderTime = this.renderTime.bind(this);
+    this.shuffle = this.shuffle.bind(this);
+
     this.state = {
       questionIndex: 0,
       timer: 30,
       disableButton: true,
+      shuffle: true,
     };
   }
 
   componentDidMount() {
     const { getQuestions } = this.props;
     getQuestions();
+    this.renderTime();
   }
 
   componentDidUpdate() {
@@ -30,27 +35,22 @@ class Game extends Component {
 
   timer() {
     const { timer } = this.state;
-    const thousand = 1000;
-    const twentyFive = 25;
-    if (timer > 1) {
-      setTimeout(() => {
-        this.setState(({ timer }) => ({
-          timer: timer - 1,
-        }));
-      }, thousand);
-    }
-    if (timer === 0) {
+    const initialSecondEnableButton = 25;
+    const lastSecondDisableButton = 0;
+    if (timer === lastSecondDisableButton) {
       this.handleUserAnswer();
       this.setState({
         timer: 30,
         disableButton: true,
       });
     }
-    if (timer === twentyFive) {
-      this.setState({
+
+    if (timer === initialSecondEnableButton) {
+      this.setState((prevState) => ({
+        ...prevState,
         timer: 24,
         disableButton: false,
-      });
+      }));
     }
   }
 
@@ -59,7 +59,6 @@ class Game extends Component {
       const { id } = button;
       if (id === 'ok') {
         button.classList.add('btnColorGreen');
-        this.calculateScore();
       }
       button.classList.add('btnColorRed');
     });
@@ -68,29 +67,56 @@ class Game extends Component {
   calculateScore() {
     const { questions, score, sendScore } = this.props;
     const { timer } = this.state;
+    const three = 3;
+    const ten = 10;
     const questionLevel = questions.results[0].difficulty;
     let multiplier = 1;
     if (questionLevel === 'easy') multiplier = 1;
     if (questionLevel === 'medium') multiplier = 2;
-    if (questionLevel === 'hard') multiplier = 3;
-    const finalScore = score + (10 + timer * multiplier);
+    if (questionLevel === 'hard') multiplier = three;
+    const finalScore = score + (ten + timer * multiplier);
     sendScore(finalScore);
   }
 
-  handleClick({ target }) {
-    if (target.className === 'btnColorGreen') this.calculateScore();
+  shuffle(array) {
+    // let currentIndex = array.length, temporaryValue, randomIndex;
+    // // While there remain elements to shuffle...
+    // while (currentIndex !== 0) {
+    //   // Pick a remaining element...
+    //   randomIndex = Math.floor(Math.random() * currentIndex);
+    //   currentIndex -= 1;
+    //   // And swap it with the current element.
+    //   temporaryValue = array[currentIndex];
+    //   array[currentIndex] = array[randomIndex];
+    //   array[randomIndex] = temporaryValue;
+    // }
+    return array;
+  }
+
+  renderTime() {
+    const secondTimerFunction = 1000;
+    const lastSecondDisableButton = 0;
+    const { timer } = this.state;
+    setInterval(() => {
+      if (timer > lastSecondDisableButton) {
+        this.setState((prevState) => ({
+          timer: prevState.timer - 1,
+        }));
+      }
+    }, secondTimerFunction);
   }
 
   renderAllDataQuestion() {
     const { questionIndex, disableButton } = this.state;
     const { questions } = this.props;
+    console.log(questions);
 
     if (questions.results) {
       const correctAnswer = (
         <button
           type="button"
           data-testid="correct-answer"
-          onClick={ this.handleUserAnswer }
+          onClick={ () => { this.handleUserAnswer(); this.calculateScore(); } }
           key="correct"
           id="ok"
           disabled={ disableButton }
@@ -111,7 +137,9 @@ class Game extends Component {
             {answer}
           </button>
         ));
-      return [correctAnswer, ...wrongAnswer];
+
+      const arrayAnswers = [...wrongAnswer, correctAnswer];
+      return arrayAnswers;
     }
   }
 
@@ -129,7 +157,7 @@ class Game extends Component {
           {questions.results[questionIndex].question}
         </h2>
         <div>{this.renderAllDataQuestion()}</div>
-        <p>{ timer }</p>
+        <p>{timer}</p>
       </div>
     ) : (
       <p>loading</p>
@@ -153,6 +181,8 @@ Game.propTypes = {
     results: PropTypes.arrayOf(Object),
   }).isRequired,
   getQuestions: PropTypes.func.isRequired,
+  score: PropTypes.number.isRequired,
+  sendScore: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);

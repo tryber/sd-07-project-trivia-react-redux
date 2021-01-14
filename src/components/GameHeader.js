@@ -7,10 +7,16 @@ class GameHeader extends Component {
   constructor() {
     super();
     this.fetchGravatar = this.fetchGravatar.bind(this);
+    this.readLocalStorage = this.readLocalStorage.bind(this);
+    this.updateLocalStorage = this.updateLocalStorage.bind(this);
   }
 
   componentDidMount() {
     this.fetchGravatar();
+  }
+
+  componentDidUpdate() {
+    this.updateLocalStorage();
   }
 
   fetchGravatar() {
@@ -18,6 +24,18 @@ class GameHeader extends Component {
     const hashEmail = md5(getEmail);
     const endPoint = `https://www.gravatar.com/avatar/${hashEmail}`;
     return endPoint;
+  }
+
+  readLocalStorage() {
+    const readStorage = JSON.parse(localStorage.getItem('state'));
+    return readStorage;
+  }
+
+  updateLocalStorage() {
+    const { getScore } = this.props;
+    const currentStorage = this.readLocalStorage();
+    const newStorage = { ...currentStorage, player: { ...currentStorage.player, score: getScore } };
+    localStorage.setItem('state', JSON.stringify(newStorage));
   }
 
   render() {

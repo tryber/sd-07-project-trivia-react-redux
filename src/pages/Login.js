@@ -38,7 +38,7 @@ class Login extends React.Component {
       token,
     };
 
-    localStorage.setItem('token', JSON.stringify(info));
+    localStorage.setItem('state', JSON.stringify(info));
   }
 
   async requestToken() {
