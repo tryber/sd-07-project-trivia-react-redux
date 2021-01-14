@@ -28,12 +28,12 @@ class Login extends Component {
     }
   }
 
-  handleSubmit() {
+  async handleSubmit() {
     const { dispatchEmail, dispatchToken, dispatchNome, history } = this.props;
     const { email, nome } = this.state;
+    await dispatchToken(setStorage);
     dispatchEmail(email);
     dispatchNome(nome);
-    dispatchToken(setStorage);
     history.push('/gamescreen');
   }
 
