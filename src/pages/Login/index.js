@@ -3,6 +3,8 @@ import md5 from 'crypto-js/md5';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import logo from '../../images/logo200x200.png';
+import './Login.css';
 import * as PlayerActions from '../../store/ducks/player/actions';
 
 class Login extends Component {
@@ -48,38 +50,47 @@ class Login extends Component {
   render() {
     const { name, gravatarEmail, isButtonAble } = this.state;
     return (
-      <>
-        <Link to="/settings" data-testid="btn-settings">
-          Configurações
-        </Link>
-        <form>
-          <input
-            type="text"
-            data-testid="input-player-name"
-            name="name"
-            id="name"
-            placeholder="Enter your name"
-            value={ name }
-            onChange={ this.handleInputChange }
-          />
-          <input
-            type="text"
-            data-testid="input-gravatar-email"
-            name="gravatarEmail"
-            id="gravatarEmail"
-            value={ gravatarEmail }
-            onChange={ this.handleInputChange }
-          />
-          <button
-            type="button"
-            data-testid="btn-play"
-            disabled={ isButtonAble }
-            onClick={ () => this.handleClick() }
-          >
-            Jogar
-          </button>
-        </form>
-      </>
+
+      <div className="login-page">
+        <div className="login-form">
+          <Link to="/settings" data-testid="btn-settings" className="configure-button">
+            Configurações
+          </Link>
+          <img src={ logo } alt="Minha imagem de teste" className="image-logo" />
+          <p className="group-name">by Main-Group-27</p>
+          <form className="login-form-form">
+            <input
+              type="text"
+              data-testid="input-player-name"
+              className="login-input"
+              name="name"
+              id="name"
+              placeholder="Enter your name"
+              value={ name }
+              onChange={ this.handleInputChange }
+            />
+            <input
+              type="text"
+              data-testid="input-gravatar-email"
+              className="login-input"
+              name="gravatarEmail"
+              id="gravatarEmail"
+              value={ gravatarEmail }
+              onChange={ this.handleInputChange }
+            />
+            <button
+              type="button"
+              data-testid="btn-play"
+              className="login-button"
+              disabled={ isButtonAble }
+              onClick={ () => this.handleClick() }
+            >
+              Jogar
+            </button>
+          </form>
+        </div>
+
+      </div>
     );
   }
 }

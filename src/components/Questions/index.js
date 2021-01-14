@@ -75,11 +75,12 @@ class Questions extends Component {
     const questionToLoad = questions[questionNumber];
 
     return (
-      <div>
+      <div className="questions-display">
         <div>
-          <h2>{ counterInterval }</h2>
+          <h2 className="timer">{`Timer: ${counterInterval}` }</h2>
         </div>
         <div>
+          <h1>{`Question: ${questionNumber + 1}`}</h1>
           <h2 data-testid="question-category">{ questionToLoad.category }</h2>
           <h2 data-testid="question-text">{ questionToLoad.question }</h2>
           <button
