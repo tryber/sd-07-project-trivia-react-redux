@@ -5,12 +5,18 @@ import Header from '../components/Header';
 export default class FeedBack extends Component {
   constructor() {
     super();
-    this.handleRedirect = this.handleRedirect.bind(this);
+    this.handleRedirectHome = this.handleRedirectHome.bind(this);
+    this.handleRedirectRanking = this.handleRedirectRanking.bind(this);
   }
 
-  handleRedirect() {
+  handleRedirectHome() {
     const { history } = this.props;
     history.push('/');
+  }
+
+  handleRedirectRanking() {
+    const { history } = this.props;
+    history.push('/ranking');
   }
 
   render() {
@@ -22,9 +28,16 @@ export default class FeedBack extends Component {
         <button
           type="button"
           data-testid="btn-play-again"
-          onClick={ this.handleRedirect }
+          onClick={ this.handleRedirectHome }
         >
           Jogar novamente
+        </button>
+        <button
+          type="button"
+          data-testid="btn-ranking"
+          onClick={ this.handleRedirectRanking }
+        >
+          Ver Ranking
         </button>
       </div>
     );
