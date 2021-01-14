@@ -14,6 +14,14 @@ const user = (state = INITIAL_STATE, action) => {
         gravatarEmail: action.payload.gravatarEmail,
       },
     };
+  case userTypes.ADD_SCORE:
+    return {
+      ...state,
+      player: {
+        ...state.player,
+        score: state.player.score + action.payload,
+      },
+    };
   default:
     return state;
   }

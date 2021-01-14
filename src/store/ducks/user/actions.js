@@ -1,8 +1,11 @@
 import userTypes from './types';
 
-const signIn = (info) => ({
+export const signIn = (info) => ({
   type: userTypes.SIGNIN,
   payload: info,
 });
 
-export default signIn;
+export const addScore = (score) => ({
+  type: userTypes.ADD_SCORE,
+  payload: score,
+});
