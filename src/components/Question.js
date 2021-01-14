@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 class Question extends Component {
   render() {
+    // eslint-disable-next-line react/prop-types
     const { questions } = this.props;
 
     return (
