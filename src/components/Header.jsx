@@ -29,10 +29,29 @@ class Header extends Component {
     const { name, scoreboard } = this.props;
     const { avatar } = this.state;
     return (
-      <div>
-        <p data-testid="header-player-name">{name}</p>
-        <p data-testid="header-score">{scoreboard}</p>
+      <div
+        style={ {
+          display: 'flex',
+          marginBottom: 50,
+        } }
+      >
         <img src={ avatar } data-testid="header-profile-picture" alt="avatar" />
+        <p
+          style={ {
+            marginLeft: 20,
+          } }
+          data-testid="header-player-name"
+        >
+          {`Jogador: ${name}`}
+        </p>
+        <p
+          style={ {
+            marginLeft: 80,
+          } }
+          data-testid="header-score"
+        >
+          {`Pontos: ${scoreboard}`}
+        </p>
       </div>
     );
   }
