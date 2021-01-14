@@ -1,0 +1,7 @@
+.header-components-container {
+  display: flex;
+}
+
+.header-component {
+  margin: 1vw 9vw;
+}
