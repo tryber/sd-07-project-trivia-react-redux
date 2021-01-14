@@ -1,4 +1,4 @@
-import { REQUEST_TOKEN, REQUEST_TOKEN_SUCCESS } from '../actions';
+import { REQUEST_TOKEN, REQUEST_TOKEN_SUCCESS } from '../actions/fetchTokenTrivia';
 
 const INITIAL_STATE = {
   isFetching: false,
