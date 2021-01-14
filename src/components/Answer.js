@@ -18,7 +18,7 @@ class Answer extends React.Component {
   }
 
   test() {
-    this.setState((previous) =>({
+    this.setState((previous) => ({
       count: previous.count + 1,
     }));
   }
@@ -28,29 +28,31 @@ class Answer extends React.Component {
     const { resAnswer } = this.props;
     console.log(resAnswer);
 
-    const answers = Object.values(resAnswer).map(
-      ({ incorrect_answers, correct_answer }) => [
-        ...incorrect_answers, correct_answer].sort()
-    );
+    const answersResponse = Object.values(resAnswer)
+      .map(({
+        incorrect_answers: incorrect, correct_answer: correct }) => [
+        ...incorrect, correct].sort());
 
-    console.log(answers[count]);
+    const answers = { ...answersResponse[count] };
+
     return (
       <div>
-        {[answers[count]].map((answer, index) => (
+        {Object.values(answers).map((answer, index) => (
           <div key={ index }>
             <br />
             <button type="button">{ answer }</button>
             <br />
           </div>
         ))}
-        <button type="button" onClick={ this.test }>teste</button>
+        <br />
+        <button type="button" onClick={ this.test }>Próxima</button>
       </div>
     );
   }
 }
 
 Answer.propTypes = {
-  resAnswer: PropTypes.arrayOf(PropTypes.shape({}).isRequired).isRequired,
+  resAnswer: PropTypes.shape({}).isRequired,
   fetchAnswers: PropTypes.func.isRequired,
 };
 
