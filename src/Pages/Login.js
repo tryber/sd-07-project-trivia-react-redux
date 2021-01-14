@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { thunkApiToken } from '../actions';
+import { thunkApiToken, setName, addGravatar } from '../actions';
 import { connect } from 'react-redux';
-import { setName } from '../actions';
+import crypto from 'crypto-js';
 
 class Login extends React.Component {
   constructor(props) {
@@ -15,7 +15,6 @@ class Login extends React.Component {
     this.enableButton = this.enableButton.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.verificationEmail = this.verificationEmail.bind(this);
-    this.addToken = this.addToken.bind(this);
     this.routeChangeConfig = this.routeChangeConfig.bind(this);
     this.routeChangeGame = this.routeChangeGame.bind(this);
   }
@@ -39,25 +38,13 @@ class Login extends React.Component {
   }
 
   routeChangeGame() {
-    const { email } = this.state;
-    const { history, sendName } = this.props;
-    console.log(this.props)
-    sendName(email);
-    // this.addToken();
+    const { history, sendName, addToken, setGravatar } = this.props;
+    const { name, email } = this.state;
+    const emailMd5 = crypto.MD5(email).toString();
+    setGravatar(emailMd5);
+    addToken();
+    sendName(name);
     history.push('/game');
-  }
-
-  async addToken() {
-    const fetchToken = await thunkApiToken();
-    console.log(fetchToken);
-    const { token } = fetchToken;
-    console.log(token);
-    if (Storage) {
-      const tokens = JSON.parse(localStorage.getItem('token'));
-      const values = tokens === null ? [] : tokens;
-      values.push(token);
-      localStorage.setItem('token', JSON.stringify(values));
-    }
   }
 
   enableButton() {
@@ -108,15 +95,17 @@ class Login extends React.Component {
   }
 }
 
+const mapDispatchToProps = (dispatch) => ({
+  addToken: () => dispatch(thunkApiToken()),
+  sendName: (name) => dispatch(setName(name)),
+  setGravatar: (gravatar) => dispatch(addGravatar(gravatar)),
+});
+
 Login.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
 };
-
-const mapDispatchToProps = (dispatch) => ({
-  sendName: (email) => dispatch(setName(email))
-});
 
 export default connect(null, mapDispatchToProps)(Login);
 
