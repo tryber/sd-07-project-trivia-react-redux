@@ -7,7 +7,6 @@ import './header.css';
 class Header extends React.Component {
   render() {
     const { name, email, score } = this.props;
-    console.log(score);
     const hash = md5(email);
     const urlGravatar = `https://www.gravatar.com/avatar/${hash}`;
 

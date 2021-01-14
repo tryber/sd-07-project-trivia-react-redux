@@ -2,19 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { addScore } from '../Redux/Actions';
-
 import './Questions.css';
 
 class Questions extends React.Component {
-  constructor() {
+  constructor(props) {
     super();
     this.state = {
-      questions: [{
-        question: '',
-        category: '',
-        correct_answer: '',
-        incorrect_answers: [],
-      }],
+      questions: props.questions,
       index: 0,
       status: true,
       score: 0,
@@ -22,14 +16,12 @@ class Questions extends React.Component {
       showAnswers: false,
       seconds: 30,
     };
-    this.fetchQuestions = this.fetchQuestions.bind(this);
     this.nextQuestion = this.nextQuestion.bind(this);
     this.clickRightAnswer = this.clickRightAnswer.bind(this);
     this.clickButtonAnswer = this.clickButtonAnswer.bind(this);
   }
 
   componentDidMount() {
-    this.fetchQuestions();
     const oneSecond = 1000;
     const myInterval = setInterval(() => {
       const { seconds } = this.state;
@@ -44,21 +36,19 @@ class Questions extends React.Component {
     }, oneSecond);
   }
 
-  fetchQuestions() {
-    const { token } = this.props;
-    fetch(`https://opentdb.com/api.php?amount=5&token=${token}`)
-      .then((response) => response.json())
-      .then((data) => this.setState({
-        questions: data.results,
-      }));
-  }
-
   nextQuestion() {
     const { index } = this.state;
-    this.setState({
-      index: index + 1,
-      seconds: 30,
-    });
+    const limit = 4;
+    if (index < limit) {
+      this.setState({
+        index: index + 1,
+        seconds: 30,
+        status: true,
+      });
+    } else {
+      const { push } = this.props;
+      push('/feedback');
+    }
   }
 
   clickRightAnswer() {
@@ -99,6 +89,7 @@ class Questions extends React.Component {
 
   render() {
     const { questions, index, status, showAnswers, seconds } = this.state;
+
     return (
       <div>
         <h3>
@@ -106,10 +97,10 @@ class Questions extends React.Component {
         </h3>
         <div id="bloco-pergunta">
           <div id="categoria-pergunta">
+            Category:
             <span
               data-testid="question-category"
             >
-              Category:
               {questions[index].category}
             </span>
           </div>
@@ -134,11 +125,11 @@ class Questions extends React.Component {
                 onClick={ this.clickButtonAnswer }
                 disabled={ seconds === 0 }
                 type="button"
-                key="incorrect"
+                key={ itemIndex }
                 data-testid={ `wrong-answer-${itemIndex}` }
                 className={ showAnswers ? 'incorrect' : '' }
               >
-                { item }
+                { item}
               </button>))}
         </div>
         <button
@@ -151,24 +142,21 @@ class Questions extends React.Component {
         </button>
         <span>
           Tempo restante:
-          { seconds }
+          {seconds}
         </span>
       </div>
     );
   }
 }
 
-const mapStateToProps = (state) => ({
-  token: state.token.token,
-});
-
 const mapDispatchToProps = (dispatch) => ({
   addScoreAction: (score) => dispatch(addScore(score)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Questions);
+export default connect(null, mapDispatchToProps)(Questions);
 
 Questions.propTypes = {
-  token: PropTypes.string.isRequired,
   addScoreAction: PropTypes.func.isRequired,
+  questions: PropTypes.arrayOf(PropTypes.object).isRequired,
+  push: PropTypes.func.isRequired,
 };
