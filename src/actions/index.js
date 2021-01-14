@@ -5,9 +5,9 @@ export function login(object) {
   });
 }
 
-export function test() {
+export function saveQuestions(array) {
   return ({
-    type: 'TEST',
-    player: 'test',
+    type: 'SAVE_QUESTIONS',
+    questions: array,
   });
 }
