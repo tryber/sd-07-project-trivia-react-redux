@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { CustomHeader, CustomGame } from '../components';
+import { CustomHeader, CustomGame, CustomNextButton } from '../components';
 import { getStorage } from '../services/localStorage';
 import { fetchTrivia } from '../actions';
 
@@ -9,10 +9,13 @@ class GameScreen extends Component {
   constructor() {
     super();
     this.state = {
-      // magicButton: false,
+      answered: false,
+      count: 0,
     };
     this.submitAnswer = this.submitAnswer.bind(this);
-    // this.changeIndex = this.changeIndex.bind(this);
+    this.changeCount = this.changeCount.bind(this);
+   // this.changeStyle = this.changeStyle.bind(this);
+    // this.changeSstyles = this.changeSstyles.bind(this);
   }
 
   componentDidMount() {
@@ -20,18 +23,38 @@ class GameScreen extends Component {
     dispatchTrivia(getStorage('token'));
   }
 
+  // changeSstyles() {
+  //   const correctAnswer = document.querySelector('.correct-not');
+  //   correctAnswer.className = 'correct';
+  //   const incorrectAnswer = document.querySelectorAll('.incorrect-not');
+  //   for (let index = 0; index < incorrectAnswer.length; index += 1) {
+  //     incorrectAnswer[index].className = 'incorrect';
+  //   }
+  // }
+
   submitAnswer() {
-    const correctAnswer = document.querySelector('.correct');
-    correctAnswer.style = 'border: 3px solid rgb(6, 240, 15)';
-    const incorrectAnswer = document.querySelectorAll('.incorrect');
-    for (let index = 0; index < incorrectAnswer.length; index += 1) {
-      incorrectAnswer[index].style = 'border: 3px solid red';
-    }
-    // this.setState({ magicButton: true });
+    // this.changeSstyles();
+    this.setState({ answered: true });
+  }
+
+  // changeStyle() {
+  //   const correctAnswer = document.querySelector('.correct');
+  //   correctAnswer.className = 'correct-not';
+  //   const incorrectAnswer = document.querySelectorAll('.incorrect');
+  //   for (let index = 0; index < incorrectAnswer.length; index += 1) {
+  //     incorrectAnswer[index].className = 'incorrect-not';
+  //   }
+  // }
+
+  changeCount() {
+    const { count } = this.state;
+    this.setState({ count: count + 1,
+    answered:false });
   }
 
   render() {
     const { name, email, trivia, loading } = this.props;
+    const { answered, count } = this.state;
     return (
       <div>
         <CustomHeader name={ name } email={ email } />
@@ -39,7 +62,8 @@ class GameScreen extends Component {
           <p>...Loading</p>
         ) }
         { trivia.length > 0
-          && <CustomGame challenge={ trivia } correct={ this.submitAnswer } />}
+          && <CustomGame changeStyle={ answered } index={ count } challenge={ trivia } correct={ this.submitAnswer } />}
+        {answered && <CustomNextButton next={ this.changeCount } /> }
       </div>
     );
   }

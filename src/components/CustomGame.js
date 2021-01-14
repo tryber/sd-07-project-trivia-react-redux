@@ -1,30 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { scrambler } from '../services';
+import '../App.css';
 
-const CustomGame = ({ challenge, correct }) => {
-  const correctAnswer = challenge[0].correct_answer;
-  const answersArray = scrambler([...challenge[0].incorrect_answers, correctAnswer]);
+const CustomGame = ({ challenge, correct, changeStyle, index }) => {
   return (
     <div>
+      <h1 data-testid="question-category">{challenge[index].category}</h1>
+      <h3 data-testid="question-text">{challenge[index].question}</h3>
+      <button
+        onClick={correct}
+        type="button"
+        key="correct"
+        data-testid="correct-answer"
+        className={changeStyle ? 'correct' : ''}
+      >
+        {challenge[index].correct_answer}
+      </button>
 
-      <h1 data-testid="question-category">{ challenge[0].category}</h1>
-      <h3 data-testid="question-text">{ challenge[0].question}</h3>
-      {answersArray.map((item, index) => (
+      {challenge[0].incorrect_answers.map((item, index1) => (
         <button
-          type="button"
-          key={ index }
           onClick={ correct }
-          data-testid={
-            item === correctAnswer
-              ? 'correct-answer'
-              : `wrong-answer-${index}`
-          }
-          className={
-            item === correctAnswer
-              ? 'correct'
-              : 'incorrect'
-          }
+          type="button"
+          key="incorrect"
+          data-testid={`wrong-answer-${index1}`}
+          className={changeStyle ? 'incorrect' : ''}
         >
           {item}
         </button>
@@ -32,7 +31,6 @@ const CustomGame = ({ challenge, correct }) => {
     </div>
   );
 };
-
 CustomGame.propTypes = {
   challenge: PropTypes.shape({
     category: PropTypes.string,
