@@ -1,4 +1,9 @@
-import { REQUEST_STARTED, REQUEST_FAIL, FETCH_QUESTIONS_SUCCESS } from '../actions';
+import {
+  REQUEST_STARTED,
+  REQUEST_FAIL,
+  FETCH_QUESTIONS_SUCCESS,
+  UPDATE_SCORE,
+} from '../actions';
 
 const INITIAL_STATE = {
   isLoading: false,
@@ -20,6 +25,10 @@ const gameReducer = (state = INITIAL_STATE, action) => {
     return { ...state,
       isLoading: false,
       questions: action.payload,
+    };
+  case UPDATE_SCORE:
+    return { ...state,
+      score: state.score + 1,
     };
   default:
     return state;

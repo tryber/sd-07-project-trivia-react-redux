@@ -20,7 +20,7 @@ export const fetchQuestionsSuccess = (payload) => (
   { type: 'FETCH_QUESTIONS_SUCCESS', payload });
 
 export const UPDATE_SCORE = 'UPDATE_SCORE';
-export const updateScore = (score) => ({ type: UPDATE_SCORE, score });
+export const updateScore = () => ({ type: UPDATE_SCORE });
 
 export function fetchToken() {
   return async (dispatch) => {
