@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
+import Empty from '../components/Empty';
 import * as Actions from '../actions';
 import store from '../store';
 
@@ -18,6 +19,7 @@ const Game = (props) => {
   const [assertions, setAssertion] = useState('');
   const tempMax = 30;
   const [time, setTime] = useState(tempMax);
+  const [showButton, setshowButton] = useState(false);
 
   const calculateScore = () => {
     let convertedDifficulty;
@@ -79,6 +81,7 @@ const Game = (props) => {
 
     setTime(tempMax);
     setIsEnable(false);
+    setshowButton(false);
   };
 
   let intervalId;
@@ -87,6 +90,7 @@ const Game = (props) => {
       style1: 'border-correct',
       style2: 'border-incorrect',
     });
+    setshowButton(true);
 
     if (target.value === 'correct') {
       setAssertion(true);
@@ -102,6 +106,7 @@ const Game = (props) => {
     if (!time) {
       setIsEnable(true);
       setAssertion(false);
+      setshowButton(true);
       return;
     }
 
@@ -158,9 +163,13 @@ const Game = (props) => {
         ))}
       </div>
       <div>
-        <button type="button" data-testid="btn-next" onClick={ handleQuestion }>
-          Próxima
-        </button>
+        {showButton ? (
+          <button type="button" data-testid="btn-next" onClick={ handleQuestion }>
+            Próxima
+          </button>
+        ) : (
+          <Empty />
+        )}
       </div>
       <div>{time}</div>
       <p>{assertions}</p>
