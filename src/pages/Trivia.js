@@ -85,13 +85,13 @@ class Trivia extends React.Component {
         const { placar } = this.state;
         const { acertos } = this.state;
         localStorage.setItem('state',
-          JSON.stringify({ player: { score: placar, acertos } }));
+          JSON.stringify({ player: { score: placar, assertions: acertos } }));
       });
     } else {
       const { placar } = this.state;
       const { acertos } = this.state;
       localStorage.setItem('state',
-        JSON.stringify({ player: { score: placar, acertos } }));
+        JSON.stringify({ player: { score: placar, assertions: acertos } }));
     }
     this.setState({
       replyConfirmation: true,

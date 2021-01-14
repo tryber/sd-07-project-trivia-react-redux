@@ -35,8 +35,8 @@ class FeedBack extends React.Component {
     const state = JSON.parse(localStorage.getItem('state'));
     const tres = 3;
     const { player } = state;
-    const { acertos } = player;
-    if (acertos >= tres) {
+    const { assertions } = player;
+    if (assertions >= tres) {
       return 'Mandou bem!';
     }
     return 'Podia ser melhor...';
@@ -45,7 +45,7 @@ class FeedBack extends React.Component {
   render() {
     const state = JSON.parse(localStorage.getItem('state'));
     const { player } = state;
-    const { score } = player;
+    const { score, assertions } = player;
     const { emailSave, nameSave } = this.props;
     const { urlImg } = this.state;
     console.log(urlImg);
@@ -61,6 +61,10 @@ class FeedBack extends React.Component {
           <img data-testid="header-profile-picture" src={ urlImg } alt="Gravatar" />
 
         </header>
+        <section>
+          <h3 data-testid="feedback-total-score">{score}</h3>
+          <h3 data-testid="feedback-total-question">{assertions}</h3>
+        </section>
         <button
           type="button"
           data-testid="btn-play-again"
