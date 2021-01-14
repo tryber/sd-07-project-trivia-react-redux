@@ -7,6 +7,8 @@ class QuestionsList extends React.Component {
 
     this.state = {
       array: [],
+      nameClassCorrect: '',
+      nameClassWrong: '',
     };
 
     this.shuffle = this.shuffle.bind(this);
@@ -34,8 +36,13 @@ class QuestionsList extends React.Component {
     this.setState({ array: randomArray });
   }
 
+  answers() {
+    this.setState({ nameClassCorrect: 'correctAnswer' });
+    this.setState({ nameClassWrong: 'wrongAnswer' });
+  }
+
   render() {
-    const { array } = this.state;
+    const { array, nameClassCorrect, nameClassWrong } = this.state;
     const { question } = this.props;
     const correto = question.results[0].correct_answer;
     const numberForIterat = -1;
@@ -45,14 +52,25 @@ class QuestionsList extends React.Component {
         { array.map((answers) => {
           if (answers === correto) {
             return (
-              <button type="button" data-testid="correct-answer">
+              <button
+                type="button"
+                data-testid="correct-answer"
+                className={ nameClassCorrect }
+                onClick={ () => this.answers() }
+              >
                 { answers }
               </button>
             );
           }
           index += 1;
           return (
-            <button key={ index } type="button" data-testid={ `wrong-answer-${index}` }>
+            <button
+              key={ index }
+              type="button"
+              data-testid={ `wrong-answer-${index}` }
+              className={ nameClassWrong }
+              onClick={ () => this.answers() }
+            >
               { answers }
             </button>
           );
