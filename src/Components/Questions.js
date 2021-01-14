@@ -37,31 +37,32 @@ class Questions extends React.Component {
       return <div>Carregando...</div>;
     }
     const { questions } = this.state;
-    const { category } = questions[questionNumber];
     return (
       <div>
         {`Questão número ${questionNumber + 1}`}
         <div>
           <h2 data-testid="question-category">
-            {category}
+            {questions.length > 0 && questions[questionNumber].category}
           </h2>
           <p data-testid="question-text">
-            {questions[questionNumber].question}
+            {questions.length > 0 && questions[questionNumber].question}
           </p>
         </div>
         <div>
           <button type="button" data-testid="correct-answer">
-            {questions[questionNumber].correct_answer}
+            {questions.length > 0 && questions[questionNumber].correct_answer}
           </button>
-          {questions[questionNumber].incorrect_answers.map((resposta) => (
-            <button
-              type="button"
-              data-testid={ `wrong-answer-${questionNumber}` }
-              key={ resposta }
-            >
-              {resposta}
-            </button>
-          ))}
+          {questions.length > 0
+            && questions[questionNumber].incorrect_answers.map((q, index) => (
+              <button
+                key={ q }
+                data-testid={ `wrong-answer-${index}` }
+                className="wrong-answer"
+                type="button"
+              >
+                {q}
+              </button>
+            ))}
         </div>
         <button type="button" onClick={ () => this.incrementIndex() }>
           Próxima

@@ -2,7 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { clickLogin, fetchToken } from '../actions';
+import { clickLogin } from '../actions';
+import { fetchToken } from '../services/API';
 
 import SettingsButton from '../Components/SettingsButton';
 
@@ -38,7 +39,7 @@ class Login extends React.Component {
     const { email, name } = this.state;
     const { texts, token } = this.props;
     texts(email, name);
-    token();
+    fetchToken();
   }
 
   render() {
@@ -87,12 +88,10 @@ class Login extends React.Component {
 
 const mapDispatchToProps = (dispatch) => ({
   texts: (email, name) => dispatch(clickLogin({ email, name })),
-  token: () => dispatch(fetchToken()),
 });
 
 Login.propTypes = {
   texts: PropTypes.func.isRequired,
-  token: PropTypes.func.isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(Login);
