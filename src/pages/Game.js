@@ -18,14 +18,19 @@ class Game extends Component {
       questionIndex: 0,
       timer: 30,
       disableButton: true,
-      shuffle: true,
+      shuffleAnswers: [],
+      correctAnswer: '',
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     const { getQuestions } = this.props;
-    getQuestions();
+    await getQuestions();
     this.renderTime();
+    
+    this.setState({
+      shuffleAnswers: [ ...this.renderAllDataQuestion() ],
+    })
   }
 
   componentDidUpdate() {
@@ -44,11 +49,10 @@ class Game extends Component {
       });
     }
     if (timer === initialSecondEnableButton) {
-      this.setState((prevState) => ({
-        ...prevState,
+      this.setState({
         timer: 24,
         disableButton: false,
-      }));
+      });
     }
   }
 
@@ -63,17 +67,17 @@ class Game extends Component {
   }
 
   shuffle(array) {
-    // let currentIndex = array.length, temporaryValue, randomIndex;
-    // // While there remain elements to shuffle...
-    // while (currentIndex !== 0) {
-    //   // Pick a remaining element...
-    //   randomIndex = Math.floor(Math.random() * currentIndex);
-    //   currentIndex -= 1;
-    //   // And swap it with the current element.
-    //   temporaryValue = array[currentIndex];
-    //   array[currentIndex] = array[randomIndex];
-    //   array[randomIndex] = temporaryValue;
-    // }
+    let currentIndex = array.length, temporaryValue, randomIndex;
+    // While there remain elements to shuffle...
+    while (currentIndex !== 0) {
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+      // And swap it with the current element.
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
     return array;
   }
 
@@ -91,45 +95,25 @@ class Game extends Component {
   }
 
   renderAllDataQuestion() {
-    // console.log()
-    const { questionIndex, disableButton } = this.state;
+    const { questionIndex } = this.state;
     const { questions } = this.props;
     console.log(questions);
 
     if (questions.results) {
-      const correctAnswer = (
-        <button
-          type="button"
-          data-testid="correct-answer"
-          onClick={ this.handleUserAnswer }
-          key="correct"
-          id="ok"
-          disabled={ disableButton }
-        >
-          { questions.results[questionIndex].correct_answer }
-        </button>
-      );
+      const correctAnswer = questions.results[questionIndex].correct_answer;
       const wrongAnswer = questions.results[questionIndex].incorrect_answers
-        .map((answer, index) => (
-          <button
-            onClick={ this.handleUserAnswer }
-            type="button"
-            key={ answer }
-            data-testid={ `wrong-answer-${index}` }
-            id="notOk"
-            disabled={ disableButton }
-          >
-            {answer}
-          </button>
-        ));
+        .map((answer) => answer);
 
-      const arrayAnswers = [...wrongAnswer, correctAnswer];
+      const arrayAnswers = this.shuffle([...wrongAnswer, correctAnswer]);
+      this.setState({
+        correctAnswer,
+      })
       return arrayAnswers;
     }
   }
 
   render() {
-    const { questionIndex, timer } = this.state;
+    const { questionIndex, timer, shuffleAnswers, correctAnswer, disableButton } = this.state;
     const { questions } = this.props;
     return questions.results ? (
       <div>
@@ -141,7 +125,36 @@ class Game extends Component {
         <h2 data-testid="question-text">
           {questions.results[questionIndex].question}
         </h2>
-        <div>{this.renderAllDataQuestion()}</div>
+        <div>{ 
+        shuffleAnswers.map((answer, index) => {
+          if (answer === correctAnswer) {
+            return (<div>
+              <button
+                type="button"
+                data-testid="correct-answer"
+                onClick={ this.handleUserAnswer }
+                key="correct"
+                id="ok"
+                disabled={ disableButton }
+              >
+                {answer}
+              </button>
+            </div>)
+          }
+          return (<div>
+            <button
+              onClick={ this.handleUserAnswer }
+              type="button"
+              key={ answer }
+              data-testid={ `wrong-answer-${index}` }
+              id="notOk"
+              disabled={ disableButton }
+            >
+              {answer}
+            </button>
+          </div>)
+        })
+        }</div>
         <p>{timer}</p>
       </div>
     ) : (
