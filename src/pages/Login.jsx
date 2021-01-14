@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import requestToken from '../services/api';
-import { login } from '../redux/actions/index';
+import { requestToken } from '../services/api';
+import { fetchQuestions, login } from '../redux/actions';
 
 class Login extends Component {
   constructor(props) {
@@ -18,9 +18,11 @@ class Login extends Component {
     };
   }
 
-  getToken() {
-    const tokenTrivia = requestToken();
-    localStorage.setItem('token', { tokenTrivia });
+  async getToken() {
+    const { fetchTrivia } = this.props;
+
+    await requestToken();
+    fetchTrivia();
   }
 
   verifyLogin() {
@@ -78,9 +80,11 @@ class Login extends Component {
 
 const mapDispatchToProps = (dispatch) => ({
   saveUserInfos: (name, email) => dispatch(login(name, email)),
+  fetchTrivia: () => dispatch(fetchQuestions()),
 });
 export default connect(null, mapDispatchToProps)(Login);
 
 Login.propTypes = {
   saveUserInfos: PropTypes.func.isRequired,
+  fetchTrivia: PropTypes.func.isRequired,
 };
