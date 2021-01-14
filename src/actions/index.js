@@ -66,7 +66,10 @@ export function requestToken() {
     return fetch('https://opentdb.com/api_token.php?command=request')
       .then((response) => {
         response.json().then(
-          (data) => dispatch(tokenToStoreSucess(data.token)),
+          (data) => {
+            dispatch(tokenToStoreSucess(data.token)); 
+            localStorage.setItem('token', data.token);
+          },
           (error) => dispatch(tokenToStoreFail(error)),
         );
       });

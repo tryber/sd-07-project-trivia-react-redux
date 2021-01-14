@@ -4,23 +4,32 @@ import PropTypes from 'prop-types';
 import { requestQuestionAndAnsewrs } from '../actions';
 import QuestionsList from './componentes/QuestionsList';
 import Header from './componentes/Header';
+import Loading from './componentes/Loading';
 
 class Game extends React.Component {
   componentDidMount() {
     const { requestQuestions } = this.props;
+    console.log(localStorage.token);
     requestQuestions(localStorage.token);
+    console.log(localStorage.token);
   }
 
   render() {
-    const { question } = this.props;
+    const { question, loading } = this.props;
+    console.log(question);
+    console.log(question.results);
+    console.log(loading);
     return (
-      <div>
-        <Header />
-        <h3 data-testid="question-category">{ question.results[0].category }</h3>
-        <p data-testid="question-text">{ question.results[0].question }</p>
-        <QuestionsList />
-      </div>
-    );
+      loading ? <Loading />
+      :
+      (
+        <div>
+          <Header />
+          <h3 data-testid="question-category">{ question.results[0].category }</h3>
+          <p data-testid="question-text">{ question.results[0].question }</p>
+          <QuestionsList question={ question } />
+        </div>)
+      );
   }
 }
 

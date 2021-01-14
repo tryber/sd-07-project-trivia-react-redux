@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 class QuestionsList extends React.Component {
@@ -15,8 +14,7 @@ class QuestionsList extends React.Component {
   }
 
   componentDidMount() {
-    const noMagicNumber = 600;
-    setTimeout(() => { this.mountArrayOfAnswer(); }, noMagicNumber);
+    this.mountArrayOfAnswer();
   }
 
   shuffle(array) {
@@ -79,8 +77,4 @@ QuestionsList.propTypes = {
   }),
 }.isRequired;
 
-const mapStateToProps = (state) => ({
-  question: state.player.question,
-});
-
-export default connect(mapStateToProps)(QuestionsList);
+export default QuestionsList;

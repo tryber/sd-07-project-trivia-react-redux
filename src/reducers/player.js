@@ -39,7 +39,6 @@ export default function (state = initialState, action) {
       gravatarEmail: action.payload,
     };
   case 'CREATE_TOKEN_SUCCESS':
-    localStorage.setItem('token', action.payload);
     return {
       ...state,
       token: action.payload,
@@ -58,6 +57,7 @@ export default function (state = initialState, action) {
     return {
       ...state,
       question: action.payload,
+      loading: false,
     };
   case 'REQUEST_QUESTIONS_API_FAIL':
     return {
