@@ -31,7 +31,7 @@ class Login extends Component {
   }
 
   async click() {
-    const { nameDispatch, emailDispatch, token, history, toPlayer } = this.props;
+    const { nameDispatch, emailDispatch, token, history } = this.props;
     const { name, email } = this.state;
     nameDispatch(name);
     emailDispatch(email);
