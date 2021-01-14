@@ -34,7 +34,7 @@
   align-items: center;
   display: flex;
   color: white;
-  font-family: 'Roboto', sans-serif;
+  font-family: Roboto, sans-serif;
   font-size: 36px;
   font-style: normal;
   font-weight: 400;
@@ -46,7 +46,7 @@
   align-items: center;
   color: white;
   display: flex;
-  font-family: 'Roboto', sans-serif;
+  font-family: Roboto, sans-serif;
   font-size: 36px;
   font-style: normal;
   font-weight:700;

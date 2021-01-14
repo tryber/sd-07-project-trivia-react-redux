@@ -21,12 +21,12 @@
   box-sizing: border-box;
   color: #ff9914;
   display: flex;
-  font-family: 'Roboto', sans-serif;
+  font-family: Roboto, sans-serif;
   font-size: 64px;
   font-style: normal;
   font-weight: 900;
-  line-height: 75px;
   height: 145px;
+  line-height: 75px;
   justify-content: center;
   position: relative;
   width: 140px;
