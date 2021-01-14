@@ -49,6 +49,25 @@ class Quiz extends React.Component {
     updateIndex(index + 1);
     const buttonNext = document.querySelector('.button-next-active');
     buttonNext.className = 'button-next-deactive';
+    console.log(index)
+    if (index === 4) {
+      const { player } = this.props;
+      const newRanking = {
+        name: player.name,
+        score: player.score,
+        picture: player.gravatarEmail,
+      };
+      const ranking = JSON.parse(localStorage.getItem('ranking')) || [];
+      const rankingSorted = ranking.sort((a, b) => {
+        if (a.score > b.score) return -1;
+        if (a.score < b.score) return 1;
+        return 0;
+      });
+      localStorage.setItem('ranking', JSON.stringify([
+        ...rankingSorted,
+        newRanking,
+      ]));
+    }
   }
 
   render() {
