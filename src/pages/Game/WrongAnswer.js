@@ -8,17 +8,15 @@ class WrongAnswer extends Component {
     const { answer, index, isAnswered, actionSetScore } = this.props;
     const label = `wrong-answer-${index}`;
     return (
-      <div>
-        <button
-          type="button"
-          data-testid={ label }
-          disabled={ isAnswered }
-          className={ isAnswered ? 'answer-button-wrong' : 'answer-button' }
-          onClick={ () => actionSetScore(true, false, 0, 'none') }
-        >
-          { answer }
-        </button>
-      </div>
+      <button
+        type="button"
+        data-testid={ label }
+        disabled={ isAnswered }
+        className={ isAnswered ? 'answer-button-wrong' : 'answer-button' }
+        onClick={ () => actionSetScore(true, false, 0, 'none') }
+      >
+        { answer }
+      </button>
     );
   }
 }

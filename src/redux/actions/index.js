@@ -19,7 +19,6 @@ export const setPlayer = (data) => {
     assertions: 0,
     score: 0,
   };
-
   localStorage.setItem('state', JSON.stringify({ player }));
   return {
     type: SET_PLAYER,
@@ -49,9 +48,12 @@ export const setScore = (isAnswered, isCorrect, time, diff) => (dispatch) => {
   };
   const baseScore = 10;
   const newScore = isCorrect ? baseScore + difficulty[diff] * time : 0;
+
   const state = JSON.parse(localStorage.getItem('state'));
+  if (isCorrect) state.player.assertions += 1;
   state.player.score += newScore;
-  localStorage.setItem('state', JSON.stringify(state));
+  localStorage.setItem('state', JSON.stringify({ player: state.player }));
+
   dispatch(questionAnswered(isAnswered, isCorrect));
   return dispatch(changeScore(newScore));
 };
