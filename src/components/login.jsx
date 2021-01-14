@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import getToken from '../services/trivia';
-import { getUserAvatar } from '../actions';
+import { getUserAvatar, getApiTrivia, getToken } from '../actions';
 
 class Login extends Component {
   constructor(props) {
@@ -34,14 +33,14 @@ class Login extends Component {
     this.setState({ [name]: value });
   }
 
-  handleClick() {
-    // const { email } = this.state;
-    // const requestToken = getToken().then((response) => console.log(response));
-    getToken();
+  async handleClick() {
     const { email, userName } = this.state;
     const { history, loginAction } = this.props;
     console.log(email);
     loginAction(email, userName);
+    const { saveTrivia, saveToken } = this.props;
+    await saveToken();
+    await saveTrivia();
     history.push('/game');
   }
 
@@ -89,11 +88,15 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   loginAction: (email, userName) => dispatch(getUserAvatar(email, userName)),
+  saveTrivia: () => dispatch(getApiTrivia()),
+  saveToken: () => dispatch(getToken()),
 });
 
 Login.propTypes = {
   history: PropTypes.objectOf.isRequired,
   loginAction: PropTypes.func.isRequired,
+  saveToken: PropTypes.func.isRequired,
+  saveTrivia: PropTypes.func.isRequired,
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Login));
