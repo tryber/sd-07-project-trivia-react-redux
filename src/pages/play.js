@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import md5 from 'crypto-js/md5';
 import PropTypes from 'prop-types';
+import './question.css';
 
 class Play extends Component {
   constructor() {
@@ -12,10 +13,15 @@ class Play extends Component {
       disabled: false,
       timer: 30,
       index: 0,
+      answered: false,
+      btclass: 'answer',
+      btclassw: 'answer',
+      btnext: 'btnexthi',
     };
     this.triviaApi = this.triviaApi.bind(this);
     this.counter = this.counter.bind(this);
     this.next = this.next.bind(this);
+    this.chosen = this.chosen.bind(this);
   }
 
   componentDidMount() {
@@ -25,12 +31,23 @@ class Play extends Component {
 
   next() {
     const four = 4;
-    const { index } = this.state;
+    const { index, btclass, btclassw, btnext } = this.state;
     if (index < four) {
       this.setState(({ index: index + 1 }));
       this.setState({ timer: 30 });
       this.setState({ disabled: false });
+      this.setState({
+        btclass: 'answer',
+        btclassw: 'answer',
+        btnext: 'btnexthi',
+      });
     } else {
+      this.setState({
+        btclass: 'answer',
+        btclassw: 'answer',
+        btnext: 'btnexthi',
+      });
+      console.log(btclass, btclassw, btnext);
       const { history } = this.props;
       history.push('/feedback');
     }
@@ -39,19 +56,36 @@ class Play extends Component {
   counter() {
     const magicNumber = 1000;
     setInterval(() => {
-      const { timer } = this.state;
+      const { timer, btnext } = this.state;
+      console.log(btnext);
       if (timer > 0) {
         this.setState(({ timer: timer - 1 }));
       }
       if (timer <= 0) {
-        this.setState({ disabled: true });
+        this.setState({
+          disabled: true,
+          btnext: 'answer',
+        });
       }
     }, magicNumber);
   }
 
+  chosen({ target }) {
+    const { trivia, index, answered, disabled, btclass, btclassw, btnext } = this.state;
+    const answer = target.value;
+    console.log(answered, disabled, btclass, btclassw, btnext);
+    this.setState({
+      answered: true,
+      disabled: true,
+      btclass: 'correct',
+      btclassw: 'incorrect',
+      btnext: 'answer',
+    });
+    if (answer === trivia[index].correct_answer) console.log('foi');
+  }
+
   trivia() {
-    const { trivia, disabled, timer, index } = this.state;
-    console.log(trivia);
+    const { trivia, disabled, timer, index, btclass, btclassw, btnext } = this.state;
     return (
       <div>
         <div>
@@ -62,6 +96,9 @@ class Play extends Component {
             type="button"
             data-testid="correct-answer"
             disabled={ disabled }
+            onClick={ this.chosen }
+            className={ btclass }
+            value={ trivia[index].correct_answer }
           >
             {trivia[index].correct_answer}
           </button>
@@ -70,6 +107,9 @@ class Play extends Component {
               <button
                 type="button"
                 disabled={ disabled }
+                onClick={ this.chosen }
+                className={ btclassw }
+                value={ incorrect[index2] }
                 data-testid={ `wrong-answer-${index2}` }
               >
                 {incorrect}
@@ -77,7 +117,14 @@ class Play extends Component {
             </div>
           ))}
         </div>
-        <button type="button" onClick={ this.next }>Próxima</button>
+        <button
+          type="button"
+          data-testid="btn-next"
+          onClick={ this.next }
+          className={ btnext }
+        >
+          Próxima
+        </button>
       </div>);
   }
 
