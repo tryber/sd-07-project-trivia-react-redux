@@ -59,7 +59,7 @@ class Login extends Component {
             type="text"
             name="email"
             placeholder="email"
-            data-testid="email-input"
+            data-testid="input-gravatar-email"
             value={ email }
             onChange={ this.handleInputChange }
           />
@@ -72,7 +72,7 @@ class Login extends Component {
               signin({ name, email });
             } }
           >
-            Play
+            Jogar
           </button>
         </div>
         {redirect && (
