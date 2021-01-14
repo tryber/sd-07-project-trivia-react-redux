@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import md5 from 'crypto-js/md5';
 import PropTypes from 'prop-types';
 import './question.css';
-import { assertion, scores } from '../actions';
+import { assertion, scores, getGravatar } from '../actions';
 
 class Play extends Component {
   constructor() {
@@ -35,6 +35,7 @@ class Play extends Component {
   next() {
     const four = 4;
     const { index, btclass, btclassw, btnext } = this.state;
+    const { saveGravatar } = this.props;
     if (index < four) {
       this.setState(({ index: index + 1 }));
       this.setState({ timer: 30 });
@@ -54,6 +55,7 @@ class Play extends Component {
       const { history } = this.props;
       history.push('/feedback');
     }
+    saveGravatar(this.hash());
   }
 
   counter() {
@@ -192,6 +194,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   scoreDispatch: (score) => dispatch(scores(score)),
   assertionsDispatch: (assertions) => dispatch(assertion(assertions)),
+  saveGravatar: (gravatar) => dispatch(getGravatar(gravatar)),
 });
 
 Play.propTypes = {
@@ -203,6 +206,7 @@ Play.propTypes = {
   scoreDispatch: PropTypes.func.isRequired,
   assertionsDispatch: PropTypes.func.isRequired,
   assertions: PropTypes.number.isRequired,
+  saveGravatar: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Play);

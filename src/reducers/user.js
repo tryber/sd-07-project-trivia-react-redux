@@ -1,4 +1,4 @@
-import { EMAIL, LOGIN, SCORE, ASSERTIONS } from '../actions';
+import { EMAIL, LOGIN, SCORE, ASSERTIONS, GRAVATAR } from '../actions';
 
 const INITIAL_STATE = {
   name: '',
@@ -13,7 +13,7 @@ function user(state = INITIAL_STATE, action) {
   switch (action.type) {
   case EMAIL:
     return {
-      ...state, gravatarEmail: action.email,
+      ...state, email: action.email,
     };
   case LOGIN:
     return {
@@ -26,6 +26,10 @@ function user(state = INITIAL_STATE, action) {
   case ASSERTIONS:
     return {
       ...state, assertions: action.assertions,
+    };
+  case GRAVATAR:
+    return {
+      ...state, gravatarEmail: action.gravatar,
     };
   default:
     return state;

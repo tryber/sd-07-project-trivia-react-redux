@@ -4,6 +4,7 @@ export const TOKEN = 'TOKEN';
 export const SCORE = 'SCORE';
 export const ASSERTIONS = 'ASSERTIONS';
 export const PLAYER = 'PLAYER';
+export const GRAVATAR = 'GRAVATAR';
 
 export const login = (name) => ({
   type: LOGIN, name,
@@ -21,8 +22,12 @@ export const assertion = (assertions) => ({
   type: ASSERTIONS, assertions,
 });
 
-export const savePlayer = (nome, picture, pontos) => ({
-  type: PLAYER, nome, picture, pontos,
+export const savePlayer = (rank) => ({
+  type: PLAYER, rank,
+});
+
+export const getGravatar = (gravatar) => ({
+  type: GRAVATAR, gravatar,
 });
 
 export const getToken = () => function api(dispatch) {

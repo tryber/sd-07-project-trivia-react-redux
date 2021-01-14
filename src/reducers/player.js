@@ -1,25 +1,15 @@
 import { PLAYER } from '../actions';
 
-const INITIAL_STATE = {
-  name: '',
-  score: '',
-  picture: '',
-};
-
-function user(state = INITIAL_STATE, action) {
+const INITIAL_STATE = [];
+function player(state = INITIAL_STATE, action) {
   switch (action.type) {
   case PLAYER:
     return [
-      {
-        ...state,
-        name: state.action.nome,
-        score: state.action.picture,
-        picture: state.action.ponto,
-      },
+      ...state, action.rank,
     ];
   default:
     return state;
   }
 }
 
-export default user;
+export default player;

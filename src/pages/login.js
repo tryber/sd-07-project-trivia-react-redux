@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { login, userEmail, getToken, savePlayer } from '../actions';
+import { login, userEmail, getToken } from '../actions';
 
 class Login extends Component {
   constructor() {
@@ -36,7 +36,6 @@ class Login extends Component {
     nameDispatch(name);
     emailDispatch(email);
     token();
-    toPlayer(name, email, null);
     history.push('/play');
   }
 
@@ -91,14 +90,12 @@ const mapDispatchToProps = (dispatch) => ({
   nameDispatch: (name) => dispatch(login(name)),
   emailDispatch: (email) => dispatch(userEmail(email)),
   token: () => dispatch(getToken()),
-  toPlayer: (nome, picture, pontos) => dispatch(savePlayer(nome, picture, pontos)),
 });
 
 Login.propTypes = {
   nameDispatch: PropTypes.func.isRequired,
   emailDispatch: PropTypes.func.isRequired,
   token: PropTypes.func.isRequired,
-  toPlayer: PropTypes.func.isRequired,
   history: PropTypes.shape(PropTypes.object).isRequired,
 };
 
