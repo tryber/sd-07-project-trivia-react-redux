@@ -11,13 +11,18 @@ class Game extends React.Component {
     this.state = {
       currentQuestion: 0,
       nextQuestion: false,
+      disabledTimeOut: false,
+      timer: 30,
     };
     this.shuffle = this.shuffle.bind(this);
     this.handleAnswer = this.handleAnswer.bind(this);
     this.handleNext = this.handleNext.bind(this);
+    this.timeOut = this.timeOut.bind(this);
+    this.disableQuestion = this.disableQuestion.bind(this);
   }
 
   async componentDidMount() {
+    this.timeOut();
     const { requestQuestions, token } = this.props;
     await requestQuestions(token);
     console.log(token);
@@ -54,9 +59,28 @@ class Game extends React.Component {
     }
   }
 
+  disableQuestion() {
+    const { timer } = this.state;
+    if (timer <= 0) {
+      this.setState({ disabledTimeOut: true });
+    }
+  }
+
+  timeOut() {
+    const ONE_SEC = 1000;
+    setInterval(() => {
+      this.setState(
+        (state) => ({
+          timer: state.timer - 1,
+        }),
+        this.disableQuestion,
+      );
+    }, ONE_SEC);
+  }
+
   render() {
     const { questions } = this.props;
-    const { currentQuestion, nextQuestion } = this.state;
+    const { currentQuestion, nextQuestion, timer, disabledTimeOut } = this.state;
     if (questions === undefined) return <p>Loading...</p>;
     const question = questions[currentQuestion];
     const {
@@ -115,6 +139,7 @@ class Game extends React.Component {
                 ? 'correct-answer'
                 : `wrong-answer-${answer.index}` }
               onClick={ (e) => this.handleAnswer(e) }
+              disabled={ disabledTimeOut }
             >
               {answer.answer}
 
@@ -128,6 +153,7 @@ class Game extends React.Component {
           >
             Próxima pergunta
           </button>
+          {!disabledTimeOut && timer}
         </div>
       </div>
     );
