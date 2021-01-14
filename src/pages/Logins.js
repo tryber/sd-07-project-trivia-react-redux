@@ -45,12 +45,13 @@ class Login extends React.Component {
   }
 
   startGame() {
-    const { requestAPI } = this.props;
+    const { requestAPI, history } = this.props;
     const { name, email } = this.state;
+    const noMagicNumber = 1000;
     changeName(name);
-    console.log('teste name em login: ', name);
     changeGravatarEmail(email);
     requestAPI();
+    setTimeout(() => history.push('/game'), noMagicNumber);
   }
 
   render() {
@@ -72,16 +73,14 @@ class Login extends React.Component {
             data-testid="input-gravatar-email"
             onChange={ this.handleInputs }
           />
-          <Link to="./game">
-            <button
-              type="button"
-              data-testid="btn-play"
-              disabled={ buttonDisable }
-              onClick={ this.startGame }
-            >
-              Jogar
-            </button>
-          </Link>
+          <button
+            type="button"
+            data-testid="btn-play"
+            disabled={ buttonDisable }
+            onClick={ this.startGame }
+          >
+            Jogar
+          </button>
           <Link to="./config">
             <button
               type="button"
@@ -115,6 +114,7 @@ Login.propTypes = {
   requestAPI: PropTypes.func.isRequired,
   newName: PropTypes.func.isRequired,
   changeEmail: PropTypes.func.isRequired,
+  history: PropTypes.string.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

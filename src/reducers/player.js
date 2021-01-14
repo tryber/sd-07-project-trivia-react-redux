@@ -4,6 +4,14 @@ const initialState = {
   score: 0,
   gravatarEmail: '',
   loading: false,
+  question: {
+    results: [{
+      category: '',
+      question: '',
+      correct_answer: '',
+      incorrect_answers: [],
+    }],
+  },
   token: '',
   avatar: '',
 };
@@ -31,7 +39,6 @@ export default function (state = initialState, action) {
       gravatarEmail: action.payload,
     };
   case 'CREATE_TOKEN_SUCCESS':
-    localStorage.setItem('token', action.payload);
     return {
       ...state,
       token: action.payload,
@@ -40,6 +47,21 @@ export default function (state = initialState, action) {
     return {
       ...state,
       loading: true,
+    };
+  case 'REQUEST_QUESTIONS_API':
+    return {
+      ...state,
+      loading: true,
+    };
+  case 'REQUEST_QUESTIONS_API_SUCCESS':
+    return {
+      ...state,
+      question: action.payload,
+      loading: false,
+    };
+  case 'REQUEST_QUESTIONS_API_FAIL':
+    return {
+      ...state,
     };
   case 'CREATE_GRAVATAR_SUCCESS':
     return {

@@ -32,6 +32,20 @@ export const requestApiToken = () => ({
   type: 'REQUEST_TOKEN_API',
 });
 
+export const requestApiQuestion = () => ({
+  type: 'REQUEST_QUESTIONS_API',
+});
+
+const requestApiQuestionSucess = (payload) => ({
+  type: 'REQUEST_QUESTIONS_API_SUCCESS',
+  payload,
+});
+
+const requestApiQuestionFail = (error) => ({
+  type: 'REQUEST_QUESTIONS_API_FAIL',
+  error,
+});
+
 const gravatarToStoreSuccess = (payload) => ({
   type: 'CREATE_GRAVATAR_SUCCESS',
   payload,
@@ -52,12 +66,29 @@ export function requestToken() {
     return fetch('https://opentdb.com/api_token.php?command=request')
       .then((response) => {
         response.json().then(
-          (data) => dispatch(tokenToStoreSucess(data.token)),
+          (data) => {
+            dispatch(tokenToStoreSucess(data.token));
+            localStorage.setItem('token', data.token);
+          },
           (error) => dispatch(tokenToStoreFail(error)),
         );
       });
   };
 }
+
+export function requestQuestionAndAnsewrs(token) {
+  return (dispatch) => {
+    dispatch(requestApiQuestion());
+    return fetch(`https://opentdb.com/api.php?amount=3&token=${token}`)
+      .then((response) => {
+        response.json().then(
+          (data) => dispatch(requestApiQuestionSucess(data)),
+          (error) => dispatch(requestApiQuestionFail(error)),
+        );
+      });
+  };
+}
+
 export function requestGravatar(hash) {
   return (dispatch) => {
     dispatch(requestApiGravatar(hash));
