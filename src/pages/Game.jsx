@@ -3,6 +3,7 @@ import propTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
 import Question from '../components/Question';
+import Timer from '../components/Timer';
 import * as callAPI from '../services/callAPI';
 
 class Game extends Component {
@@ -30,6 +31,7 @@ class Game extends Component {
     return (
       <div>
         <Header />
+        <Timer />
         { questions[0] ? <Question item={ questions[0] } /> : null }
       </div>
     );

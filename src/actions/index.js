@@ -5,9 +5,14 @@ export function login(object) {
   });
 }
 
-export function saveQuestions(array) {
+export function timer() {
   return ({
-    type: 'SAVE_QUESTIONS',
-    questions: array,
+    type: 'TIME_OUT',
+  });
+}
+
+export function changeColor() {
+  return ({
+    type: 'CLICK',
   });
 }
