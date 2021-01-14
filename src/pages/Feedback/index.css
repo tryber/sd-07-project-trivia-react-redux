@@ -16,8 +16,31 @@
 }
 
 .feedback__content {
+  align-items: center;
   background: white;
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 4px;
-  padding: 15px 30px;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  height: 90%;
+  justify-content: space-between;
+  max-height: 300px;
+  max-width: 400px;
+  padding: 30px;
+  width: 90%;
+}
+
+.feedback__title {
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.feedback__result {
+  display: flex;
+  margin: 10px 0;
+}
+
+.feedback__number {
+  margin-left: 5px;
 }
