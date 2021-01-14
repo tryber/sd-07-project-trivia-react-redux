@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 import propTypes from 'prop-types';
 import Header from '../components/Header';
 
@@ -21,7 +21,7 @@ class Feedback extends Component {
     const { score, assertions } = this.props;
     return (
       <div>
-        <Header/>
+        <Header />
         { this.renderMessage(assertions) }
         <div className="score-questions-container">
           <h3

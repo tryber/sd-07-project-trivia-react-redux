@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import propTypes from 'prop-types';
 import { Redirect, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import md5 from 'crypto-js/md5';
@@ -15,22 +16,30 @@ class Login extends Component {
       redirect: false,
     };
     this.isDisabled = this.isDisabled.bind(this);
+    this.sendPlayerInfo = this.sendPlayerInfo.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   async handleSubmit(event) {
-    const { login } = this.props;
-    const { name, email } = this.state;
     event.preventDefault();
+    const expiredToken = 3;
     const callingApi = await callAPI.requestToken();
+    if (callingApi.response_code === expiredToken) return console.log('Email expirado');
+    // incluir regra de negócio para token expirado
     const { token } = callingApi;
     localStorage.setItem('token', JSON.stringify(token));
-    const hash = md5(email).toString();
-    const imageSrc = `https://www.gravatar.com/avatar/${hash}`
-    const playerInfo = { name, email, token, imageSrc };
-    login(playerInfo);
-    this.setState({ redirect: true });
+    this.sendPlayerInfo(token);
     return callingApi;
+  }
+
+  sendPlayerInfo(token) {
+    const { sendInfoToStore } = this.props;
+    const { name, email } = this.state;
+    const hash = md5(email).toString();
+    const imageSrc = `https://www.gravatar.com/avatar/${hash}`;
+    const playerInfo = { name, email, token, imageSrc };
+    sendInfoToStore(playerInfo);
+    return this.setState({ redirect: true });
   }
 
   isDisabled() {
@@ -78,6 +87,10 @@ class Login extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  login: (object) => dispatch(login(object)) });
+  sendInfoToStore: (object) => dispatch(login(object)) });
 
 export default connect(null, mapDispatchToProps)(Login);
+
+Login.propTypes = {
+  sendInfoToStore: propTypes.func,
+}.isRequired;

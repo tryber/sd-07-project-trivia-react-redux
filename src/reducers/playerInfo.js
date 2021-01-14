@@ -14,13 +14,12 @@ function playerReducer(state = INITIAL_STATE, action) {
   const { player, type } = action;
   switch (type) {
   case 'LOGIN':
-    const { name, email, token, imageSrc } = player;
     return {
       ...state,
-      name,
-      email,
-      token,
-      imageSrc,
+      name: player.name,
+      email: player.email,
+      token: player.token,
+      imageSrc: player.imageSrc,
     };
   default:
     return state;
