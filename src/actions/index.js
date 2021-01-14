@@ -16,3 +16,9 @@ export function changeColor() {
     type: 'CLICK',
   });
 }
+
+export function nextQuestion() {
+  return ({
+    type: 'NEXT_QUESTION',
+  });
+}

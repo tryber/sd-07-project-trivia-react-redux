@@ -1,11 +1,20 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import propTypes from 'prop-types';
 import Header from '../components/Header';
 
 class Feedback extends Component {
   constructor(props) {
     super(props);
+
+    this.state = { redirect: false };
+
     this.renderMessage = this.renderMessage.bind(this);
+    this.toRanking = this.toRanking.bind(this);
+  }
+
+  toRanking() {
+    this.setState({ redirect: true });
   }
 
   renderMessage(assertions) {
@@ -18,6 +27,8 @@ class Feedback extends Component {
 
   render() {
     const { score, assertions } = this.props;
+    const { redirect } = this.state;
+    if (redirect) return (<Redirect to="/ranking" />);
     return (
       <div>
         <Header />
@@ -33,6 +44,15 @@ class Feedback extends Component {
           >
             { `Um total de ${score} pontos!` }
           </h3>
+        </div>
+        <div className="btn-container">
+          <button
+            type="button"
+            data-testid="btn-ranking"
+            onClick={ this.toRanking }
+          >
+            Ver Ranking
+          </button>
         </div>
       </div>
     );
