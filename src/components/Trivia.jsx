@@ -1,12 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { nextQuestion, resetTimer } from '../redux/actions/index';
+import PlayTimer from './PlayTimer';
 
 class Trivia extends Component {
   constructor(props) {
     super(props);
+    this.enableBtnsQuestions = this.enableBtnsQuestions.bind(this);
     this.changeBorderColor = this.changeBorderColor.bind(this);
     this.randomArrayQuestions = this.randomArrayQuestions.bind(this);
+    this.nextQuestion = this.nextQuestion.bind(this);
+    this.showNextQuestionBtn = this.showNextQuestionBtn.bind(this);
   }
 
   changeBorderColor() {
@@ -17,6 +22,27 @@ class Trivia extends Component {
 
     for (let index = 0; index < wrongAnswers.length; index += 1) {
       wrongAnswers[index].style.border = '3px solid rgb(255, 0, 0)';
+    }
+  }
+
+  showNextQuestionBtn() {
+    const nextQuestionBtn = document.querySelector('.next-question');
+    nextQuestionBtn.style.display = 'block';
+  }
+
+  nextQuestion() {
+    const { nextQuestion, resetTimer } = this.props;
+    nextQuestion();
+    resetTimer();
+  }
+
+  enableBtnsQuestions() {
+    const correctAnswer = document.querySelector('.correct-answer');
+    const wrongAnswers = document.querySelectorAll('.wrong-answer');
+
+    correctAnswer.disabled = 'false';
+    for (let index = 0; index < wrongAnswers.length; index += 1) {
+      wrongAnswers[index].disabled = 'false';
     }
   }
 
@@ -37,6 +63,7 @@ class Trivia extends Component {
     return (
       <div>
         <span>TRIVIA</span>
+        <PlayTimer />
         {questions.length > 0 ? (
           <div key={ currentQuestion.question }>
             <h1
@@ -60,10 +87,24 @@ class Trivia extends Component {
                   className={ element === currentQuestion.correct_answer
                     ? 'correct-answer'
                     : 'wrong-answer' }
-                  onClick={ () => this.changeBorderColor() }
+                  onClick={ () => {
+                    this.changeBorderColor();
+                    this.showNextQuestionBtn();
+                  } }
                 >
                   { element }
                 </button>))}
+            <button
+              type="button"
+              onClick={ () => {
+                this.nextQuestion();
+                this.enableBtnsQuestions();
+              }}
+              className="next-question"
+              data-testid="btn-next"
+            >
+              Próxima
+            </button>
           </div>
         ) : (
           <h3>Loading</h3>
@@ -79,7 +120,12 @@ const mapStateToProps = (state) => ({
   status: state.play.status,
 });
 
-export default connect(mapStateToProps)(Trivia);
+const mapDispatchToProps = (dispatch) => ({
+  nextQuestion: () => dispatch(nextQuestion()),
+  resetTimer: () => dispatch(resetTimer()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Trivia);
 
 Trivia.propTypes = {
   questions: PropTypes.arrayOf(PropTypes.object).isRequired,
