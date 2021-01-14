@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
 import requestQuest from '../store/ducks/QuestionsRequest/actions';
-import addScore from '../store/ducks/Score/actions'
+import addScore from '../store/ducks/Score/actions';
 import './styles.css';
 
 class GameScreen extends Component {
@@ -36,7 +36,7 @@ class GameScreen extends Component {
     console.log(quest);
     if (quest.length === 0) {
       return null;
-    } 
+    }
     this.setState({
       category: quest[1].category,
       question: quest[1].question,
@@ -48,17 +48,21 @@ class GameScreen extends Component {
 
   async changeStyle({ target }) {
     const { timer, score } = this.state;
-    const { actionScore } = this.props;
+    const dez = 10;
     await this.setState({ right: 'right', wrong: 'wrong' });
 
-    if(target.className === 'right' ){
-      this.setState({ 
-        score: score + (10 + 
-          (this.calcDificulty(target.name) * timer)),
+    if (target.className === 'right') {
+      this.setState({
+        score: score + (dez + (this.calcDificulty(target.name) * timer)),
       });
+      this.callActionScore();
     }
-    actionScore(this.state.score);
-    localStorage.setItem('state', JSON.stringify( { player: { score: this.state.score } }));
+  }
+
+  callActionScore() {
+    const { actionScore } = this.props;
+    const { score } = this.state;
+    actionScore(score);
   }
 
   calcDificulty(dificulty) {
@@ -72,6 +76,7 @@ class GameScreen extends Component {
 
   render() {
     const { category, question, resps, right, wrong, dificulty } = this.state;
+    console.log(this.props);
     return (
       <div>
         <div>
@@ -133,4 +138,5 @@ export default connect(mapStateToProps, mapDispatchToProps)(GameScreen);
 GameScreen.propTypes = {
   actionRequest: PropTypes.func.isRequired,
   quest: PropTypes.arrayOf().isRequired,
+  actionScore: PropTypes.func.isRequired,
 };
