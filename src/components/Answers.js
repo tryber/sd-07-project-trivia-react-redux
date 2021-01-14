@@ -3,26 +3,31 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from './Header';
 import Counter from './Counter';
+import { addPoint } from '../actions';
 
 class Answers extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
       clicked: false,
       next: true,
       newCounter: 0,
       nextUp: false,
+      count: 0,
     };
 
     this.nextButton = this.nextButton.bind(this);
     this.mountAnswers = this.mountAnswers.bind(this);
     this.isClicked = this.isClicked.bind(this);
+    this.handleCorrectClick = this.handleCorrectClick.bind(this);
   }
 
-  isClicked() {
+  isClicked(count) {
     this.setState({
       clicked: true,
       nextUp: true,
+      count: count,
     });
   }
 
@@ -47,15 +52,29 @@ class Answers extends React.Component {
       </button>);
   }
 
+  handleCorrectClick(difficulty) {
+    this.isClicked();
+    const { addPoint } = this.props;
+    let difficultyValue = 0;
+    if (difficulty === 'easy') {
+      difficultyValue = 1;
+    } else if (difficulty === 'medium') {
+      difficultyValue = 2;
+    } else {
+      difficultyValue = 3;
+    }
+    addPoint(difficultyValue);
+  }
+
   mountAnswers() {
     const { clicked } = this.state;
     const { questions, sortedAnswers, index } = this.props;
     if (!questions[index]) return 'acabou';
-    console.log(sortedAnswers);
     const {
       category,
       correct_answer: correct,
       question,
+      difficulty,
     } = questions[index];
 
     return (
@@ -73,13 +92,14 @@ class Answers extends React.Component {
           <div>
             { sortedAnswers.map((element, set) => {
               if (element.id) {
+                console.log( correct );
                 return (
                   <button
                     className={ clicked ? 'wright-answer' : '' }
                     key={ `correct${set}` }
                     type="button"
                     data-testid="correct-answer"
-                    onClick={ () => this.isClicked() }
+                    onClick={ () => this.handleCorrectClick(difficulty) }
                     disabled={ clicked }
                   >
                     { correct }
@@ -129,6 +149,10 @@ const mapStateToProps = (state) => ({
   token: state.token.token,
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  addPoint: (value) => dispatch(addPoint(value)),
+})
+
 Answers.propTypes = {
   questions: PropTypes.arrayOf(PropTypes.shape({
     category: PropTypes.string.isRequired,
@@ -141,4 +165,4 @@ Answers.propTypes = {
   index: PropTypes.number.isRequired,
 };
 
-export default connect(mapStateToProps)(Answers);
+export default connect(mapStateToProps, mapDispatchToProps)(Answers);

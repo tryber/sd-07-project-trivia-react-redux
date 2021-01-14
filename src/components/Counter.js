@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { setCounter } from '../actions';
 
 class Counter extends React.Component {
   constructor(props) {
     super(props);
     this.counterFunc = this.counterFunc.bind(this);
-    this.state = {
-      count: 30,
-    };
   }
 
   componentDidMount() {
@@ -18,27 +17,35 @@ class Counter extends React.Component {
     const second = 1000;
 
     this.timer = setInterval(() => {
-      const { count } = this.state;
-      const { clicked, isClicked } = this.props;
+      const { clicked, isClicked, setCounter, count } = this.props;
 
-      if (count === 1 || clicked) {
+      if (count === 0 || clicked) {
         clearInterval(this.timer);
         isClicked();
+        return
       }
-      this.setState(({ count: counter }) => ({ count: counter - 1 }));
+      setCounter();
     }, second);
   }
 
   render() {
-    const { count } = this.state;
+    const { count } = this.props;
 
     return <p>{ count }</p>;
   }
 }
+
+const mapStateToProps = (state) => ({
+  count: state.token.count,
+});
+
+const mapDispatchToProps = dispatch => ({
+  setCounter: () => dispatch(setCounter()),
+});
 
 Counter.propTypes = {
   clicked: PropTypes.bool.isRequired,
   isClicked: PropTypes.func.isRequired,
 };
 
-export default Counter;
+export default connect(mapStateToProps, mapDispatchToProps)(Counter);
