@@ -27,6 +27,10 @@ class Questions extends React.Component {
   }
 
   render() {
+
+    const { questionNumber } = this.state;
+    const { questions, timer } = this.props;
+    const { questionsList } = questions;
     const { questionNumber, wrongAnswer, correctAnswer } = this.state;
     const { questions } = this.props;
     const { questionsList } = questions;
@@ -48,6 +52,7 @@ class Questions extends React.Component {
           </p>
         </div>
         <div>
+          <button type="button" data-testid="correct-answer" disabled={ timer }>
           <button
             type="button"
             data-testid="correct-answer"
@@ -60,6 +65,9 @@ class Questions extends React.Component {
             <button
               key={ q }
               data-testid={ `wrong-answer-${index}` }
+              className="wrong-answer"
+              type="button"
+              disabled={ timer }
               className={ wrongAnswer }
               type="button"
               onClick={ () => this.buttonColor() }
@@ -78,6 +86,7 @@ class Questions extends React.Component {
 
 const mapStateToProps = (state) => ({
   questions: state.questions.questions,
+  timer: state.questions.timer,
 });
 
 Questions.propTypes = {
@@ -85,5 +94,6 @@ Questions.propTypes = {
     questionsList: PropTypes.arrayOf(PropTypes.string, PropTypes.array)
       .isRequired,
   }).isRequired,
+  timer: PropTypes.bool.isRequired,
 };
 export default connect(mapStateToProps, null)(Questions);
