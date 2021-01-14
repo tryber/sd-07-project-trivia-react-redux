@@ -2,44 +2,39 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { fetchTriviaQuestions } from '../../store/ducks/triviaQuestions';
+import './GameQuestions.css';
 
 class GameQuestions extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      currentQuestion: 0,
+      revealAnswer: false,
+    };
+  }
+
   async componentDidMount() {
     const { getTriviaQuestions } = this.props;
     await getTriviaQuestions();
   }
 
-  randomAnswers(correctAnswer, incorrectAnswers) {
-    const randomAnswers = [];
-    randomAnswers.push({
-      text: correctAnswer,
-      dataTestid: 'correct-answer',
-      randomIndex: Math.random(),
-    });
-    incorrectAnswers.forEach((answer, index) => randomAnswers.push({
-      text: answer,
-      dataTestid: `wrong-answer-${index}`,
-      randomIndex: Math.random(),
-    }));
-
-    return randomAnswers.sort((a, b) => a.randomIndex - b.randomIndex);
-  }
-
   render() {
     const { questions, isLoading } = this.props;
+    const { currentQuestion, revealAnswer } = this.state;
     if (isLoading) { return <h1>Loading...</h1>; }
     return (
       <>
         <h3>
           Category:
           <span data-testid="question-category">
-            {questions.length && questions[0].category}
+            {questions.length && questions[currentQuestion].category}
           </span>
         </h3>
         <h3>
-          Question:
+          {`Question ${currentQuestion + 1}: `}
           <span data-testid="question-text">
-            {questions.length && questions[0].question}
+            {questions.length && questions[currentQuestion].question}
           </span>
         </h3>
         <h3>
@@ -47,15 +42,15 @@ class GameQuestions extends Component {
           <span data-testid="question-text">
             {
               questions.length
-              && this.randomAnswers(
-                questions[0].correct_answer,
-                questions[0].incorrect_answers,
-              )
+              && questions[currentQuestion].randomAnswers
                 .map((answer) => (
                   <button
                     type="button"
+                    className={ (revealAnswer
+                      && (answer.correct ? 'correctAnswer' : 'wrongAnswer')).toString() }
                     key={ answer.text }
                     data-testid={ answer.dataTestid }
+                    onClick={ () => this.setState({ revealAnswer: true }) }
                   >
                     {answer.text}
                   </button>))

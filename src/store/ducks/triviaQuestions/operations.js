@@ -3,6 +3,35 @@ import { fetchTriviaToken } from '../triviaToken';
 
 const ENDPOINT_GET_QUESTIONS = 'https://opentdb.com/api.php?amount=5&token=';
 
+const mapRandomAnswers = (results) => {
+  const returnResults = [];
+  results.forEach((question) => {
+    const {
+      correct_answer: correctAnswer,
+      incorrect_answers: incorrectAnswers,
+    } = question;
+    const randomAnswers = [];
+    randomAnswers.push({
+      text: correctAnswer,
+      correct: true,
+      dataTestid: 'correct-answer',
+      randomIndex: Math.random(),
+    });
+    incorrectAnswers.forEach((answer, index) => randomAnswers.push({
+      text: answer,
+      correct: false,
+      dataTestid: `wrong-answer-${index}`,
+      randomIndex: Math.random(),
+    }));
+
+    randomAnswers.sort((a, b) => a.randomIndex - b.randomIndex);
+
+    returnResults.push({ ...question, randomAnswers: [...randomAnswers] });
+  });
+
+  return returnResults;
+};
+
 export default function fetchTriviaQuestions() {
   return async (dispatch, getState) => {
     dispatch(actions.request());
@@ -16,7 +45,7 @@ export default function fetchTriviaQuestions() {
         response = await fetch(`${ENDPOINT_GET_QUESTIONS}${token}`);
         result = await response.json();
       }
-      dispatch(actions.receiveSuccess(result.results));
+      dispatch(actions.receiveSuccess(mapRandomAnswers(result.results)));
     } catch (error) {
       dispatch(actions.receiveFail(error));
     }
