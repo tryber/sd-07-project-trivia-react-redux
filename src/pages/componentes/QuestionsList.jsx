@@ -1,68 +1,83 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+
 class QuestionsList extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
       array: [],
-    }
+    };
 
     this.shuffle = this.shuffle.bind(this);
     this.mountArrayOfAnswer = this.mountArrayOfAnswer.bind(this);
   }
 
   componentDidMount() {
-    setTimeout(() => { this.mountArrayOfAnswer(); }, 3000);
+    const noMagicNumber = 300;
+    setTimeout(() => { this.mountArrayOfAnswer(); }, noMagicNumber);
   }
 
   shuffle(array) {
-    for (var j, x, i = array.length; i; j = Math.floor(Math.random() * i), x = array[--i], array[i] = array[j], array[j] = x);
+    for (
+      let j, x, i = array.length; i; j = Math
+        .floor(Math.random() * i), x = array[i -= 1], array[i] = array[j], array[j] = x
+    );
     return array;
   }
 
   mountArrayOfAnswer() {
-      const { question } = this.props;
-      const correct = question.results[0].correct_answer;
-      const incorrect = question.results[0].incorrect_answers;
-      const array = [correct, ...incorrect];
-      console.log(array);
-      const randomArray = this.shuffle(array);
-      this.setState({array: randomArray });
-      console.log(this.state.array);
-    }
-
-/* var alpha = ["a", "b", "c"];
-var numeric = [1, 2, 3];
-// creates array ["a", "b", "c", 1, 2, 3]; alpha and numeric are unchanged
-var alphaNumeric = alpha.concat(numeric); */
+    const { question } = this.props;
+    const correct = question.results[0].correct_answer;
+    const incorrect = question.results[0].incorrect_answers;
+    const array = [correct, ...incorrect];
+    const randomArray = this.shuffle(array);
+    this.setState({ array: randomArray });
+  }
 
   render() {
     const { array } = this.state;
     const { question } = this.props;
-    const correto = question.results[0].correct_answer
-    return(
+    const correto = question.results[0].correct_answer;
+    const numberForIterat = -1;
+    let index = numberForIterat;
+    return (
       <div>
         { array.map((answers) => {
-          if(answers === correto) {
-            return <button
-              type="button"
-              
-            >
+          if (answers === correto) {
+            return (
+              <button type="button" data-testid="correct-answer">
+                { answers }
+              </button>
+            );
+          }
+          index += 1;
+          return (
+            <button key={ index } type="button" data-testid={ `wrong-answer-${index}` }>
               { answers }
             </button>
-          }
-          return <button
-            type="button"
-          >
-            { answers }
-          </button>
-        }
-        )}
+          );
+        })}
       </div>
     );
   }
 }
+
+QuestionsList.propTypes = {
+  name: PropTypes.string,
+  assertions: PropTypes.string,
+  score: PropTypes.number,
+  gravatarEmail: PropTypes.bool,
+  loading: PropTypes.number,
+  token: PropTypes.string,
+  question: PropTypes.shape({
+    results: PropTypes.arrayOf(PropTypes.string),
+    question: PropTypes.string,
+    correct_answer: PropTypes.string,
+    incorrect_answers: PropTypes.arrayOf(PropTypes.string),
+  }),
+}.isRequired;
 
 const mapStateToProps = (state) => ({
   question: state.player.question,

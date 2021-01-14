@@ -10,7 +10,7 @@ const initialState = {
       question: '',
       correct_answer: '',
       incorrect_answers: [],
-    }]
+    }],
   },
 };
 
