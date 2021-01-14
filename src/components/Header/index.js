@@ -10,7 +10,7 @@ class Header extends React.Component {
         pname: 'jota',
         assertions: '2',
         score: '20',
-        gravaterEmail: 'j.vitoroflores@gmail.com',
+        gravaterEmail: 'jtonto',
       },
     };
   }
@@ -19,12 +19,12 @@ class Header extends React.Component {
     const { player } = this.state;
     const { pname, gravaterEmail } = player;
     const gravatarHash = md5(gravaterEmail);
-    console.log(gravatarHash);
+
     return (
       <div className="header-name">
-        <img className="ugly-picture" alt={ player } src={ `https://www.gravatar.com/avatar/${gravatarHash}` } />
+        <img data-testid="header-profile-picture" className="ugly-picture" alt={ player } src={ `https://www.gravatar.com/avatar/${gravatarHash}` } />
         <h2 className="header-label">Jogador: </h2>
-        <h2>{ pname }</h2>
+        <h2 data-testid="header-player-name">{ pname }</h2>
       </div>
     );
   }
@@ -35,7 +35,7 @@ class Header extends React.Component {
     return (
       <div className="header-score">
         <h2 className="header-label">Pontos: </h2>
-        <h2>{ score }</h2>
+        <h2 data-testid="header-score">{ score }</h2>
       </div>
     );
   }
