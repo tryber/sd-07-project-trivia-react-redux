@@ -6,6 +6,7 @@ import {
   ConfigButton,
   Next,
   Title,
+  QuestionCategory,
 } from '../../components';
 import getApi from '../../services/api';
 import './style.css';
@@ -16,6 +17,8 @@ class Game extends Component {
     this.state = {
       userToken: '',
       questions: [],
+      isFetching: true,
+      turn: 0,
     };
     this.handleApiRequisition = this.handleApiRequisition.bind(this);
   }
@@ -35,18 +38,26 @@ class Game extends Component {
     const apiQuestionresult = await getApi(questionUrl);
     const { results } = apiQuestionresult;
     this.setState({ questions: results });
+
+    // eslint-disable-next-line react/no-unused-state
+    this.setState({ isFetching: false });
   }
 
   render() {
-    const { userToken, questions } = this.state;
-    console.log(userToken);
+    const { questions, isFetching, turn } = this.state;
+    const curQuestion = questions[turn];
+
     console.log(questions);
-    return (
+
+    if (isFetching) {
+      return (<h1>Loading</h1>);
+    } return (
       <div>
         <Header />
         <Timer />
-        <Title title="Aqui vai a pergunta" />
-        <Answer />
+        <QuestionCategory />
+        <Title title={ curQuestion.question } dataTestid="question-text" />
+        <Answer curQuestion={ curQuestion } />
         <ConfigButton />
         <Next />
       </div>
