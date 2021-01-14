@@ -1,34 +1,25 @@
-import { EMAIL, LOGIN, SCORE, ASSERTIONS } from '../actions';
+import { PLAYER } from '../actions';
 
 const INITIAL_STATE = {
   name: '',
-  assertions: 0,
-  score: 0,
-  gravatarEmail: '',
-  point: 0,
+  score: '',
+  picture: '',
 };
 
-function player(state = INITIAL_STATE, action) {
+function user(state = INITIAL_STATE, action) {
   switch (action.type) {
-  case EMAIL:
-    return {
-      ...state, gavatarEmail: action.email,
-    };
-  case LOGIN:
-    return {
-      ...state, name: action.name,
-    };
-  case SCORE:
-    return {
-      ...state, score: action.score,
-    };
-  case ASSERTIONS:
-    return {
-      ...state, assertions: action.assertions,
-    };
+  case PLAYER:
+    return [
+      {
+        ...state,
+        name: state.action.nome,
+        score: state.action.picture,
+        picture: state.action.ponto,
+      },
+    ];
   default:
     return state;
   }
 }
 
-export default player;
+export default user;

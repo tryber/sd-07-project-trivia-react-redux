@@ -3,6 +3,7 @@ export const EMAIL = 'EMAIL';
 export const TOKEN = 'TOKEN';
 export const SCORE = 'SCORE';
 export const ASSERTIONS = 'ASSERTIONS';
+export const PLAYER = 'PLAYER';
 
 export const login = (name) => ({
   type: LOGIN, name,
@@ -18,6 +19,10 @@ export const scores = (score) => ({
 
 export const assertion = (assertions) => ({
   type: ASSERTIONS, assertions,
+});
+
+export const savePlayer = (nome, picture, pontos) => ({
+  type: PLAYER, nome, picture, pontos,
 });
 
 export const getToken = () => function api(dispatch) {

@@ -184,9 +184,9 @@ class Play extends Component {
 const mapStateToProps = (state) => ({
   token: state.login.token,
   email: state.login.email,
-  name: state.player.name,
-  score: state.player.score,
-  assertions: state.player.assertions,
+  name: state.user.name,
+  score: state.user.score,
+  assertions: state.user.assertions,
 });
 
 const mapDispatchToProps = (dispatch) => ({
