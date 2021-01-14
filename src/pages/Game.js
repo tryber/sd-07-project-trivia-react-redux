@@ -1,7 +1,33 @@
 import React, { Component } from 'react';
+import questionsRequest from '../services/QuestionsRequest';
+
+import Questions from './Questions';
 
 class Game extends Component {
+  constructor() {
+    super();
+    this.fetchQuestions = this.fetchQuestions.bind(this);
+
+    this.state = {
+      questionsArray: [],
+      currentQuestion: 0,
+    };
+  }
+
+  componentDidMount() {
+    this.fetchQuestions();
+  }
+
+  async fetchQuestions() {
+    const token = localStorage.getItem('token');
+    const myQuestions = await questionsRequest(token);
+    this.setState({
+      questionsArray: myQuestions,
+    });
+  }
+
   render() {
+    const { questionsArray, currentQuestion } = this.state;
     return (
       <div>
         <header>
@@ -19,6 +45,7 @@ class Game extends Component {
         </header>
         <h1>Token da requisição</h1>
         {localStorage.token}
+        <Questions question={ questionsArray[currentQuestion] } />
       </div>
     );
   }
