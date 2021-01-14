@@ -39,7 +39,7 @@ class Login extends React.Component {
     const { email, name } = this.state;
     const { texts, questionsGenerator, history } = this.props;
     texts(email, name);
-    fetchToken();
+    await fetchToken();
     const questionsList = await fetchQ();
     questionsGenerator(questionsList);
     history.push('/questions-page');
@@ -56,10 +56,10 @@ class Login extends React.Component {
               type="email"
               data-testid="input-gravatar-email"
               name="email"
-              value={email}
+              value={ email }
               id="email"
               placeholder="E-Mail"
-              onChange={(e) => this.handleChange(e)}
+              onChange={ (e) => this.handleChange(e) }
             />
           </label>
           <label htmlFor="name">
@@ -67,17 +67,17 @@ class Login extends React.Component {
               type="text"
               data-testid="input-player-name"
               name="name"
-              value={name}
+              value={ name }
               id="name"
               placeholder="Nome"
-              onChange={(e) => this.handleChange(e)}
+              onChange={ (e) => this.handleChange(e) }
             />
           </label>
           <button
             data-testid="btn-play"
             type="button"
-            disabled={validate}
-            onClick={this.login}
+            disabled={ validate }
+            onClick={ this.login }
           >
             Jogar
           </button>
@@ -89,8 +89,7 @@ class Login extends React.Component {
 
 const mapDispatchToProps = (dispatch) => ({
   texts: (email, name) => dispatch(clickLogin({ email, name })),
-  questionsGenerator: (questionsList) =>
-    dispatch(questionsGen({ questionsList })),
+  questionsGenerator: (questionsList) => dispatch(questionsGen({ questionsList })),
 });
 
 Login.propTypes = {

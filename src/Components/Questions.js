@@ -45,8 +45,8 @@ class Questions extends React.Component {
           </button>
           {questionsList[questionNumber].incorrect_answers.map((q, index) => (
             <button
-              key={q}
-              data-testid={`wrong-answer-${index}`}
+              key={ q }
+              data-testid={ `wrong-answer-${index}` }
               className="wrong-answer"
               type="button"
             >
@@ -54,7 +54,7 @@ class Questions extends React.Component {
             </button>
           ))}
         </div>
-        <button type="button" onClick={() => this.incrementIndex()}>
+        <button type="button" onClick={ () => this.incrementIndex() }>
           Próxima
         </button>
       </div>
@@ -66,4 +66,10 @@ const mapStateToProps = (state) => ({
   questions: state.questions.questions,
 });
 
+Questions.propTypes = {
+  questions: PropTypes.shape({
+    questionsList: PropTypes.arrayOf(PropTypes.string, PropTypes.array)
+      .isRequired,
+  }).isRequired,
+};
 export default connect(mapStateToProps, null)(Questions);
