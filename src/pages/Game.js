@@ -31,21 +31,24 @@ class Game extends Component {
 
   timer() {
     const { timer } = this.state;
+    const secondTimerFunction = 1000;
+    const initialSecondEnableButton = 25;
+    const lastSecondDisableButton = 0;
     if (timer > 1) {
       setTimeout(() => {
-        this.setState(({ timer }) => ({
-          timer: timer -1,
-        }))
-      }, 1000);
+        this.setState(({ prevState }) => ({
+          timer: prevState.timer - 1,
+        }));
+      }, secondTimerFunction);
     }
-    if (timer === 0) {
+    if (timer === lastSecondDisableButton) {
       this.handleUserAnswer();
       this.setState({
         timer: 30,
         disableButton: true,
       });
     }
-    if (timer === 25) {
+    if (timer === initialSecondEnableButton) {
       this.setState({
         timer: 24,
         disableButton: false,
@@ -63,24 +66,20 @@ class Game extends Component {
     });
   }
 
-  shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
-  
-    // While there remain elements to shuffle...
-    while (0 !== currentIndex) {
-  
-      // Pick a remaining element...
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex -= 1;
-  
-      // And swap it with the current element.
-      temporaryValue = array[currentIndex];
-      array[currentIndex] = array[randomIndex];
-      array[randomIndex] = temporaryValue;
-    }
-  
-    return array;
-  }
+  // shuffle(array) {
+  //   let currentIndex = array.length, temporaryValue, randomIndex;
+  //   // While there remain elements to shuffle...
+  //   while (0 !== currentIndex) {
+  //     // Pick a remaining element...
+  //     randomIndex = Math.floor(Math.random() * currentIndex);
+  //     currentIndex -= 1;
+  //     // And swap it with the current element.
+  //     temporaryValue = array[currentIndex];
+  //     array[currentIndex] = array[randomIndex];
+  //     array[randomIndex] = temporaryValue;
+  //   }
+  //   return array;
+  // }
 
   renderAllDataQuestion() {
     // console.log()
