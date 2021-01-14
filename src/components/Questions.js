@@ -13,15 +13,15 @@ class Questions extends Component {
     return arr.sort(() => Math.random() - random);
   }
 
-  renderQuestions(correct_answer, incorrect_answers) {
+  renderQuestions(correctAnswers, incorrectAnswers) {
     const incorreta = [];
     const correta = (
       <button type="button" data-testid="correct-answer">
-        {correct_answer}
+        {correctAnswers}
       </button>
     );
 
-    incorrect_answers.map((incorrect, index) => incorreta.push(
+    incorrectAnswers.map((incorrect, index) => incorreta.push(
       <button type="button" key={ index } data-testid={ `wrong-answer-${index}` }>
         {incorrect}
       </button>,
@@ -39,8 +39,11 @@ class Questions extends Component {
       const {
         category,
         question,
-        incorrect_answers,
-        correct_answer,
+      } = results[0];
+
+      const {
+        incorrect_answers: incorrect,
+        correct_answer: correct,
       } = results[0];
 
       return (
@@ -54,7 +57,7 @@ class Questions extends Component {
             Pergunta:
             {question}
           </div>
-          <div>{this.renderQuestions(correct_answer, incorrect_answers)}</div>
+          <div>{this.renderQuestions(correct, incorrect)}</div>
         </div>
       );
     }

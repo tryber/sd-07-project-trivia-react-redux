@@ -9,7 +9,6 @@ class Game extends React.Component {
     super();
     this.state = {};
     this.fetchAPI = this.fetchAPI.bind(this);
-    this.handleRequest = this.handleRequest.bind(this);
   }
 
   componentDidMount() {
@@ -21,18 +20,13 @@ class Game extends React.Component {
     questionsAction();
   }
 
-  handleRequest() {
-    const index = 0;
-    return index;
-  }
-
   render() {
     return (
       <div>
         <Header />
         <div>
           <Questions />
-          <button type="button" onClick={ this.handleRequest }>Próxima</button>
+          <button type="button">Próxima</button>
         </div>
       </div>
     );
