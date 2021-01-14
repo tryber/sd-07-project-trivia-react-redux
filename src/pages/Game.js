@@ -14,15 +14,15 @@ class Game extends React.Component {
     this.requestAsks = this.requestAsks.bind(this);
   }
 
-  async componentDidMount() {
-    await this.requestAsks();
+  componentDidMount() {
+    this.requestAsks();
   }
 
   async requestAsks() {
     const { returnAsks } = Api;
     const { token } = this.props;
-    console.log(token);
     const resultAsks = await returnAsks(token);
+
     this.setState({
       questions: resultAsks.results,
     });
@@ -30,16 +30,14 @@ class Game extends React.Component {
 
   render() {
     const { questions } = this.state;
-    console.log(questions);
-    if (questions === [] || questions === undefined) {
-      return <h1>Carregando...</h1>;
-    }
-    return (
+
+    if (questions.length === 0) return <p>Carregando...</p>;
+      return (
       <div>
         <Header />
         <Answers questions={ questions } />
       </div>
-    );
+    )
   }
 }
 

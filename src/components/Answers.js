@@ -10,7 +10,7 @@ class Answers extends React.Component {
     this.state = {
       index: 0,
       clicked: false,
-      sort: false,
+      sort: true,
       next: true,
       newCounter: 0,
       nextUp: false,
@@ -31,13 +31,15 @@ class Answers extends React.Component {
       const arrayAnswers = [correctAnswer, ...wrong];
       const { sort } = this.state;
       if (sort) {
+        console.log('first', arrayAnswers);
         for (let i = 0; i < arrayAnswers.length; i += 1) {
           const j = Math.floor(Math.random() * (i + 1));
           [arrayAnswers[i], arrayAnswers[j]] = [arrayAnswers[j], arrayAnswers[i]];
-          this.setState({ sort: true });
         } // Foi pego no stackOverFlow
+        this.setState({ sort: false });
       }
-      console.log(arrayAnswers);
+      console.log('second', arrayAnswers);
+
       return (
         <div>
           <div>
@@ -105,16 +107,13 @@ class Answers extends React.Component {
         Próxima
       </button>);
 
-    console.log(questions);
-    console.log(this.props);
     return (
       <div>
         <Header />
         <h1>Joguinho</h1>
         { this.mountQuestion(questions, index) }
         <Counter key={ newCounter } clicked={ clicked } next={ next } />
-        {nextUp ? nextButton : ''}
-
+        { nextUp && nextButton }
       </div>
     );
   }

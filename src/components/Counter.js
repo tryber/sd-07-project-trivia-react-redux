@@ -5,7 +5,7 @@ class Counter extends React.Component {
     super(props);
     this.counterFunc = this.counterFunc.bind(this);
     this.state = {
-      count: 2,
+      count: 30,
     };
   }
 
