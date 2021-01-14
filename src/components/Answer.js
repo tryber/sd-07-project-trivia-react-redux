@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { fetchQuestionAnswers } from '../actions';
+import { fetchQuestionAnswers, resQuestion } from '../actions';
 
 class Answer extends React.Component {
   constructor(props) {
@@ -25,8 +25,12 @@ class Answer extends React.Component {
 
   render() {
     const { count } = this.state;
-    const { resAnswer } = this.props;
-    console.log(resAnswer);
+    const { resAnswer, resQuest } = this.props;
+
+    const questions = Object.values(resAnswer).map(({ question: quest }) => quest);
+    console.log(questions[count])
+
+    resQuest(questions[count]);
 
     const answersResponse = Object.values(resAnswer)
       .map(({
@@ -54,14 +58,16 @@ class Answer extends React.Component {
 Answer.propTypes = {
   resAnswer: PropTypes.shape({}).isRequired,
   fetchAnswers: PropTypes.func.isRequired,
+  resQuest: PropTypes.arrayOf([]).isRequired,
 };
 
 const mapStateToProps = (state) => ({
   resAnswer: state.question.responses,
 });
 
-const mapDispatchToProps = (dispacht) => ({
-  fetchAnswers: () => dispacht(fetchQuestionAnswers()),
+const mapDispatchToProps = (dispatch) => ({
+  fetchAnswers: () => dispatch(fetchQuestionAnswers()),
+  resQuest: (quest) => dispatch(resQuestion(quest)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Answer);

@@ -6,9 +6,9 @@ import React, { Component } from 'react';
 
 export default class Question extends Component {
   render() {
-
     // const token = request
     // const questions = new Request(`https://opentdb.com/api.php?amount=5&token=${token}`);
+
     return (
       <div className="questions">
         Question
