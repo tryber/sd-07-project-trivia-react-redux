@@ -14,8 +14,11 @@ class GamePage extends React.Component {
     this.state = {
       queries: [],
       load: true,
+      count: 30,
+      index: 0,
     };
     this.getFetchQuestion = this.getFetchQuestion.bind(this);
+    this.updateIndex = this.updateIndex.bind(this);
   }
 
   async componentDidMount() {
@@ -32,8 +35,18 @@ class GamePage extends React.Component {
     });
   }
 
+  updateIndex(index) {
+    const { queries } = this.state;
+    if (queries.length - 1 >= index) {
+      this.setState({ index });
+    } else {
+      const { history } = this.props;
+      if (history) history.push('/feedback');
+    }
+  }
+
   render() {
-    const { load, queries } = this.state;
+    const { load, queries, count, index } = this.state;
 
     if (load) {
       return <h2>Loading...</h2>;
@@ -43,16 +56,21 @@ class GamePage extends React.Component {
       incorrect_answers: incorrectAnswers,
       question,
       correct_answer: correctAnswer,
-    } = queries[0];
+      difficulty,
+    } = queries[index];
 
     return (
       <div>
         <Header />
         <Quiz
+          index={ index }
+          count={ count }
           category={ category }
           question={ question }
           correctAnswer={ correctAnswer }
           incorrectAnswers={ incorrectAnswers }
+          difficulty={ difficulty }
+          updateIndex={ this.updateIndex }
         />
       </div>
     );
