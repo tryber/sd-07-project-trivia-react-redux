@@ -27,6 +27,7 @@ class GameScreen extends Component {
     this.disableQuestion = this.disableQuestion.bind(this);
     // this.nextQuestion = this.nextQuestion.bind(this);
     this.handleRedirect = this.handleRedirect.bind(this);
+    this.MAX_ALTERNATIVES = 4;
   }
 
   async componentDidMount() {
@@ -60,6 +61,8 @@ class GameScreen extends Component {
       resps: [quest[id].correct_answer, ...quest[id].incorrect_answers],
       buttonNext: false,
       timer: 30,
+      right: '',
+      wrong: '',
     });
   }
 
@@ -98,9 +101,12 @@ class GameScreen extends Component {
   timeOut() {
     const ONE_SEC = 1000;
     setInterval(() => {
-      this.setState((state) => ({
-        timer: state.timer - 1,
-      }), this.disableQuestion);
+      this.setState(
+        (state) => ({
+          timer: state.timer - 1,
+        }),
+        this.disableQuestion,
+      );
     }, ONE_SEC);
   }
 
@@ -146,24 +152,28 @@ class GameScreen extends Component {
             >
               {resps[1]}
             </button>
-            <button
-              className={ wrong }
-              data-testid="wrong-answer-2"
-              type="button"
-              onClick={ this.changeStyle }
-              disabled={ disabledTimeOut }
-            >
-              {resps[2]}
-            </button>
-            <button
-              className={ wrong }
-              data-testid="wrong-answer-3"
-              type="button"
-              onClick={ this.changeStyle }
-              disabled={ disabledTimeOut }
-            >
-              {resps[3]}
-            </button>
+            {resps.length === this.MAX_ALTERNATIVES && (
+              <div>
+                <button
+                  className={ wrong }
+                  data-testid="wrong-answer-2"
+                  type="button"
+                  onClick={ this.changeStyle }
+                  disabled={ disabledTimeOut }
+                >
+                  {resps[2]}
+                </button>
+                <button
+                  className={ wrong }
+                  data-testid="wrong-answer-3"
+                  type="button"
+                  onClick={ this.changeStyle }
+                  disabled={ disabledTimeOut }
+                >
+                  {resps[3]}
+                </button>
+              </div>
+            )}
           </div>
           {buttonNext && (
             <button
