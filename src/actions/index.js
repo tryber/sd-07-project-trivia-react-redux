@@ -1,10 +1,3 @@
-export function user(email) {
-  return ({
-    type: 'USER',
-    payload: email,
-  });
-}
-
 export const tokenAPI = (dataToken) => ({
   type: 'token',
   payload: dataToken,
