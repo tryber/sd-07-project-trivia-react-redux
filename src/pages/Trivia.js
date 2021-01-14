@@ -51,7 +51,6 @@ class Trivia extends React.Component {
     this.setState({
       questions: await fetchQuestions(number, token),
     });
-    console.log('funcaçao');
   }
 
   fetchGravatar() {
@@ -126,7 +125,6 @@ class Trivia extends React.Component {
 
   render() {
     const { emailSave, nameSave, timer } = this.props;
-    console.log(timer);
     const {
       urlImg,
       placar,
@@ -136,6 +134,7 @@ class Trivia extends React.Component {
       clicked,
       disabled,
       counter } = this.state;
+    console.log(timer);
 
     return (
       <div>
