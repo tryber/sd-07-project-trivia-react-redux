@@ -49,7 +49,7 @@ class Answer extends Component {
 
 const mapStateToProps = (state) => ({
   disable: state.timer.disable,
-  click: state.color.click,
+  click: state.questions.click,
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -5,17 +5,14 @@ import { connect } from 'react-redux';
 import Header from '../components/Header';
 import Question from '../components/Question';
 import Timer from '../components/Timer';
-import * as callAPI from '../services/callAPI';
-import { nextQuestion } from '../actions';
+import { getQuestions, nextQuestion } from '../actions';
 
 class Game extends Component {
   constructor() {
     super();
 
-    this.state = {
-      questions: [],
-      redirect: false,
-    };
+    this.state = { redirect: false };
+
     this.getQuestions = this.getQuestions.bind(this);
     this.renderButton = this.renderButton.bind(this);
     this.nextQuestion = this.nextQuestion.bind(this);
@@ -26,20 +23,17 @@ class Game extends Component {
   }
 
   async getQuestions() {
-    const { token } = this.props;
-    const requestQuestions = await callAPI.requestQuestions(token);
-    this.setState({ questions: requestQuestions.results });
+    const { requestQuestions, token } = this.props;
+    requestQuestions(token);
   }
 
   nextQuestion() {
-    const { questions } = this.state;
-    const { changeQuestion } = this.props;
+    const { changeQuestions, questions } = this.props;
     const filteredQuestions = questions.filter((item) => item !== questions[0]);
     if (filteredQuestions.length === 0) {
       return this.setState({ redirect: true });
     }
-    this.setState({ questions: filteredQuestions });
-    changeQuestion();
+    changeQuestions(filteredQuestions);
   }
 
   renderButton() {
@@ -55,8 +49,9 @@ class Game extends Component {
   }
 
   render() {
-    const { questions, redirect } = this.state;
-    const { clicked } = this.props;
+    const { redirect } = this.state;
+    const { questions, clicked } = this.props;
+    console.log(questions);
     if (redirect) return (<Redirect to="/feedback" />);
     return (
       <div>
@@ -70,11 +65,14 @@ class Game extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  changeQuestion: () => dispatch(nextQuestion()) });
+  changeQuestions: (array) => dispatch(nextQuestion(array)),
+  requestQuestions: (string) => dispatch(getQuestions(string)),
+});
 
 const mapStateToProps = (state) => ({
   token: state.player.token,
-  clicked: state.color.clicked,
+  clicked: state.questions.clicked,
+  questions: state.questions.questions,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);

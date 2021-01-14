@@ -1,3 +1,5 @@
+import * as callAPI from '../services/callAPI';
+
 export function login(object) {
   return ({
     type: 'LOGIN',
@@ -17,8 +19,17 @@ export function changeColor() {
   });
 }
 
-export function nextQuestion() {
+export function nextQuestion(array) {
   return ({
     type: 'NEXT_QUESTION',
+    newQuestions: array,
   });
+}
+
+export function getQuestions(token) {
+  return async (dispatch) => {
+    const requestQuestions = await callAPI.requestQuestions(token);
+    const questions = requestQuestions.results;
+    return dispatch(nextQuestion(questions));
+  }
 }
