@@ -10,7 +10,7 @@ class Questions extends React.Component {
     this.state = {
       questionNumber: 0,
       correctAnswer: 'neutral',
-      wrongAnswer: 'neutralAnswer',
+      wrongAnswer: 'neutral',
     };
   }
 
@@ -27,14 +27,9 @@ class Questions extends React.Component {
   }
 
   render() {
-
-    const { questionNumber } = this.state;
     const { questions, timer } = this.props;
     const { questionsList } = questions;
     const { questionNumber, wrongAnswer, correctAnswer } = this.state;
-    const { questions } = this.props;
-    const { questionsList } = questions;
-    console.log(questionsList);
     const five = 5;
     if (questionsList < five) {
       console.log(questionsList);
@@ -52,12 +47,12 @@ class Questions extends React.Component {
           </p>
         </div>
         <div>
-          <button type="button" data-testid="correct-answer" disabled={ timer }>
           <button
             type="button"
             data-testid="correct-answer"
             onClick={ () => this.buttonColor() }
             className={ correctAnswer }
+            disabled={ timer }
           >
             {questionsList[questionNumber].correct_answer}
           </button>
@@ -65,11 +60,9 @@ class Questions extends React.Component {
             <button
               key={ q }
               data-testid={ `wrong-answer-${index}` }
-              className="wrong-answer"
               type="button"
               disabled={ timer }
               className={ wrongAnswer }
-              type="button"
               onClick={ () => this.buttonColor() }
             >
               {q}
