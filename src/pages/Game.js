@@ -11,7 +11,7 @@ class Game extends Component {
     this.renderAllDataQuestion = this.renderAllDataQuestion.bind(this);
     this.handleUserAnswer = this.handleUserAnswer.bind(this);
     this.timer = this.timer.bind(this);
-    this.shuffle = this.shuffle.bind(this);
+    // this.shuffle = this.shuffle.bind(this);
 
     this.state = {
       questionIndex: 0,
@@ -36,7 +36,7 @@ class Game extends Component {
     const lastSecondDisableButton = 0;
     if (timer > 1) {
       setTimeout(() => {
-        this.setState(({ prevState }) => ({
+        this.setState(( prevState ) => ({
           timer: prevState.timer - 1,
         }));
       }, secondTimerFunction);
