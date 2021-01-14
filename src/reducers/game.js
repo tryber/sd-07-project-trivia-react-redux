@@ -6,7 +6,7 @@ const INITIAL_STATE = {
   token: '',
   data: {},
   assertions2: false,
-  time: 0,
+  time2: 0,
   score: 0,
 };
 
@@ -15,7 +15,7 @@ const game = (state = INITIAL_STATE, action) => {
   case GAME_DATA:
     return { ...state, token: action.token, data: action.data };
   case GAME_STATUS:
-    return { ...state, assertions2: action.assertions2, time: action.time };
+    return { ...state, assertions2: action.assertions2, time2: action.time2 };
   case GAME_SCORE:
     return { ...state, score: action.score };
   default:

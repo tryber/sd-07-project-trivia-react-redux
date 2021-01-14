@@ -29,10 +29,10 @@ export function fetchApi() {
 
 //--------------------------------------------------------
 
-export const gameStatus = (assertions2, time) => ({
+export const gameStatus = (assertions2, time2) => ({
   type: GAME_STATUS,
   assertions2,
-  time,
+  time2,
 });
 
 export const gameScore = (score) => ({
