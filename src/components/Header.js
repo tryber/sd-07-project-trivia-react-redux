@@ -2,13 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import md5 from 'crypto-js/md5';
-
 // https://github.com/brix/crypto-js
 // md5 gera as hash para add no fim do link de acordo com o email do user.
 
 class Header extends Component {
   render() {
-    const { nome, email } = this.props;
+    const { email, nome } = this.props;
     return (
       <header>
         <img src={ `https://www.gravatar.com/avatar/${md5(email)}` } className="App-logo" alt="logo" width="50" height="50" />
