@@ -12,6 +12,8 @@ const initialState = {
       incorrect_answers: [],
     }],
   },
+  token: '',
+  avatar: '',
 };
 
 export default function (state = initialState, action) {
@@ -40,6 +42,7 @@ export default function (state = initialState, action) {
     localStorage.setItem('token', action.payload);
     return {
       ...state,
+      token: action.payload,
     };
   case 'REQUEST_TOKEN_API':
     return {
@@ -59,6 +62,16 @@ export default function (state = initialState, action) {
   case 'REQUEST_QUESTIONS_API_FAIL':
     return {
       ...state,
+      
+  case 'CREATE_GRAVATAR_SUCCESS':
+    return {
+      ...state,
+      avatar: action.payload,
+    };
+  case 'REQUEST_GRAVATAR_API':
+    return {
+      ...state,
+      loading: true,
     };
   default:
     return state;

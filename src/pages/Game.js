@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { requestQuestionAndAnsewrs } from '../actions';
 import QuestionsList from './componentes/QuestionsList';
+import Header from './componentes/Header';
 
 class Game extends React.Component {
   componentDidMount() {
