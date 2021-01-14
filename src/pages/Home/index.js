@@ -39,10 +39,21 @@ class Home extends Component {
 
   async handleClick() {
     const { callApi } = this.props;
+    const { name, email } = this.state;
     const endpoint = await fetch('https://opentdb.com/api_token.php?command=request');
     const objct = await endpoint.json();
 
+    const playerObject = {
+      player: {
+        name,
+        gravatarEmail: email,
+        assertions: 0,
+        score: 0,
+      },
+    };
+
     localStorage.setItem('token', objct.token);
+    localStorage.setItem('state', JSON.stringify(playerObject));
     callApi();
   }
 

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import propTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { gameActions } from '../../actions';
 
 class GameTimer extends Component {
   constructor() {
@@ -23,9 +25,8 @@ class GameTimer extends Component {
 
   handleTimer() {
     const { count } = this.state;
-    const { timerZero } = this.props;
-    const { clicked } = this.props;
-    if (clicked) return;
+    const { timerZero, clicked, updateTime } = this.props;
+    if (clicked) return (updateTime(count));
     if (count > 0) {
       this.setState({
         count: count - 1,
@@ -48,6 +49,11 @@ class GameTimer extends Component {
 GameTimer.propTypes = {
   timerZero: propTypes.func.isRequired,
   clicked: propTypes.func.isRequired,
+  updateTime: propTypes.func.isRequired,
 };
 
-export default GameTimer;
+const mapDispatchToProps = (dispatch) => ({
+  updateTime: (payload) => dispatch(gameActions.updateTime(payload)),
+});
+
+export default connect(null, mapDispatchToProps)(GameTimer);
