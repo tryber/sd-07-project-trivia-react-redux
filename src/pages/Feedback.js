@@ -12,6 +12,10 @@ class FeedBack extends React.Component {
     };
   }
 
+  componentDidMount() {
+    this.fetchGravatar();
+  }
+
   fetchGravatar() {
     const { emailSave } = this.props;
     const hash = md5(emailSave);
@@ -22,10 +26,12 @@ class FeedBack extends React.Component {
   }
 
   render() {
-    const player = JSON.parse(localStorage.getItem('player'));
+    const state = JSON.parse(localStorage.getItem('state'));
+    const { player } = state;
     const { score } = player;
     const { emailSave, nameSave } = this.props;
     const { urlImg } = this.state;
+    console.log(urlImg);
     return (
 
       <div>
@@ -36,7 +42,6 @@ class FeedBack extends React.Component {
           <img data-testid="header-profile-picture" src={ urlImg } alt="Gravatar" />
 
         </header>
-        <h1>FeedBack</h1>
         <h1 data-testid="feedback-text">FeedBack</h1>
       </div>
     );
