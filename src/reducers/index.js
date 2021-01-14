@@ -1,18 +1,8 @@
-const initialState = {
-  name: '',
-  assertions: 0,
-  score: 0,
-  gravatarEmail: '',
-};
+import { combineReducers } from 'redux';
+import player from './player';
 
-export default function player(state = initialState, action) {
-  switch (action.type) {
-  case 'USER': return {
-    ...state,
-    gravatarEmail: action.payload,
-  };
+const rootReducers = combineReducers({
+  player,
+});
 
-  default:
-    return state;
-  }
-}
+export default rootReducers;

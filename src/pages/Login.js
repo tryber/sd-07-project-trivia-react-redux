@@ -1,4 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { getAPIToken } from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -10,6 +13,7 @@ class Login extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.verifyLogin = this.verifyLogin.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleChange({ target: { name, value } }) {
@@ -21,6 +25,11 @@ class Login extends React.Component {
     if (name.length > 0 && email.length > 0) {
       this.setState({ subimitDisabled: false });
     }
+  }
+
+  async handleSubmit() {
+    const { getToken } = this.props;
+    await getToken();
   }
 
   render() {
@@ -43,13 +52,26 @@ class Login extends React.Component {
             name="email"
             data-testid="input-gravatar-email"
           />
-          <button disabled={ subimitDisabled } type="button" data-testid="btn-play">
-            Jogar
-          </button>
+          <Link to="/tela-de-jogo">
+            <button
+              onClick={ this.handleSubmit }
+              disabled={ subimitDisabled }
+              type="button"
+              data-testid="btn-play"
+            >
+              Jogar
+            </button>
+          </Link>
         </form>
       </div>
     );
   }
 }
 
-export default Login;
+function mapDispatchToProps(dispatch) {
+  return {
+    getToken: () => dispatch(getAPIToken()),
+  };
+}
+
+export default connect(null, mapDispatchToProps)(Login);
