@@ -1,22 +1,9 @@
 import React from "react";
+import { Link } from 'react-router-dom';
 
 class Ranking extends React.Component {
   constructor() {
     super();
-
-    // A chave state deve conter a seguinte estrutura:
-    // player: {
-    //     name,
-    //     assertions,
-    //     score,
-    //     gravatarEmail
-    // }
-
-    //     A chave ranking deve conter a seguinte estrutura:
-    // [
-    //   { name: nome-da-pessoa, score: 10, picture: url-da-foto-no-gravatar }
-    // ]
-
     this.state = {
       player: {
         name: '',
@@ -33,15 +20,27 @@ class Ranking extends React.Component {
     };
   }
 
+  rankingList() {
+    const { player: { name, assertions, score, gravatarEmail } } = JSON.parse(localStorage.getItem('state'));
+    const { index } = this.state.ranking;
+    return (
+    <li data-testid={`player-name-${index}`}>
+      { `Nome: ${name},  ` }
+      { `Pontuação: ${score},   ` }
+      {`Acertos: ${assertions},   `}
+      { `foto: ${gravatarEmail}` }
+    </li>
+    );
+  }
+
   render() {
-    const { name, score, picture, index } = this.state.ranking;
-    
     return (
       <div>
         <h1 data-testid='ranking-title'>Tela do ranking</h1>
         <ul>
-          <li data-testid={`player-name-${index}`}>{ `Nome: ${name},  ` }{ `Pontuação: ${score},   ` }{ `foto: ${picture}` }</li>
+          { this.rankingList() }
         </ul>
+        <Link data-testid="btn-go-home" to="/">Go to Home</Link>
       </div>
     );
   }
