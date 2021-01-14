@@ -6,8 +6,11 @@ class Questions extends React.Component {
   constructor() {
     super();
     this.incrementIndex = this.incrementIndex.bind(this);
+    // this.buttonColor = this.buttonColor.bind(this);
     this.state = {
       questionNumber: 0,
+      correctAnswer: 'neutral',
+      wrongAnswer: 'neutralAnswer',
     };
   }
 
@@ -19,10 +22,15 @@ class Questions extends React.Component {
     }));
   }
 
+  buttonColor() {
+    this.setState({ correctAnswer: 'correctAnswer', wrongAnswer: 'wrongAnswer' });
+  }
+
   render() {
-    const { questionNumber } = this.state;
+    const { questionNumber, wrongAnswer, correctAnswer } = this.state;
     const { questions } = this.props;
     const { questionsList } = questions;
+    console.log(questionsList);
     const five = 5;
     if (questionsList < five) {
       console.log(questionsList);
@@ -40,15 +48,21 @@ class Questions extends React.Component {
           </p>
         </div>
         <div>
-          <button type="button" data-testid="correct-answer">
+          <button
+            type="button"
+            data-testid="correct-answer"
+            onClick={ () => this.buttonColor() }
+            className={ correctAnswer }
+          >
             {questionsList[questionNumber].correct_answer}
           </button>
           {questionsList[questionNumber].incorrect_answers.map((q, index) => (
             <button
               key={ q }
               data-testid={ `wrong-answer-${index}` }
-              className="wrong-answer"
+              className={ wrongAnswer }
               type="button"
+              onClick={ () => this.buttonColor() }
             >
               {q}
             </button>
