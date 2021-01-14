@@ -10,7 +10,14 @@ class Header extends Component {
     const { email, nome } = this.props;
     return (
       <header>
-        <img src={ `https://www.gravatar.com/avatar/${md5(email)}` } className="App-logo" alt="logo" width="50" height="50" />
+        <img
+          src={ `https://www.gravatar.com/avatar/${md5(email)}` }
+          className="App-logo"
+          data-testid="header-profile-picture"
+          alt="logo"
+          width="50"
+          height="50"
+        />
         <p data-testid="header-player">{ nome }</p>
         <p data-testid="header-score">Score: 0</p>
       </header>

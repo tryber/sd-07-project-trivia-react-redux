@@ -4,11 +4,12 @@ import PropTypes from 'prop-types';
 
 class Question extends Component {
   render() {
-    const { question } = this.props;
+    const { question, category } = this.props;
 
     return (
       <div className="questions">
-        { question }
+        <p data-testid="question-category">{ category }</p>
+        <p data-testid="question-text">{ question }</p>
       </div>
     );
   }
@@ -16,10 +17,12 @@ class Question extends Component {
 
 Question.propTypes = {
   question: PropTypes.node.isRequired,
+  category: PropTypes.node.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   question: state.question.resQuestion,
+  category: state.question.categoryRes,
 });
 
 export default connect(mapStateToProps)(Question);
