@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { questionAnswered } from '../../redux/actions';
+import { setScore } from '../../redux/actions';
 
 class CorrectAnswer extends Component {
   render() {
-    const { answer, isAnswered, changeColor } = this.props;
+    const { answer, isAnswered, timerValue, actionSetScore, difficulty } = this.props;
     return (
       <div>
         <button
@@ -13,7 +13,7 @@ class CorrectAnswer extends Component {
           data-testid="correct-answer"
           disabled={ isAnswered }
           className={ isAnswered ? 'answer-button-correct' : 'answer-button' }
-          onClick={ () => changeColor() }
+          onClick={ () => actionSetScore(true, true, timerValue, difficulty) }
         >
           { answer }
         </button>
@@ -23,17 +23,21 @@ class CorrectAnswer extends Component {
 }
 
 const mapStateToProps = (state) => ({
+  timerValue: state.throwTimer,
   isAnswered: state.questionAnswererd.isAnswered,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  changeColor: () => dispatch(questionAnswered()),
+  // changeColor: (a, b) => dispatch(questionAnswered(a, b)),
+  actionSetScore: (a, b, c, d) => dispatch(setScore(a, b, c, d)),
 });
 
 CorrectAnswer.propTypes = {
   answer: PropTypes.string.isRequired,
   isAnswered: PropTypes.bool.isRequired,
-  changeColor: PropTypes.func.isRequired,
+  actionSetScore: PropTypes.func.isRequired,
+  difficulty: PropTypes.string.isRequired,
+  timerValue: PropTypes.number.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CorrectAnswer);
