@@ -4,6 +4,7 @@
   flex-direction: column;
   flex-flow: row wrap;
   justify-content: center;
+  margin-top: 5px;
 }
 
 .ranking {
@@ -15,7 +16,7 @@
   height: 70px;
   justify-content: space-between;
   margin: 0;
-  min-width: 85%;
+  min-width: 90%;
   padding: 0 10px;
 }
 

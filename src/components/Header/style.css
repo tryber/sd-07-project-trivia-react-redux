@@ -47,3 +47,7 @@
   margin-right: 150px;
   text-align: left;
 }
+
+.ugly-picture {
+  border-radius: 50%;
+}
