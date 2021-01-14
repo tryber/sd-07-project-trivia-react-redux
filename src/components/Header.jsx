@@ -15,13 +15,17 @@ class Header extends React.Component {
   }
 
   render() {
-    const { user } = this.props;
+    const { user, game } = this.props;
     const gravatarUrl = this.createGravatarUrl(user.email);
     return (
       <header>
-        <img data-testid="header-profile-picture" alt={ user.name } src={ gravatarUrl } />
-        <div data-testid="header-player-name">{ user.name }</div>
-        <div data-testid="header-score">0</div>
+        <img
+          data-testid="header-profile-picture"
+          alt={ user.name }
+          src={ gravatarUrl }
+        />
+        <div data-testid="header-player-name">{user.name}</div>
+        <div data-testid="header-score">{game.score}</div>
       </header>
     );
   }
@@ -29,12 +33,16 @@ class Header extends React.Component {
 
 const mapStateToProps = (state) => ({
   user: state.user,
+  game: state.game,
 });
 
 Header.propTypes = {
   user: PropTypes.shape({
     name: PropTypes.string.isRequired,
     email: PropTypes.string.isRequired,
+  }).isRequired,
+  game: PropTypes.shape({
+    score: PropTypes.number,
   }).isRequired,
 };
 

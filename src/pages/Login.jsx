@@ -34,6 +34,17 @@ class Login extends React.Component {
 
     const { game } = this.props;
     localStorage.setItem('token', game.token);
+    localStorage.setItem(
+      'state',
+      JSON.stringify({
+        player: {
+          name: '',
+          assertions: 0,
+          score: 0,
+          email: '',
+        },
+      }),
+    );
 
     history.push('/game');
   }
