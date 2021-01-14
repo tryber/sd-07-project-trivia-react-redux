@@ -5,25 +5,46 @@ import { connect } from 'react-redux';
 class Feedbacks extends Component {
   render() {
     const minScore = 3;
-    const { score } = this.props;
+    const { score, history } = this.props;
 
     if (score >= minScore) {
       return (
-        <h1 data-testid="feedback-text">
-          Mandou bem!
-        </h1>
+        <div>
+          <h1 data-testid="feedback-text">
+            Mandou bem!
+          </h1>
+          <button
+            type="button"
+            data-testid="btn-play-again"
+            onClick={ () => history.push('/') }
+          >
+            Jogar Novamente
+          </button>
+        </div>
+
       );
     }
     return (
-      <h1 data-testid="feedback-text">
-        Podia ser melhor...
-      </h1>
+      <div>
+        <h1 data-testid="feedback-text">
+          Podia ser melhor...
+        </h1>
+        <button
+          type="button"
+          data-testid="btn-play-again"
+          onClick={ () => history.push('/') }
+        >
+          Jogar Novamente
+        </button>
+      </div>
+
     );
   }
 }
 
 Feedbacks.propTypes = {
   score: PropTypes.number.isRequired,
+  history: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
