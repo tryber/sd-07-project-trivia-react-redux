@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import md5 from 'crypto-js/md5';
 import fetchQuestions from '../services/questionsApi';
-import Timer from '../components/Timer';
 import Questions from '../components/Questions';
 
 class Trivia extends React.Component {
@@ -14,6 +13,7 @@ class Trivia extends React.Component {
     this.requestQuestions = this.requestQuestions.bind(this);
     this.disable = this.disable.bind(this);
     this.nextQuestion = this.nextQuestion.bind(this);
+    this.countDown = this.countDown.bind(this);
     this.state = {
       urlImg: '',
       placar: 0,
@@ -22,6 +22,7 @@ class Trivia extends React.Component {
       disabled: false,
       replyConfirmation: false,
       clicked: false,
+      counter: 30,
     };
   }
 
@@ -30,6 +31,10 @@ class Trivia extends React.Component {
     const { tokenValue } = this.props;
     this.fetchGravatar();
     this.requestQuestions(cinco, tokenValue);
+    const second = 1000;
+    this.interval = setInterval(() => {
+      this.countDown();
+    }, second);
   }
 
   async requestQuestions(number, token) {
@@ -59,15 +64,28 @@ class Trivia extends React.Component {
 
   nextQuestion() {
     const { position } = this.state;
-    this.setState({
-      position: position + 1,
-      replyConfirmation: false,
-      clicked: false,
-    });
+    const { history } = this.props;
+    const maxLength = 4;
+    return position === maxLength ? history.push('/feedback')
+      : this.setState({
+        position: position + 1,
+        replyConfirmation: false,
+        clicked: false,
+        counter: 30,
+      });
   }
 
   disable() {
     this.setState({ disabled: true });
+  }
+
+  countDown() {
+    const { counter } = this.state;
+    if (counter > 0) {
+      this.setState({ counter: counter - 1 });
+    } else {
+      this.disable();
+    }
   }
 
   render() {
@@ -79,7 +97,8 @@ class Trivia extends React.Component {
       position,
       replyConfirmation,
       clicked,
-      disabled } = this.state;
+      disabled,
+      counter } = this.state;
 
     return (
       <div>
@@ -109,7 +128,7 @@ class Trivia extends React.Component {
             Próxima
           </button>
         </section>
-        <Timer disable={ this.disable } />
+        <div>{counter}</div>
       </div>
     );
   }
@@ -119,6 +138,7 @@ Trivia.propTypes = {
   emailSave: PropTypes.string.isRequired,
   nameSave: PropTypes.string.isRequired,
   tokenValue: PropTypes.string.isRequired,
+  history: PropTypes.shape({ push: PropTypes.func }).isRequired,
 };
 
 const mapStateToProps = (state) => ({
