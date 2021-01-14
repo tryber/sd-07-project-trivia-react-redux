@@ -521,7 +521,7 @@ describe.skip('15 - [TELA DE FEEDBACK] Crie a opção para a pessoa jogadora pod
   });
 });
 
-describe.skip('16 - [TELA DE FEEDBACK] Crie a opção para a pessoa jogadora poder visualizar a tela de _ranking_', () => {
+describe('16 - [TELA DE FEEDBACK] Crie a opção para a pessoa jogadora poder visualizar a tela de _ranking_', () => {
   beforeEach(() => {
     cy.visit('http://localhost:3000/');
     cy.clearLocalStorage();

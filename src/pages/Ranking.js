@@ -27,19 +27,20 @@ class Ranking extends React.Component {
       ranking: {
         name: 'João', 
         score: '10', 
-        picture: ' :-) '
+        picture: ' :-) ',
+        index: ''
       }
     };
   }
 
   render() {
-    const { name, score, picture } = this.state.ranking;
+    const { name, score, picture, index } = this.state.ranking;
     
     return (
       <div>
-        <p>Tela do ranking</p>
+        <h1 data-testid='ranking-title'>Tela do ranking</h1>
         <ul>
-          <li data-testid='player-name-${index}'>{ `Nome: ${name},  ` }{ `Pontuação: ${score},   ` }{ `foto: ${picture}` }</li>
+          <li data-testid={`player-name-${index}`}>{ `Nome: ${name},  ` }{ `Pontuação: ${score},   ` }{ `foto: ${picture}` }</li>
         </ul>
       </div>
     );
