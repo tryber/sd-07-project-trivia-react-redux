@@ -23,7 +23,7 @@ class Ranking extends React.Component {
         },
         {
             img:'lauro.png',
-            name:'Lauro',
+            name:'Lauro'
             score: 5,
         }
 
