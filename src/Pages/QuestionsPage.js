@@ -1,16 +1,26 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import Questions from '../Components/Questions';
-import { fetchQuestions } from '../actions';
-import Header from '../Components/Header';
+import React from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import Questions from "../Components/Questions";
+import { fetchQuestions } from "../actions";
+import Header from "../Components/Header";
 
 class QuestionsPage extends React.Component {
-  async componentDidMount() {
-    const token = localStorage.getItem('token');
-    const { questionsGen } = this.props;
+  componentDidMount() {
+    const token = localStorage.getItem("token");
+    const questionsList = fetchQuestions(token);
+  }
 
-    await questionsGen(token);
+  fetchQuestions(token) {
+    const URL = `https://opentdb.com/api.php?amount=5&token=${token}`;
+    fetch(URL)
+      .then((response) => response.json())
+      .then((obj) => {
+        if (obj.response_code === 0) {
+          const questions = obj.results;
+          return questions;
+        }
+      });
   }
 
   render() {

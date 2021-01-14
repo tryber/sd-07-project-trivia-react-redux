@@ -6,9 +6,40 @@ class Questions extends React.Component {
   constructor() {
     super();
     this.incrementIndex = this.incrementIndex.bind(this);
+    this.fetchQ = this.fetchQ.bind(this);
     this.state = {
       questionNumber: 0,
+      questionsList: [],
+      isLoading: false,
     };
+  }
+
+  componentDidMount() {
+    this.fetchQ();
+  }
+
+  fetchQuestions(token) {
+    const URL = `https://opentdb.com/api.php?amount=5&token=${token}`;
+    fetch(URL)
+      .then((response) => response.json())
+      .then((obj) => {
+        if (obj.response_code === 0) {
+          const questions = obj.results;
+          return questions;
+        }
+      });
+  }
+
+  fetchQ() {
+    const token = localStorage.getItem('token');
+    this.setState({ isLoading: true }, () => {
+      this.fetchQuestions(token).then((q) => {
+        this.setState({
+          isLoading: false,
+          questionsList: q,
+        });
+      });
+    });
   }
 
   incrementIndex() {
@@ -24,55 +55,47 @@ class Questions extends React.Component {
     const { questionsList } = this.props;
     const { questions } = questionsList;
     const five = 5;
-
-    // if (questions.length > 0) {
-    //   this.setState({
-    //     isLoading: true,
-    //   });
-    // }
-
-    if (questionNumber < five) {
-      return (
-        <div>
-          {`Questão número ${questionNumber + 1}`}
+    if (questions.length > 0) {
+      if (questionNumber < five) {
+        return (
           <div>
-            <p data-testid="question-category">
-              {questions.length > 0 && questions[questionNumber].category}
-            </p>
-            <p data-testid="question-text">
-              {questions.length > 0 && questions[questionNumber].question}
-            </p>
-          </div>
-          <div>
-            <button type="button" data-testid="correct-answer">
-              {questions.length > 0 && questions[questionNumber].correct_answer}
+            {`Questão número ${questionNumber + 1}`}
+            <div>
+              <h2 data-testid="question-category">
+                {questions[questionNumber].category}
+              </h2>
+              <p data-testid="question-text">
+                {questions[questionNumber].question}
+              </p>
+            </div>
+            <div>
+              <button type="button" data-testid="correct-answer">
+                {questions[questionNumber].correct_answer}
+              </button>
+              {questions[questionNumber].incorrect_answers.map((resposta) => (
+                <button
+                  type="button"
+                  data-testid={ `wrong-answer-${questionNumber}` }
+                  key={ resposta }
+                >
+                  {resposta}
+                </button>
+              ))}
+            </div>
+            <button type="button" onClick={ () => this.incrementIndex() }>
+              Próxima
             </button>
-            {questions.length > 0
-              && questions[questionNumber].incorrect_answers.map(
-                (resposta, index) => (
-                  <button
-                    type="button"
-                    data-testid={ `wrong-answer-${index}` }
-                    key={ resposta }
-                  >
-                    {resposta}
-                  </button>
-                ),
-              )}
           </div>
-          <button type="button" onClick={ () => this.incrementIndex() }>
-            Próxima
-          </button>
-        </div>
-      );
+        );
+      }
+      return <h1>Tente novamente</h1>;
     }
-    return <h1>Tente novamente</h1>;
+    return <p>Carregando...</p>;
   }
 }
 
 const mapStateToProps = (state) => ({
   questionsList: state.questions,
-  isLoading: state.questions.loading,
 });
 
 Questions.propTypes = {
