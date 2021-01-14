@@ -3,22 +3,50 @@ import PropTypes from 'prop-types';
 import './Quiz.css';
 
 class Quiz extends Component {
-  // constructor() {
-  //  super();
-  //  this.state = {
-  //    answered: false,
-  //  };
-  // }
+  constructor() {
+    super();
 
-  // handleClick() {
-  // const { answered } = this.state;
-  //  this.setState({
-  //    answered: true,
-  //  });
-  // }
+    this.state = {
+      answered: false,
+      colorCorrect: '',
+      colorIncorrect: '',
+    };
+
+    this.answerColor = this.answerColor.bind(this);
+    this.nextButton = this.nextButton.bind(this);
+  }
+
+  handleClick() {
+    this.setState({
+      answered: true,
+    });
+  }
+
+  answerColor() {
+    // const { results } = this.props;
+    // const { correct_answer: correctAnswer } = results;
+
+    // if (target.innerText !== correctAnswer) {
+    // }
+
+    this.setState({
+      colorIncorrect: 'answer-wrong',
+      colorCorrect: 'answer-correct',
+    });
+
+    this.handleClick();
+  }
+
+  nextButton() {
+    this.setState({
+      answered: false,
+      colorCorrect: '',
+      colorIncorrect: '',
+    });
+  }
 
   render() {
-    // const { answered } = this.state;
+    const { answered, colorCorrect, colorIncorrect } = this.state;
     const { results, nextQuestion } = this.props;
     const { correct_answer: correctAnswer } = results;
     const { incorrect_answers: incorrectAnswers } = results;
@@ -33,15 +61,25 @@ class Quiz extends Component {
     const renderQuestions = (questionToRender, number) => {
       if (questionToRender === correctAnswer) {
         return (
-          <button className="answer-correct" data-testid="correct-answer" type="button">
+          <button
+            className={ colorCorrect }
+            key={ number }
+            data-testid="correct-answer"
+            type="button"
+            onClick={ this.answerColor }
+            disabled={ answered }
+          >
             { correctAnswer }
           </button>);
       }
       return (
         <button
-          className="answer-wrong"
+          className={ colorIncorrect }
+          key={ number }
           data-testid={ `wrong-answer-${number}` }
           type="button"
+          onClick={ this.answerColor }
+          disabled={ answered }
         >
           { questionToRender }
         </button>);
@@ -52,7 +90,12 @@ class Quiz extends Component {
         <p>{ difficulty }</p>
         <p data-testid="question-category">{ category }</p>
         {shuffledArray.map((oneQuestion, index) => renderQuestions(oneQuestion, index))}
-        <button type="button" onClick={ nextQuestion }>
+        <button
+          type="button"
+          onClick={ () => { this.nextButton(); nextQuestion(); } }
+          hidden={ !answered }
+          data-testid="btn-next"
+        >
           Próxima
         </button>
       </div>
