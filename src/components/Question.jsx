@@ -1,60 +1,67 @@
 import React, { Component } from 'react';
 import propTypes from 'prop-types';
+import Answer from './Answer';
 
 class Question extends Component {
   constructor() {
     super();
+
     this.getAnswers = this.getAnswers.bind(this);
     this.renderAnswers = this.renderAnswers.bind(this);
-    // this.renderCorrectAnswer = this.renderCorrectAnswer.bind(this);
-    // this.renderIncorrectAnswer = this.renderIncorrectAnswer.bind(this);
   }
-  /*
-  renderCorrectAnswer(answer) {
-    return (<button data-testid="correct-answer">{ answer }</button>);
-  }
-
-  renderIncorrectAnswer() {
-
-  } */
-
-  /*
-  if (random === 0) {
-
-    this.renderCorrectAnswer(questions[random]);
-    const newQuestions = questions.filter((question) => question === questions[random]);
-    counter -= 1;
-    return this.renderAnswers(counter, newQuestions);
-  };
-  if (random === 1) {
-
-  }
-  this.renderAnswers(counter, array);
-  } */
 
   getAnswers(obj) {
+    const randomQuestions = [];
     const questions = [
       { correctAnswer: obj.correct_answer },
       { incorrectAnswer: obj.incorrect_answers },
     ];
     let counter = 1;
+    const index = 0;
     if (obj.incorrect_answers.length > counter) {
       counter += obj.incorrect_answers.length;
     } else counter = questions.length;
-    this.renderAnswers(counter, questions);
+    return this.renderAnswers(counter, index, questions, randomQuestions);
   }
 
-  renderAnswers(counter, questions) {
-    // if (counter === 0) break;
+  renderAnswers(counter, index, questions, randomQuestions) {
+    if (counter === 0) return randomQuestions;
     const random = Math.floor(Math.random() * questions.length);
     const question = questions[random];
-    console.log(question);
-    console.log(question.correctAnswer);
+    const { correctAnswer } = question;
+    if (correctAnswer) {
+      counter -= 1;
+      randomQuestions.push({
+        answer: correctAnswer,
+        value: -1,
+      });
+      const filteredQuestions = questions.filter((item) => item !== question);
+      return this.renderAnswers(counter, index, filteredQuestions, randomQuestions);
+    }
+    counter -= 1;
+    const { incorrectAnswer } = question;
+    const randomIncorrectAnswerIndex = Math.floor(Math.random() * incorrectAnswer.length);
+    const randomIncorrectAnswer = incorrectAnswer[randomIncorrectAnswerIndex];
+    randomQuestions.push({
+      answer: randomIncorrectAnswer,
+      value: index,
+    });
+    index += 1;
+    const filteredIncorrectQuestions = incorrectAnswer
+      .filter((item) => item !== randomIncorrectAnswer);
+    question.incorrectAnswer = filteredIncorrectQuestions;
+    const incorrectAnswersLength = 0;
+    if (question.incorrectAnswer.length === incorrectAnswersLength) {
+      const filteredQuestions = questions.filter((item) => item !== question);
+      return this.renderAnswers(counter, index, filteredQuestions, randomQuestions);
+    }
+    return this.renderAnswers(counter, index, questions, randomQuestions);
   }
 
   render() {
     const { item } = this.props;
     const { category, question } = item;
+    const randomQuestions = this.getAnswers(item);
     return (
       <div className="question-container">
         <div className="category-container">
@@ -64,7 +71,12 @@ class Question extends Component {
           <h3 data-testid="question-text">{ question }</h3>
         </div>
         <div className="answers-container">
-          { this.getAnswers(item) }
+          { randomQuestions.map((answer) => (
+            <Answer
+              key={ answer.value }
+              item={ answer }
+            />
+          ))}
         </div>
       </div>
     );
