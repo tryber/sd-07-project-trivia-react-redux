@@ -10,6 +10,11 @@ body {
   height: 50px;
 }
 
+.btn-settings {
+  margin-top: 100px;
+ 
+}
+
 .imputs {
   align-items: center;
   background-color: #282c34;
