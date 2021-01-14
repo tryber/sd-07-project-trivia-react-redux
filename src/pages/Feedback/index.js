@@ -6,10 +6,14 @@ import Header from '../../components/Header';
 import './index.css';
 
 class Feedback extends Component {
+  handleRedirect(path) {
+    const { history } = this.props;
+    history.push(path);
+  }
+
   render() {
     const { assertions, score } = this.props;
     const sufficientAssertion = 3;
-    console.log(assertions);
     return (
       <main className="wrapper">
         <Header />
@@ -45,6 +49,24 @@ class Feedback extends Component {
                 </p>
               </div>
             </div>
+            <div className="feedback__actions">
+              <button
+                type="button"
+                className="feedback__action feedback__action--primary"
+                data-testid="btn-play-again"
+                onClick={ () => this.handleRedirect('/') }
+              >
+                Jogar novamente
+              </button>
+              <button
+                type="button"
+                className="feedback__action"
+                data-testid="btn-ranking"
+                onClick={ () => this.handleRedirect('/ranking') }
+              >
+                Ver Ranking
+              </button>
+            </div>
           </div>
         </div>
       </main>
@@ -60,6 +82,9 @@ const mapStateToProps = (state) => ({
 Feedback.propTypes = {
   assertions: PropTypes.number.isRequired,
   score: PropTypes.number.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 export default connect(mapStateToProps)(Feedback);

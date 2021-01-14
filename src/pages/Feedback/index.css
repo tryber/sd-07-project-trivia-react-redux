@@ -26,6 +26,7 @@
   background: white;
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   color: #333;
   display: flex;
   flex-direction: column;
@@ -49,4 +50,32 @@
 
 .feedback__number {
   margin-left: 5px;
+}
+
+.feedback__actions {
+  display: flex;
+  flex-direction: column;
+}
+
+.feedback__action {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  color: #333;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  height: 36px;
+  margin-top: 10px;
+  padding: 10px 15px;
+  transition: all 0.4s ease-out;
+}
+
+.feedback__action--primary {
+  background: #0b8f70;
+  border: 0;
+  color: white;
+}
+
+.feedback__action:hover {
+  opacity: 0.9;
 }
