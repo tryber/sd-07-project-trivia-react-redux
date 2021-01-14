@@ -22,7 +22,8 @@ class FeedBack extends React.Component {
   }
 
   render() {
-    const placar = localStorage.getItem('score');
+    const player = JSON.parse(localStorage.getItem('player'));
+    const { score } = player;
     const { emailSave, nameSave } = this.props;
     const { urlImg } = this.state;
     return (
@@ -31,8 +32,8 @@ class FeedBack extends React.Component {
           <h1 data-testid="header-player-name">{nameSave}</h1>
 
           <h2>{emailSave}</h2>
-          <h2 data-testid="header-score">{placar}</h2>
-          <img data-testid="header-profile-picture" src={ urlImg } alt="Gravatar" />
+          <h2 data-testid="header-score">{score}</h2>
+          <img data-testid="header-profile-picture" src={urlImg} alt="Gravatar" />
 
         </header>
         <h1>FeedBack</h1>
