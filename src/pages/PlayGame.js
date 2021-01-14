@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
 import PlayGameHeader from '../components/playGameHeader';
+import GameBoard from '../components/gameBoard';
 import { fetchAPI } from '../action';
 
 class PlayGame extends React.Component {
@@ -14,7 +15,12 @@ class PlayGame extends React.Component {
   render() {
     const { token } = this.props;
     localStorage.setItem('token', token);
-    return <PlayGameHeader />;
+    return (
+      <>
+        <PlayGameHeader />
+        <GameBoard />
+      </>
+    );
   }
 }
 

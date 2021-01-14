@@ -3,12 +3,11 @@ import { LOGIN, REQUEST_TOKEN,
 
 const INITIAL_STATE = {
   user: {},
-  apiToken: [],
+  apiToken: {},
   isFetching: true,
 };
 
 export default function userReducer(state = INITIAL_STATE, action) {
-  console.log(action.type);
   switch (action.type) {
   case LOGIN:
     return {
