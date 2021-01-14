@@ -2,19 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchQuestions } from '../actions';
+import GameHeader from '../components/GameHeader';
 import '../style/game.css';
 
 class Game extends React.Component {
   constructor() {
     super();
     this.shuffle = this.shuffle.bind(this);
-    // this.applyColor = this.applyColor.bind(this);
   }
 
   async componentDidMount() {
     const { requestQuestions, token } = this.props;
     await requestQuestions(token);
-    console.log(token);
   }
 
   shuffle(answers) {
@@ -24,15 +23,6 @@ class Game extends React.Component {
     }
     return answers;
   }
-
-  // applyColor(randomAnswers) {
-  //   randomAnswers.map((answer) => {
-  //     const a = '';
-  //     const color = answer.correct ? 'rightGreen' : 'wrongRed';
-  //     document.getElementById('button-choice').className = color;
-  //     return a;
-  //   });
-  // }
 
   render() {
     const { questions } = this.props;
@@ -72,32 +62,28 @@ class Game extends React.Component {
         index: 0,
       }];
     const randomAnswers = this.shuffle(taggedAnswers);
-    // let btnClass = '';
     return (
-      <div key={ question.question }>
-        <h4 key={ question.category } data-testid="question-category">
-          {question.category}
-        </h4>
-        <h3 data-testid="question-text">
-          {question.question}
-        </h3>
-        {randomAnswers.map((answer) => (
-          <button
-            id="button-choice"
-            className={ answer.correct ? 'rightGreen' : 'wrongRed' }
-            type="button"
-            key={ answer.answer }
-            // onClick={
-            //   this.applyColor(randomAnswers)
-            // }
-            data-testid={ answer.correct
-              ? 'correct-answer'
-              : `wrong-answer-${answer.index}` }
-          >
-            {answer.answer}
-
-          </button>
-        ))}
+      <div>
+        <GameHeader />
+        <div key={ question.question }>
+          <h4 key={ question.category } data-testid="question-category">
+            {question.category}
+          </h4>
+          <h3 data-testid="question-text">
+            {question.question}
+          </h3>
+          {randomAnswers.map((answer) => (
+            <button
+              type="button"
+              key={ answer.answer }
+              data-testid={ answer.correct
+                ? 'correct-answer'
+                : `wrong-answer-${answer.index}` }
+            >
+              {answer.answer}
+            </button>
+          ))}
+        </div>
       </div>
     );
   }

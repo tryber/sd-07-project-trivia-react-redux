@@ -1,7 +1,7 @@
 import { LOGIN, TOKEN_REQUEST } from '../actions';
 
 const INITIAL_STATE = {
-  nome: '',
+  name: '',
   email: '',
   token: '',
 };
@@ -11,7 +11,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
   case LOGIN:
     return {
       ...state.Login,
-      nome: action.nome,
+      name: action.name,
       email: action.email,
     };
   case TOKEN_REQUEST:

@@ -1,9 +1,15 @@
 // support provided by group 25-thx!
 export const LOGIN = 'LOGIN';
-export const login = (nome, email) => ({
+export const login = (name, email) => ({
   type: LOGIN,
-  nome,
+  name,
   email,
+});
+
+export const EMAIL_HASH = 'EMAIL_HASH';
+export const hashRequest = (emailHash) => ({
+  type: EMAIL_HASH,
+  hash: emailHash,
 });
 
 export const TOKEN_REQUEST = 'TOKEN_REQUEST';
