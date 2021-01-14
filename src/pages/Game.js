@@ -2,11 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchQuestions } from '../actions';
+import '../style/game.css';
 
 class Game extends React.Component {
   constructor() {
     super();
     this.shuffle = this.shuffle.bind(this);
+    // this.applyColor = this.applyColor.bind(this);
   }
 
   async componentDidMount() {
@@ -22,6 +24,15 @@ class Game extends React.Component {
     }
     return answers;
   }
+
+  // applyColor(randomAnswers) {
+  //   randomAnswers.map((answer) => {
+  //     const a = '';
+  //     const color = answer.correct ? 'rightGreen' : 'wrongRed';
+  //     document.getElementById('button-choice').className = color;
+  //     return a;
+  //   });
+  // }
 
   render() {
     const { questions } = this.props;
@@ -61,6 +72,7 @@ class Game extends React.Component {
         index: 0,
       }];
     const randomAnswers = this.shuffle(taggedAnswers);
+    // let btnClass = '';
     return (
       <div key={ question.question }>
         <h4 key={ question.category } data-testid="question-category">
@@ -71,13 +83,19 @@ class Game extends React.Component {
         </h3>
         {randomAnswers.map((answer) => (
           <button
+            id="button-choice"
+            className={ answer.correct ? 'rightGreen' : 'wrongRed' }
             type="button"
             key={ answer.answer }
+            // onClick={
+            //   this.applyColor(randomAnswers)
+            // }
             data-testid={ answer.correct
               ? 'correct-answer'
               : `wrong-answer-${answer.index}` }
           >
             {answer.answer}
+
           </button>
         ))}
       </div>
