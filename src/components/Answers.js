@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Header from './Header';
 import Counter from './Counter';
@@ -11,16 +10,15 @@ class Answers extends React.Component {
     this.state = {
       index: 0,
       clicked: false,
-      sort: true,
       next: true,
       newCounter: 0,
       nextUp: false,
-      sortedAnswers: [],
     };
 
     this.nextButton = this.nextButton.bind(this);
     this.mountAnswers = this.mountAnswers.bind(this);
     this.questionsSorted = this.questionsSorted.bind(this);
+    this.isClicked = this.isClicked.bind(this);
   }
 
   questionsSorted() {
@@ -41,6 +39,12 @@ class Answers extends React.Component {
     }
   }
 
+  isClicked() {
+    this.setState({
+      clicked: true,
+      nextUp: true,
+    });
+  }
 
   nextButton() {
     const { index, newCounter } = this.state;
@@ -48,75 +52,76 @@ class Answers extends React.Component {
     return (
       <button
         type="button"
-        onClick={() => {
+        onClick={ () => {
           this.setState({
             index: index + 1,
             clicked: false,
-            sort: true,
             next: true,
             newCounter: newCounter + 1,
             nextUp: false,
           });
-        }}
+        } }
       >
         Próxima
       </button>);
   }
 
   mountAnswers() {
-    const { index } = this.state;
-    if (!this.props.questions[index]) return 'acabou';
+    const { index, clicked } = this.state;
+    const { questions } = this.props;
+    if (!questions[index]) return 'acabou';
 
     const {
       category,
       correct_answer: correct,
       question,
-    } = this.props.questions[index];
+    } = questions[index];
 
     return (
       <div>
+        <div>
+          <h3
+            key={ `category${index}` }
+            data-testid="question-category"
+          >
+            { category }
+          </h3>
+          <h2 key={ `question${index}` } data-testid="question-text">{ question }</h2>
+        </div>
+        <div>
           <div>
-            <h3
-              key={`category${index}`}
-              data-testid="question-category"
-            >
-              {category}
-            </h3>
-            <h2 key={`question${index}`} data-testid="question-text">{question}</h2>
-          </div>
-          <div>
-            <div>
-              {this.questionsSorted().map((element, set) => {
-                const { clicked } = this.state;
-                if (element.id) {
-                  return (
-                    <button
-                      className={clicked ? 'wright-answer' : ''}
-                      key={`correct${set}`}
-                      type="button"
-                      data-testid="correct-answer"
-                      onClick={() => this.setState({ clicked: true, nextUp: true })}
-                    >
-                      { correct }
-                    </button>
-                  );
-                }
+            { this.questionsSorted().map((element, set) => {
+              if (element.id) {
                 return (
                   <button
-                    className={clicked ? 'wrong-answer' : ''}
-                    key={`wrong${set}`}
+                    className={ clicked ? 'wright-answer' : '' }
+                    key={ `correct${set}` }
                     type="button"
-                    data-testid={`wrong-answer-${'0'}`}
-                    onClick={() => this.setState({ clicked: true, nextUp: true })}
+                    data-testid="correct-answer"
+                    onClick={ () => this.isClicked() }
+                    disabled={ clicked }
                   >
-                    { element }
+                    { correct }
                   </button>
                 );
-              })}
-            </div>
+              }
+              return (
+                <button
+                  className={ clicked ? 'wrong-answer' : '' }
+                  key={ `wrong${set}` }
+                  type="button"
+                  data-testid={ `wrong-answer-${'0'}` }
+                  onClick={ () => this.isClicked() }
+                  disabled={ clicked }
+                >
+                  { element }
+                </button>
+              );
+            })}
           </div>
         </div>
-    )
+      </div>
+    );
   }
 
   render() {
@@ -127,8 +132,13 @@ class Answers extends React.Component {
         <Header />
         <h1>Joguinho</h1>
         { this.mountAnswers() }
-        <Counter key={newCounter} clicked={clicked} next={next} />
-        { nextUp && this.nextButton()}
+        <Counter
+          key={ newCounter }
+          clicked={ clicked }
+          isClicked={ this.isClicked }
+          next={ next }
+        />
+        { nextUp && this.nextButton() }
       </div>
     );
   }
