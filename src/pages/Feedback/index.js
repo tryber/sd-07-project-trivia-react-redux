@@ -10,6 +10,7 @@ class Feedback extends Component {
     const { assertions } = this.props;
     const sufficientAssertion = 3;
     console.log(assertions);
+    const { history } = this.props;
     return (
       <main className="wrapper">
         <Header />
@@ -24,6 +25,13 @@ class Feedback extends Component {
             </p>
           </div>
         </div>
+        <button
+          type="button"
+          data-testid="btn-ranking"
+          onClick={ () => history.push('/ranking') }
+        >
+          Ver Ranking
+        </button>
       </main>
     );
   }
@@ -35,6 +43,9 @@ const mapStateToProps = (state) => ({
 
 Feedback.propTypes = {
   assertions: PropTypes.number.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 export default connect(mapStateToProps)(Feedback);
