@@ -31,7 +31,7 @@ class Score extends Component {
 
     return (
       <div className="score-grid">
-        <div className="score-header">
+        <header className="score-header">
           <img src={ picture } data-testid="header-profile-picture" alt="gravatar" />
           <p data-testid="header-player-name">
             {`Nome: ${name}`}
@@ -39,7 +39,7 @@ class Score extends Component {
           <p data-testid="header-score">
             { score }
           </p>
-        </div>
+        </header>
         <div className="score-notice">
           <p data-testid="feedback-text">
             { assertionMessage }
