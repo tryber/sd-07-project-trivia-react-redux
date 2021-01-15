@@ -1,50 +1,44 @@
 import React from 'react';
-import md5 from 'crypto-js/md5';
+import { getStorage } from '../../services';
 import './style.css';
 
 class Header extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      player: {
-        pname: 'jota',
-        assertions: '2',
-        score: '20',
-        gravaterEmail: 'jtonto',
-      },
-    };
-  }
-
-  renderJogador() {
-    const { player } = this.state;
-    const { pname, gravaterEmail } = player;
-    const gravatarHash = md5(gravaterEmail);
+  renderJogador(player) {
+    const {
+      name,
+      gravatarURL,
+    } = player;
 
     return (
-      <div className="header-name">
-        <img data-testid="header-profile-picture" className="ugly-picture" alt={ player } src={ `https://www.gravatar.com/avatar/${gravatarHash}` } />
+      <div className="header header-left">
+        <img
+          data-testid="header-profile-picture"
+          className="ugly-picture"
+          alt={ name }
+          src={ gravatarURL }
+        />
         <h2 className="header-label">Jogador: </h2>
-        <h2 data-testid="header-player-name">{ pname }</h2>
+        <h2 className="header-name" data-testid="header-player-name">{ name }</h2>
       </div>
     );
   }
 
-  renderScore() {
-    const { player } = this.state;
+  renderScore(player) {
     const { score } = player;
     return (
-      <div className="header-score">
+      <div className="header header-right">
         <h2 className="header-label">Pontos: </h2>
-        <h2 data-testid="header-score">{ score }</h2>
+        <h2 className="header-name" data-testid="header-score">{ score }</h2>
       </div>
     );
   }
 
   render() {
+    const player = getStorage('player');
     return (
       <header className="header-section">
-        {this.renderJogador()}
-        {this.renderScore()}
+        {this.renderJogador(player)}
+        {this.renderScore(player)}
       </header>
     );
   }

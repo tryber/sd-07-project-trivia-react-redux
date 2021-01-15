@@ -1,12 +1,22 @@
-import React from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import './style.css';
 
-const Timer = () => (
-  <section className="timer-section">
-    <div className="timer-circle">
-      <div className="timer">0</div>
-    </div>
-  </section>
-);
+class Timer extends Component {
+  render() {
+    const { timer } = this.props;
+    return (
+      <section className="timer-section">
+        <div className="timer-circle">
+          <div className="timer">{ timer }</div>
+        </div>
+      </section>
+    );
+  }
+}
+
+Timer.propTypes = {
+  timer: PropTypes.number.isRequired,
+};
 
 export default Timer;

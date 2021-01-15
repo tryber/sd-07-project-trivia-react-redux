@@ -1,7 +1,8 @@
 .login-section {
+  box-sizing: border-box;
   align-items: center;
   display: flex;
-  flex-direction: column;
+  flex-basis: 100%;
   justify-content: center;
 }
 
@@ -25,9 +26,13 @@ button {
   height: 50px;
   width: 300px;
 }
+button:hover {
+  cursor: pointer;
+}
 
 button:disabled {
   background: #333;
+  cursor: pointer;
   color: white;
   opacity: 0.3;
   width: 300px;
