@@ -60,7 +60,7 @@ class Game extends Component {
     if (redirect) return (<Redirect to="/feedback" />);
     return (
       <div>
-        <Header />
+        <Header  />
         <Timer />
         { questions[0] ? <Question item={ questions[0] } /> : null }
         { clicked ? this.renderButton() : null }
@@ -73,6 +73,7 @@ const mapDispatchToProps = (dispatch) => ({
   changeQuestion: () => dispatch(nextQuestion()) });
 
 const mapStateToProps = (state) => ({
+  score: state.player.score,
   token: state.player.token,
   clicked: state.color.clicked,
 });

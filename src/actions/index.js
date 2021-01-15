@@ -17,6 +17,12 @@ export function changeColor() {
   });
 }
 
+export function changeScore(payload) {
+  return ({
+    type: 'CHANGE_SCORE',
+    payload,
+  })
+
 export function nextQuestion() {
   return ({
     type: 'NEXT_QUESTION',

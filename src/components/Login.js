@@ -3,7 +3,7 @@ import propTypes from 'prop-types';
 import { Redirect, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import md5 from 'crypto-js/md5';
-import { login } from '../actions';
+import { login, changeScore } from '../actions';
 import * as callAPI from '../services/callAPI';
 
 class Login extends Component {
@@ -18,8 +18,11 @@ class Login extends Component {
     this.isDisabled = this.isDisabled.bind(this);
     this.sendPlayerInfo = this.sendPlayerInfo.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleInputs = this.handleInputs.bind(this)
   }
 
+
+ 
   async handleSubmit(event) {
     event.preventDefault();
     const expiredToken = 3;
@@ -29,6 +32,10 @@ class Login extends Component {
     const { token } = callingApi;
     localStorage.setItem('token', JSON.stringify(token));
     this.sendPlayerInfo(token);
+    if(localStorage.getItem('playerScore')) {
+      const { setScore } = this.props;
+      setScore(JSON.parse(localStorage.getItem('playerScore')));
+    }
     return callingApi;
   }
 
@@ -62,7 +69,7 @@ class Login extends Component {
             required="required"
             placeholder="Nome"
             data-testid="input-player-name"
-            onChange={ (e) => this.setState({ name: e.target.value }) }
+            onChange={ (e) => { this.setState({ name: e.target.value }); this.handleInputs; } }
           />
           <input
             type="email"
@@ -70,7 +77,8 @@ class Login extends Component {
             required="required"
             placeholder="E-mail"
             data-testid="input-gravatar-email"
-            onChange={ (e) => this.setState({ email: e.target.value }) }
+            onChange={ (e) => { 
+              this.setState({ email: e.target.value }); this.handleInputs }}
           />
           <button type="submit" data-testid="btn-play" disabled={ this.isDisabled() }>
             Jogar
@@ -87,9 +95,15 @@ class Login extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  sendInfoToStore: (object) => dispatch(login(object)) });
+  sendInfoToStore: (object) => dispatch(login(object)),
+setScore: (score) => dispatch(changeScore(score)),
+});
 
-export default connect(null, mapDispatchToProps)(Login);
+const mapStateToProps = (state) => ({
+  score: state.player.score,
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
 
 Login.propTypes = {
   sendInfoToStore: propTypes.func,

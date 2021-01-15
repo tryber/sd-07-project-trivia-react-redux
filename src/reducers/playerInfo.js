@@ -1,5 +1,7 @@
 // Esse reducer será responsável por tratar as informações da pessoa usuária
 
+// import { act } from "react-dom/test-utils";
+
 const INITIAL_STATE = {
   name: '',
   email: '',
@@ -20,7 +22,14 @@ function playerReducer(state = INITIAL_STATE, action) {
       email: player.email,
       token: player.token,
       imageSrc: player.imageSrc,
+      score: player.score,
     };
+    case 'CHANGE_SCORE':
+      return {
+        ...state,
+        score: action.payload
+      }
+
   default:
     return state;
   }
