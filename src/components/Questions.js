@@ -6,8 +6,15 @@ import { thunkApiQuestions } from '../actions';
 class Questions extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      buttonCorrect: '',
+      buttonError: '',
+    };
+
     this.givesIfTrue = this.givesIfTrue.bind(this);
     this.givesIfFalse = this.givesIfFalse.bind(this);
+    this.borderButton = this.borderButton.bind(this);
   }
 
   componentDidMount() {
@@ -15,7 +22,15 @@ class Questions extends React.Component {
     getQuestion(token);
   }
 
+  borderButton() {
+    this.setState({
+      buttonCorrect: 'correct',
+      buttonError: 'wrong-answer',
+    });
+  }
+
   givesIfFalse(question) {
+    const { buttonCorrect, buttonError } = this.state;
     return (
       <div>
         <div data-testid="question-category">{question.category}</div>
@@ -25,14 +40,21 @@ class Questions extends React.Component {
         </div>
         <div>
           Alternativas:
-          <button type="button" data-testid="correct-answer">
+          <button
+            className={ buttonCorrect }
+            type="button"
+            data-testid="correct-answer"
+            onClick={ this.borderButton }
+          >
             { question.correct_answer }
           </button>
           { question.incorrect_answers.map((wrong, index) => (
             <button
+              className={ buttonError }
               key={ index }
               type="button"
               data-testid={ `wrong-answer-${index}` }
+              onClick={ this.borderButton }
             >
               { wrong }
             </button>
