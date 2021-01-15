@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Header from './header';
+import HomeButton from '../components/HomeButton';
+import RankingButton from '../components/RankingButton';
 
 class Feedback extends Component {
   constructor() {
@@ -43,9 +45,8 @@ class Feedback extends Component {
         <Link to="/" data-testid="btn-play-again">
           Jogar novamente
         </Link>
-        <Link to="/ranking" data-testid="btn-ranking">
-          Ver Ranking
-        </Link>
+        <RankingButton />
+        <HomeButton />
       </div>
     );
   }

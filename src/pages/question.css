@@ -1,0 +1,18 @@
+.correct {
+  border: 3px solid rgb(6, 240, 15);
+  outline: none;
+}
+
+.incorrect {
+  border: 3px solid red;
+  outline: none;
+}
+
+.answer {
+  border: 3px solid rgb(82, 82, 82);
+  outline: none;
+}
+
+.btnexthi {
+  visibility: hidden;
+}

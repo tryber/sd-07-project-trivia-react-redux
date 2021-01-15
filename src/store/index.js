@@ -13,6 +13,7 @@ store.subscribe(() => {
   saveState({
     login: store.getState().login,
     player: store.getState().player,
+    allplayer: store.getState().allplayer,
   });
 });
 
