@@ -198,7 +198,7 @@ Game.propTypes = {
       results: PropTypes.arrayOf(
         PropTypes.shape({
           difficulty: PropTypes.string,
-        },)
+        })
       )
     }),
     score: PropTypes.number,
