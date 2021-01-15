@@ -41,7 +41,7 @@ export default class Questions extends Component {
   }
 
   render() {
-    const { question, timer } = this.props;
+    const { question, timer, nextQuestion } = this.props;
     const { questionWasAnswered, shuffledAnswers } = this.state;
     console.log(shuffledAnswers);
     if (question) {
@@ -63,7 +63,6 @@ export default class Questions extends Component {
                 >
                   {answer}
                 </button>
-
               );
             }
             return (
@@ -80,6 +79,14 @@ export default class Questions extends Component {
               </button>
             );
           })}
+          <button
+            data-testid="btn-next"
+            type="button"
+            hidden={ !questionWasAnswered }
+            onClick={ nextQuestion }
+          >
+            Próxima
+          </button>
         </div>
       );
     }
@@ -92,4 +99,5 @@ export default class Questions extends Component {
 Questions.propTypes = {
   question: PropTypes.arrayOf.isRequired,
   timer: PropTypes.number.isRequired,
+  nextQuestion: PropTypes.func.isRequired,
 };
