@@ -5,7 +5,19 @@ import PropTypes from 'prop-types';
 class Questions extends Component {
   constructor() {
     super();
+    this.handleClass = this.handleClass.bind(this);
     this.randomChoice = this.randomChoice.bind(this);
+    this.state = {
+      green: '',
+      red: '',
+    };
+  }
+
+  handleClass() {
+    this.setState({
+      green: 'green',
+      red: 'red',
+    });
   }
 
   randomChoice(arr) {
@@ -15,14 +27,27 @@ class Questions extends Component {
 
   renderQuestions(correctAnswers, incorrectAnswers) {
     const incorreta = [];
+    const { green, red } = this.state;
     const correta = (
-      <button type="button" data-testid="correct-answer">
+      <button
+        type="button"
+        key="correct"
+        className={ green }
+        data-testid="correct-answer"
+        onClick={ (event) => this.handleClass(event) }
+      >
         {correctAnswers}
       </button>
     );
 
     incorrectAnswers.map((incorrect, index) => incorreta.push(
-      <button type="button" key={ index } data-testid={ `wrong-answer-${index}` }>
+      <button
+        type="button"
+        key={ index }
+        className={ red }
+        data-testid={ `wrong-answer-${index}` }
+        onClick={ (event) => this.handleClass(event) }
+      >
         {incorrect}
       </button>,
     ));
