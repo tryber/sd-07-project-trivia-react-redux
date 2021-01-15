@@ -1,12 +1,15 @@
 const INITIAL_STATE = {
   questions: [],
+  category: 'random',
+  difficulty: 'random',
+  type: 'random',
   click: '',
   clicked: false,
   redirectToFeedback: false,
 };
 
 function questionsReducer(state = INITIAL_STATE, action) {
-  const { type, newQuestions } = action;
+  const { type, newQuestions, newCategory, newDifficulty, newType } = action;
   switch (type) {
   case 'CLICK':
     return {
@@ -25,6 +28,21 @@ function questionsReducer(state = INITIAL_STATE, action) {
     return {
       ...state,
       redirectToFeedback: true,
+    };
+  case 'CHANGE_CATEGORY':
+    return {
+      ...state,
+      category: newCategory,
+    };
+  case 'CHANGE_DIFFICULTY':
+    return {
+      ...state,
+      difficulty: newDifficulty,
+    };
+  case 'CHANGE_TYPE':
+    return {
+      ...state,
+      type: newType,
     };
   default:
     return state;

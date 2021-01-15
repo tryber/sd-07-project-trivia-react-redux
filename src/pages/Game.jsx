@@ -20,8 +20,8 @@ class Game extends Component {
   }
 
   async getQuestions() {
-    const { requestQuestions, token } = this.props;
-    requestQuestions(token);
+    const { requestQuestions, token, category, difficulty, type } = this.props;
+    requestQuestions({ token, category, difficulty, type });
   }
 
   render() {
@@ -38,11 +38,14 @@ class Game extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  requestQuestions: (string) => dispatch(getQuestions(string)),
+  requestQuestions: (object) => dispatch(getQuestions(object)),
 });
 
 const mapStateToProps = (state) => ({
   token: state.player.token,
+  category: state.questions.category,
+  difficulty: state.questions.difficulty,
+  type: state.questions.type,
   questions: state.questions.questions,
   redirect: state.questions.redirectToFeedback,
 });
@@ -51,4 +54,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(Game);
 
 Game.propTypes = {
   token: propTypes.string,
+  category: propTypes.string,
+  difficulty: propTypes.string,
+  type: propTypes.string,
 }.isRequired;

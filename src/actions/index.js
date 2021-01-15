@@ -34,9 +34,30 @@ export function redirect(string) {
   }
 }
 
-export function getQuestions(token) {
+export function changeSettings({ name, value }) {
+  if (name === 'category') {
+    return ({
+      type: 'CHANGE_CATEGORY',
+      newCategory: value,
+    });
+  }
+  if (name === 'difficulty') {
+    return ({
+      type: 'CHANGE_DIFFICULTY',
+      newDifficulty: value,
+    });
+  }
+  if (name === 'type') {
+    return ({
+      type: 'CHANGE_TYPE',
+      newType: value,
+    });
+  }
+}
+
+export function getQuestions(object) {
   return async (dispatch) => {
-    const requestQuestions = await callAPI.requestQuestions(token);
+    const requestQuestions = await callAPI.requestQuestions(object);
     const questions = requestQuestions.results;
     return dispatch(nextQuestion(questions));
   };
