@@ -7,7 +7,4 @@ export default {
     score: 0,
     assertions: 0,
   },
-  game: {
-    questions: [],
-  },
 };

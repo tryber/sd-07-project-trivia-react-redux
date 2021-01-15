@@ -25,3 +25,12 @@ export function getToken() {
     localStorage.setItem('token', recevedToken);
   };
 }
+
+export function setLocalStorage() {
+  console.log('chamou setLocalStorge');
+  const { player } = this.props;
+  const { name, gravatarEmail: email, score, assertions } = player;
+  addScore(score, assertions);
+  const playerToStorage = { player: { name, assertions, score, email } };
+  localStorage.setItem('state', JSON.stringify(playerToStorage));
+}

@@ -16,6 +16,7 @@ class Questions extends Component {
     this.handleClickNextQuestion = this.handleClickNextQuestion.bind(this);
     this.resetCounter = this.resetCounter.bind(this);
     this.calculateScore = this.calculateScore.bind(this);
+    this.setLocalStorage = this.setLocalStorage.bind(this);
 
     this.state = {
       questions: [],
@@ -24,6 +25,7 @@ class Questions extends Component {
       isDisabled: false,
       counterInterval: 30,
       counter: 0,
+      toStorage: false,
     };
   }
 
@@ -31,6 +33,19 @@ class Questions extends Component {
     this.fetchQuestions();
     const milisegundos = 1000;
     setInterval(this.countdown, milisegundos);
+    this.setLocalStorage(0, 0);
+  }
+
+  setLocalStorage(totalScore, assertions) {
+    console.log('chamou setLocalStorge');
+    const { playerProps } = this.props;
+    const { name, gravatarEmail } = playerProps;
+    const playerToStorage = { player: {
+      name,
+      assertions,
+      score: totalScore,
+      gravatarEmail } };
+    localStorage.setItem('state', JSON.stringify(playerToStorage));
   }
 
   resetCounter() {
@@ -54,8 +69,9 @@ class Questions extends Component {
   }
 
   calculateScore() {
+    console.log('chamou a calculate');
     const { questions, questionNumber, counterInterval } = this.state;
-    const { scoreProps, assertionsProps, addScoreAction } = this.props;
+    const { scoreProps, addScoreAction, assertionsProps } = this.props;
     const questionLevel = questions[questionNumber].difficulty;
     let levelScore = 1;
     const hardLevelScore = 3;
@@ -70,10 +86,16 @@ class Questions extends Component {
     }
 
     const totalScore = scoreProps + (defaultPoint + counterInterval * levelScore);
-    addScoreAction(totalScore, assertionsProps + 1);
+    console.log(totalScore);
+
+    const assertions = assertionsProps + 1;
+
+    addScoreAction(totalScore, assertions);
+    this.setLocalStorage(totalScore, assertions);
   }
 
   handleClick({ target }) {
+    console.log('click');
     this.setState({ isDisabled: true });
     if (target.className === 'correct-answer') this.calculateScore();
   }
@@ -147,6 +169,7 @@ class Questions extends Component {
 }
 
 const mapStateToProps = (state) => ({
+  playerProps: state.player,
   scoreProps: state.player.score,
   assertionsProps: state.player.assertions,
 });
@@ -159,6 +182,10 @@ Questions.propTypes = {
   scoreProps: PropTypes.number.isRequired,
   assertionsProps: PropTypes.number.isRequired,
   addScoreAction: PropTypes.func.isRequired,
+  playerProps: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    gravatarEmail: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Questions);

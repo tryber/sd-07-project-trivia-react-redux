@@ -14,7 +14,7 @@ class Header extends Component {
         <div className="player-header-information">
           <img data-testid="header-profile-picture" alt="jogador" src={ hashLink } />
           <h3 data-testid="header-player-name">{`Player: ${playerProps.name}` }</h3>
-          <h2 data-testid="header-score">{`Score: ${playerProps.score}` }</h2>
+          <h2 data-testid="header-score">{ playerProps.score }</h2>
         </div>
       </header>
     );
