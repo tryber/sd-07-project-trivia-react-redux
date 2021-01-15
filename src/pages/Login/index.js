@@ -40,7 +40,6 @@ class Login extends React.Component {
     tokenAction();
     const { email, name } = this.state;
     const gravatar = md5(email).toString();
-    console.log(gravatar);
     const player = {
       name,
       gravatarEmail: `https://www.gravatar.com/avatar/${gravatar}`,
