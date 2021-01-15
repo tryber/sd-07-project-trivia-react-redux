@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { userActions, fetchApi } from '../../actions';
-import { LoginForm, ConfigButton } from './components';
+import { LoginForm } from '../../components';
 
 class Home extends Component {
   constructor(props) {
@@ -17,44 +18,23 @@ class Home extends Component {
     };
   }
 
-  componentDidUpdate() {
-    const { updateEmail, updateName } = this.props;
-    const { name, email } = this.state;
-    updateEmail(email);
-    updateName(name);
-  }
-
   handleChange({ target }) {
     const { email, name } = this.state;
     const regex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+    const validation = regex.test(email) && name;
 
-    this.setState({ [target.id]: target.value });
-
-    if (regex.test(email) && name) {
-      this.setState({ auth: true });
-    } else {
-      this.setState({ auth: false });
-    }
+    this.setState({ [target.id]: target.value, auth: validation });
   }
 
   async handleClick() {
-    const { callApi } = this.props;
+    const { callApi, newPlyr } = this.props;
     const { name, email } = this.state;
     const endpoint = await fetch('https://opentdb.com/api_token.php?command=request');
     const objct = await endpoint.json();
 
-    const playerObject = {
-      player: {
-        name,
-        gravatarEmail: email,
-        assertions: 0,
-        score: 0,
-      },
-    };
-
     localStorage.setItem('token', objct.token);
-    localStorage.setItem('state', JSON.stringify(playerObject));
     callApi();
+    newPlyr(name, email);
   }
 
   render() {
@@ -69,7 +49,11 @@ class Home extends Component {
           email={ email }
           auth={ auth }
         />
-        <ConfigButton />
+        <Link to="/config">
+          <button type="button" data-testid="btn-settings">
+            Configurações
+          </button>
+        </Link>
       </div>
     );
   }
@@ -77,14 +61,12 @@ class Home extends Component {
 
 const mapDispatchToProps = (dispatch) => ({
   callApi: () => dispatch(fetchApi()),
-  updateEmail: (email) => dispatch(userActions.updateEmail(email)),
-  updateName: (name) => dispatch(userActions.updateName(name)),
+  newPlyr: (name, email) => dispatch(userActions.newPlayer(name, email)),
 });
 
 export default connect(null, mapDispatchToProps)(Home);
 
 Home.propTypes = {
-  updateEmail: PropTypes.func.isRequired,
-  updateName: PropTypes.func.isRequired,
   callApi: PropTypes.func.isRequired,
+  newPlyr: PropTypes.func.isRequired,
 };
