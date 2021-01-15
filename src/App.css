@@ -98,6 +98,21 @@
   font-weight: 700;
   margin-top: 20px;
   padding: 10px;
+  outline: none;
+}
+
+.btn-actions:focus,
+.btn-actions-correct:focus,
+.btn-actions-wrong:focus {
+  outline: none;
+}
+
+.btn-actions-correct{
+  border: 3px solid rgb(6, 240, 15);
+}
+
+.btn-actions-wrong{
+  border: 3px solid rgb(255, 0, 0);
 }
 
 .btn-actions:hover {

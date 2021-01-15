@@ -80,12 +80,16 @@ class Play extends React.Component {
     const correctValue = {
       answer: correct,
       status: 'correct',
+      className: 'btn-actions',
+      disabled: false,
     };
     newArray.push(correctValue);
     for (let i = 0; i < incorrect.length; i += 1) {
       const wrong = {
         answer: incorrect[i],
         status: 'wrong',
+        className: 'btn-actions',
+        disabled: false,
       };
       newArray.push(wrong);
     }
