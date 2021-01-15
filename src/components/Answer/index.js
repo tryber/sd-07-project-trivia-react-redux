@@ -1,24 +1,61 @@
+/* eslint-disable no-unused-expressions */
 import React from 'react';
 import PropTypes from 'prop-types';
 import './style.css';
 
 class Answer extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      ansersStyle: ['green', 'pink', 'orange', 'purple'],
+      questionAnsered: false,
+    };
+    this.handleAnswerStyle = this.handleAnswerStyle.bind(this);
+    this.handleClickAnswer = this.handleClickAnswer.bind(this);
+    this.handleDataTestId = this.handleDataTestId.bind(this);
+  }
+
+  handleAnswerStyle(index) {
+    const { ansersStyle, questionAnsered } = this.state;
+    const { curQuestion } = this.props;
+    const answers = [...curQuestion.incorrect_answers, curQuestion.correct_answer];
+
+    if (!questionAnsered) {
+      return (`answer-box ${ansersStyle[index]}`);
+    } if (answers[index] === curQuestion.correct_answer) {
+      return (`answer-box ${ansersStyle[index]} right`);
+    } return (`answer-box ${ansersStyle[index]} wrong`);
+  }
+
+  handleClickAnswer() {
+    this.setState({ questionAnsered: true });
+  }
+
+  handleDataTestId(index) {
+    const { curQuestion } = this.props;
+    const incorrectAnswers = [...curQuestion.incorrect_answers];
+    const answers = [...curQuestion.incorrect_answers, curQuestion.correct_answer];
+
+    return ((answers[index] === curQuestion.correct_answer)
+      ? ('correct-answer')
+      : (`wrong-answer ${incorrectAnswers.indexOf(answers[index])}`));
+  }
+
   render() {
     const { curQuestion } = this.props;
     const answers = [...curQuestion.incorrect_answers, curQuestion.correct_answer];
-    const incorrectAnswers = [...curQuestion.incorrect_answers];
-    const ansersStyle = ['green', 'pink', 'orange', 'purple'];
+
     return (
       <section className="answer-section">
         {answers.map((question, index) => (
           <div
+            role="button"
+            tabIndex={ 0 }
             key={ index }
-            className={ `answer-box ${ansersStyle[index]}` }
-            data-testid={
-              (answers[index] === curQuestion.correct_answer)
-                ? ('correct-answer')
-                : (`wrong-answer ${incorrectAnswers.indexOf(answers[index])}`)
-            }
+            className={ this.handleAnswerStyle(index) }
+            data-testid={ this.handleDataTestId(index) }
+            onClick={ this.handleClickAnswer }
+            onKeyDown={ this.handleClickAnswer }
           >
             <p className="message">{ answers[index] }</p>
           </div>
@@ -31,7 +68,7 @@ class Answer extends React.Component {
 Answer.propTypes = {
   correct_answer: PropTypes.string,
   incorrect_answers: PropTypes.string,
-  curQuestion: PropTypes.objectOf,
+  curQuestion: PropTypes.objectOf(Array),
 };
 
 Answer.defaultProps = {
