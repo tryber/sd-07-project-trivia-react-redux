@@ -39,8 +39,7 @@ class Login extends React.Component {
 
   async handleClick() {
     const { history, tokenAction, token } = this.props;
-    await tokenAction();
-    localStorage.setItem('token', token);
+    await tokenAction(token);
     history.push('/game');
   }
 
