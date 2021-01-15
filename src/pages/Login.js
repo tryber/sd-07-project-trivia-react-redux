@@ -25,10 +25,11 @@ class Login extends Component {
 
   handleClick() {
     const { username, email } = this.state;
+    const magic = 1000;
     resultToken();
     generateHash(username, email);
     const { history } = this.props;
-    history.push('/jogo');
+    setTimeout(() => history.push('/jogo'), magic);
   }
 
   handleClickSettingsBtn() {
