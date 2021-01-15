@@ -10,9 +10,15 @@ class Questions extends React.Component {
     this.scoreFunc = this.scoreFunc.bind(this);
     this.funcStorageAndAssertions = this.funcStorageAndAssertions.bind(this);
     this.funcaoDoNonato = this.funcaoDoNonato.bind(this);
+    this.buttonColor = this.buttonColor.bind(this);
+    this.renderNextButton = this.renderNextButton.bind(this);
+
     this.state = {
-      questionNumber: 0,
       timer: 30,
+      questionNumber: 0,
+      correctAnswer: 'neutral',
+      wrongAnswer: 'neutral',
+      visibleClick: false,
     };
   }
 
@@ -63,13 +69,27 @@ class Questions extends React.Component {
   incrementIndex() {
     this.setState((anterior) => ({
       questionNumber: anterior.questionNumber + 1,
+      visibleClick: false,
     }));
   }
 
+  allFunctionsOfButton() {
+    this.buttonColor();
+    this.renderNextButton();
+  }
+
+  buttonColor() {
+    this.setState({ correctAnswer: 'correctAnswer', wrongAnswer: 'wrongAnswer' });
+  }
+
+  renderNextButton() {
+    this.setState({ visibleClick: true });
+  }
+
   render() {
-    const { questionNumber } = this.state;
-    const { questions } = this.props;
+    const { questions, timer } = this.props;
     const { questionsList } = questions;
+    const { questionNumber, wrongAnswer, correctAnswer, visibleClick } = this.state;
     const five = 5;
     console.log(questionsList[questionNumber].difficulty);
     if (questionsList < five) {
@@ -90,9 +110,10 @@ class Questions extends React.Component {
           <button
             type="button"
             data-testid="correct-answer"
-            id="correct"
-            onClick={ (e) => { this.funcaoDoNonato(e); } }
             value={ questionsList[questionNumber].correct_answer }
+            onClick={ (e) => this.allFunctionsOfButton(e) }
+            className={ correctAnswer }
+            disabled={ timer }
           >
             {questionsList[questionNumber].correct_answer}
           </button>
@@ -100,19 +121,28 @@ class Questions extends React.Component {
             <button
               key={ q }
               data-testid={ `wrong-answer-${index}` }
-              className="wrong-answer"
               type="button"
-              id="incorrect"
-              onClick={ (e) => { this.funcaoDoNonato(e); } }
               value={ questionsList[questionNumber].incorrect_answers }
+              disabled={ timer }
+              className={ wrongAnswer }
+              onClick={ (e) => this.allFunctionsOfButton(e) }
             >
               {q}
             </button>
           ))}
         </div>
-        <button type="button" onClick={ () => this.incrementIndex() }>
-          Próxima
-        </button>
+        {
+          visibleClick || timer
+            ? (
+              <button
+                data-testid="btn-next"
+                type="button"
+                onClick={ this.incrementIndex }
+              >
+                Next
+              </button>
+            ) : null
+        }
       </div>
     );
   }
@@ -129,6 +159,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   scoreGen: (points) => dispatch(pointsGen(points)),
   assertionsG: (assertions) => dispatch(assertionsGen(assertions)),
+  timer: state.questions.timer,
 });
 
 Questions.propTypes = {
@@ -143,5 +174,6 @@ Questions.propTypes = {
   email: PropTypes.string.isRequired,
   realScore: PropTypes.number.isRequired,
   realAssertions: PropTypes.number.isRequired,
+  timer: PropTypes.bool.isRequired,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Questions);
