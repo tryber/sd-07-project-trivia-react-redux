@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import Header from '../components/Header';
 
 class FeedBack extends Component {
   constructor() {
@@ -20,8 +21,10 @@ class FeedBack extends Component {
     console.log('quest', assertions);
     return (
       <div data-testid="feedback-text">
-        <p>{this.getScore()}</p>
-        { assertions < three ? <p ata-testid="feedback-text">Podia ser melhor...</p> : <p ata-testid="feedback-text">Mandou bem!</p>}
+        <Header />
+        { assertions < three
+          ? <p data-testid="feedback-text">Podia ser melhor...</p>
+          : <p data-testid="feedback-text">Mandou bem!</p> }
       </div>
     );
   }

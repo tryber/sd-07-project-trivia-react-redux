@@ -9,8 +9,8 @@ const failedRequest = (error) => ({ type: FAILED_REQUEST, resp: error });
 
 export const assertionCauting = (assertions) => ({ type: ASSERTIONS, assertions });
 
-export const handleAsyncQuestion = () => {
-  return async (dispatch) => {
+export const handleAsyncQuestion = () => (
+  async (dispatch) => {
     try {
       dispatch(requestQuestion());
       const quest = await fetchQuests();
@@ -18,5 +18,5 @@ export const handleAsyncQuestion = () => {
     } catch (error) {
       return dispatch(failedRequest(error));
     }
-  };
-};
+  }
+);

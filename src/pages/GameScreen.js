@@ -49,21 +49,21 @@ class GameScreen extends Component {
     history.push('/feedback');
   }
 
-  handleNextQuest() {
+  async handleNextQuest() {
     const { quest } = this.props;
     const { id } = this.state;
     const MAX_QUESTIONS = 5;
+    await this.setState((state) => ({ id: state.id + 1 }));
+    if (id === MAX_QUESTIONS) {
+      return this.handleRedirect();
+    }
     if (quest.length === 0) {
       return null;
-    }
-    this.setState({ id: id + 1 });
-    if (id >= MAX_QUESTIONS) {
-      return this.handleRedirect();
     }
     this.setState({
       category: quest[id].category,
       question: quest[id].question,
-      dificulty: quest[1].difficulty,
+      dificulty: quest[id].difficulty,
       // respCorrect: quest[1].correct_answer,
       resps: [quest[id].correct_answer, ...quest[id].incorrect_answers],
       buttonNext: false,
