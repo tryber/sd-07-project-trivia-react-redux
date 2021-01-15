@@ -49,6 +49,11 @@ class Quiz extends Component {
       colorIncorrect: '',
       resetTimer: true,
     });
+
+    const { name, assertions, score, gravatarEmail } = this.props;
+    const playerObj = { player: { name, assertions, score, gravatarEmail } };
+
+    localStorage.setItem('state', JSON.stringify(playerObj));
   }
 
   restoreTimer() {
@@ -79,7 +84,7 @@ class Quiz extends Component {
             key={ number }
             data-testid="correct-answer"
             type="button"
-            onClick={ () => { this.answerColor(); updateScore(magicNumberTwo); } }
+            onClick={ () => { updateScore(magicNumberTwo); this.answerColor(); } }
             disabled={ answered }
           >
             { correctAnswer }
@@ -124,15 +129,32 @@ class Quiz extends Component {
   }
 }
 
-// const mapStateToProps = ({ player: { score, assertions }})
+const mapStateToProps = ({
+  player: {
+    name,
+    assertions,
+    score,
+    gravatarEmail,
+  },
+}) => ({
+  name,
+  assertions,
+  score,
+  gravatarEmail,
+});
+
 const mapDispatchToProps = (dispatch) => ({
   updateScore: (info) => dispatch(scoreUpdate(info)),
 });
 
-export default connect(null, mapDispatchToProps)(Quiz);
+export default connect(mapStateToProps, mapDispatchToProps)(Quiz);
 
 Quiz.propTypes = {
   results: PropTypes.arrayOf(PropTypes.object).isRequired,
   nextQuestion: PropTypes.func.isRequired,
   updateScore: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
+  assertions: PropTypes.number.isRequired,
+  score: PropTypes.number.isRequired,
+  gravatarEmail: PropTypes.string.isRequired,
 };

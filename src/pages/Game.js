@@ -15,6 +15,13 @@ class Game extends Component {
     this.nextQuestion = this.nextQuestion.bind(this);
   }
 
+  componentDidMount() {
+    const { name, assertions, score, gravatarEmail } = this.props;
+    const playerObj = { player: { name, assertions, score, gravatarEmail } };
+
+    localStorage.setItem('state', JSON.stringify(playerObj));
+  }
+
   nextQuestion() {
     const { key } = this.state;
     const { history } = this.props;
@@ -49,15 +56,31 @@ const mapStateToProps = ({
     isLoading,
     questions: { results },
   },
+  player: {
+    name,
+    assertions,
+    score,
+    gravatarEmail,
+  },
 }) => ({
   isLoading,
   results,
+  name,
+  assertions,
+  score,
+  gravatarEmail,
 });
+
 export default connect(mapStateToProps)(Game);
+
 Game.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   results: PropTypes.arrayOf(PropTypes.object).isRequired,
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,
+  name: PropTypes.string.isRequired,
+  assertions: PropTypes.number.isRequired,
+  score: PropTypes.number.isRequired,
+  gravatarEmail: PropTypes.string.isRequired,
 };
