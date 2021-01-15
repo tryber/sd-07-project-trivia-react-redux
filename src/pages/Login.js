@@ -44,10 +44,14 @@ class Login extends Component {
     const { email, name, isValid, loggedIn } = this.state;
     return (
       <div>
-        <form>
-          <label htmlFor="email">
+        <form className="inputLogin">
+          <label
+            htmlFor="email"
+            className="label"
+          >
             Email
             <input
+              className="input is-info"
               value={ email }
               type="email"
               name="email"
@@ -57,13 +61,17 @@ class Login extends Component {
               onChange={ this.handleChange }
             />
           </label>
-          <label htmlFor="name">
+          <label
+            htmlFor="name"
+            className="label"
+          >
             Nome
             <input
+              className="input is-info"
               value={ name }
               type="text"
               name="name"
-              placeholder="name"
+              placeholder="Name"
               id="name"
               data-testid="input-player-name"
               onChange={ this.handleChange }
@@ -71,6 +79,7 @@ class Login extends Component {
           </label>
 
           <button
+            className="button is-primary"
             disabled={ !isValid }
             type="button"
             data-testid="btn-play"
@@ -81,6 +90,7 @@ class Login extends Component {
           {loggedIn && <Redirect to="/game" />}
           <Link to="/settings">
             <button
+              className="button is-info"
               type="button"
               data-testid="btn-settings"
             >
