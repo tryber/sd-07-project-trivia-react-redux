@@ -26,10 +26,18 @@ export function nextQuestion(array) {
   });
 }
 
+export function redirect(string) {
+  if (string === 'feedback') {
+    return ({
+      type: 'REDIRECT_FEEDBACK',
+    });
+  }
+}
+
 export function getQuestions(token) {
   return async (dispatch) => {
     const requestQuestions = await callAPI.requestQuestions(token);
     const questions = requestQuestions.results;
     return dispatch(nextQuestion(questions));
-  }
+  };
 }

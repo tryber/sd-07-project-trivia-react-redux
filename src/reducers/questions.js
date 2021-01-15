@@ -2,6 +2,7 @@ const INITIAL_STATE = {
   questions: [],
   click: '',
   clicked: false,
+  redirectToFeedback: false,
 };
 
 function questionsReducer(state = INITIAL_STATE, action) {
@@ -19,6 +20,11 @@ function questionsReducer(state = INITIAL_STATE, action) {
       click: '',
       clicked: false,
       questions: newQuestions,
+    };
+  case 'REDIRECT_FEEDBACK':
+    return {
+      ...state,
+      redirectToFeedback: true,
     };
   default:
     return state;
