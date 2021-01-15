@@ -10,8 +10,6 @@ class Login extends Component {
     this.state = {
       name: '',
       gravatarEmail: '',
-      // assertions: '',
-      score: 0,
     };
     this.handleChange = this.handleChange.bind(this);
     this.validateImputs = this.validateImputs.bind(this);
@@ -20,9 +18,8 @@ class Login extends Component {
   }
 
   validateImputs() {
-    const { gravatarEmail, name, score } = this.state;
+    const { gravatarEmail, name } = this.state;
     const emailValidator = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    console.log(score);
     if (emailValidator.test(gravatarEmail) && name.length) {
       return false;
     }
@@ -33,11 +30,11 @@ class Login extends Component {
     this.setState({ [name]: value });
   }
 
-  async handleClick() {
+  handleClick() {
     const { fetchTokenActionProps } = this.props;
-    await fetchTokenActionProps();
-    const { token, history } = this.props;
-    const { payload } = token;
+    fetchTokenActionProps();
+    const { game, history } = this.props;
+    const { payload } = game;
     localStorage.setItem('token', JSON.stringify(payload));
     const player = { player: this.state };
     localStorage.setItem('state', JSON.stringify(player));
@@ -62,7 +59,7 @@ class Login extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  token: state.token,
+  game: state.game,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -74,7 +71,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(Login);
 
 Login.propTypes = {
   fetchTokenActionProps: PropTypes.func.isRequired,
-  token: PropTypes.shape({
+  game: PropTypes.shape({
     payload: PropTypes.shape({
       response_code: PropTypes.number,
       response_message: PropTypes.string,

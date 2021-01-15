@@ -17,8 +17,6 @@ class Header extends Component {
   render() {
     const { playerProfile } = this.props;
     const { player } = playerProfile;
-    console.log(player);
-
     return (
       <header>
         <div>
@@ -50,7 +48,7 @@ Header.propTypes = {
     player: PropTypes.shape({
       gravatarEmail: PropTypes.string,
       name: PropTypes.string,
-      score: PropTypes.number,
+      score: PropTypes.number.isRequired,
     }),
   }).isRequired,
 };
