@@ -42,6 +42,13 @@ export const saveTimer = (payload) => (
   }
 );
 
+export const savePicture = (payload) => (
+  {
+    type: types.SAVE_PICTURE,
+    payload,
+  }
+);
+
 export function fetchApiTrivia(token) {
   return async (dispatch) => {
     dispatch(isFetching());

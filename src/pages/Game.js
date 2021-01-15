@@ -21,8 +21,12 @@ class Game extends Component {
   }
 
   createLocalStorage() {
-    const { name, assertions, score, gravatarEmail } = this.props;
-    const playerObj = { player: { name, assertions, score, gravatarEmail } };
+    const playerObj = { player: {
+      name: '',
+      assertions: 0,
+      score: 0,
+      gravatarEmail: '',
+    } };
 
     localStorage.setItem('state', JSON.stringify(playerObj));
   }
@@ -87,8 +91,4 @@ Game.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,
-  name: PropTypes.string.isRequired,
-  assertions: PropTypes.number.isRequired,
-  score: PropTypes.number.isRequired,
-  gravatarEmail: PropTypes.string.isRequired,
 };

@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import * as components from '../components';
-import recoveryProductsFromLocalStorage from '../services/localStorageFunctions';
+import rankingLocalStorage from '../services/localStorageFunctions';
 
 class Ranking extends Component {
   render() {
     // const { ranking } = this.state;
-    const ranking = recoveryProductsFromLocalStorage();
+    const ranking = rankingLocalStorage();
     console.log(ranking);
     const compareNumber = 0;
 
