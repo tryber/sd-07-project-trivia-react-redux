@@ -18,6 +18,5 @@ export default function App() {
         <Route path="/feedback" component={ Feedback } />
       </Switch>
     </Router>
-
   );
 }
