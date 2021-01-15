@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import fetchQuestions from '../services/api';
+import { updateScoreAction } from '../actions/index';
 
 class QuestionCard extends Component {
   constructor() {
@@ -15,17 +16,20 @@ class QuestionCard extends Component {
       questions: [],
       isLoading: true,
       lastQuestion: false,
+      assertions: 0,
+      score: 0,
     };
     this.timer = 0;
     this.oneQuestion = this.oneQuestion.bind(this);
     this.answerAnalyze = this.answerAnalyze.bind(this);
     this.startTimer = this.startTimer.bind(this);
     this.countDown = this.countDown.bind(this);
-    // this.nextQuestion = this.nextQuestion.bind(this);
     this.getQuestions = this.getQuestions.bind(this);
+    this.updateItensInLocalStorage = this.updateItensInLocalStorage.bind(this);
   }
 
   componentDidMount() {
+    this.updateItensInLocalStorage();
     this.startTimer();
     this.getQuestions();
   }
@@ -34,16 +38,15 @@ class QuestionCard extends Component {
     const { buttonColorVisible, questions, disableButton, lastQuestion } = this.state;
     const options = [...questions[indexQuestion].incorrect_answers,
       questions[indexQuestion].correct_answer].sort();
-    console.log(questions);
     if (lastQuestion) return <Redirect to="/feedback" />;
     return (
       <div>
         <div key={ Math.random() }>
           <h5 data-testid="question-category">
-            { questions[indexQuestion].category }
+            {questions[indexQuestion].category}
           </h5>
           <h5 data-testid="question-text">
-            { questions[indexQuestion].question }
+            {questions[indexQuestion].question}
           </h5>
           {options
             .map((answer, index) => (
@@ -60,9 +63,9 @@ class QuestionCard extends Component {
                   ? 'correct' : 'incorrect' }
                 type="button"
                 disabled={ disableButton }
-                onClick={ () => this.answerAnalyze() }
+                onClick={ (event) => this.answerAnalyze(event) }
               >
-                { answer }
+                { answer}
               </button>))}
           <button
             data-testid="btn-next"
@@ -81,7 +84,6 @@ class QuestionCard extends Component {
     const { token } = this.props;
     const questionsResponse = await fetchQuestions(token);
     const questions = questionsResponse.results;
-    console.log(questions);
     this.setState({ questions, isLoading: false });
   }
 
@@ -109,11 +111,80 @@ class QuestionCard extends Component {
     }
   }
 
-  answerAnalyze() {
+  answerAnalyze(event) {
     this.setState({
       buttonColorVisible: true,
       disableButton: true,
     });
+
+    const { questions, indexQuestion, seconds, assertions, score } = this.state;
+    const { updateScore } = this.props;
+    const { value } = event.target;
+    const ten = 10;
+    const one = 1;
+    const two = 2;
+    const three = 3;
+    if (value === 'correct') {
+      switch (questions[indexQuestion].difficulty) {
+      case 'easy':
+        this.updateItensInLocalStorage(assertions + 1, score + (ten + (seconds * one)));
+        updateScore(assertions + 1, score + (ten + (seconds * one)));
+        this.setState(
+          {
+            score: score + (ten + (seconds * one)),
+          },
+        );
+        break;
+      case 'medium':
+        this.updateItensInLocalStorage(assertions + 1, score + (ten + (seconds * two)));
+        updateScore(assertions + 1, score + (ten + (seconds * two)));
+        this.setState(
+          {
+            score: score + (ten + (seconds * two)),
+          },
+        );
+        break;
+      case 'hard':
+        this.updateItensInLocalStorage(assertions + 1, score + (ten + (seconds * three)));
+        updateScore(assertions + 1, score + (ten + (seconds * three)));
+        this.setState(
+          {
+            score: score + (ten + (seconds * three)),
+          },
+        );
+        break;
+      default:
+        break;
+      }
+      this.setState((prevState) => ({ assertions: prevState.assertions + 1 }));
+    } else {
+      this.updateItensInLocalStorage(assertions, score);
+    }
+  }
+
+  updateItensInLocalStorage(assertions = 0, score = 0) {
+    const { name, email } = this.props;
+    const localStorageItem = localStorage.getItem('state');
+    if (!localStorageItem) {
+      const playerToStorage = {
+        player: {
+          name,
+          assertions,
+          score,
+          gravatarEmail: email },
+      };
+      localStorage.setItem('state', JSON.stringify(playerToStorage));
+    } else {
+      const playerToStorage = {
+        player: {
+          name,
+          assertions,
+          score,
+          gravatarEmail: email,
+        },
+      };
+      localStorage.setItem('state', JSON.stringify(playerToStorage));
+    }
   }
 
   clickNextQuestion() {
@@ -132,16 +203,15 @@ class QuestionCard extends Component {
 
   render() {
     const { indexQuestion, seconds, isLoading } = this.state;
-
     return isLoading ? <p>Loading</p> : (
       <div>
         <section>
           <div>
-            { this.oneQuestion(indexQuestion) }
+            {this.oneQuestion(indexQuestion)}
           </div>
           <div>
             Tempo:
-            { seconds }
+            {seconds}
           </div>
         </section>
       </div>
@@ -151,10 +221,22 @@ class QuestionCard extends Component {
 
 QuestionCard.propTypes = {
   token: PropTypes.string.isRequired,
+  updateScore: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
+  email: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
+  name: state.userReducer.name,
+  email: state.userReducer.email,
   token: state.tokenReducer.token,
+  assertions: state.userReducer.assertions,
 });
 
-export default connect(mapStateToProps)(QuestionCard);
+const mapDispatchToProps = (dispatch) => ({
+  updateScore: (newAssertions, newScore) => dispatch(
+    updateScoreAction(newAssertions, newScore),
+  ),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(QuestionCard);

@@ -37,7 +37,6 @@ class Login extends Component {
   async saveToken() {
     const { name, email } = this.state;
     const { userLogin, history, token } = this.props;
-    console.log(token);
     userLogin(email, name);
     localStorage.setItem('token', JSON.stringify(token));
     history.push('/game');
