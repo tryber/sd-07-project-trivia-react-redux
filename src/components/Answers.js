@@ -1,12 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Header from './Header';
 import Counter from './Counter';
+import { addPoint, resetCounter } from '../actions';
 
 class Answers extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
       clicked: false,
       next: true,
@@ -17,6 +20,8 @@ class Answers extends React.Component {
     this.nextButton = this.nextButton.bind(this);
     this.mountAnswers = this.mountAnswers.bind(this);
     this.isClicked = this.isClicked.bind(this);
+    this.handleCorrectClick = this.handleCorrectClick.bind(this);
+    this.resetNextQuestion = this.resetNextQuestion.bind(this);
   }
 
   isClicked() {
@@ -26,37 +31,63 @@ class Answers extends React.Component {
     });
   }
 
-  nextButton() {
+  resetNextQuestion() {
     const { newCounter } = this.state;
-    const { increaseIndex } = this.props;
+    const { increaseIndex, reset } = this.props;
 
+    increaseIndex();
+    this.setState({
+      clicked: false,
+      next: true,
+      newCounter: newCounter + 1,
+      nextUp: false,
+    });
+    reset();
+  }
+
+  nextButton() {
     return (
       <button
+        data-testid="btn-next"
         type="button"
-        onClick={ () => {
-          increaseIndex();
-          this.setState({
-            clicked: false,
-            next: true,
-            newCounter: newCounter + 1,
-            nextUp: false,
-          });
-        } }
+        onClick={ this.resetNextQuestion }
       >
         Próxima
       </button>);
   }
 
+  handleCorrectClick(difficulty) {
+    const { add } = this.props;
+    const easy = 1;
+    const medium = 2;
+    const hard = 3;
+    let difficultyValue = 0;
+
+    if (difficulty === 'easy') {
+      difficultyValue = easy;
+    } else if (difficulty === 'medium') {
+      difficultyValue = medium;
+    } else {
+      difficultyValue = hard;
+    }
+
+    add(difficultyValue);
+    this.isClicked();
+  }
+
   mountAnswers() {
     const { clicked } = this.state;
     const { questions, sortedAnswers, index } = this.props;
-    if (!questions[index]) return 'acabou';
-    console.log(sortedAnswers);
+    if (!questions[index]) {
+      return <Redirect to="/feedback" />;
+    }
     const {
       category,
       correct_answer: correct,
       question,
+      difficulty,
     } = questions[index];
+    console.log(correct);
 
     return (
       <div>
@@ -79,7 +110,7 @@ class Answers extends React.Component {
                     key={ `correct${set}` }
                     type="button"
                     data-testid="correct-answer"
-                    onClick={ () => this.isClicked() }
+                    onClick={ () => this.handleCorrectClick(difficulty) }
                     disabled={ clicked }
                   >
                     { correct }
@@ -112,7 +143,7 @@ class Answers extends React.Component {
       <div>
         <Header />
         <h1>Joguinho</h1>
-        { this.mountAnswers()}
+        { this.mountAnswers() }
         <Counter
           key={ newCounter }
           clicked={ clicked }
@@ -129,16 +160,24 @@ const mapStateToProps = (state) => ({
   token: state.token.token,
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  add: (value) => dispatch(addPoint(value)),
+  reset: () => dispatch(resetCounter()),
+});
+
 Answers.propTypes = {
   questions: PropTypes.arrayOf(PropTypes.shape({
     category: PropTypes.string.isRequired,
     correct_answer: PropTypes.string.isRequired,
     incorrect_answers: PropTypes.arrayOf(PropTypes.string),
     question: PropTypes.string.isRequired,
+    difficulty: PropTypes.string.isRequired,
   })).isRequired,
   increaseIndex: PropTypes.func.isRequired,
   sortedAnswers: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   index: PropTypes.number.isRequired,
+  add: PropTypes.func.isRequired,
+  reset: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps)(Answers);
+export default connect(mapStateToProps, mapDispatchToProps)(Answers);
