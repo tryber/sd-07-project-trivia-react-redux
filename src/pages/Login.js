@@ -18,8 +18,9 @@ class Login extends React.Component {
   }
 
   fillLocalStorage() {
+    const { name } = this.state;
     const player = {
-      name: this.state.name,
+      name,
       assertions: 0,
       score: 0,
       gravatarEmail: '',

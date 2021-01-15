@@ -34,23 +34,21 @@ class Feedback extends React.Component {
     const {
       player: { score, name },
     } = JSON.parse(localStorage.getItem('state'));
-    const controlMessage = 3;
-    console.log('passei');
     if (localStorage.getItem('ranking')) {
       const arrayRanking = JSON.parse(localStorage.getItem('ranking'));
-      arrayRanking.push({ name: name, score: score, picture: ':-)' });
+      arrayRanking.push({ name, score, picture: ':-)' });
       localStorage.setItem('ranking', JSON.stringify(arrayRanking));
     } else {
       localStorage.setItem(
         'ranking',
-        JSON.stringify([{ name: name, score: score, picture: ':-)' }])
+        JSON.stringify([{ name, score, picture: ':-)' }]),
       );
     }
   }
 
   messageFeedback() {
     const {
-      player: { assertions},
+      player: { assertions },
     } = JSON.parse(localStorage.getItem('state'));
     const controlMessage = 3;
 
@@ -64,8 +62,8 @@ class Feedback extends React.Component {
   render() {
     const { assertions, score } = this.state;
     return (
-      <div className='feedback-screen'>
-        <div className='feedback-header'>
+      <div className="feedback-screen">
+        <div className="feedback-header">
           <Header />
         </div>
 
@@ -79,9 +77,9 @@ class Feedback extends React.Component {
         </div>
 
         <button
-          onClick={this.handleClick}
-          data-testid='btn-ranking'
-          type='button'
+          onClick={ this.handleClick }
+          data-testid="btn-ranking"
+          type="button"
         >
           Ver Ranking
         </button>
