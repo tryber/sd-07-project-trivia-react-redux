@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { fetchTriviaQuestions } from '../../store/ducks/triviaQuestions';
 import './GameQuestions.css';
+import Timer from '../Timer';
 
 class GameQuestions extends Component {
   constructor() {
@@ -12,11 +13,23 @@ class GameQuestions extends Component {
       currentQuestion: 0,
       revealAnswer: false,
     };
+    this.timeOver = this.timeOver.bind(this);
+    this.timer = React.createRef();
+    this.clickAnswer = this.clickAnswer.bind(this);
   }
 
   async componentDidMount() {
     const { getTriviaQuestions } = this.props;
     await getTriviaQuestions();
+  }
+
+  timeOver() {
+    this.setState({ revealAnswer: true });
+  }
+
+  clickAnswer() {
+    this.setState({ revealAnswer: true });
+    this.timer.current.stopTimer();
   }
 
   render() {
@@ -46,17 +59,23 @@ class GameQuestions extends Component {
                 .map((answer) => (
                   <button
                     type="button"
+                    disabled={ revealAnswer }
                     className={ (revealAnswer
                       && (answer.correct ? 'correctAnswer' : 'wrongAnswer')).toString() }
                     key={ answer.text }
                     data-testid={ answer.dataTestid }
-                    onClick={ () => this.setState({ revealAnswer: true }) }
+                    onClick={ () => this.clickAnswer() }
                   >
                     {answer.text}
                   </button>))
             }
           </span>
         </h3>
+        <Timer
+          stopTimer={ revealAnswer }
+          handleTimeOver={ this.timeOver }
+          ref={ this.timer }
+        />
       </>
     );
   }
