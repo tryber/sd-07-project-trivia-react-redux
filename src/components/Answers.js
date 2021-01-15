@@ -15,51 +15,57 @@ class Answers extends React.Component {
       next: true,
       newCounter: 0,
       nextUp: false,
+      render: false,
     };
 
     this.nextButton = this.nextButton.bind(this);
     this.mountAnswers = this.mountAnswers.bind(this);
     this.isClicked = this.isClicked.bind(this);
     this.handleCorrectClick = this.handleCorrectClick.bind(this);
+    this.resetNextQuestion = this.resetNextQuestion.bind(this);
   }
 
   isClicked() {
+    console.log('changed to true');
     this.setState({
       clicked: true,
       nextUp: true,
     });
   }
 
-  nextButton() {
+  resetNextQuestion() {
     const { newCounter } = this.state;
     const { increaseIndex, reset } = this.props;
 
+    increaseIndex();
+    console.log('changed to falses');
+    this.setState({
+      clicked: false,
+      next: true,
+      newCounter: newCounter + 1,
+      nextUp: false,
+    });
+    reset();
+  }
+
+  nextButton() {
     return (
       <button
         data-testid="btn-next"
         type="button"
-        onClick={ () => {
-          increaseIndex();
-          this.setState({
-            clicked: false,
-            next: true,
-            newCounter: newCounter + 1,
-            nextUp: false,
-          });
-          reset();
-        } }
+        onClick={ this.resetNextQuestion }
       >
         Próxima
       </button>);
   }
 
   handleCorrectClick(difficulty) {
-    this.isClicked();
     const { add } = this.props;
-    let difficultyValue = 0;
     const easy = 1;
     const medium = 2;
     const hard = 3;
+    let difficultyValue = 0;
+    
     if (difficulty === 'easy') {
       difficultyValue = easy;
     } else if (difficulty === 'medium') {
@@ -67,7 +73,9 @@ class Answers extends React.Component {
     } else {
       difficultyValue = hard;
     }
+    
     add(difficultyValue);
+    this.isClicked();
   }
 
   mountAnswers() {
@@ -132,12 +140,13 @@ class Answers extends React.Component {
 
   render() {
     const { clicked, next, newCounter, nextUp } = this.state;
+    console.log(this.state)
 
     return (
       <div>
         <Header />
         <h1>Joguinho</h1>
-        { this.mountAnswers()}
+        { this.mountAnswers() }
         <Counter
           key={ newCounter }
           clicked={ clicked }

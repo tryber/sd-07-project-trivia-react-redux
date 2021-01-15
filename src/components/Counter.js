@@ -21,7 +21,7 @@ class Counter extends React.Component {
 
       if (count === 0 || clicked) {
         clearInterval(this.timer);
-        isClicked();
+        clicked || isClicked();
         return;
       }
       set();
