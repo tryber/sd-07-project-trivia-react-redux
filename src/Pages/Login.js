@@ -34,6 +34,7 @@ class Login extends React.Component {
 
   routeChangeSettings() {
     const { history } = this.props;
+    console.log(history);
     history.push('/settings');
   }
 
