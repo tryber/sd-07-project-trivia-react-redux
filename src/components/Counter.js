@@ -19,10 +19,11 @@ class Counter extends React.Component {
     this.timer = setInterval(() => {
       const { clicked, isClicked, set, count } = this.props;
 
-      if (count === 0 || clicked) {
+      if (count === 1) {
         clearInterval(this.timer);
-        clicked || isClicked();
-        return;
+        isClicked();
+      } else if (clicked) {
+        clearInterval(this.timer);
       }
       set();
     }, second);

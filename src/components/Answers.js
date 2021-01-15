@@ -15,7 +15,6 @@ class Answers extends React.Component {
       next: true,
       newCounter: 0,
       nextUp: false,
-      render: false,
     };
 
     this.nextButton = this.nextButton.bind(this);
@@ -26,7 +25,6 @@ class Answers extends React.Component {
   }
 
   isClicked() {
-    console.log('changed to true');
     this.setState({
       clicked: true,
       nextUp: true,
@@ -38,7 +36,6 @@ class Answers extends React.Component {
     const { increaseIndex, reset } = this.props;
 
     increaseIndex();
-    console.log('changed to falses');
     this.setState({
       clicked: false,
       next: true,
@@ -65,7 +62,7 @@ class Answers extends React.Component {
     const medium = 2;
     const hard = 3;
     let difficultyValue = 0;
-    
+
     if (difficulty === 'easy') {
       difficultyValue = easy;
     } else if (difficulty === 'medium') {
@@ -73,7 +70,7 @@ class Answers extends React.Component {
     } else {
       difficultyValue = hard;
     }
-    
+
     add(difficultyValue);
     this.isClicked();
   }
@@ -90,6 +87,7 @@ class Answers extends React.Component {
       question,
       difficulty,
     } = questions[index];
+    console.log(correct);
 
     return (
       <div>
@@ -140,7 +138,6 @@ class Answers extends React.Component {
 
   render() {
     const { clicked, next, newCounter, nextUp } = this.state;
-    console.log(this.state)
 
     return (
       <div>

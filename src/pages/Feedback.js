@@ -1,35 +1,47 @@
 import React from 'react';
-import Header from '../components';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import Header from '../components';
 
 class FeedBack extends React.Component {
   constructor(props) {
     super(props);
     this.handleAssertions = this.handleAssertions.bind(this);
+    this.handleTotalQuestions = this.handleTotalQuestions.bind(this);
   }
 
   handleAssertions() {
     const { assertions } = this.props;
+    const lowScore = 3;
 
-    if (assertions < 3) {
-      return <h2 data-testid="feedback-text">Podia ser melhor...</h2>
+    if (assertions < lowScore) {
+      return <h2 data-testid="feedback-text">Podia ser melhor...</h2>;
     }
-    return <h2 data-testid="feedback-text">Mandou bem!</h2>
+    return <h2 data-testid="feedback-text">Mandou bem!</h2>;
+  }
+
+  handleTotalQuestions() {
+    const { assertions } = this.props;
+
+    return (
+      <p data-testid="feedback-total-question">
+        {assertions}
+      </p>
+    );
   }
 
   render() {
-    const { assertions, points, history } = this.props;
+    const { points, history } = this.props;
 
     return (
       <div>
         <Header />
         <main>
-          { this.handleAssertions() }
-          {
-            assertions > 0 ? <h2>Você acertou <span data-testid="feedback-total-question">{ assertions }</span> questões!</h2> : <h2 data-testid="feedback-total-question">Não acertou nenhuma pergunta</h2>
-          }
-          <h2 data-testid="feedback-total-score">Um total de {points} pontos</h2>
-
+          {this.handleAssertions()}
+          {this.handleTotalQuestions()}
+          <h2 data-testid="feedback-total-score">
+            {points}
+          </h2>
           <button data-testid="btn-ranking" type="button">Ver ranking</button>
           <button
             data-testid="btn-play-again"
@@ -48,5 +60,11 @@ const mapStateToProps = (state) => ({
   assertions: state.token.assertions,
   points: state.token.points,
 });
+
+FeedBack.propTypes = {
+  assertions: PropTypes.number.isRequired,
+  points: PropTypes.number.isRequired,
+  history: PropTypes.shape().isRequired,
+};
 
 export default connect(mapStateToProps)(FeedBack);
