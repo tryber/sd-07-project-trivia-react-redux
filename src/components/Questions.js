@@ -5,19 +5,31 @@ import PropTypes from 'prop-types';
 class Questions extends Component {
   constructor() {
     super();
-    this.handleClass = this.handleClass.bind(this);
-    this.randomChoice = this.randomChoice.bind(this);
     this.state = {
       green: '',
       red: '',
     };
+    this.handleClass = this.handleClass.bind(this);
+    this.randomChoice = this.randomChoice.bind(this);
+    this.WinnerOrLoser = this.WinnerOrLoser.bind(this);
+  }
+
+  WinnerOrLoser() {
+    console.log('entrei aqui');
   }
 
   handleClass() {
+    const { disableButton, next } = this.props;
+    const maxQuestion = 4;
     this.setState({
       green: 'green',
       red: 'red',
     });
+    if (next !== maxQuestion) {
+      disableButton();
+    } else {
+      this.WinnerOrLoser();
+    }
   }
 
   randomChoice(arr) {
@@ -57,19 +69,17 @@ class Questions extends Component {
   }
 
   render() {
-    const { questions } = this.props;
-    const { results } = questions;
+    const {
+      questions: { results },
+      next,
+    } = this.props;
 
     if (results) {
-      const {
-        category,
-        question,
-      } = results[0];
+      const { category, question } = results[next];
 
-      const {
-        incorrect_answers: incorrect,
-        correct_answer: correct,
-      } = results[0];
+      const { incorrect_answers: incorrect, correct_answer: correct } = results[
+        next
+      ];
 
       return (
         <div>
@@ -92,6 +102,8 @@ class Questions extends Component {
 
 Questions.propTypes = {
   questions: PropTypes.objectOf.isRequired,
+  disableButton: PropTypes.func.isRequired,
+  next: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = (state) => ({
