@@ -30,7 +30,7 @@ class Header extends Component {
 
 const mapStateToProps = (state) => ({
   name: state.userReducer.name,
-  hash: state.questionsReducer.hash,
+  hash: state.hashReducer.hash,
 });
 
 Header.propTypes = {
