@@ -8,21 +8,24 @@
 
 .form {
   align-items: center;
-  border-radius: 5px;
-  box-shadow: 1px 1px 5px black;
+  border-radius: 10px;
+  box-shadow: 5px 5px 5px black;
   display: flex;
   flex-direction: column;
   height: 400px;
+  background-color: whitesmoke;
+  background-image: url("https://brancopapeldeparede.fbitsstatic.net/img/p/papel-de-parede-degrade-amarelo-099-71219/241063-1.jpg?w=542&h=730&v=202010301756");
   justify-content: center;
-  width: 400px;
+  width: 450px;
+  margin-left: -55px;
 }
+
 
 .input {
   border-radius: 5px;
   margin: 0.3em;
   text-align: center;
 }
-
 .text {
   width: 85%;
 }

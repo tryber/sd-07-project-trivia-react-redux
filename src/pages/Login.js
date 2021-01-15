@@ -64,7 +64,7 @@ class Login extends Component {
             onChange={ this.handleInputChange }
           />
           <button
-            className="input"
+            className="button"
             type="button"
             disabled={ disabled }
             data-testid="btn-play"
