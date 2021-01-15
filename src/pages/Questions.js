@@ -43,7 +43,7 @@ export default class Questions extends Component {
   render() {
     const { question, timer, nextQuestion } = this.props;
     const { questionWasAnswered, shuffledAnswers } = this.state;
-    console.log(shuffledAnswers);
+    console.log('alguma coisa', question);
     if (question) {
       return (
         <div>
@@ -58,7 +58,9 @@ export default class Questions extends Component {
                   key={ index }
                   data-testid="correct-answer"
                   className={ questionWasAnswered ? 'correct' : null }
-                  onClick={ this.handleAnswer }
+                  onClick={ () => {
+                    this.handleAnswer();
+                  } }
                   disabled={ timer === 0 }
                 >
                   {answer}
@@ -71,7 +73,9 @@ export default class Questions extends Component {
                 type="button"
                 key={ index }
                 data-testid={ `wrong-answer-${index}` }
-                onClick={ this.handleAnswer }
+                onClick={ () => {
+                  this.handleAnswer();
+                } }
                 className={ questionWasAnswered ? 'incorrect' : null }
                 disabled={ timer === 0 }
               >
@@ -83,7 +87,9 @@ export default class Questions extends Component {
             data-testid="btn-next"
             type="button"
             hidden={ !questionWasAnswered }
-            onClick={ nextQuestion }
+            onClick={ () => {
+              nextQuestion();
+            } }
           >
             Próxima
           </button>

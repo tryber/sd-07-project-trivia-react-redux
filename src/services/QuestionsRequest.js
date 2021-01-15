@@ -4,7 +4,6 @@ const questionsRequest = async (token) => {
   const response = await fetch(`${requestApi}${token}`);
   const data = await response.json();
   const questions = data.results;
-  console.log(questions);
   return questions;
 };
 

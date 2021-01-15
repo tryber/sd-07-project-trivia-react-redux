@@ -22,7 +22,6 @@ class Game extends Component {
 
   componentDidMount() {
     this.fetchQuestions();
-    this.startTimer();
   }
 
   startTimer() {
@@ -53,18 +52,22 @@ class Game extends Component {
   }
 
   nextQuestion() {
-    const lastQuestion = 5;
     const { currentQuestion } = this.state;
     const { history } = this.props;
-    if (currentQuestion === lastQuestion) {
+    const numberQuestion = 4;
+    if (currentQuestion < numberQuestion) {
+      this.setState({
+        currentQuestion: currentQuestion + 1,
+        timer: 30,
+      });
+    } else {
       history.push('/feedback');
     }
-    this.setState({ currentQuestion: currentQuestion + 1 });
-    this.fetchQuestions();
   }
 
   render() {
     const { questionsArray, currentQuestion, timer } = this.state;
+    console.log('questionsArray', questionsArray);
     return (
       <div>
         <Header />
