@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
 
-export default class FeedBack extends Component {
+class FeedBack extends Component {
   constructor() {
     super();
     this.handleRedirectHome = this.handleRedirectHome.bind(this);
@@ -20,11 +21,17 @@ export default class FeedBack extends Component {
   }
 
   render() {
+    const { assertions } = this.props;
+    const three = 3;
+    console.log('quest', assertions);
     return (
-      <div>
+      <div data-testid="feedback-text">
         <Header />
-        feedback
-        <p data-testid="feedback-text"> voce é top</p>
+        {assertions < three ? (
+          <p ata-testid="feedback-text">Podia ser melhor...</p>
+        ) : (
+          <p ata-testid="feedback-text">Mandou bem!</p>
+        )}
         <button
           type="button"
           data-testid="btn-play-again"
@@ -44,6 +51,13 @@ export default class FeedBack extends Component {
   }
 }
 
+const mapStateToProps = (state) => ({
+  assertions: state.QuestionRequest.assertions,
+});
+
+export default connect(mapStateToProps)(FeedBack);
+
 FeedBack.propTypes = {
   history: PropTypes.objectOf(PropTypes.any).isRequired,
+  assertions: PropTypes.string.isRequired,
 };
