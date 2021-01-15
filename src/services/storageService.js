@@ -1,6 +1,5 @@
 export const initialize = () => {
   if (!localStorage.getItem('ranking')) {
-    console.log('criei');
     localStorage.setItem('ranking', JSON.stringify([]));
   }
 };

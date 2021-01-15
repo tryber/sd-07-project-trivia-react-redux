@@ -10,7 +10,6 @@ import './index.css';
 class Feedback extends Component {
   componentDidMount() {
     const { player } = this.props;
-    console.log('ComponentDidMount: ', player);
     const hash = md5(player.gravatarEmail.trim().toLowerCase());
     const playerPicture = `https://www.gravatar.com/avatar/${hash}?s=36`;
     const newPlayerRanking = {
@@ -30,7 +29,6 @@ class Feedback extends Component {
     const { player } = this.props;
     const { assertions, score } = player;
     const sufficientAssertion = 3;
-    console.log('Render: ', player);
     return (
       <main className="wrapper">
         <Header />

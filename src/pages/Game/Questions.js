@@ -50,7 +50,6 @@ class Questions extends Component {
 
   randomizeAnswers() {
     const { currentQuestion, questions } = this.state;
-    console.log(questions);
     const maxAnswers = questions[currentQuestion].incorrect_answers.length;
     let array = [];
     for (let i = 0; i <= maxAnswers; i += 1) {
@@ -77,7 +76,7 @@ class Questions extends Component {
         },
       );
     } else {
-      // actionNextQuestion();
+      actionNextQuestion();
       history.push('/feedback');
     }
   }
