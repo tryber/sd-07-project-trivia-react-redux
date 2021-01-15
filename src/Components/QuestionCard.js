@@ -132,6 +132,7 @@ class QuestionCard extends Component {
         this.setState(
           {
             score: score + (ten + (seconds * one)),
+            assertions: assertions + 1,
           },
         );
         break;
@@ -141,6 +142,7 @@ class QuestionCard extends Component {
         this.setState(
           {
             score: score + (ten + (seconds * two)),
+            assertions: assertions + 1,
           },
         );
         break;
@@ -150,13 +152,14 @@ class QuestionCard extends Component {
         this.setState(
           {
             score: score + (ten + (seconds * three)),
+            assertions: assertions + 1,
           },
         );
         break;
       default:
         break;
       }
-      this.setState((prevState) => ({ assertions: prevState.assertions + 1 }));
+      // this.setState((prevState) => ({ assertions: prevState.assertions + 1 }));
     } else {
       this.updateItensInLocalStorage(assertions, score);
     }
