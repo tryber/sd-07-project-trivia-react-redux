@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import './question.css';
 import PropTypes from 'prop-types';
 import QuestionTimer from './questionTimer';
 
@@ -8,6 +9,7 @@ class Question extends Component {
     super(props);
     this.state = {
       btnDisabled: false,
+      markAnswers: false,
     };
     this.shuffle = this.shuffle.bind(this);
     this.disableButton = this.disableButton.bind(this);
@@ -35,7 +37,7 @@ class Question extends Component {
   }
 
   render() {
-    const { btnDisabled } = this.state;
+    const { btnDisabled, markAnswers } = this.state;
     const { questions, questionSelected } = this.props;
     const question = questions[questionSelected];
     const arr = question.incorrect_answers.map((answer, index) => (
@@ -43,7 +45,9 @@ class Question extends Component {
         disabled={ btnDisabled }
         type="button"
         key={ answer }
+        className={ markAnswers && 'wrong-answer' }
         data-testid={ `wrong-answer-${index}` }
+        onClick={ () => { this.setState({ markAnswers: true }); } }
       >
         { answer }
       </button>));
@@ -52,7 +56,9 @@ class Question extends Component {
         disabled={ btnDisabled }
         type="button"
         key={ question.correct_answer }
+        className={ markAnswers && 'correct-answer' }
         data-testid="correct-answer"
+        onClick={ () => { this.setState({ markAnswers: true }); } }
       >
         {question.correct_answer}
       </button>));
