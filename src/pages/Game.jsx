@@ -5,20 +5,14 @@ import { connect } from 'react-redux';
 import Header from '../components/Header';
 import Question from '../components/Question';
 import Timer from '../components/Timer';
-import * as callAPI from '../services/callAPI';
-import { nextQuestion } from '../actions';
+import NextQuestionButton from '../components/NextQuestionButton';
+import { getQuestions } from '../actions';
 
 class Game extends Component {
   constructor() {
     super();
 
-    this.state = {
-      questions: [],
-      redirect: false,
-    };
     this.getQuestions = this.getQuestions.bind(this);
-    this.renderButton = this.renderButton.bind(this);
-    this.nextQuestion = this.nextQuestion.bind(this);
   }
 
   componentDidMount() {
@@ -26,59 +20,41 @@ class Game extends Component {
   }
 
   async getQuestions() {
-    const { token } = this.props;
-    const requestQuestions = await callAPI.requestQuestions(token);
-    this.setState({ questions: requestQuestions.results });
-  }
-
-  nextQuestion() {
-    const { questions } = this.state;
-    const { changeQuestion } = this.props;
-    const filteredQuestions = questions.filter((item) => item !== questions[0]);
-    if (filteredQuestions.length === 0) {
-      return this.setState({ redirect: true });
-    }
-    this.setState({ questions: filteredQuestions });
-    changeQuestion();
-  }
-
-  renderButton() {
-    return (
-      <button
-        type="button"
-        data-testid="btn-next"
-        onClick={ this.nextQuestion }
-      >
-        Próxima pergunta
-      </button>
-    );
+    const { requestQuestions, token, category, difficulty, type } = this.props;
+    requestQuestions({ token, category, difficulty, type });
   }
 
   render() {
-    const { questions, redirect } = this.state;
-    const { clicked } = this.props;
+    const { redirect, questions } = this.props;
     if (redirect) return (<Redirect to="/feedback" />);
     return (
       <div>
         <Header />
         <Timer />
         { questions[0] ? <Question item={ questions[0] } /> : null }
-        { clicked ? this.renderButton() : null }
-      </div>
-    );
+        <NextQuestionButton />
+      </div>);
   }
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  changeQuestion: () => dispatch(nextQuestion()) });
+  requestQuestions: (object) => dispatch(getQuestions(object)),
+});
 
 const mapStateToProps = (state) => ({
   token: state.player.token,
-  clicked: state.color.clicked,
+  category: state.questions.category,
+  difficulty: state.questions.difficulty,
+  type: state.questions.type,
+  questions: state.questions.questions,
+  redirect: state.questions.redirectToFeedback,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);
 
 Game.propTypes = {
   token: propTypes.string,
+  category: propTypes.string,
+  difficulty: propTypes.string,
+  type: propTypes.string,
 }.isRequired;

@@ -1,22 +1,15 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
-import propTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import propTypes from 'prop-types';
+import { redirect } from '../actions';
 import Header from '../components/Header';
 
 class Feedback extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { redirect: false };
-
     this.renderMessage = this.renderMessage.bind(this);
-    this.toRanking = this.toRanking.bind(this);
-  }
-
-  toRanking() {
-    this.setState({ redirect: true });
   }
 
   renderMessage(assertions) {
@@ -28,8 +21,8 @@ class Feedback extends Component {
   }
 
   render() {
-    const { history, score, assertions } = this.props;
-    console.log(this.props);
+    const { score, assertions, inFeedback } = this.props;
+    inFeedback('inFeedback');
     return (
       <div>
         <Header />
@@ -42,16 +35,14 @@ class Feedback extends Component {
             { `Um total de ${score} pontos!` }
           </h3>
         </div>
-        <button
-          type="submit"
-          data-testid="btn-play-again"
-          onClick={ () => history.push('/') }
-        >
-          Jogar novamente
-        </button>
-        <div>
-          <Link data-testid="btn-ranking" to="/ranking">
-            Ver Ranking
+        <div className="btn-container">
+          <Link to="/ranking">
+            <button
+              type="button"
+              data-testid="btn-ranking"
+            >
+              Ver Ranking
+            </button>
           </Link>
           <Link data-testid="btn-play-again" to="/">
             Jogar novamente
@@ -62,16 +53,20 @@ class Feedback extends Component {
   }
 }
 
-Feedback.propTypes = {
-  src: propTypes.string,
-  name: propTypes.string,
-  score: propTypes.number,
-  assertions: propTypes.number,
-}.isRequired;
+const mapDispatchToProps = (dispatch) => ({
+  inFeedback: (string) => dispatch(redirect(string)),
+});
 
 const mapStateToProps = (state) => ({
   assertions: state.player.assertions,
   score: state.player.score,
 });
 
-export default connect(mapStateToProps)(Feedback);
+export default connect(mapStateToProps, mapDispatchToProps)(Feedback);
+
+Feedback.propTypes = {
+  src: propTypes.string,
+  name: propTypes.string,
+  score: propTypes.number,
+  assertions: propTypes.number,
+}.isRequired;

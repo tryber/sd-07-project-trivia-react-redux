@@ -30,7 +30,7 @@ class Timer extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  click: state.color.click,
+  click: state.questions.click,
 });
 
 const mapDispatchToProps = (dispatch) => ({
