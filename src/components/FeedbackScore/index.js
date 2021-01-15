@@ -22,21 +22,17 @@ class FeedBackScore extends Component {
         <p data-testid="feedback-total-question">
           {assertionsProps}
         </p>
-        <Link to="/">
-          <button
-            data-testid="btn-play-again"
-            type="button"
-          >
-            Jogar Novamente
-          </button>
+        <Link
+          data-testid="btn-play-again"
+          to="/"
+        >
+          Jogar Novamente
         </Link>
-        <Link to="/ranking">
-          <button
-            data-testid="btn-ranking"
-            type="button"
-          >
-            Ver Ranking
-          </button>
+        <Link
+          data-testid="btn-ranking"
+          to="/ranking"
+        >
+          Ver Ranking
         </Link>
       </div>
     );

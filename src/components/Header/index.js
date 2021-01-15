@@ -6,15 +6,15 @@ import './Header.css';
 
 class Header extends Component {
   render() {
-    const { playerProps } = this.props;
-    const hashLink = `https://www.gravatar.com/avatar/${playerProps.hash}`;
+    const { playerProps: { name, score, hash } } = this.props;
+    const hashLink = `https://www.gravatar.com/avatar/${hash}`;
     return (
       <header className="game-header">
         <img src={ logo } alt="Minha imagem de teste" className="image-logo-header" />
         <div className="player-header-information">
           <img data-testid="header-profile-picture" alt="jogador" src={ hashLink } />
-          <h3 data-testid="header-player-name">{`Player: ${playerProps.name}` }</h3>
-          <h2 data-testid="header-score">{ playerProps.score }</h2>
+          <h3 data-testid="header-player-name">{`Player: ${name}` }</h3>
+          <h2 data-testid="header-score">{ score }</h2>
         </div>
       </header>
     );
