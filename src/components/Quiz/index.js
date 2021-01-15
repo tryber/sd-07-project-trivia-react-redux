@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import '../App.css';
-import { playerAction } from '../actions/playerAction';
+import '../../App.css';
+import { playerAction } from '../../actions/playerAction';
 
 class Quiz extends React.Component {
   constructor(props) {
