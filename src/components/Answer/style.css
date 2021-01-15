@@ -1,18 +1,18 @@
 .answer-section {
+  align-items: center;
   display: flex;
   flex-flow: row wrap;
-  align-items: center;
   justify-content: center;
 }
 
 .answer-box {
-  display: flex;
-  justify-content: space-around;
-  flex-flow: row wrap;
   border: 3px solid white;
-  box-sizing: border-box;
   border-radius: 30px;
+  box-sizing: border-box;
+  display: flex;
+  flex-flow: row wrap;
   height: 200px;
+  justify-content: space-around;
   margin: 25px;
   width: 45%;
 }

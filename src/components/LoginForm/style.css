@@ -1,33 +1,38 @@
-section {
-  display: flex;
-  flex-direction: column;
+.login-section {
+  box-sizing: border-box;
   align-items: center;
+  display: flex;
+  flex-basis: 100%;
   justify-content: center;
 }
 
 .field {
   align-items: center;
-  margin: 25px 50px;
   left: 50%;
+  margin: 25px 50px;
   width: 100%;
 }
 
 .field input {
-  text-align: center;
-  height: 50px;
-  width: 300px;
   box-sizing: border-box;
+  height: 50px;
+  text-align: center;
+  width: 300px;
 }
 
 button {
-  background: #333333;
+  background: #333;
   color: white;
   height: 50px;
   width: 300px;
 }
+button:hover {
+  cursor: pointer;
+}
 
 button:disabled {
-  background: #333333;
+  background: #333;
+  cursor: pointer;
   color: white;
   opacity: 0.3;
   width: 300px;

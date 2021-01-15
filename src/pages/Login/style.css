@@ -1,5 +1,12 @@
-body {
-  background-color: rgb(255, 153, 20);
+.loginPage-container {
+  background-color: #ff9914;
+  box-sizing: border-box;
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
+  /* justify-content: space-between; */
+  flex-wrap: wrap;
+  align-content: space-between;
+  min-height: 100vh;
+  min-width: 100vw;
+  padding: 20px;
 }

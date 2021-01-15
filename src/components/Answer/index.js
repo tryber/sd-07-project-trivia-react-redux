@@ -1,34 +1,43 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './style.css';
 
 class Answer extends React.Component {
   render() {
-    const { p } = this.props;
+    const { curQuestion } = this.props;
+    const answers = [...curQuestion.incorrect_answers, curQuestion.correct_answer];
+    const incorrectAnswers = [...curQuestion.incorrect_answers];
+    const ansersStyle = ['green', 'pink', 'orange', 'purple'];
     return (
       <section className="answer-section">
-        <div className={ `answer-box green wrong ${p}` }>
-          <p className="message">
-            Pergunta meus colegas alguma coisarada escriyta! pode ser maior ou menor
-          </p>
-        </div>
-        <div className={ `answer-box pink right ${p}` }>
-          <p className="message">
-            Pergunta meus colegas alguma coisarada escriyta! pode ser maior ou menor
-          </p>
-        </div>
-        <div className={ `answer-box orange ${p}` }>
-          <p className="message">
-            Pergunta meus colegas alguma coisarada escriyta! pode ser maior ou menor
-          </p>
-        </div>
-        <div className={ `answer-box purple ${p}` }>
-          <p className="message">
-            Pergunta meus colegas alguma coisarada escriyta! pode ser maior ou 
-          </p>
-        </div>
+        {answers.map((question, index) => (
+          <div
+            key={ index }
+            className={ `answer-box ${ansersStyle[index]}` }
+            data-testid={
+              (answers[index] === curQuestion.correct_answer)
+                ? ('correct-answer')
+                : (`wrong-answer ${incorrectAnswers.indexOf(answers[index])}`)
+            }
+          >
+            <p className="message">{ answers[index] }</p>
+          </div>
+        ))}
       </section>
     );
   }
+}
+
+Answer.propTypes = {
+  correct_answer: PropTypes.string,
+  incorrect_answers: PropTypes.string,
+  curQuestion: PropTypes.objectOf,
+};
+
+Answer.defaultProps = {
+  correct_answer: '',
+  incorrect_answers: '',
+  curQuestion: {},
 };
 
 export default Answer;

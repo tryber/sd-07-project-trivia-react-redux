@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import md5 from 'crypto-js/md5';
 import { setStorage, getStorage } from '../../services';
 import getApi from '../../services/api';
 import './style.css';
@@ -45,17 +46,20 @@ class LoginForm extends Component {
 
     const token = await this.requestToken();
 
+    const gravatarHash = md5(email);
+
     const player = {
       name: playerName,
       assertions: 0,
       score: 0,
       gravatarEmail: email,
+      gravatarURL: `https://www.gravatar.com/avatar/${gravatarHash}`,
     };
 
     const ranking = {
       name: playerName,
       score: 0,
-      picture: 'url-da-foto-no-gravatar',
+      picture: `https://www.gravatar.com/avatar/${gravatarHash}`,
     };
 
     const oldRanking = getStorage('ranking');
@@ -70,7 +74,7 @@ class LoginForm extends Component {
   render() {
     const { email, playerName, isDisabled } = this.state;
     return (
-      <section>
+      <section className="login-section">
         <form onSubmit={ (e) => this.handleSubmit(e) }>
           <div className="field">
             <label htmlFor="email-input">
