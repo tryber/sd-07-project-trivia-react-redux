@@ -1,13 +1,18 @@
-import { UPDATE_NAME, UPDATE_EMAIL, REQUEST_SUCESS, REQUEST_FAIL } from '../constants';
+import {
+  NEW_PLAYER,
+  REQUEST_SUCESS,
+  REQUEST_FAIL,
+  UPDATE_SCORE,
+} from '../constants';
 
 const userActions = {
-  updateEmail: (payload) => ({ type: UPDATE_EMAIL, payload }),
-  updateName: (payload) => ({ type: UPDATE_NAME, payload }),
+  newPlayer: (name, email) => ({ type: NEW_PLAYER, name, email }),
 };
 
 const gameActions = {
   requestSucess: (payload) => ({ type: REQUEST_SUCESS, payload }),
   requestFail: (payload) => ({ type: REQUEST_FAIL, payload }),
+  updateScore: (payload) => ({ type: UPDATE_SCORE, payload }),
 };
 
 const fetchApi = () => async (dispatch) => {

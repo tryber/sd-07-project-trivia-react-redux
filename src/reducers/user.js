@@ -1,19 +1,13 @@
-import { UPDATE_EMAIL, UPDATE_NAME } from '../constants';
+import { NEW_PLAYER } from '../constants';
 
-const INITIAL_STATE = {
-  email: '',
-  name: '',
-  auth: false,
-};
+const INITIAL_STATE = { email: '', name: '' };
 
 const user = (state = INITIAL_STATE, action) => {
   const { type } = action;
 
   switch (type) {
-  case UPDATE_EMAIL:
-    return { ...state, email: action.payload };
-  case UPDATE_NAME:
-    return { ...state, name: action.payload };
+  case NEW_PLAYER:
+    return { email: action.email, name: action.name };
   default:
     return state;
   }
