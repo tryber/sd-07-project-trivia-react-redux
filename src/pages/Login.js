@@ -18,8 +18,6 @@ class Login extends React.Component {
   }
 
   fillLocalStorage() {
-    console.log('login');
-    console.log(this.state.name);
     const player = {
       name: this.state.name,
       assertions: 0,
