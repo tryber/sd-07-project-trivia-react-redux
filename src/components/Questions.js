@@ -25,7 +25,12 @@ class Questions extends Component {
       green: 'green',
       red: 'red',
     });
-    next !== maxQuestion ? disableButton() : this.WinnerOrLoser();
+    if (next !== maxQuestion) {
+      disableButton();
+    } else {
+      this.WinnerOrLoser();
+    }
+    // next !== maxQuestion ? disableButton() : this.WinnerOrLoser();
   }
 
   randomChoice(arr) {
@@ -64,15 +69,17 @@ class Questions extends Component {
   }
 
   render() {
-    const { questions: { results }, next } = this.props;
+    const {
+      questions: { results },
+      next,
+    } = this.props;
 
     if (results) {
       const { category, question } = results[next];
 
-      const {
-        incorrect_answers: incorrect,
-        correct_answer: correct,
-      } = results[next];
+      const { incorrect_answers: incorrect, correct_answer: correct } = results[
+        next
+      ];
 
       return (
         <div>
@@ -95,6 +102,8 @@ class Questions extends Component {
 
 Questions.propTypes = {
   questions: PropTypes.objectOf.isRequired,
+  disableButton: PropTypes.func.isRequired,
+  next: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = (state) => ({
