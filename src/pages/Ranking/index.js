@@ -27,10 +27,10 @@ class Ranking extends Component {
                   data-testid="player-picture"
                 />
                 <h3 data-testid={ `player-name-${player.index}` }>
-                  {` ${player.name} - `}
+                  {player.name}
                 </h3>
                 <h3 data-testid={ `player-score-${player.index}` }>
-                  {`${player.score} pontos `}
+                  {player.score}
                 </h3>
               </li>
             ))}
