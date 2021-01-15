@@ -27,18 +27,19 @@ class Login extends React.Component {
   createLocalStorage() {
     const { name, email, token } = this.state;
 
-    const info = {
+    const state = {
       player: {
         name,
         assertions: 0,
         score: 0,
         gravatarEmail: email,
       },
-      ranking: [{ name, score: 10, picture: 'url-da-foto-no-gravatar' }],
-      token,
     };
-
-    localStorage.setItem('state', JSON.stringify(info));
+    const ranking = { name, score: 10, picture: 'url-da-foto-no-gravatar' };
+    const tokenData = { token };
+    localStorage.setItem('state', JSON.stringify(state));
+    localStorage.setItem('ranking', JSON.stringify(ranking));
+    localStorage.setItem('token', JSON.stringify(tokenData));
   }
 
   async requestToken() {
