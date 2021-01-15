@@ -15,13 +15,13 @@ class Header extends Component {
               src={ gravatar }
             />
             <span>
-              Jogador:
+              <h3>Jogador: </h3>
               <span data-testid="header-player-name">
                 { name }
               </span>
             </span>
             <span>
-              Score:
+              <h3>Score: </h3>
               <span data-testid="header-score">
                 { score === undefined ? 0 : score }
               </span>
