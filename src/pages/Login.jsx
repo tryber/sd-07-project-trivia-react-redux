@@ -13,7 +13,6 @@ class Login extends React.Component {
       email: '',
       doneEmail: false,
       doneName: false,
-      // token: '',
     };
     this.testEmail = this.testEmail.bind(this);
     this.testName = this.testName.bind(this);
@@ -21,20 +20,15 @@ class Login extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.loadTokenToLocalStorage = this.loadTokenToLocalStorage.bind(this);
     this.loadRankingToLocalStorage = this.loadRankingToLocalStorage.bind(this);
+    this.loadStateToLocalStorage = this.loadStateToLocalStorage.bind(this);
   }
 
-  // componentDidMount() { this.handleFetch(); }
-
   loadTokenToLocalStorage() {
-    // const { token } = this.state;
     const { token } = this.props;
     const { tokenData } = token;
-    // console.log(this.props);
-    // console.log(tokenData);
     if (Storage) {
       const getTokenSaved = JSON.parse(localStorage.getItem('token'));
       const value = (getTokenSaved === null ? [] : getTokenSaved);
-      // let value;
       console.log(tokenData);
       value.push(tokenData);
       localStorage.setItem('token', JSON.stringify(value));
@@ -58,6 +52,20 @@ class Login extends React.Component {
     }
   }
 
+  loadStateToLocalStorage() {
+    const { name, email } = this.state;
+    const newPlayer = {
+      player: {
+        name,
+        assertions: 0,
+        score: 0,
+        gravatarEmail: email,
+      },
+    };
+    localStorage.removeItem('state');
+    localStorage.setItem('state', JSON.stringify(newPlayer));
+  }
+
   handleFetch() {
     const { apiFetchToken, apiFetchGravatar } = this.props;
     const { email } = this.state;
@@ -66,6 +74,7 @@ class Login extends React.Component {
     apiFetchToken();
     this.loadTokenToLocalStorage();
     this.loadRankingToLocalStorage();
+    this.loadStateToLocalStorage();
   }
 
   handleChange(event) {
@@ -86,7 +95,6 @@ class Login extends React.Component {
   }
 
   render() {
-    // console.log(this.props);
     const { history } = this.props;
     const { email, name, doneEmail, doneName } = this.state;
     return (

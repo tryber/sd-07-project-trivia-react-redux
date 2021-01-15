@@ -4,14 +4,16 @@ import PropTypes from 'prop-types';
 
 class Header extends React.Component {
   render() {
-    const getRakingSaved = JSON.parse(localStorage.getItem('ranking'));
-    const { name, picture } = getRakingSaved[getRakingSaved.length - 1];
+    const { gravatar } = this.props;
+    const { hashData } = gravatar;
+    const getStateSaved = JSON.parse(localStorage.getItem('state'));
+    const { score, name } = getStateSaved.player;
     return (
       <div>
         <h1>TRIVIA</h1>
-        <img src={ picture } alt="profile-player" data-testid="header-profile-picture" />
+        <img src={ hashData } alt="profile-player" data-testid="header-profile-picture" />
         <h3 data-testid="header-player-name">{ name }</h3>
-        <span data-testid="header-score">00</span>
+        <span data-testid="header-score">{ score }</span>
       </div>
     );
   }

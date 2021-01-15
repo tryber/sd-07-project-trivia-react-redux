@@ -118,6 +118,7 @@
 
 .answer {
   display: block;
+  font-size: 13pt;
   margin-bottom: 5px;
 }
 
@@ -140,4 +141,20 @@
   margin-top: 10px;
   padding: 10px;
   text-align: center;
+}
+
+.correct-answer {
+  border: 3px solid rgb(6, 240, 15);
+  border-radius: 5px;
+}
+
+.wrong-answer {
+  border: 3px solid red;
+  border-radius: 5px;
+}
+
+.category {
+  font-weight: 700;
+  margin-bottom: 10px;
+  padding-left: 5px;
 }
