@@ -29,7 +29,7 @@ const Game = (props) => {
     const one = 1;
     const ten = 10;
     const { gameScore } = props;
-    const { data, assertions2, time2 } = store.getState().game;
+    const { data, time2 } = store.getState().game;
     const { difficulty } = data.results[i];
     // console.log(difficulty);
     // console.log(assertions);
@@ -42,35 +42,18 @@ const Game = (props) => {
     } else {
       convertedDifficulty = one;
     }
-    if (assertions2) {
-      score += ten + time2 * convertedDifficulty;
-    }
-    // console.log(score);
+
+    score += ten + time2 * convertedDifficulty;
     gameScore(score);
     i += 1;
-
-    const { user } = props;
-    localStorage.setItem(
-      'state',
-      JSON.stringify({
-        player: {
-          name: user.name,
-          assertions: sum,
-          score,
-          email: user.email,
-        },
-      }),
-    );
   };
 
   const handleQuestion = async () => {
-    const { gameStatus } = props;
-    await gameStatus(assertions, time);
-    calculateScore();
+    const { history } = props;
 
     const maxQuestions = 4;
     if (counter === maxQuestions) {
-      setCounter(counter - maxQuestions);
+      history.push('/feedback');
     } else {
       setCounter(counter + 1);
     }
@@ -85,7 +68,7 @@ const Game = (props) => {
   };
 
   let intervalId;
-  const handleClickAnswer = ({ target }) => {
+  const handleClickAnswer = async ({ target }) => {
     setColor({
       style1: 'border-correct',
       style2: 'border-incorrect',
@@ -95,7 +78,22 @@ const Game = (props) => {
     if (target.value === 'correct') {
       setAssertion(true);
 
+      const { user, gameStatus } = props;
+      await gameStatus(assertions, time);
+      calculateScore();
       sum += 1;
+
+      localStorage.setItem(
+        'state',
+        JSON.stringify({
+          player: {
+            name: user.name,
+            assertions: sum,
+            score,
+            email: user.email,
+          },
+        }),
+      );
     } else {
       setAssertion(false);
     }
@@ -172,7 +170,6 @@ const Game = (props) => {
         )}
       </div>
       <div>{time}</div>
-      <p>{assertions}</p>
     </div>
   );
 };
@@ -195,6 +192,9 @@ Game.propTypes = {
   user: PropTypes.shape({
     name: PropTypes.string.isRequired,
     email: PropTypes.string.isRequired,
+  }).isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func,
   }).isRequired,
 };
 
