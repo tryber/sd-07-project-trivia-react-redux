@@ -22,4 +22,9 @@ export function changeScore(payload) {
     type: 'CHANGE_SCORE',
     payload,
   })
+
+export function nextQuestion() {
+  return ({
+    type: 'NEXT_QUESTION',
+  });
 }

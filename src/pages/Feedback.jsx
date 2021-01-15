@@ -1,38 +1,61 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import propTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import Header from '../components/Header';
 
 class Feedback extends Component {
   constructor(props) {
     super(props);
+
+    this.state = { redirect: false };
+
     this.renderMessage = this.renderMessage.bind(this);
+    this.toRanking = this.toRanking.bind(this);
+  }
+
+  toRanking() {
+    this.setState({ redirect: true });
   }
 
   renderMessage(assertions) {
     const parameter = 3;
-    if (assertions < parameter) {
-      return (<h1 data-testid="feedback-text">Podia ser melhor...</h1>);
+    if (assertions >= parameter) {
+      return (<h1 data-testid="feedback-text">Mandou bem!</h1>);
     }
-    return (<h1 data-testid="feedback-text">Mandou bem!</h1>);
+    return (<h1 data-testid="feedback-text">Podia ser melhor...</h1>);
   }
 
   render() {
-    const { score, assertions } = this.props;
+    const { history, score, assertions } = this.props;
+    console.log(this.props);
     return (
       <div>
         <Header />
         { this.renderMessage(assertions) }
         <div className="score-questions-container">
-          <h3
-            data-testid="feedback-total-quesiton"
-          >
+          <h3 data-testid="feedback-total-quesiton">
             { `Você acertou ${assertions} questões!` }
           </h3>
-          <h3
-            data-testid="feedback-total-score"
-          >
+          <h3 data-testid="feedback-total-score">
             { `Um total de ${score} pontos!` }
           </h3>
+        </div>
+        <button
+          type="submit"
+          data-testid="btn-play-again"
+          onClick={ () => history.push('/') }
+        >
+          Jogar novamente
+        </button>
+        <div>
+          <Link data-testid="btn-ranking" to="/ranking">
+            Ver Ranking
+          </Link>
+          <Link data-testid="btn-play-again" to="/">
+            Jogar novamente
+          </Link>
         </div>
       </div>
     );
@@ -46,4 +69,9 @@ Feedback.propTypes = {
   assertions: propTypes.number,
 }.isRequired;
 
-export default Feedback;
+const mapStateToProps = (state) => ({
+  assertions: state.player.assertions,
+  score: state.player.score,
+});
+
+export default connect(mapStateToProps)(Feedback);
