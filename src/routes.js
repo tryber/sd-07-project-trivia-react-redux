@@ -3,6 +3,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import SetPage from './pages/SetPage';
 import GamePage from './pages/GamePage';
+import FeedBackPage from './pages/FeedBackPage';
 
 const Routes = () => (
   <BrowserRouter>
@@ -10,6 +11,7 @@ const Routes = () => (
       <Route exact path="/" component={ LoginPage } />
       <Route path="/settings" component={ SetPage } />
       <Route path="/game" component={ GamePage } />
+      <Route path="/feedback" component={ FeedBackPage } />
     </Switch>
   </BrowserRouter>
 );

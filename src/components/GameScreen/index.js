@@ -12,6 +12,7 @@ class GameScreen extends Component {
       correct: Math.floor(Math.random() * limit),
       actual: 0,
       solved: false,
+      timer: 30,
     };
 
     this.questFrame = this.questFrame.bind(this);
@@ -21,7 +22,13 @@ class GameScreen extends Component {
 
   componentDidMount() {
     const { playerToken, getQuest } = this.props;
+    const decrement = 1000;
     getQuest(playerToken);
+    this.timerQuest = setInterval(() => {
+      this.setState((prevState) => ({
+        timer: prevState.count - 1,
+      }));
+    }, decrement);
   }
 
   questFrame() {
@@ -41,9 +48,8 @@ class GameScreen extends Component {
             onClick={ () => this.setState({ solved: true }) }
             type="button"
             data-testid={
-              questions[actual].correct_answer === 'True'
-                ? 'correct-answer'
-                : 'wrong-answer'
+              // eslint-disable-next-line max-len
+              questions[actual].correct_answer === 'True' ? 'correct-answer' : 'wrong-answer'
             }
           >
             Verdadeiro
@@ -52,9 +58,8 @@ class GameScreen extends Component {
             onClick={ () => this.setState({ solved: true }) }
             type="button"
             data-testid={
-              questions[actual].correct_answer === 'False'
-                ? 'correct-answer'
-                : 'wrong-answer'
+              // eslint-disable-next-line max-len
+              questions[actual].correct_answer === 'False' ? 'correct-answer' : 'wrong-answer'
             }
           >
             False
@@ -109,14 +114,12 @@ class GameScreen extends Component {
             type="button"
             disabled={ solved }
             className={
-              questions[actual].correct_answer === 'True'
-                ? 'correct-answer'
-                : 'wrong-answer'
+              // eslint-disable-next-line max-len
+              questions[actual].correct_answer === 'True' ? 'correct-answer' : 'wrong-answer'
             }
             data-testid={
-              questions[actual].correct_answer === 'True'
-                ? 'correct-answer'
-                : 'wrong-answer'
+              // eslint-disable-next-line max-len
+              questions[actual].correct_answer === 'True' ? 'correct-answer' : 'wrong-answer'
             }
           >
             Verdadeiro
@@ -125,14 +128,12 @@ class GameScreen extends Component {
             type="button"
             disabled={ solved }
             className={
-              questions[actual].correct_answer === 'False'
-                ? 'correct-answer'
-                : 'wrong-answer'
+              // eslint-disable-next-line max-len
+              questions[actual].correct_answer === 'False' ? 'correct-answer' : 'wrong-answer'
             }
             data-testid={
-              questions[actual].correct_answer === 'False'
-                ? 'correct-answer'
-                : 'wrong-answer'
+            // eslint-disable-next-line max-len
+              questions[actual].correct_answer === 'False' ? 'correct-answer' : 'wrong-answer'
             }
           >
             False
@@ -179,12 +180,13 @@ class GameScreen extends Component {
   }
 
   render() {
+    const { timer } = this.state;
     return (
       <>
         <p data-testid="question-category">Categoria</p>
         <p data-testid="question-text">Pergunta</p>
         {this.renderScreen()}
-        {/* {this.questFrame()} */}
+        <p>{timer}</p>
       </>
     );
   }
