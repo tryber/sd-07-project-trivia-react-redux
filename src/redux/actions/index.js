@@ -35,9 +35,22 @@ export const scoreUpdate = (payload) => (
   }
 );
 
+export const resetScore = () => (
+  {
+    type: types.RESET_SCORE,
+  }
+);
+
 export const saveTimer = (payload) => (
   {
     type: types.SAVE_TIMER,
+    payload,
+  }
+);
+
+export const savePicture = (payload) => (
+  {
+    type: types.SAVE_PICTURE,
     payload,
   }
 );

@@ -6,6 +6,7 @@ const LOGIN_INITIAL_STATE = {
   score: 0,
   gravatarEmail: '',
   tokenString: '',
+  picture: '',
 };
 
 const player = (state = LOGIN_INITIAL_STATE, action) => {
@@ -26,6 +27,17 @@ const player = (state = LOGIN_INITIAL_STATE, action) => {
       ...state,
       score: state.score + action.payload,
       assertions: state.assertions + 1,
+    });
+  case types.RESET_SCORE:
+    return ({
+      ...state,
+      score: 0,
+      assertions: 0,
+    });
+  case types.SAVE_PICTURE:
+    return ({
+      ...state,
+      picture: action.payload,
     });
   default:
     return state;

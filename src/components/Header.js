@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import md5 from 'crypto-js/md5';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { savePicture } from '../redux/actions';
 
 class Header extends Component {
   constructor() {
@@ -16,12 +17,15 @@ class Header extends Component {
   }
 
   render() {
-    const { name, score } = this.props;
+    const { name, score, savePic } = this.props;
+    const urlPicture = `https://www.gravatar.com/avatar/${this.gravatarHash()}`;
+    savePic(urlPicture);
+
     return (
       <div>
         <p data-testid="header-player-name">{ name }</p>
         <p data-testid="header-score">{ score }</p>
-        <img data-testid="header-profile-picture" src={ `https://www.gravatar.com/avatar/${this.gravatarHash()}` } alt="Avatar" />
+        <img data-testid="header-profile-picture" src={ urlPicture } alt="Avatar" />
       </div>
     );
   }
@@ -33,10 +37,15 @@ const mapStateToProps = ({ player: { name, gravatarEmail, score } }) => ({
   score,
 });
 
-export default connect(mapStateToProps)(Header);
+const mapDispatchToProps = (dispatch) => ({
+  savePic: (info) => dispatch(savePicture(info)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
 
 Header.propTypes = {
   gravatarEmail: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   score: PropTypes.number.isRequired,
+  savePic: PropTypes.func.isRequired,
 };

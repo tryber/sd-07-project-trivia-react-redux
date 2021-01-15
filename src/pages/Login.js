@@ -13,7 +13,6 @@ class Login extends Component {
     this.state = {
       name: '',
       email: '',
-      // storage: JSON.parse(localStorage.getItem('token')),
     };
 
     this.isValid = this.isValid.bind(this);
