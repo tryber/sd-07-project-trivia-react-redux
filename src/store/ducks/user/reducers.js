@@ -21,6 +21,7 @@ const user = (state = INITIAL_STATE, action) => {
       player: {
         ...state.player,
         score: state.player.score + action.payload,
+        assertions: state.player.assertions + 1,
       },
     };
   default:
