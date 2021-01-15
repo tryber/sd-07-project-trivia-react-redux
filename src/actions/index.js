@@ -38,9 +38,9 @@ export const requestErrorQuestion = (error) => ({
   error,
 });
 
-export const updateScore = (score) => ({
+export const updateScoreAction = (newScore) => ({
   type: 'UPDATE_SCORE',
-  score,
+  newScore,
 });
 
 export const hashAction = (hash) => ({

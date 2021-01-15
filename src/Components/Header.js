@@ -5,7 +5,7 @@ import '../App.css';
 
 class Header extends Component {
   render() {
-    const { name, hash } = this.props;
+    const { name, hash, score } = this.props;
     return (
       <header className="App-header">
         <img
@@ -21,7 +21,7 @@ class Header extends Component {
         <h2
           data-testid="header-score"
         >
-          0
+          { score }
         </h2>
       </header>
     );
@@ -31,11 +31,13 @@ class Header extends Component {
 const mapStateToProps = (state) => ({
   name: state.userReducer.name,
   hash: state.hashReducer.hash,
+  score: state.userReducer.score,
 });
 
 Header.propTypes = {
   name: PropTypes.string.isRequired,
   hash: PropTypes.string.isRequired,
+  score: PropTypes.number.isRequired,
 };
 
 export default connect(mapStateToProps)(Header);

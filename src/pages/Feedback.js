@@ -9,8 +9,7 @@ class Feedback extends Component {
     const { score } = this.props;
     const goodMessage = <p data-testid="feedback-text">Podia ser melhor...</p>;
     const badMessage = <p data-testid="feedback-text">Mandou bem!</p>;
-    const three = 3;
-    console.log(score);
+    const two = 2;
     return (
       <div>
         <h1>FeedBack</h1>
@@ -23,7 +22,7 @@ class Feedback extends Component {
             Ver Ranking
           </button>
         </Link>
-        { score > three ? badMessage : goodMessage }
+        { score > two ? badMessage : goodMessage }
       </div>
     );
   }
@@ -34,7 +33,7 @@ Feedback.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  score: state.userReducer.actualScore,
+  score: state.userReducer.score,
 });
 
 export default connect(mapStateToProps)(Feedback);

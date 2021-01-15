@@ -1,11 +1,11 @@
 const INITIAL_STATE = {
   email: '',
   name: '',
-  actualScore: 0,
+  score: 0,
 };
 
 function userReducer(state = INITIAL_STATE, action) {
-  const { type, email, name, score } = action;
+  const { type, email, name, newScore } = action;
   switch (type) {
   case 'LOGIN':
     return {
@@ -15,7 +15,7 @@ function userReducer(state = INITIAL_STATE, action) {
     };
   case 'UPDATE_SCORE':
     return {
-      ...state, actualScore: score,
+      ...state, score: newScore,
     };
   default:
     return state;
