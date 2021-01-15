@@ -12,6 +12,12 @@ function colorReducer(state = INITIAL_STATE, action) {
       click: '-clicked',
       clicked: true,
     };
+  case 'NEXT_QUESTION':
+    return {
+      ...state,
+      click: '',
+      clicked: false,
+    };
   default:
     return state;
   }

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import propTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -7,7 +8,15 @@ import Header from '../components/Header';
 class Feedback extends Component {
   constructor(props) {
     super(props);
+
+    this.state = { redirect: false };
+
     this.renderMessage = this.renderMessage.bind(this);
+    this.toRanking = this.toRanking.bind(this);
+  }
+
+  toRanking() {
+    this.setState({ redirect: true });
   }
 
   renderMessage(assertions) {

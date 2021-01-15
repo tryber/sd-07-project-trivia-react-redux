@@ -1,36 +1,36 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
+// import propTypes from 'prop-types';
 
-class Ranking extends React.Component {
+class Ranking extends Component {
+  constructor() {
+    super();
+
+    this.state = { redirect: false };
+
+    this.toLogin = this.toLogin.bind(this);
+  }
+
+  toLogin() {
+    this.setState({ redirect: true });
+  }
+
   render() {
+    const { redirect } = this.state;
+    if (redirect) return (<Redirect to="/" />);
+    // incluir array.map() para gerar os itens da lista <ul />
+    // componente 'RankingItem' criado para renderizar os itens da lista
     return (
       <div>
         <h1 data-testid="ranking-title">Ranking</h1>
-        <ul>
-          <li>
-            <img
-              src="#"
-              alt="#"
-            />
-            Nome:
-            <span data-testid="player-name-1">player.name1</span>
-            Score:
-            <span data-testid="player-score-1">player.score1</span>
-          </li>
-          <li>
-            <img
-              src="#"
-              alt="#"
-            />
-            Nome:
-            <span data-testid="player-name-2">player.name2</span>
-            Score:
-            <span data-testid="player-score-2">player.score2</span>
-          </li>
-        </ul>
-        <Link to="/" data-testid="btn-go-home">
-          <button type="button">Login</button>
-        </Link>
+        <ul />
+        <button
+          type="button"
+          data-testid="btn-go-home"
+          onClick={ this.toLogin }
+        >
+          Jogar novamente!
+        </button>
       </div>
     );
   }
