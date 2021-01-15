@@ -8,6 +8,13 @@ class FeedBack extends Component {
     super();
     this.handleRedirectHome = this.handleRedirectHome.bind(this);
     this.handleRedirectRanking = this.handleRedirectRanking.bind(this);
+    this.getScore = this.getScore.bind(this);
+  }
+
+  getScore() {
+    const score = JSON.parse(localStorage.getItem('state'));
+    console.log('score', score);
+    return score.player.score;
   }
 
   handleRedirectHome() {
@@ -28,10 +35,12 @@ class FeedBack extends Component {
       <div data-testid="feedback-text">
         <Header />
         {assertions < three ? (
-          <p ata-testid="feedback-text">Podia ser melhor...</p>
+          <p>Podia ser melhor...</p>
         ) : (
-          <p ata-testid="feedback-text">Mandou bem!</p>
+          <p>Mandou bem!</p>
         )}
+        <p data-testid="feedback-total-score">{this.getScore}</p>
+        <p data-testid="feedback-total-question">{assertions}</p>
         <button
           type="button"
           data-testid="btn-play-again"
