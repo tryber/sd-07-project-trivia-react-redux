@@ -1,7 +1,38 @@
+body {
+  background-color: cadetblue;
+}
+.margin-page {
+  background-color: aliceblue;
+  margin: 100px 200px;
+  padding: 100px;
+}
+.login {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin: 5px;
+  overflow: hidden;
+  width: 300px;
+}
+button {
+  height: 30px;
+  margin: 10px;
+}
+input {
+  height: 30px;
+  margin: 2px;
+}
+.header {
+  display: flex;
+  flex-direction: row;
+}
+.questions {
+  display: flex;
+  flex-direction: column;
+}
 .correct {
   border: 3px solid rgb(6, 240, 15);
 }
-
 .incorrect {
   border: 3px solid red;
 }

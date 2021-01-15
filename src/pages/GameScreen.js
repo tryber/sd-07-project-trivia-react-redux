@@ -63,7 +63,9 @@ class GameScreen extends Component {
     const { name, email, trivia, loading } = this.props;
     const { answered, count, time, timeout } = this.state;
     return (
-      <div>
+      <div
+        className="margin-page"
+      >
         <CustomHeader name={ name } email={ email } />
         {loading && <p>...Loading</p>}
 

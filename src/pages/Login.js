@@ -47,11 +47,15 @@ class Login extends Component {
   render() {
     const { permitir } = this.state;
     return (
-      <CustomLogin
-        onInputChange={ this.handleInputChange }
-        onHandleSubmit={ this.handleSubmit }
-        validate={ permitir }
-      />
+      <div
+        className="margin-page"
+      >
+        <CustomLogin
+          onInputChange={ this.handleInputChange }
+          onHandleSubmit={ this.handleSubmit }
+          validate={ permitir }
+        />
+      </div>
     );
   }
 }

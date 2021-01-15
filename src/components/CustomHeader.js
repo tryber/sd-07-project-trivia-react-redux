@@ -5,7 +5,9 @@ import CustomScore from './CustomScore';
 
 export default function CustomHeader({ name, email }) {
   return (
-    <div>
+    <div
+      className="header"
+    >
       <h1>Tela do jogo</h1>
       <img
         data-testid="header-profile-picture"

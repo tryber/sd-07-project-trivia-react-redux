@@ -1,37 +1,35 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import '../App.css';
+import "../App.css";
 
 const CustomGame = ({ challenge, correct, changeStyle, index, timeout }) => (
-  <div>
+  <div className="questions">
     <h1 data-testid="question-category">{challenge[index].category}</h1>
     <h3 data-testid="question-text">{challenge[index].question}</h3>
     <button
-      onClick={ correct }
+      onClick={correct}
       type="button"
       key="correct"
       data-testid="correct-answer"
-      className={ changeStyle ? 'correct' : '' }
-      disabled={ timeout }
+      className={changeStyle ? "correct" : ""}
+      disabled={timeout}
     >
       {challenge[index].correct_answer}
     </button>
 
     {challenge[0].incorrect_answers.map((item, index1) => (
       <button
-        onClick={ correct }
+        onClick={correct}
         type="button"
         key="incorrect"
-        data-testid={ `wrong-answer-${index1}` }
-        className={ changeStyle ? 'incorrect' : '' }
-        disabled={ timeout }
+        data-testid={`wrong-answer-${index1}`}
+        className={changeStyle ? "incorrect" : ""}
+        disabled={timeout}
       >
         {item}
       </button>
-
     ))}
-
   </div>
 );
 CustomGame.propTypes = {
