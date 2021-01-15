@@ -12,6 +12,7 @@ class Game extends Component {
     };
     this.timer = 0;
     this.stopTimer = this.stopTimer.bind(this);
+    this.resetTimer = this.resetTimer.bind(this);
   }
 
   componentDidMount() {
@@ -29,6 +30,10 @@ class Game extends Component {
     }, oneSecond);
   }
 
+  resetTimer() {
+    this.setState({ count: 30 }, () => this.startTimer());
+  }
+
   stopTimer() {
     const { count } = this.state;
     clearInterval(this.timer);
@@ -41,7 +46,11 @@ class Game extends Component {
     return (
       <div>
         <Header />
-        <QuestionsList count={ count } stopTimer={ this.stopTimer } />
+        <QuestionsList
+          count={ count }
+          stopTimer={ this.stopTimer }
+          resetTimer={ this.resetTimer }
+        />
       </div>
     );
   }
