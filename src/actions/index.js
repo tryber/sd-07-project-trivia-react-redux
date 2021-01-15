@@ -20,7 +20,6 @@ export const getName = (name) => ({
 
 const startRequest = () => ({
   type: START_REQUEST,
-
 });
 
 const receivedQuestions = (payload) => ({
