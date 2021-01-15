@@ -243,6 +243,7 @@ class GameScreen extends Component {
 
   render() {
     const { playerEmail, playerName, assertions, scoreSession } = this.props;
+    const { solved } = this.state;
     const player = {
       name: playerName,
       assertions,
@@ -260,6 +261,18 @@ class GameScreen extends Component {
         {this.renderScreen()}
         {/* {this.questFrame()} */}
         <h2>{timer}</h2>
+        {solved && (
+          <button
+            type="button"
+            onClick={ () => this.setState((prevState) => ({
+              actual: prevState.actual + 1,
+              timer: 30,
+              solved: false,
+            })) }
+            data-testid="btn-next"
+          >
+            Próximo
+          </button>)}
       </>
     );
   }
