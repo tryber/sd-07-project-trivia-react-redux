@@ -13,6 +13,18 @@ class Game extends Component {
       //  results: results,
     };
     this.nextQuestion = this.nextQuestion.bind(this);
+    this.createLocalStorage = this.createLocalStorage.bind(this);
+  }
+
+  componentDidMount() {
+    this.createLocalStorage();
+  }
+
+  createLocalStorage() {
+    const { name, assertions, score, gravatarEmail } = this.props;
+    const playerObj = { player: { name, assertions, score, gravatarEmail } };
+
+    localStorage.setItem('state', JSON.stringify(playerObj));
   }
 
   nextQuestion() {
@@ -39,7 +51,10 @@ class Game extends Component {
     return (
       <div>
         <Header />
-        <Quiz nextQuestion={ this.nextQuestion } results={ results[key] } />
+        <Quiz
+          nextQuestion={ this.nextQuestion }
+          results={ results[key] }
+        />
       </div>
     );
   }
@@ -49,15 +64,31 @@ const mapStateToProps = ({
     isLoading,
     questions: { results },
   },
+  player: {
+    name,
+    assertions,
+    score,
+    gravatarEmail,
+  },
 }) => ({
   isLoading,
   results,
+  name,
+  assertions,
+  score,
+  gravatarEmail,
 });
+
 export default connect(mapStateToProps)(Game);
+
 Game.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   results: PropTypes.arrayOf(PropTypes.object).isRequired,
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,
+  name: PropTypes.string.isRequired,
+  assertions: PropTypes.number.isRequired,
+  score: PropTypes.number.isRequired,
+  gravatarEmail: PropTypes.string.isRequired,
 };

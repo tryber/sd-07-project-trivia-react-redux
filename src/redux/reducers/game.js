@@ -3,6 +3,7 @@ import types from '../actions/types';
 const GAME_INITIAL_STATE = {
   questions: {},
   isLoading: false,
+  timer: 0,
 };
 
 const game = (state = GAME_INITIAL_STATE, action) => {
@@ -17,6 +18,11 @@ const game = (state = GAME_INITIAL_STATE, action) => {
       ...state,
       questions: action.questions,
       isLoading: false,
+    });
+  case types.SAVE_TIMER:
+    return ({
+      ...state,
+      timer: action.payload,
     });
   default:
     return state;
