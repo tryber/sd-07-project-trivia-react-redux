@@ -11,5 +11,126 @@
 }
 
 .border-neutral {
-  border: none;
+  border: 2px solid;
+}
+
+.login-container {
+  display: flex;
+  flex-direction: column; 
+  margin: 10px 0 0 8px;
+  align-items: center;
+  width: 100%;
+}
+
+.login-container button, input {
+  border-radius: 3em;
+  margin-top: 15px;
+  padding: 8px;
+}
+
+.login-container button {
+  width: 320px
+}
+
+.login-container input {
+  width: 300px
+}
+
+.header, .user-info, .top-bar {
+  align-items: center;
+  background-color: rgb(31, 83, 35);
+  display: flex;
+  height: 50px;
+  justify-content: space-between;
+  object-fit: contain;
+  padding: 0 8px;
+  color: white;
+}
+
+.top-bar button {
+  border-radius: 3em;
+  padding: 8px;
+}
+
+.user-info {
+  width: 200px;
+}
+
+.header img {
+  height: 45px;
+}
+
+.user-info div, img {
+  justify-content: space-around;
+  padding-right: 8px;
+}
+
+.game-page div {
+  padding: 0 8px;
+}
+
+.game-page button {
+  border-radius: 2em;
+ }
+
+.options-container{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  width: 400px
+}
+
+.next-button {
+  background-color:rgb(95, 95, 95);
+  color: white;
+  height: 40px;
+  margin-left: 8px;
+  width: 400px;
+}
+
+.options-container div button {
+  height: 40px;
+  margin-bottom: 20px;
+  width: 190px;
+}
+
+.page-container {
+  display: flex;
+}
+
+.timer {
+  background-color: rgb(31, 83, 35);
+  border-radius: 50%;
+  height: 108px;
+  object-fit: contain;
+  vertical-align: middle;
+  width: 100px;
+}
+
+.timer-text {
+  color: white;
+  font-size: 60px;
+  font-weight: 800;
+  margin-top: 8px;
+  text-align: center;
+}
+
+.questions-container {
+  margin-left: 6px;
+  width: 700px;
+}
+
+.play-again-button {
+  background-color: rgb(95, 95, 95);
+  border: 1px solid black;
+  border-radius: 3em;
+  color: white;
+  font: 400 13.3333px Arial;
+  margin-top: 15px;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+}
+
+.feedback-container {
+ text-align: center;
 }

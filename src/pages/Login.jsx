@@ -53,6 +53,10 @@ class Login extends React.Component {
     const { nome, email } = this.state;
     return (
       <div>
+        <div className="top-bar">
+          <div>
+            <h1>Trivia Game</h1>
+          </div>  
         <button
           type="button"
           data-testid="btn-settings"
@@ -60,6 +64,8 @@ class Login extends React.Component {
         >
           Configurações
         </button>
+        </div>
+        <div className="login-container">
         <input
           type="text"
           name="nome"
@@ -89,6 +95,7 @@ class Login extends React.Component {
             Jogar
           </button>
         )}
+        </div>
       </div>
     );
   }
