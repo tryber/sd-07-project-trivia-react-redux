@@ -92,7 +92,7 @@ const Game = (props) => {
             score,
             email: user.email,
           },
-        },)
+        })
       );
     } else {
       setAssertion(false);
@@ -151,10 +151,9 @@ const Game = (props) => {
               </button>
             </div>
             {results[counter].incorrect_answers.map((answer, index) => (
-              <div>
+              <div key={ answer }>
                 <button
                   value="incorrect"
-                  key={ answer }
                   type="button"
                   data-testid={ `wrong-answer-${index}` }
                   className={ color.style2 }
@@ -200,7 +199,7 @@ Game.propTypes = {
         PropTypes.shape({
           difficulty: PropTypes.string,
         },)
-      ),
+      )
     }),
     score: PropTypes.number,
   }).isRequired,
