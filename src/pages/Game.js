@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import Quiz from '../components/Quiz';
+import { resetScore } from '../redux/actions';
 
 class Game extends Component {
   constructor(props) {
@@ -21,13 +22,9 @@ class Game extends Component {
   }
 
   createLocalStorage() {
-    const playerObj = { player: {
-      name: '',
-      assertions: 0,
-      score: 0,
-      gravatarEmail: '',
-    } };
-
+    const { name, gravatarEmail, resetScoreAssertion } = this.props;
+    resetScoreAssertion();
+    const playerObj = { player: { name, assertions: 0, score: 0, gravatarEmail } };
     localStorage.setItem('state', JSON.stringify(playerObj));
   }
 
@@ -36,7 +33,6 @@ class Game extends Component {
     const { history } = this.props;
     const numberQuestion = 4;
     if (key === numberQuestion) {
-      console.log('chegou');
       history.push('/feedback');
     } if (key < numberQuestion) {
       this.setState({
@@ -51,7 +47,7 @@ class Game extends Component {
     if (isLoading || results === undefined) {
       return <p>Carregando</p>;
     }
-    // setTimeout(() => console.log(results), 2000);
+
     return (
       <div>
         <Header />
@@ -83,7 +79,11 @@ const mapStateToProps = ({
   gravatarEmail,
 });
 
-export default connect(mapStateToProps)(Game);
+const mapDispatchToProps = (dispatch) => ({
+  resetScoreAssertion: (info) => dispatch(resetScore(info)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Game);
 
 Game.propTypes = {
   isLoading: PropTypes.bool.isRequired,
@@ -91,4 +91,7 @@ Game.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,
+  name: PropTypes.string.isRequired,
+  gravatarEmail: PropTypes.string.isRequired,
+  resetScoreAssertion: PropTypes.func.isRequired,
 };

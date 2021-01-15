@@ -29,12 +29,6 @@ class Quiz extends Component {
   }
 
   answerColor() {
-    // const { results } = this.props;
-    // const { correct_answer: correctAnswer } = results;
-
-    // if (target.innerText !== correctAnswer) {
-    // }
-
     this.setState({
       colorIncorrect: 'answer-wrong',
       colorCorrect: 'answer-correct',
@@ -51,11 +45,6 @@ class Quiz extends Component {
       colorIncorrect: '',
       resetTimer: true,
     });
-
-    const { name, assertions, score, gravatarEmail } = this.props;
-    const playerObj = { player: { name, assertions, score, gravatarEmail } };
-
-    localStorage.setItem('state', JSON.stringify(playerObj));
   }
 
   restoreTimer() {
@@ -70,6 +59,11 @@ class Quiz extends Component {
     const easy = 1;
     const medium = 2;
     const hard = 3;
+
+    const { name, assertions, score, gravatarEmail } = this.props;
+    const playerObj = { player: { name, assertions, score, gravatarEmail } };
+
+    localStorage.setItem('state', JSON.stringify(playerObj));
 
     switch (difficulty) {
     case 'easy':
@@ -95,6 +89,7 @@ class Quiz extends Component {
     const { question, category, difficulty } = results;
     const allQuestions = [correctAnswer, ...incorrectAnswers];
     const magicNumber = 0.5;
+    const test = this.scoreCalculator();
     const allIndex = allQuestions
       .map((anyQuestion) => allQuestions
         .indexOf(anyQuestion))
@@ -110,7 +105,7 @@ class Quiz extends Component {
             type="button"
             onClick={ () => {
               this.answerColor();
-              updateScore(this.scoreCalculator());
+              updateScore(test);
             } }
             disabled={ answered }
           >

@@ -28,6 +28,12 @@ const player = (state = LOGIN_INITIAL_STATE, action) => {
       score: state.score + action.payload,
       assertions: state.assertions + 1,
     });
+  case types.RESET_SCORE:
+    return ({
+      ...state,
+      score: 0,
+      assertions: 0,
+    });
   case types.SAVE_PICTURE:
     return ({
       ...state,
