@@ -29,6 +29,7 @@ class Feedback extends Component {
     );
   }
 }
+
 const mapStateToProps = (state) => ({
   assertions: state.game.assertions,
 });
