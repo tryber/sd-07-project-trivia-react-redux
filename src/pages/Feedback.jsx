@@ -42,7 +42,7 @@ class Feedback extends Component {
               data-testid="btn-ranking"
             >
               Ver Ranking
-            </button>Main group 16 req19 20 21
+            </button>
           </Link>
         </div>
       </div>
