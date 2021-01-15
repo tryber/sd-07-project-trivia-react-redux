@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { fetchQ, fetchToken } from '../services/API';
 import { clickLogin, questionsGen } from '../actions';
+import loginImage from '../img/LoginImage.png';
 
 import SettingsButton from '../Components/SettingsButton';
 
@@ -48,40 +49,53 @@ class Login extends React.Component {
   render() {
     const { validate, email, name } = this.state;
     return (
-      <div>
-        <SettingsButton />
-        <form>
-          <label htmlFor="email">
-            <input
-              type="email"
-              data-testid="input-gravatar-email"
-              name="email"
-              value={ email }
-              id="email"
-              placeholder="E-Mail"
-              onChange={ (e) => this.handleChange(e) }
-            />
-          </label>
-          <label htmlFor="name">
-            <input
-              type="text"
-              data-testid="input-player-name"
-              name="name"
-              value={ name }
-              id="name"
-              placeholder="Nome"
-              onChange={ (e) => this.handleChange(e) }
-            />
-          </label>
-          <button
-            data-testid="btn-play"
-            type="button"
-            disabled={ validate }
-            onClick={ this.login }
-          >
-            Jogar
-          </button>
-        </form>
+      <div className="login-page">
+        <div>
+          <img src={ loginImage } alt="" />
+        </div>
+        <div className="login-area">
+          <SettingsButton />
+          <div className="login-welcome-area">
+            <p className="login-welcome-text">Boas vindas ao</p>
+            <p className="login-assassins-text">Assassin'S</p>
+            <p className="login-lint-text">LINT</p>
+          </div>
+          <form className="login-form">
+            <label htmlFor="email">
+              <input
+                className="login-input"
+                type="email"
+                data-testid="input-gravatar-email"
+                name="email"
+                value={ email }
+                id="email"
+                placeholder="E-Mail do Gravatar"
+                onChange={ (e) => this.handleChange(e) }
+              />
+            </label>
+            <label htmlFor="name">
+              <input
+                className="login-input"
+                type="text"
+                data-testid="input-player-name"
+                name="name"
+                value={ name }
+                id="name"
+                placeholder="Nome do Jogador"
+                onChange={ (e) => this.handleChange(e) }
+              />
+            </label>
+            <button
+              className="login-button-play"
+              data-testid="btn-play"
+              type="button"
+              disabled={ validate }
+              onClick={ this.login }
+            >
+              Jogar
+            </button>
+          </form>
+        </div>
       </div>
     );
   }

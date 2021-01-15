@@ -1,7 +1,108 @@
+@import url('https://fonts.googleapis.com/css2?family=Philosopher:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+body {
+  background: linear-gradient(88.96deg, #F2F0EE 11.73%, #5F5C5D 91.62%);
+}
 .correctAnswer {
   border: 3px solid rgb(6, 240, 15);
 }
 
 .wrongAnswer {
   border: 3px solid red;
+}
+
+.login-page {
+  display: flex;
+  justify-content: space-around ;
+  align-items: center;
+}
+
+.login-area {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 500px;
+}
+
+
+
+.login-welcome-text {
+  font-family: Philosopher, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 40px;
+  line-height: 45px;
+  text-align: center;
+  color: #F5F6F6;
+}
+
+.login-assassins-text {
+  font-family: Philosopher, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 72px;
+  line-height: 81px;
+  text-align: center;
+  letter-spacing: 0.195em;
+  color: #F5F6F6;
+}
+
+.login-lint-text {
+  font-family: Philosopher, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 58px;
+  line-height: 65px;
+  text-align: center;
+  letter-spacing: 0.195em;
+  color: #F50000;
+}
+
+.login-form {
+  display: flex;
+  width: 580px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.login-input {
+  font-family: Philosopher, sans-serif;
+  background: #F2F0EE;
+  border: 1px solid #F2F0EE;
+  box-sizing: border-box;
+  border-radius: 5px;
+  width: 220px;
+  height: 42px;
+  padding: 8px;
+  margin: 32px
+}
+
+.login-button-play:disabled {
+  font-family: Philosopher, sans-serif;
+  background: #F2F0EE;
+  border: 1px solid #F2F0EE;
+  box-sizing: border-box;
+  border-radius: 5px;
+  width: 280px;
+  height: 48px;
+  background-color: #4D4F57;
+  color: #F2F0EE;
+  border: none
+}
+
+.login-button-play {
+  font-family: Philosopher, sans-serif;
+  background: #F2F0EE;
+  border: 1px solid #F2F0EE;
+  box-sizing: border-box;
+  border-radius: 5px;
+  width: 280px;
+  height: 48px;
+  background-color: #AA412E;
+  color: #F2F0EE;
+  border: none
+}
+
+.icon-gear {
+  width: 64px;
 }

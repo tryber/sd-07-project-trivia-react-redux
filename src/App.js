@@ -10,7 +10,7 @@ import Ranking from './pages/Ranking';
 
 export default function App() {
   return (
-    <div>
+    <div className="app">
       <Switch>
         <Route exact path="/" component={ Login } />
         <Route exact path="/questions-page" component={ QuestionsPage } />
