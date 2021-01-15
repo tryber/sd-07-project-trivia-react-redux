@@ -85,9 +85,6 @@ Feedback.propTypes = {
     push: PropTypes.func.isRequired,
   }).isRequired,
   score: PropTypes.number.isRequired,
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
 };
 
 export default connect(mapStateToProps)(Feedback);
