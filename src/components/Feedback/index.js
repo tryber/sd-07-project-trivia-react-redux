@@ -2,11 +2,18 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { resetScore } from '../../redux/actions/gameActions';
 
 class Feedback extends Component {
   constructor() {
     super();
     this.FeedbackMsg = this.FeedbackMsg.bind(this);
+    this.rankNewSession = this.rankNewSession.bind(this);
+  }
+
+  componentWillUnmount() {
+    const { resetSession } = this.props;
+    resetSession();
   }
 
   FeedbackMsg(rightAnswers) {
@@ -19,10 +26,25 @@ class Feedback extends Component {
     );
   }
 
+  rankNewSession() {
+    const { name, score, picture } = this.props;
+
+    const sessionObject = { name, score, picture };
+
+    const chaveAtual = localStorage.getItem('ranking') || '[]';
+
+    const arrayAtual = JSON.parse(chaveAtual);
+
+    const novoArray = [...arrayAtual, sessionObject];
+
+    localStorage.setItem('ranking', JSON.stringify(novoArray));
+  }
+
   render() {
     const { FeedbackMsg } = this;
     const { rightAnswers, score } = this.props;
     const three = 3;
+    this.rankNewSession();
 
     return (
       <>
@@ -47,13 +69,22 @@ class Feedback extends Component {
 }
 
 Feedback.propTypes = {
+  resetSession: PropTypes.func.isRequired,
   rightAnswers: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  picture: PropTypes.string.isRequired,
   score: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   rightAnswers: state.session.rightAnswers,
   score: state.session.score,
+  name: state.user.userName,
+  picture: state.user.avatarUrl,
 });
 
-export default connect(mapStateToProps)(Feedback);
+const mapDispatchToProps = (dispatch) => ({
+  resetSession: () => (dispatch(resetScore())),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Feedback);
