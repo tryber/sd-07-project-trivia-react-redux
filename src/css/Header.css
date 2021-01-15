@@ -1,17 +1,17 @@
 .game-header-container {
+  align-items: center;
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-around;
-  align-items: center;
   padding: 0 0 20px;
 }
 
 .game-header-container img {
-  border: 5px dashed #f5f5f5;
+  border: 5px dashed whitesmoke;
 }
 
 .game-header-container p {
+  color: white;
   font-size: 30px;
   font-weight: 700;
-  color: white;
 }
