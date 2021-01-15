@@ -29,7 +29,10 @@ class GameScreen extends Component {
 
   changeCount() {
     const { count } = this.state;
-    this.setState({ count: count + 1, answered: false });
+    const { history } = this.props;
+    const four = 4;
+    if (count >= four) history.push('/feedback');
+    else this.setState({ count: count + 1, answered: false });
   }
 
   render() {
@@ -66,6 +69,7 @@ const mapStateToProps = ({
   trivia,
   loading,
   loadingToken,
+  
 });
 const mapDispatchToProps = (dispatch) => ({
   dispatchTrivia: (a) => dispatch(fetchTrivia(a)),
