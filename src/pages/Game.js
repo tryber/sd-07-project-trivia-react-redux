@@ -35,7 +35,6 @@ class Game extends Component {
 
   render() {
     const { questionsArray, currentQuestion } = this.state;
-    console.log(questionsArray);
     return (
       <div>
         <Header />
