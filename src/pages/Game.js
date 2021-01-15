@@ -72,10 +72,11 @@ class Game extends Component {
         <h1>Token da requisição</h1>
         {localStorage.token}
         {questionsArray[currentQuestion]
-          && <Questions timer={ timer } question={ questionsArray[currentQuestion] } />}
-        <button data-testid="btn-next" type="button" onClick={ this.nextQuestion }>
-          Próxima
-        </button>
+          && <Questions
+            timer={ timer }
+            question={ questionsArray[currentQuestion] }
+            nextQuestion={ this.nextQuestion }
+          />}
       </div>
     );
   }
