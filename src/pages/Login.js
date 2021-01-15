@@ -30,9 +30,9 @@ class Login extends Component {
     this.setState({ [name]: value });
   }
 
-  async handleClick() {
+  handleClick() {
     const { fetchTokenActionProps } = this.props;
-    await fetchTokenActionProps();
+    fetchTokenActionProps();
     const { game, history } = this.props;
     const { payload } = game;
     localStorage.setItem('token', JSON.stringify(payload));

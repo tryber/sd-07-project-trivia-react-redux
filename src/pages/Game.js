@@ -52,7 +52,7 @@ class Game extends Component {
 
   handleClickCorrect() {
     const { timer, numberQuestion } = this.state;
-    let score = 0;
+    let currScore = 0;
     const { questions: { results } } = this.props;
     const { difficulty } = results[numberQuestion];
 
@@ -63,25 +63,25 @@ class Game extends Component {
 
     switch (difficulty) {
     case 'easy':
-      score = dez + (timer * easy);
+      currScore = dez + (timer * easy);
       break;
     case 'medium':
-      score = dez + (timer * medium);
+      currScore = dez + (timer * medium);
       break;
     case 'hard':
-      score = dez + (timer * hard);
+      currScore = dez + (timer * hard);
       break;
     default:
-      score = 0;
+      currScore = 0;
     }
 
-    this.setState({
+    this.setState(({ score }) => ({
       alreadyAnswered: true,
-      score,
-    });
+      score: score + currScore,
+    }));
 
     const state = this.getPlayerProfile();
-    state.player.score = score;
+    state.player.score += currScore;
     localStorage.setItem('state', JSON.stringify(state));
   }
 
