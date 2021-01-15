@@ -1,5 +1,13 @@
 import md5 from 'crypto-js/md5';
-import { AVATAR, LOGIN, QUESTIONS, TIMER } from './actionsTypes';
+import {
+  AVATAR,
+  LOGIN,
+  POINTS,
+  QUESTIONS,
+  ASSERTION,
+  TIMER,
+  SECONDS,
+} from './actionsTypes';
 
 export const clickLogin = ({ email, name }) => ({
   type: LOGIN,
@@ -16,9 +24,19 @@ export const questionsGen = (questions) => ({
   questions,
 });
 
+export const pointsGen = (points) => ({
+  type: POINTS,
+  points,
+});
+
 export const finalTime = (timer) => ({
   type: TIMER,
   timer,
+});
+
+export const secondsLeft = (seconds) => ({
+  type: SECONDS,
+  seconds,
 });
 
 export const fetchGravatar = (email) => {
@@ -32,3 +50,8 @@ export const fetchGravatar = (email) => {
       });
   };
 };
+
+export const assertionsGen = (assertions) => ({
+  type: ASSERTION,
+  assertions,
+});

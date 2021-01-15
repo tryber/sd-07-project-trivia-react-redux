@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { finalTime } from '../actions';
+import { finalTime, secondsLeft } from '../actions';
 
 class Timer extends Component {
   constructor() {
@@ -21,11 +21,13 @@ class Timer extends Component {
 
   setContagem() {
     const { contagem } = this.state;
+    const { secondsProps } = this.props;
     if (contagem > 0) {
       this.setState((anterior) => ({
         ...anterior,
         contagem: anterior.contagem - 1,
       }));
+      secondsProps(contagem);
     } else {
       this.setState({
         contagem: 0,
@@ -53,10 +55,12 @@ class Timer extends Component {
 
 const mapDispatchToProps = (dispatch) => ({
   time: (disable) => dispatch(finalTime({ disable })),
+  secondsProps: (seconds) => dispatch(secondsLeft(seconds)),
 });
 
 Timer.propTypes = {
   time: PropTypes.bool.isRequired,
+  secondsProps: PropTypes.func.isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(Timer);
