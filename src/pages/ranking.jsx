@@ -11,17 +11,17 @@ import HomeButton from '../components/HomeButton';
 // ];
 class Ranking extends Component {
   render() {
-    const { player } = this.props;
+    const { allplayer } = this.props;
     return (
       <div>
         <h1 data-testid="ranking-title">Ranking</h1>
-        {player.map((score) => score)
+        {allplayer.map((score) => score)
           .sort((b, a) => a.score - b.score)
-          .map((user, index) => (
+          .map((player, index) => (
             <div key={ index }>
-              <img src={ user.picture } alt="player-pic" />
-              <p data-testid={ `player-name-${index}` }>{user.name}</p>
-              <p data-testid={ `player-score-${index}` }>{user.score}</p>
+              <img src={ player.picture } alt="player-pic" />
+              <p data-testid={ `player-name-${index}` }>{player.name}</p>
+              <p data-testid={ `player-score-${index}` }>{player.score}</p>
             </div>
           ))}
         <HomeButton />
@@ -31,10 +31,10 @@ class Ranking extends Component {
 }
 
 const mapDispatchToProps = (state) => ({
-  player: state.player,
+  allplayer: state.allplayer,
 });
 
 Ranking.propTypes = {
-  player: PropTypes.shape(PropTypes.string).isRequired,
+  allplayer: PropTypes.shape(PropTypes.string).isRequired,
 };
 export default connect(mapDispatchToProps)(Ranking);

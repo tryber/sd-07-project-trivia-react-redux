@@ -54,9 +54,9 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const mapStateToProps = (state) => ({
-  name: state.user.name,
-  score: state.user.score,
-  picture: state.user.gravatarEmail,
+  name: state.player.name,
+  score: state.player.score,
+  picture: state.player.gravatarEmail,
 });
 
 RankingButton.propTypes = {

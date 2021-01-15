@@ -3,7 +3,7 @@ export const EMAIL = 'EMAIL';
 export const TOKEN = 'TOKEN';
 export const SCORE = 'SCORE';
 export const ASSERTIONS = 'ASSERTIONS';
-export const PLAYER = 'PLAYER';
+export const ALLPLAYER = 'ALLPLAYER';
 export const GRAVATAR = 'GRAVATAR';
 
 export const login = (name) => ({
@@ -23,7 +23,7 @@ export const assertion = (assertions) => ({
 });
 
 export const savePlayer = (rank) => ({
-  type: PLAYER, rank,
+  type: ALLPLAYER, rank,
 });
 
 export const getGravatar = (gravatar) => ({

@@ -89,7 +89,7 @@ class Play extends Component {
   }
 
   somapontos() {
-    const { scoreDispatch, assertionsDispatch, score, assertions } = this.props;
+    const { scoreDispatch, assertionsDispatch, assertions, score } = this.props;
     const { trivia, index, timer } = this.state;
     const ten = 10;
     const lvl1 = 1;
@@ -99,10 +99,8 @@ class Play extends Component {
     if (trivia[index].difficulty === 'easy') lvl = lvl1;
     if (trivia[index].difficulty === 'medium') lvl = lvl2;
     if (trivia[index].difficulty === 'hard') lvl = lvl3;
-    const point = (Number(score) + (ten + (timer * lvl)));
-    console.log(point);
+    const point = (score + (ten + (timer * lvl)));
     scoreDispatch(point);
-    // this.setState({ sum: assertions + lvl1 });
     assertionsDispatch(assertions + lvl1);
   }
 
@@ -164,16 +162,14 @@ class Play extends Component {
   }
 
   render() {
-    const { name, score = Number(0), assertions = 0 } = this.props;
+    const { name, score, assertions } = this.props;
     const { isLoading } = this.state;
     return (
       <div>
         <header>
           <img src={ this.hash() } alt="avatar" data-testid="header-profile-picture" />
           <h1 data-testid="header-player-name">{name}</h1>
-          {!score
-            ? (<p data-testid="header-score">0</p>)
-            : (<p data-testid="header-score">{score}</p>)}
+          <p data-testid="header-score">{score}</p>
           <p>{ assertions }</p>
         </header>
         { isLoading ? this.trivia() : <p>Carregando</p> }
@@ -184,10 +180,10 @@ class Play extends Component {
 
 const mapStateToProps = (state) => ({
   token: state.login.token,
-  email: state.login.email,
-  name: state.user.name,
-  score: state.user.score,
-  assertions: state.user.assertions,
+  email: state.player.email,
+  name: state.player.name,
+  score: state.player.score,
+  assertions: state.player.assertions,
 });
 
 const mapDispatchToProps = (dispatch) => ({
