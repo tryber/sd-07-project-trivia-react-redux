@@ -1,13 +1,11 @@
-const BASE_API = 'https://opentdb.com';
+export default async () => {
+  const BASE_API = 'https://opentdb.com';
 
-const api = async () => {
   try {
     const request = await fetch(`${BASE_API}/api_token.php?command=request`);
-    const json = await request.json();
-    return json;
+    const token = await request.json();
+    return token.token;
   } catch (error) {
     throw new Error(`${error}`);
   }
 };
-
-export default api;

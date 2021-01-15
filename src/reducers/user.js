@@ -1,24 +1,20 @@
-import { LOGIN, REQUEST_TOKEN,
-  REQUEST_API_SUCCESS } from '../action/index';
+import {
+  SAVE_USER_DATA,
+} from '../action/index';
 
 const INITIAL_STATE = {
   user: {},
-  apiToken: {},
-  isFetching: true,
+  logged: false,
 };
 
 export default function userReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
-  case LOGIN:
+  case SAVE_USER_DATA:
     return {
-      ...state, user: { email: action.email, username: action.username },
+      ...state,
+      user: action.data,
+      logged: true,
     };
-  // estou fazendo a requisição, espere...
-  case REQUEST_TOKEN:
-    return { ...state, isFetching: true };
-  // terminei, receba o objeto.
-  case REQUEST_API_SUCCESS:
-    return { ...state, apiToken: { ...action.value }, isFetching: false };
   default:
     return state;
   }

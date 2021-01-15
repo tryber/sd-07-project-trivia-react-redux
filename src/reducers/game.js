@@ -1,16 +1,18 @@
-import { REQUEST_TRIVIA_SUCCESS, REQUEST_TRIVIA_API } from '../action';
+import {
+  SAVE_QUESTIONS,
+} from '../action';
 
 const INITIAL_STATE = {
-  apiData: [],
-  isFetchingQuestions: true,
+  questions: [],
 };
 
 export default function gameReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
-  case REQUEST_TRIVIA_API:
-    return { ...state, isFetchingQuestions: true };
-  case REQUEST_TRIVIA_SUCCESS:
-    return { ...state, apiData: { ...action.value }, isFetchingQuestions: false };
+  case SAVE_QUESTIONS:
+    return {
+      ...state,
+      questions: action.questions,
+    };
   default:
     return state;
   }
