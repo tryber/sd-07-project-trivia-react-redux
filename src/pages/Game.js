@@ -223,7 +223,10 @@ class Game extends Component {
                           id="ok"
                           key="correct"
                           disabled={ disableButton }
-                          onClick={ this.handleUserAnswer }
+                          onClick={ () => {
+                            this.handleUserAnswer();
+                            this.calculateScore();
+                          } }
                           data-testid="correct-answer"
                         >
                           {this.convertQuestionAndAnswers(answer)}
