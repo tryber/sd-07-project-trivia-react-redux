@@ -87,7 +87,7 @@ class GamePage extends React.Component {
       const totalScore = tenPoints + (timer * points) + score;
       const storageState = JSON.parse(localStorage.getItem('state'));
       storageState.player.score = totalScore;
-      storageState.player.assertions = assertions + 1;
+      storageState.player.assertions = assertions;
       localStorage.setItem('state', JSON.stringify(storageState));
       updateScoreAction(totalScore);
     }
