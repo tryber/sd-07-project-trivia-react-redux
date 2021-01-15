@@ -26,6 +26,7 @@ class GameScreen extends Component {
 
   componentDidMount() {
     const { playerToken, getQuest } = this.props;
+    // const decrement = 1000;
     getQuest(playerToken);
     this.starTimer();
   }
@@ -69,7 +70,7 @@ class GameScreen extends Component {
       break;
     }
 
-    const calcQuest = minimumQuest + (timer * valueQuest);
+    const calcQuest = minimumQuest + timer * valueQuest;
 
     addPoints(calcQuest);
 
@@ -101,6 +102,7 @@ class GameScreen extends Component {
             } }
             type="button"
             data-testid={
+              // eslint-disable-next-line max-len
               questions[actual].correct_answer === 'True'
                 ? 'correct-answer'
                 : 'wrong-answer'
@@ -110,11 +112,12 @@ class GameScreen extends Component {
           </button>
           <button
             onClick={ () => {
-              if (questions[actual].correct_answer === 'False') this.calcScore();
+              if (questions[actual].correct_answer === 'False') { this.calcScore(); }
               this.setState({ solved: true });
             } }
             type="button"
             data-testid={
+              // eslint-disable-next-line max-len
               questions[actual].correct_answer === 'False'
                 ? 'correct-answer'
                 : 'wrong-answer'
@@ -173,11 +176,13 @@ class GameScreen extends Component {
             type="button"
             disabled
             className={
+              // eslint-disable-next-line max-len
               questions[actual].correct_answer === 'True'
                 ? 'correct-answer'
                 : 'wrong-answer'
             }
             data-testid={
+              // eslint-disable-next-line max-len
               questions[actual].correct_answer === 'True'
                 ? 'correct-answer'
                 : 'wrong-answer'
@@ -189,11 +194,13 @@ class GameScreen extends Component {
             type="button"
             disabled
             className={
+              // eslint-disable-next-line max-len
               questions[actual].correct_answer === 'False'
                 ? 'correct-answer'
                 : 'wrong-answer'
             }
             data-testid={
+              // eslint-disable-next-line max-len
               questions[actual].correct_answer === 'False'
                 ? 'correct-answer'
                 : 'wrong-answer'
@@ -277,7 +284,8 @@ class GameScreen extends Component {
             data-testid="btn-next"
           >
             Próximo
-          </button>)}
+          </button>
+        )}
       </>
     );
   }
