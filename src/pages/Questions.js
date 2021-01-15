@@ -41,7 +41,7 @@ export default class Questions extends Component {
   }
 
   render() {
-    const { question } = this.props;
+    const { question, timer } = this.props;
     const { questionWasAnswered, shuffledAnswers } = this.state;
     console.log(shuffledAnswers);
     if (question) {
@@ -59,6 +59,7 @@ export default class Questions extends Component {
                   data-testid="correct-answer"
                   className={ questionWasAnswered ? 'correct' : null }
                   onClick={ this.handleAnswer }
+                  disabled={ timer === 0 }
                 >
                   {answer}
                 </button>
@@ -73,6 +74,7 @@ export default class Questions extends Component {
                 data-testid={ `wrong-answer-${index}` }
                 onClick={ this.handleAnswer }
                 className={ questionWasAnswered ? 'incorrect' : null }
+                disabled={ timer === 0 }
               >
                 {answer}
               </button>
@@ -89,4 +91,5 @@ export default class Questions extends Component {
 
 Questions.propTypes = {
   question: PropTypes.arrayOf.isRequired,
+  timer: PropTypes.number.isRequired,
 };
