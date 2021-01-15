@@ -44,7 +44,10 @@ class Game extends Component {
   }
 
   getPlayerProfile() {
-    return JSON.parse(localStorage.getItem('state'));
+    const { score } = this.state;
+    const state = JSON.parse(localStorage.getItem('state'));
+    state.player.score = score;
+    return state;
   }
 
   handleClickCorrect() {
@@ -80,15 +83,6 @@ class Game extends Component {
     const state = this.getPlayerProfile();
     state.player.score = score;
     localStorage.setItem('state', JSON.stringify(state));
-    // console.log(localStorage)
-    /* const um = 1;
-    this.setState((prevState) => {
-      if (prevState.numberQuestion < questions.results.length - um) {
-        return ({
-          numberQuestion: prevState.numberQuestion + um,
-        });
-      }
-    }); */
   }
 
   handleClickWrong() {
@@ -111,6 +105,22 @@ class Game extends Component {
     return a;
   }
 
+  handleClickNext() {
+    const { numberQuestion } = this.state;
+    const { history } = this.props;
+    const um = 1;
+    const quatro = 4;
+    if (numberQuestion < quatro) {
+      this.setState((prevState) => ({
+        numberQuestion: prevState.numberQuestion + um,
+        alreadyAnswered: false,
+        timer: 30,
+      }));
+    } else {
+      history.push('/feedback');
+    }
+  }
+
   renderNextBtn() {
     const { alreadyAnswered } = this.state;
     if (alreadyAnswered) {
@@ -118,6 +128,7 @@ class Game extends Component {
         <button
           type="button"
           data-testid="btn-next"
+          onClick={ () => this.handleClickNext() }
         >
           Próxima pergunta
         </button>
@@ -159,11 +170,10 @@ class Game extends Component {
 
   render() {
     const { questions } = this.props;
-    const { numberQuestion, timer, score } = this.state;
-    console.log(score);
+    const { numberQuestion, timer } = this.state;
     return (
       <div>
-        <Header playerProfile={ this.getPlayerProfile() } score={ score } />
+        <Header playerProfile={ this.getPlayerProfile() } />
         <Trivia
           renderNextBtn={ this.renderNextBtn }
           numberQuestion={ numberQuestion }
@@ -181,6 +191,9 @@ const mapStateToProps = (state) => ({
 });
 
 Game.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
   questions: PropTypes.shape().isRequired,
 };
 

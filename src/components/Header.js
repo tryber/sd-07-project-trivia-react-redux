@@ -15,7 +15,7 @@ class Header extends Component {
   }
 
   render() {
-    const { playerProfile, score } = this.props;
+    const { playerProfile } = this.props;
     const { player } = playerProfile;
     return (
       <header>
@@ -33,7 +33,7 @@ class Header extends Component {
         </div>
         <div>
           <h3 data-testid="header-score">
-            {score}
+            {player.score}
           </h3>
         </div>
       </header>
@@ -48,7 +48,7 @@ Header.propTypes = {
     player: PropTypes.shape({
       gravatarEmail: PropTypes.string,
       name: PropTypes.string,
+      score: PropTypes.number.isRequired,
     }),
   }).isRequired,
-  score: PropTypes.number.isRequired,
 };
