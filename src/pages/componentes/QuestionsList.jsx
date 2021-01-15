@@ -95,7 +95,8 @@ class QuestionsList extends React.Component {
   wrongAnswer() {
     this.handleButton();
     console.log('Game Over :(');
-      
+  }
+
   answers() {
     this.setState({ nameClassCorrect: 'correctAnswer' });
     this.setState({ nameClassWrong: 'wrongAnswer' });
