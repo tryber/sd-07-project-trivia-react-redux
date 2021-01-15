@@ -30,11 +30,28 @@ class Feedback extends React.Component {
   handleClick() {
     const { history } = this.props;
     history.push('/ranking');
+
+    const {
+      player: { score, name },
+    } = JSON.parse(localStorage.getItem('state'));
+    if (localStorage.getItem('ranking')) {
+      const arrayRanking = JSON.parse(localStorage.getItem('ranking'));
+      arrayRanking.push({ name, score, picture: ':-)' });
+      localStorage.setItem('ranking', JSON.stringify(arrayRanking));
+    } else {
+      localStorage.setItem(
+        'ranking',
+        JSON.stringify([{ name, score, picture: ':-)' }]),
+      );
+    }
   }
 
   messageFeedback() {
-    const { assertions } = this.state;
+    const {
+      player: { assertions },
+    } = JSON.parse(localStorage.getItem('state'));
     const controlMessage = 3;
+
     if (assertions < controlMessage) {
       return 'Podia ser melhor...';
     }

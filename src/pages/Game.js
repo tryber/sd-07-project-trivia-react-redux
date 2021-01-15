@@ -13,13 +13,6 @@ class Game extends React.Component {
   }
 
   componentDidMount() {
-    const player = {
-      name: '',
-      assertions: 0,
-      score: 0,
-      gravatarEmail: '',
-    };
-    localStorage.setItem('state', JSON.stringify({ player }));
     this.fetchQuestions();
   }
 

@@ -1,13 +1,28 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-export default class Ranking extends React.Component {
+class Ranking extends React.Component {
   render() {
+    const ranking = JSON.parse(localStorage.getItem('ranking'));
+    const ordenedRanking = ranking.sort((a, b) => b.score - a.score);
+
     return (
-      <div data-testid="ranking-title">
-        <h1>Ranking</h1>
-        <Link data-testid="btn-go-home" to="/">Go to Home</Link>
+      <div>
+        <h1 data-testid="ranking-title">Tela do ranking</h1>
+        <ul>
+          {ordenedRanking.map((player, index) => (
+            <li key={ index }>
+              <p data-testid={ `player-name-${index}` }>{`${player.name}`}</p>
+              <p data-testid={ `player-score-${index}` }>{`${player.score}`}</p>
+            </li>
+          ))}
+        </ul>
+        <Link data-testid="btn-go-home" to="/">
+          Go to Home
+        </Link>
       </div>
     );
   }
 }
+
+export default Ranking;
