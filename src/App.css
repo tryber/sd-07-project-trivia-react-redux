@@ -22,7 +22,7 @@
   width: 100%;
 }
 
-.login-container button,
+.login-container button, 
 input {
   border-radius: 3em;
   margin-top: 15px;
@@ -37,8 +37,8 @@ input {
   width: 300px;
 }
 
-.header,
-.user-info,
+.header, 
+.user-info, 
 .top-bar {
   align-items: center;
   background-color: rgb(31, 83, 35);
@@ -59,14 +59,14 @@ input {
   width: 200px;
 }
 
-.header img {
-  height: 45px;
-}
-
-.user-info div,
+.user-info div, 
 img {
   justify-content: space-around;
   padding-right: 8px;
+}
+
+.header img {
+  height: 45px;
 }
 
 .game-page div {
@@ -128,7 +128,8 @@ img {
   border: 1px solid black;
   border-radius: 3em;
   color: white;
-  font: 400 13px Arial;
+  font: 400 13px;
+  font-family: Arial, Helvetica, sans-serif;
   margin-top: 15px;
   padding: 10px;
   text-align: center;
