@@ -6,6 +6,7 @@ export default function Routes() {
   return (
     <Switch>
       <Route exact path="/game" component={ pages.Game } />
+      <Route exact path="/setting" component={ pages.Setting } />
       <Route exact path="/" component={ pages.Login } />
     </Switch>
   );
