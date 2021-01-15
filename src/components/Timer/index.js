@@ -16,7 +16,7 @@ class Timer extends React.Component {
 }
 
 Timer.propTypes = {
-  count: PropTypes.bool.isRequired,
+  count: PropTypes.number.isRequired,
 };
 
 export default Timer;
