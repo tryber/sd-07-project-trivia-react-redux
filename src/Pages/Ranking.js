@@ -39,7 +39,7 @@ class Ranking extends React.Component {
 
     return (
       <div>
-        <h2>RANKING</h2>
+        <h2 data-testid="ranking-title">RANKING</h2>
         {/* Índice inicia com 0 */}
         { playerListDescendingOrder.map((player, indice) => (
           <p key={ player.name }>
