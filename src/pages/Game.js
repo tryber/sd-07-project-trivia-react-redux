@@ -17,7 +17,7 @@ class Game extends Component {
       alreadyAnswered: false,
       shuffle: true,
       timer: 30,
-      // assertions: '',
+      assertions: 0,
       score: 0,
     };
   }
@@ -44,9 +44,10 @@ class Game extends Component {
   }
 
   getPlayerProfile() {
-    const { score } = this.state;
+    const { score, assertions } = this.state;
     const state = JSON.parse(localStorage.getItem('state'));
     state.player.score = score;
+    state.player.assertions = assertions;
     return state;
   }
 
@@ -75,13 +76,16 @@ class Game extends Component {
       currScore = 0;
     }
 
-    this.setState(({ score }) => ({
+    this.setState(({ score, assertions }) => ({
       alreadyAnswered: true,
       score: score + currScore,
+      assertions: assertions + 1,
     }));
 
+    // const { assertions } = this.state;
     const state = this.getPlayerProfile();
     state.player.score += currScore;
+    state.player.assertions += 1;
     localStorage.setItem('state', JSON.stringify(state));
   }
 
