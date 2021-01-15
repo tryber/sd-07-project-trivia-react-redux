@@ -20,8 +20,8 @@ class Login extends Component {
 
   async getToken() {
     const { fetchTrivia } = this.props;
-
     await requestToken();
+    console.log('oi')
     fetchTrivia();
   }
 

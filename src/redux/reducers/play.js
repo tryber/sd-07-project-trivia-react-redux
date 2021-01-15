@@ -4,6 +4,7 @@ import {
   NEXT_QUESTION,
   RESET_TIMER,
   SAVE_QUESTIONS,
+  START_TIME,
 } from '../actions';
 
 const PLAY_INITIAL_STATE = {
@@ -12,6 +13,7 @@ const PLAY_INITIAL_STATE = {
   indexQuestion: 0,
   status: '',
   timer: 30,
+  setIntervalState: 0,
 };
 
 const play = (state = PLAY_INITIAL_STATE, action) => {
@@ -30,6 +32,11 @@ const play = (state = PLAY_INITIAL_STATE, action) => {
       currentQuestion: state.questions[state.indexQuestion],
       indexQuestion: state.indexQuestion + 1,
       timer: 30,
+    };
+  case START_TIME:
+    return {
+      ...state,
+      setIntervalState: action.setIntervalState,
     };
   case RESET_TIMER:
     return {

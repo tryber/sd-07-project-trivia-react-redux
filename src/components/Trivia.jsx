@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { freezeTimeAction, nextQuestion, resetTimer } from '../redux/actions/index';
+import { freezeTimeAction, nextQuestion, resetTimer, startTimeAction } from '../redux/actions/index';
 import PlayTimer from './PlayTimer';
 
 class Trivia extends Component {
@@ -31,7 +31,11 @@ class Trivia extends Component {
   }
 
   nextQuestionComponent() {
-    const { nextQuestionDispatch, resetTimerDispatch } = this.props;
+    const { nextQuestionDispatch, resetTimerDispatch, startTimeActionDispatch } = this.props;
+    const numberToSetInterval = 1000;
+    const setIntervalState = setInterval(() => this.setStateTimer(), numberToSetInterval);
+
+    startTimeActionDispatch(setIntervalState);
     nextQuestionDispatch();
     resetTimerDispatch();
   }
@@ -58,8 +62,8 @@ class Trivia extends Component {
   }
 
   render() {
-    const { questions, currentQuestion, nextQuestionDispatch, freezeTime } = this.props;
-
+    const { questions, currentQuestion, nextQuestionDispatch, freezeTime, setIntervalState } = this.props;
+    console.log(setIntervalState);
     return (
       <div>
         <span>TRIVIA</span>
@@ -90,6 +94,7 @@ class Trivia extends Component {
                   onClick={ () => {
                     this.changeBorderColor();
                     this.showNextQuestionBtn();
+                    clearInterval(setIntervalState);
                     freezeTime();
                   } }
                 >
@@ -116,12 +121,14 @@ class Trivia extends Component {
 }
 
 const mapStateToProps = (state) => ({
+  setIntervalState: state.play.setIntervalState,
   questions: state.play.questions,
   currentQuestion: state.play.currentQuestion,
   status: state.play.status,
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  startTimeActionDispatch: (setIntervalState) => dispatch(startTimeAction(setIntervalState)),
   nextQuestionDispatch: () => dispatch(nextQuestion()),
   resetTimerDispatch: () => dispatch(resetTimer()),
   freezeTime: () => dispatch(freezeTimeAction()),

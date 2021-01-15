@@ -6,6 +6,7 @@ export const NEXT_QUESTION = 'NEXT_QUESTION';
 export const RESET_TIMER = 'RESET_TIMER';
 export const COUNT_DOWN = 'COUNT_DOWN';
 export const FREEZE_TIME = 'FREEZE_TIME';
+export const START_TIME = 'START_TIME';
 
 export const login = (name, email) => (
   {
@@ -36,6 +37,13 @@ export function fetchQuestions() {
   return async (dispatch) => {
     const request = await requestQuestions();
     dispatch(questionsTimeTrivia(request.results, request.response_code));
+  };
+}
+
+export function startTimeAction(setIntervalState) {
+  return {
+    type: START_TIME,
+    setIntervalState,
   };
 }
 

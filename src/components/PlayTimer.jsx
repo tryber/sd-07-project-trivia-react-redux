@@ -6,6 +6,7 @@ import {
   freezeTimeAction,
   nextQuestion,
   resetTimer,
+  startTimeAction,
 } from '../redux/actions';
 
 class PlayTimer extends Component {
@@ -44,8 +45,10 @@ class PlayTimer extends Component {
   }
 
   cownDown() {
+    const { startTimeActionDispatch } = this.props;
     const numberToSetInterval = 1000;
-    setInterval(() => this.setStateTimer(), numberToSetInterval);
+    const setIntervalState = setInterval(() => this.setStateTimer(), numberToSetInterval);
+    startTimeActionDispatch(setIntervalState);
   }
 
   render() {
@@ -68,6 +71,7 @@ const mapDispatchToProps = (dispatch) => ({
   resetTimer: () => dispatch(resetTimer()),
   countDown: () => dispatch(CountDownAction()),
   freezeTime: () => dispatch(freezeTimeAction()),
+  startTimeActionDispatch: (setIntervalState) => dispatch(startTimeAction(setIntervalState)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PlayTimer);
