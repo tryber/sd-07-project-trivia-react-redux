@@ -99,6 +99,17 @@ class QuestionsList extends React.Component {
         <span>
           {time}
         </span>
+        <div>
+          {
+            disableButon ? (
+              <button data-testid="btn-next" type="button">
+                Próxima
+              </button>
+            ) : (
+              <span> </span>
+            )
+          }
+        </div>
       </div>
     );
   }
