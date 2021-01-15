@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 class FeedbackMSG extends Component {
   render() {
-    const { player, handlePlayAgain } = this.props;
+    const { player, handlePlayAgain, handleRanking } = this.props;
     const { assertions, score } = player;
     const msg1 = 'Podia ser melhor...';
     const msg2 = 'Mandou bem!';
@@ -28,6 +28,13 @@ class FeedbackMSG extends Component {
         >
           Jogar novamente
         </button>
+        <button
+          type="button"
+          data-testid="btn-ranking"
+          onClick={ () => handleRanking() }
+        >
+          Ver Ranking
+        </button>
       </div>
     );
   }
@@ -42,4 +49,5 @@ FeedbackMSG.propTypes = {
     score: PropTypes.number,
   }).isRequired,
   handlePlayAgain: PropTypes.func.isRequired,
+  handleRanking: PropTypes.func.isRequired,
 };
