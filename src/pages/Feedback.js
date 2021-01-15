@@ -20,8 +20,8 @@ class Feedback extends React.Component {
       testScore: state.player.assertions,
       testScorePoint: state.player.score,
     });
-  } */
-
+  }
+ */
   renderFeedback() {
     const three = 3;
     const { testScore } = this.state;

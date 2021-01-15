@@ -8,7 +8,7 @@ class QuestionsPage extends React.Component {
     return (
       <div>
         <Header />
-        <Questions />
+        <Questions { ...this.props } />
         <Timer />
       </div>
     );

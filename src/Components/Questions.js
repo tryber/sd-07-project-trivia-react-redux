@@ -59,10 +59,18 @@ class Questions extends React.Component {
   }
 
   incrementIndex() {
+    const four = 4;
     this.setState((anterior) => ({
       questionNumber: anterior.questionNumber + 1,
       visibleClick: false,
     }));
+    const { questionNumber } = this.state;
+    console.log(questionNumber);
+    if (questionNumber === four) {
+      const { history } = this.props;
+      history.push('/feedback');
+    }
+    this.setState({ correctAnswer: 'neutral', wrongAnswer: 'neutral' });
   }
 
   async allFunctionsOfButton(e) {
@@ -73,7 +81,10 @@ class Questions extends React.Component {
   }
 
   buttonColor() {
-    this.setState({ correctAnswer: 'correctAnswer', wrongAnswer: 'wrongAnswer' });
+    this.setState({
+      correctAnswer: 'correctAnswer',
+      wrongAnswer: 'wrongAnswer',
+    });
   }
 
   renderNextButton() {
@@ -83,7 +94,12 @@ class Questions extends React.Component {
   render() {
     const { questions, timer } = this.props;
     const { questionsList } = questions;
-    const { questionNumber, wrongAnswer, correctAnswer, visibleClick } = this.state;
+    const {
+      questionNumber,
+      wrongAnswer,
+      correctAnswer,
+      visibleClick,
+    } = this.state;
     const five = 5;
     if (questionsList < five) {
       return <div>Efetue o login novamente</div>;
@@ -125,18 +141,15 @@ class Questions extends React.Component {
             </button>
           ))}
         </div>
-        {
-          visibleClick || timer
-            ? (
-              <button
-                data-testid="btn-next"
-                type="button"
-                onClick={ this.incrementIndex }
-              >
-                Next
-              </button>
-            ) : null
-        }
+        {visibleClick || timer ? (
+          <button
+            data-testid="btn-next"
+            type="button"
+            onClick={ this.incrementIndex }
+          >
+            Next
+          </button>
+        ) : null}
       </div>
     );
   }
@@ -170,6 +183,9 @@ Questions.propTypes = {
   realScore: PropTypes.number.isRequired,
   realAssertions: PropTypes.number.isRequired,
   timer: PropTypes.bool.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
   seconds: PropTypes.number.isRequired,
 };
 
