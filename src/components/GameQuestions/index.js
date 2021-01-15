@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { fetchTriviaQuestions } from '../../store/ducks/triviaQuestions';
+import { addScore } from '../../store/ducks/user';
 import './GameQuestions.css';
 import Timer from '../Timer';
 
@@ -16,6 +17,12 @@ class GameQuestions extends Component {
     this.timeOver = this.timeOver.bind(this);
     this.timer = React.createRef();
     this.clickAnswer = this.clickAnswer.bind(this);
+    this.CORRECT_ANSWER_VALUE = 10;
+    this.difficultyLevel = {
+      hard: 3,
+      medium: 2,
+      easy: 1,
+    };
   }
 
   async componentDidMount() {
@@ -27,9 +34,15 @@ class GameQuestions extends Component {
     this.setState({ revealAnswer: true });
   }
 
-  clickAnswer() {
+  clickAnswer(isCorrect, difficulty) {
+    const { addScoreQuestion } = this.props;
     this.setState({ revealAnswer: true });
-    this.timer.current.stopTimer();
+    const timeLeft = this.timer.current.stopTimer();
+    if (isCorrect) {
+      const scoreQuestion = this.CORRECT_ANSWER_VALUE
+        + (this.difficultyLevel[difficulty] * timeLeft);
+      addScoreQuestion(scoreQuestion);
+    }
   }
 
   render() {
@@ -64,7 +77,10 @@ class GameQuestions extends Component {
                       && (answer.correct ? 'correctAnswer' : 'wrongAnswer')).toString() }
                     key={ answer.text }
                     data-testid={ answer.dataTestid }
-                    onClick={ () => this.clickAnswer() }
+                    onClick={ () => this.clickAnswer(
+                      answer.correct,
+                      questions[currentQuestion].difficulty,
+                    ) }
                   >
                     {answer.text}
                   </button>))
@@ -83,6 +99,7 @@ class GameQuestions extends Component {
 
 GameQuestions.propTypes = {
   getTriviaQuestions: PropTypes.func.isRequired,
+  addScoreQuestion: PropTypes.func.isRequired,
   questions: PropTypes.arrayOf(PropTypes.object).isRequired,
   isLoading: PropTypes.bool.isRequired,
 };
@@ -94,6 +111,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getTriviaQuestions: () => dispatch(fetchTriviaQuestions()),
+  addScoreQuestion: (score) => dispatch(addScore(score)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(GameQuestions);
