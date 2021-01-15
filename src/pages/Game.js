@@ -5,21 +5,20 @@ import { requestQuestionAndAnsewrs } from '../actions';
 import QuestionsList from './componentes/QuestionsList';
 import Header from './componentes/Header';
 import Loading from './componentes/Loading';
-import player from '../reducers/player';
 
 class Game extends React.Component {
   componentDidMount() {
     const { requestQuestions, name, score, email } = this.props;
     const objPlayer = { 
       player: {
-        name: name,
+        name,
         assertions: '',
-        score: score,
+        score,
         gravatarEmail: email,
       }
     };
     requestQuestions(localStorage.token);
-    localStorage.setItem('player', JSON.stringify(objPlayer));
+    localStorage.setItem('state', JSON.stringify(objPlayer));
   }
 
   render() {

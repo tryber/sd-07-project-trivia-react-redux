@@ -59,37 +59,28 @@ class QuestionsList extends React.Component {
 
   scoreCalculete() {
     this.handleButton();
-    const { question, dispatchScore } = this.props;
+    let difficultyNum = 0;
+    const { question, dispatchScore, name, gravatarEmail, assertions } = this.props;
     const scoreStorege = localStorage.getItem('playerScore');
+    const pointForHit = 10;
+    const timer = this.state.time;
 
     if (question.results[0].difficulty === 'easy') {
-      const difficultyNum = 1;
-      const pointForHit = 10;
-      const timer = this.state.time;
-      const newScore = parseInt(scoreStorege, 10) + pointForHit + (timer * difficultyNum);
-      dispatchScore(newScore);
-
-      return localStorage.setItem('playerScore', newScore);
+      difficultyNum = 1;
     }
 
     if (question.results[0].difficulty === 'medium') {
-      const difficultyNum = 2;
-      const pointForHit = 10;
-      const timer = this.state.time;
-      const newScore = parseInt(scoreStorege, 10) + pointForHit + (timer * difficultyNum);
-      dispatchScore(newScore);
-
-      return localStorage.setItem('playerScore', newScore);
+      difficultyNum = 2;
     }
     if (question.results[0].difficulty === 'hard') {
-      const difficultyNum = 3;
-      const pointForHit = 10;
-      const timer = this.state.time;
-      const newScore = parseInt(scoreStorege, 10) + pointForHit + (timer * difficultyNum);
-      dispatchScore(newScore);
-
-      return localStorage.setItem('playerScore', newScore);
+      difficultyNum = 3;
     }
+    const newScore = parseInt(scoreStorege, 10) + pointForHit + (timer * difficultyNum);
+
+    localStorage.setItem('playerScore', newScore);
+
+    localStorage.setItem('state', JSON.stringify({ player: {name, assertions, score: newScore, gravatarEmail}}));
+    dispatchScore(newScore);
   }
 
   wrongAnswer() {
@@ -158,4 +149,14 @@ const mapDispatchToProps = (dispatch) => ({
   dispatchScore: (score) => dispatch(changeScore(score)),
 });
 
-export default connect(null, mapDispatchToProps)(QuestionsList);
+const mapStateToProps = (state) => ({
+  name: state.player.name,
+  assertions: state.player.assertions,
+  score: state.player.score,
+  gravatarEmail: state.player.gravatarEmail,
+  loading: state.player.loading,
+  token: state.player.token,
+  question: state.player.question,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(QuestionsList);
