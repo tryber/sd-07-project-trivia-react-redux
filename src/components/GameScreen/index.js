@@ -12,16 +12,34 @@ class GameScreen extends Component {
       correct: Math.floor(Math.random() * limit),
       actual: 0,
       solved: false,
+      timer: 30,
+      // idTimer: 0,
     };
 
     this.questFrame = this.questFrame.bind(this);
     this.questFrameSolved = this.questFrameSolved.bind(this);
     this.renderScreen = this.renderScreen.bind(this);
+    this.starTimer = this.starTimer.bind(this);
   }
 
   componentDidMount() {
     const { playerToken, getQuest } = this.props;
     getQuest(playerToken);
+    this.starTimer();
+  }
+
+  starTimer() {
+    const timeDesc = 1000;
+    // const tempId =
+    setInterval(() => {
+      this.setState((prevState) => {
+        if (prevState.timer > 0) {
+          return ({ timer: prevState.timer - 1 });
+        }
+      });
+    }, timeDesc);
+
+    // this.setState({ idTimer: tempId });
   }
 
   questFrame() {
@@ -96,7 +114,7 @@ class GameScreen extends Component {
     // return <p>Loading</p>;
 
     const { questions } = this.props;
-    const { actual, correct, solved } = this.state;
+    const { actual, correct } = this.state;
     let counter = 0;
 
     // nada elegante
@@ -107,7 +125,7 @@ class GameScreen extends Component {
         <div>
           <button
             type="button"
-            disabled={ solved }
+            disabled
             className={
               questions[actual].correct_answer === 'True'
                 ? 'correct-answer'
@@ -123,7 +141,7 @@ class GameScreen extends Component {
           </button>
           <button
             type="button"
-            disabled={ solved }
+            disabled
             className={
               questions[actual].correct_answer === 'False'
                 ? 'correct-answer'
@@ -144,7 +162,7 @@ class GameScreen extends Component {
             if (index === correct) {
               return (
                 <button
-                  disabled={ solved }
+                  disabled
                   key={ questions[actual].correct_answer }
                   className="correct-answer"
                   type="button"
@@ -157,7 +175,7 @@ class GameScreen extends Component {
             counter += 1;
             return (
               <button
-                disabled={ solved }
+                disabled
                 key={ questions[actual].incorrect_answers[counter - 1] }
                 className="wrong-answer"
                 type="button"
@@ -173,18 +191,20 @@ class GameScreen extends Component {
   }
 
   renderScreen() {
-    const { solved } = this.state;
+    const { solved, timer } = this.state;
 
-    return solved ? this.questFrameSolved() : this.questFrame();
+    return solved || timer === 0 ? this.questFrameSolved() : this.questFrame();
   }
 
   render() {
+    const { timer } = this.state;
     return (
       <>
         <p data-testid="question-category">Categoria</p>
         <p data-testid="question-text">Pergunta</p>
         {this.renderScreen()}
         {/* {this.questFrame()} */}
+        <h2>{timer}</h2>
       </>
     );
   }
