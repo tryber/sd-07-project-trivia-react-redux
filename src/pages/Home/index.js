@@ -21,7 +21,7 @@ class Home extends Component {
   handleChange({ target }) {
     const { email, name } = this.state;
     const regex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
-    const validation = regex.test(email) && name;
+    const validation = !!(regex.test(email) && name);
 
     this.setState({ [target.id]: target.value, auth: validation });
   }

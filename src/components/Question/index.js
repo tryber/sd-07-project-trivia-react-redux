@@ -35,7 +35,12 @@ const Question = ({ listObjct, clicked, count, handleClick }) => (
 export default Question;
 
 Question.propTypes = {
-  listObjct: PropTypes.shape(PropTypes.object).isRequired,
+  listObjct: PropTypes.shape({
+    category: PropTypes.string.isRequired,
+    question: PropTypes.string.isRequired,
+    correct_answer: PropTypes.string.isRequired,
+    incorrect_answers: PropTypes.arrayOf(PropTypes.string).isRequired,
+  }).isRequired,
   clicked: PropTypes.bool.isRequired,
   count: PropTypes.number.isRequired,
   handleClick: PropTypes.func.isRequired,

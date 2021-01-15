@@ -11,7 +11,7 @@ const Header = ({ name, email, score }) => (
       data-testid="header-profile-picture"
     />
     <span data-testid="header-player-name">{name}</span>
-    <span data-testid="header-score">{score || 0}</span>
+    <span data-testid="header-score">{score}</span>
   </div>
 );
 

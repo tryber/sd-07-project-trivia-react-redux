@@ -101,7 +101,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 QuestionsList.propTypes = {
-  list: PropTypes.shape(PropTypes.array).isRequired,
+  list: PropTypes.arrayOf(PropTypes.object).isRequired,
   name: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
   count: PropTypes.number.isRequired,
