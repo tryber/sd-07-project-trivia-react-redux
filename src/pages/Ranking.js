@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'
 
 class Ranking extends React.Component {
 
@@ -12,9 +12,9 @@ class Ranking extends React.Component {
         <h1 data-testid='ranking-title'>Tela do ranking</h1>
         <ul>
           {ordenedRanking.map((ranking, index) => (
-            <li key={index}>
-              <p data-testid={`player-name-${index}`}>{`${ranking.name}`}</p>
-              <p data-testid={`player-score-${index}`}>{`${ranking.score}`}</p>
+            <li key={ index }>
+              <p data-testid={ `player-name-${index}` }>{`${ranking.name}`}</p>
+              <p data-testid={ `player-score-${index}` }>{`${ranking.score}`}</p>
             </li>
           ))}
         </ul>
