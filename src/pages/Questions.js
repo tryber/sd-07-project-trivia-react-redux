@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import '../styles/styles.css';
 
 export default class Questions extends Component {
   constructor() {
     super();
+    this.handleAnswer = this.handleAnswer.bind(this);
     this.state = {
       // shuffled: false,
       shuffledAnswers: [],
+      questionWasAnswered: false,
     };
 
     this.shuffleAnswers = this.shuffleAnswers.bind(this);
@@ -14,6 +17,10 @@ export default class Questions extends Component {
 
   componentDidMount() {
     this.shuffleAnswers();
+  }
+
+  handleAnswer() {
+    this.setState({ questionWasAnswered: true });
   }
 
   shuffleAnswers() {
@@ -35,7 +42,7 @@ export default class Questions extends Component {
 
   render() {
     const { question } = this.props;
-    const { shuffledAnswers } = this.state;
+    const { questionWasAnswered, shuffledAnswers } = this.state;
     console.log(shuffledAnswers);
     if (question) {
       return (
@@ -46,9 +53,12 @@ export default class Questions extends Component {
             if (answer === question.correct_answer) {
               return (
                 <button
+                  name="correct"
                   type="button"
                   key={ index }
                   data-testid="correct-answer"
+                  className={ questionWasAnswered ? 'correct' : null }
+                  onClick={ this.handleAnswer }
                 >
                   {answer}
                 </button>
@@ -57,9 +67,12 @@ export default class Questions extends Component {
             }
             return (
               <button
+                name="incorrect"
                 type="button"
                 key={ index }
                 data-testid={ `wrong-answer-${index}` }
+                onClick={ this.handleAnswer }
+                className={ questionWasAnswered ? 'incorrect' : null }
               >
                 {answer}
               </button>

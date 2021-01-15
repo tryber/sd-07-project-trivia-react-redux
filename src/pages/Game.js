@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import questionsRequest from '../services/QuestionsRequest';
 import Header from '../components/Header';
 import Questions from './Questions';
@@ -7,6 +8,7 @@ class Game extends Component {
   constructor() {
     super();
     this.fetchQuestions = this.fetchQuestions.bind(this);
+    this.nextQuestion = this.nextQuestion.bind(this);
     this.state = {
       questionsArray: [],
       currentQuestion: 0,
@@ -25,6 +27,17 @@ class Game extends Component {
     });
   }
 
+  nextQuestion() {
+    const lastQuestion = 5;
+    const { currentQuestion } = this.state;
+    const { history } = this.props;
+    if (currentQuestion === lastQuestion) {
+      history.push('/feedback');
+    }
+    this.setState({ currentQuestion: currentQuestion + 1 });
+    this.fetchQuestions();
+  }
+
   render() {
     const { questionsArray, currentQuestion } = this.state;
     return (
@@ -34,16 +47,18 @@ class Game extends Component {
         {localStorage.token}
         {questionsArray[currentQuestion]
           && <Questions question={ questionsArray[currentQuestion] } />}
-        <button
-          data-testid="btn-next"
-          type="button"
-        >
+        <button data-testid="btn-next" type="button" onClick={ this.nextQuestion }>
           Próxima
         </button>
-
       </div>
     );
   }
 }
+
+Game.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+};
 
 export default Game;
