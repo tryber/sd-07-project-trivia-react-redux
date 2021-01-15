@@ -3,14 +3,14 @@ import {
   REQUEST_FAIL,
   FETCH_QUESTIONS_SUCCESS,
   EMAIL_HASH,
-  UPDATE_SCORE,
+  UPDATE_ASSERTIONS,
 } from '../actions';
 
 const INITIAL_STATE = {
   isLoading: false,
   error: '',
   questions: {},
-  score: 0,
+  assertions: 0,
   hash: '',
 };
 
@@ -30,9 +30,9 @@ const gameReducer = (state = INITIAL_STATE, action) => {
       isLoading: false,
       questions: action.payload,
     };
-  case UPDATE_SCORE:
+  case UPDATE_ASSERTIONS:
     return { ...state,
-      score: state.score + 1,
+      assertions: state.assertions + 1,
     };
   default:
     return state;

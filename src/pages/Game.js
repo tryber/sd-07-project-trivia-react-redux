@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchQuestions, updateScore } from '../actions';
+import { fetchQuestions, updateAssertions } from '../actions';
 import GameHeader from '../components/GameHeader';
+import { setStorage } from '../services';
 import '../style/game.css';
 
 class Game extends React.Component {
@@ -23,9 +24,15 @@ class Game extends React.Component {
 
   async componentDidMount() {
     this.timeOut();
+    const mockData = {
+      player: {
+        score: 0,
+        assertions: 0,
+      },
+    };
+    setStorage('state', mockData);
     const { requestQuestions, token } = this.props;
     await requestQuestions(token);
-    console.log(token);
   }
 
   shuffle(answers) {
@@ -37,18 +44,27 @@ class Game extends React.Component {
   }
 
   handleAnswer({ target: { name } }) {
-    const { scoreAction } = this.props;
+    const { assertionAction } = this.props;
     const answerButtons = document.querySelectorAll('.hidden');
     answerButtons.forEach((button) => button.classList.remove('hidden'));
-    if (name === 'correct') scoreAction();
+    if (name === 'correct') {
+      assertionAction();
+    }
     this.setState({
       nextQuestion: true,
     });
   }
 
   handleNext() {
-    const { questions, history } = this.props;
+    const { questions, history, assertions } = this.props;
     const { currentQuestion } = this.state;
+    const mockData = {
+      player: {
+        score: assertions,
+        assertions,
+      },
+    };
+    setStorage('state', mockData);
     if (currentQuestion !== questions.length - 1) {
       this.setState((prevSate) => ({
         currentQuestion: prevSate.currentQuestion + 1,
@@ -168,19 +184,21 @@ Game.propTypes = {
     length: PropTypes.number.isRequired,
   }).isRequired,
   requestQuestions: PropTypes.func.isRequired,
-  scoreAction: PropTypes.func.isRequired,
+  assertionAction: PropTypes.func.isRequired,
   token: PropTypes.string.isRequired,
+  assertions: PropTypes.number.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
   requestQuestions: (questions) => dispatch(fetchQuestions(questions)),
-  scoreAction: () => dispatch(updateScore()),
+  assertionAction: () => dispatch(updateAssertions()),
 });
 
 const mapStateToProps = (state) => ({
   isLoading: state.game.isLoading,
   questions: state.game.questions.results,
   token: state.login.token,
+  assertions: state.game.assertions,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);

@@ -1,18 +1,25 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import { getStorage } from '../services';
 
 class Feedbacks extends Component {
   render() {
-    const minScore = 3;
-    const { score, history } = this.props;
+    const minAssertions = 3;
+    const { history } = this.props;
+    const { player: { assertions } } = getStorage('state');
 
-    if (score >= minScore) {
+    if (assertions >= minAssertions) {
       return (
         <div>
           <h1 data-testid="feedback-text">
             Mandou bem!
           </h1>
+          <h4 data-testid="feedback-total-score">
+            { assertions }
+          </h4>
+          <h4 data-testid="feedback-total-question">
+            { assertions }
+          </h4>
           <button
             type="button"
             data-testid="btn-play-again"
@@ -37,6 +44,12 @@ class Feedbacks extends Component {
         <h1 data-testid="feedback-text">
           Podia ser melhor...
         </h1>
+        <h4 data-testid="feedback-total-score">
+          { assertions }
+        </h4>
+        <h4 data-testid="feedback-total-question">
+          { assertions }
+        </h4>
         <button
           type="button"
           data-testid="btn-play-again"
@@ -58,12 +71,7 @@ class Feedbacks extends Component {
 }
 
 Feedbacks.propTypes = {
-  score: PropTypes.number.isRequired,
   history: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  score: state.game.score,
-});
-
-export default connect(mapStateToProps)(Feedbacks);
+export default Feedbacks;
