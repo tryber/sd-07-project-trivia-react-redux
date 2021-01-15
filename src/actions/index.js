@@ -27,9 +27,14 @@ export function nextQuestion(array) {
 }
 
 export function redirect(string) {
-  if (string === 'feedback') {
+  if (string === 'toFeedback') {
     return ({
       type: 'REDIRECT_FEEDBACK',
+    });
+  }
+  if (string === 'inFeedback') {
+    return ({
+      type: 'IN_FEEDBACK',
     });
   }
 }

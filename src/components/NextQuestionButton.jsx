@@ -14,7 +14,7 @@ class Game extends Component {
     const { changeQuestions, questions, toFeedback } = this.props;
     const filteredQuestions = questions.filter((item) => item !== questions[0]);
     if (filteredQuestions.length === 0) {
-      return toFeedback('feedback');
+      return toFeedback('toFeedback');
     }
     changeQuestions(filteredQuestions);
   }

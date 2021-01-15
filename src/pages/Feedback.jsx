@@ -1,20 +1,15 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import propTypes from 'prop-types';
+import { redirect } from '../actions';
 import Header from '../components/Header';
 
 class Feedback extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { redirect: false };
-
     this.renderMessage = this.renderMessage.bind(this);
-    this.toRanking = this.toRanking.bind(this);
-  }
-
-  toRanking() {
-    this.setState({ redirect: true });
   }
 
   renderMessage(assertions) {
@@ -26,9 +21,8 @@ class Feedback extends Component {
   }
 
   render() {
-    const { score, assertions } = this.props;
-    const { redirect } = this.state;
-    if (redirect) return (<Redirect to="/ranking" />);
+    const { score, assertions, inFeedback } = this.props;
+    inFeedback('inFeedback');
     return (
       <div>
         <Header />
@@ -46,18 +40,25 @@ class Feedback extends Component {
           </h3>
         </div>
         <div className="btn-container">
-          <button
-            type="button"
-            data-testid="btn-ranking"
-            onClick={ this.toRanking }
-          >
-            Ver Ranking
-          </button>
+          <Link to="/ranking">
+            <button
+              type="button"
+              data-testid="btn-ranking"
+            >
+              Ver Ranking
+            </button>
+          </Link>
         </div>
       </div>
     );
   }
 }
+
+const mapDispatchToProps = (dispatch) => ({
+  inFeedback: (string) => dispatch(redirect(string)),
+});
+
+export default connect(null, mapDispatchToProps)(Feedback);
 
 Feedback.propTypes = {
   src: propTypes.string,
@@ -65,5 +66,3 @@ Feedback.propTypes = {
   score: propTypes.number,
   assertions: propTypes.number,
 }.isRequired;
-
-export default Feedback;

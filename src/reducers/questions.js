@@ -29,6 +29,12 @@ function questionsReducer(state = INITIAL_STATE, action) {
       ...state,
       redirectToFeedback: true,
     };
+  case 'IN_FEEDBACK':
+    return {
+      ...state,
+      redirectToFeedback: false,
+      questions: [],
+    };
   case 'CHANGE_CATEGORY':
     return {
       ...state,
