@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Question from '../Question';
 import NextButton from '../NextButton';
@@ -70,8 +71,10 @@ class QuestionsList extends Component {
   render() {
     const { list, count } = this.props;
     const { clicked, question } = this.state;
+    const maxQuestions = 4;
 
     if (!list[0]) return <h1>...Carregando</h1>;
+    if (question > maxQuestions) return <Redirect to="/feedback" />;
 
     return (
       <div>
