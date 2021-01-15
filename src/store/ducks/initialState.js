@@ -3,9 +3,11 @@ const INITIAL_STATE = {
     player: {
       name: '',
       assertions: '',
-      score: '',
+      score: 0,
       gravatarEmail: '',
     },
+    isLoading: false,
+    gravatarProfile: {},
   },
   ranking: [],
   triviaToken: {

@@ -16,8 +16,6 @@ export const loadState = () => {
     KEYS.forEach((KEY) => {
       const serializedState = localStorage.getItem(KEY);
       const resultState = JSON.parse(serializedState);
-      console.log(KEY);
-      console.log('resultState', resultState);
       switch (KEY) {
       case STATE_KEY:
         state.user = resultState || {};
@@ -31,7 +29,6 @@ export const loadState = () => {
       default:
       }
     });
-    console.log('state', state);
     return state;
   } catch (error) {
     return undefined;

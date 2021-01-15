@@ -1,6 +1,6 @@
-import Login from './Login/Login';
-import Game from './Game/Game';
-import Setting from './Setting/Setting';
+import Login from './Login';
+import Game from './Game';
+import Setting from './Setting';
 
 export default {
   Login,
