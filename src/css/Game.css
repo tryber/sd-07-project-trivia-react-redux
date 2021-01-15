@@ -1,79 +1,79 @@
 * {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
 
 .container-game {
-  background-color: #f5f5f5;
-  width: max-content;
-  margin: auto;
-  height: auto;
   /* display: flex;
-  flex-flow: row nowrap;
-  align-items: center;
-  justify-content: center; */
-  width: clamp(40vw, 70rem, 70vw);
   /* padding: 30px; */
-  border: 2px solid black;
+  align-items: center;
+  background-color: whitesmoke;
   border-radius: 20px;
+  border: 2px solid black;
   box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.384);
+  flex-flow: row nowrap;
+  height: auto;
+  justify-content: center; */
+  margin: auto;
+  width: clamp(40vw, 70rem, 70vw);
+  width: max-content;
 }
 
 .container-header-game {
+  align-items: center;
+  background-color: darkblue;
+  border-radius: 17px 17px 0 0;
+  color: white;
   display: flex;
   flex-flow: row nowrap;
-  background-color: darkblue;
-  color: white;
-  justify-content: space-around;
-  align-items: center;
-  width: 100%;
-  border-radius: 17px 17px 0 0;
-  height: 50px;
   font-size: 20px;
+  height: 50px;
+  justify-content: space-around;
   text-transform: uppercase;
+  width: 100%;
 }
 
 .container-questions-answers {
+  align-items: center;
   display: flex;
   flex-flow: row nowrap;
-  align-items: center;
   justify-content: space-around;
   padding: 50px;
 }
 
 .container-questions-answers h2 {
+  /* background-color: gray; */
+  box-shadow: 5px 5px 10px black;
   font-size: 30px;
   font-weight: 700;
+  padding: 20px;
   text-align: left;
   width: 400px;
-  box-shadow: 5px 5px 10px black;
-  padding: 20px;
-  /* background-color: gray; */
 }
 
 .container-buttons {
+  /* background-color: gray; */
   display: flex;
   flex-flow: row wrap;
   width: 200px;
-  /* background-color: gray; */
 }
 
 .container-buttons div {
+  align-items: stretch;
   display: flex;
   justify-content: center;
-  align-items: stretch;
-  width: 100%;
   margin: 5px 0;
+  width: 100%;
 }
 
 .container-buttons button {
-  width: 100%;
-  padding: 10px;
+  background-color: rgb(1, 0, 85);
+  color: white;
   font-size: 13px;
   font-weight: 700;
-  color: white;
-  background-color: rgb(1, 0, 85);
+  padding: 10px;
+  width: 100%;
 }
 
 .container-buttons button:hover {
@@ -83,30 +83,30 @@
 
 .timer-nextQuestion-container {
   /* background-color: #f5f5f5; */
+  align-items: center;
   display: flex;
   flex-flow: row nowrap;
-  align-items: center;
   justify-content: space-around;
-  margin: auto;
-  width: clamp(20vw, 40rem, 60vw);
-  padding: 20px;
   margin-top: 20px;
+  margin: auto;
+  padding: 20px;
+  width: clamp(20vw, 40rem, 60vw);
 }
 
 .timer-nextQuestion-container p {
-  background-color: #f5f5f5;
-  padding: 15px 20px;
+  background-color: whitesmoke;
+  border-radius: 50%;
   font-size: 20px;
   font-weight: 700;
-  border-radius: 50%;
+  padding: 15px 20px;
 }
 
 .timer-nextQuestion-container button {
   background-color: #b4000c;
   color: white;
-  padding: 10px;
   font-size: 20px;
   font-weight: 700;
+  padding: 10px;
 }
 
 .timer-nextQuestion-container button:hover {
@@ -116,5 +116,5 @@
 
 button[type="button"]:disabled {
   background: rgb(204, 204, 204);
-  color: #f5f5f5;
+  color: whitesmoke;
 }
