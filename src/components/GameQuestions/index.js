@@ -14,9 +14,12 @@ class GameQuestions extends Component {
       currentQuestion: 0,
       revealAnswer: false,
     };
+
     this.timeOver = this.timeOver.bind(this);
     this.timer = React.createRef();
     this.clickAnswer = this.clickAnswer.bind(this);
+    this.clickNextQuestion = this.clickNextQuestion.bind(this);
+
     this.CORRECT_ANSWER_VALUE = 10;
     this.difficultyLevel = {
       hard: 3,
@@ -32,6 +35,15 @@ class GameQuestions extends Component {
 
   timeOver() {
     this.setState({ revealAnswer: true });
+  }
+
+  clickNextQuestion() {
+    this.setState((state) => ({
+      currentQuestion: state.currentQuestion + 1,
+      revealAnswer: false,
+    }));
+    this.timer.current.resetTimer();
+    this.timer.current.startTimer();
   }
 
   clickAnswer(isCorrect, difficulty) {
@@ -92,6 +104,14 @@ class GameQuestions extends Component {
           handleTimeOver={ this.timeOver }
           ref={ this.timer }
         />
+        <button
+          hidden={ !revealAnswer }
+          type="button"
+          data-testid="btn-next"
+          onClick={ () => this.clickNextQuestion() }
+        >
+          Next
+        </button>
       </>
     );
   }

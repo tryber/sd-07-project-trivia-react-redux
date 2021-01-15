@@ -13,6 +13,7 @@ class Timer extends Component {
 
     this.startTimer = this.startTimer.bind(this);
     this.countDown = this.countDown.bind(this);
+    this.resetTimer = this.resetTimer.bind(this);
   }
 
   componentDidMount() {
@@ -32,8 +33,15 @@ class Timer extends Component {
 
   stopTimer() {
     clearInterval(this.timer);
+    this.timer = 0;
     const { seconds } = this.state;
     return seconds;
+  }
+
+  resetTimer() {
+    this.setState({
+      seconds: 30,
+    });
   }
 
   countDown() {
