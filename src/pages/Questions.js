@@ -151,7 +151,7 @@ class Questions extends React.Component {
                 data-testid={ questions[index].correct_answer === item ? 'correct-answer' : 'wrong-answer' }
                 className={ questions[index].correct_answer === item ? 'correct' : 'incorrect' }
                 item={ item }
-                showAnswers ={ showAnswers }
+                showAnswers ={ showAnswers } 
                />))
               }
         </div>
