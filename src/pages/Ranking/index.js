@@ -7,17 +7,16 @@ class Ranking extends Component {
     super();
     this.renderRanking = this.renderRanking.bind(this);
   }
+
   renderRanking(ranking) {
-    console.log(`aqui no render estou recebendo o ranking ${ranking}`)
-    return ranking.map((player, index) => {
-      return (
-        <div>
-          <img alt={player.name} src={player.img} />
-          <p data-testid={`player-name-${index}`}>{player.name}</p>
-          <p data-testid={`player-score-${index}`}>{player.score}</p>
-        </div>
-      );
-    });
+    console.log(`aqui no render estou recebendo o ranking ${ranking}`);
+    return ranking.map((player, index) => (
+      <div key={ index + 1 }>
+        <img alt={ player.name } src={ player.img } />
+        <p data-testid={ `player-name-${index}` }>{player.name}</p>
+        <p data-testid={ `player-score-${index}` }>{player.score}</p>
+      </div>
+    ));
   }
 
   render() {
