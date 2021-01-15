@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { getQuestions } from '../services/api';
+import { getQuestions } from '../../services/api';
 
-import Quiz from '../components/Quiz';
-import Timer from '../components/Timer';
-import Header from '../components/Header';
+import Quiz from '../../components/Quiz';
+import Timer from '../../components/Timer';
+import Header from '../../components/Header';
 
 class GamePage extends React.Component {
   constructor(props) {
@@ -31,7 +31,6 @@ class GamePage extends React.Component {
   async getFetchQuestion() {
     const { token } = this.props;
     const quiz = await getQuestions(token);
-    console.log(quiz);
     this.setState({
       queries: quiz,
       load: false,
