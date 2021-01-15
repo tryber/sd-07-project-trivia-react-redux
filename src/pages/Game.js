@@ -13,9 +13,14 @@ class Game extends Component {
       //  results: results,
     };
     this.nextQuestion = this.nextQuestion.bind(this);
+    this.createLocalStorage = this.createLocalStorage.bind(this);
   }
 
   componentDidMount() {
+    this.createLocalStorage();
+  }
+
+  createLocalStorage() {
     const { name, assertions, score, gravatarEmail } = this.props;
     const playerObj = { player: { name, assertions, score, gravatarEmail } };
 
@@ -46,7 +51,10 @@ class Game extends Component {
     return (
       <div>
         <Header />
-        <Quiz nextQuestion={ this.nextQuestion } results={ results[key] } />
+        <Quiz
+          nextQuestion={ this.nextQuestion }
+          results={ results[key] }
+        />
       </div>
     );
   }

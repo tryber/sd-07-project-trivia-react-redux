@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { saveTimer } from '../redux/actions';
 
 class Timer extends Component {
   constructor() {
@@ -33,8 +35,10 @@ class Timer extends Component {
   }
 
   checkIfAnswered() {
-    const { resetTimer, restoreTimer } = this.props;
+    const { timer } = this.state;
+    const { resetTimer, restoreTimer, saveTime } = this.props;
     if (resetTimer) {
+      saveTime(timer);
       this.setState({
         timer: 30,
       }, restoreTimer);
@@ -52,10 +56,15 @@ class Timer extends Component {
   }
 }
 
+const mapDispatchToProps = (dispatch) => ({
+  saveTime: (info) => dispatch(saveTimer(info)),
+});
+
 Timer.propTypes = {
   answerColor: PropTypes.func.isRequired,
   restoreTimer: PropTypes.func.isRequired,
   resetTimer: PropTypes.bool.isRequired,
+  saveTime: PropTypes.func.isRequired,
 };
 
-export default Timer;
+export default connect(null, mapDispatchToProps)(Timer);

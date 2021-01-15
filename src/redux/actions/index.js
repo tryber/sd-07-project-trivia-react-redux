@@ -35,6 +35,13 @@ export const scoreUpdate = (payload) => (
   }
 );
 
+export const saveTimer = (payload) => (
+  {
+    type: types.SAVE_TIMER,
+    payload,
+  }
+);
+
 export function fetchApiTrivia(token) {
   return async (dispatch) => {
     dispatch(isFetching());

@@ -19,6 +19,7 @@ class Quiz extends Component {
     this.answerColor = this.answerColor.bind(this);
     this.nextButton = this.nextButton.bind(this);
     this.restoreTimer = this.restoreTimer.bind(this);
+    this.scoreCalculator = this.scoreCalculator.bind(this);
   }
 
   handleClick() {
@@ -37,6 +38,7 @@ class Quiz extends Component {
     this.setState({
       colorIncorrect: 'answer-wrong',
       colorCorrect: 'answer-correct',
+      resetTimer: true,
     });
 
     this.handleClick();
@@ -62,6 +64,29 @@ class Quiz extends Component {
     });
   }
 
+  scoreCalculator() {
+    const { difficulty, timer } = this.props;
+    const TEN = 10;
+    const easy = 1;
+    const medium = 2;
+    const hard = 3;
+
+    switch (difficulty) {
+    case 'easy':
+      return (
+        TEN + (timer * easy)
+      );
+    case 'medium':
+      return (
+        TEN + (timer * medium)
+      );
+    default:
+      return (
+        TEN + (timer * hard)
+      );
+    }
+  }
+
   render() {
     const { answered, colorCorrect, colorIncorrect, resetTimer } = this.state;
     const { results, nextQuestion, updateScore } = this.props;
@@ -70,7 +95,6 @@ class Quiz extends Component {
     const { question, category, difficulty } = results;
     const allQuestions = [correctAnswer, ...incorrectAnswers];
     const magicNumber = 0.5;
-    const magicNumberTwo = 5;
     const allIndex = allQuestions
       .map((anyQuestion) => allQuestions
         .indexOf(anyQuestion))
@@ -84,7 +108,10 @@ class Quiz extends Component {
             key={ number }
             data-testid="correct-answer"
             type="button"
-            onClick={ () => { updateScore(magicNumberTwo); this.answerColor(); } }
+            onClick={ () => {
+              this.answerColor();
+              updateScore(this.scoreCalculator());
+            } }
             disabled={ answered }
           >
             { correctAnswer }
@@ -130,6 +157,9 @@ class Quiz extends Component {
 }
 
 const mapStateToProps = ({
+  game: {
+    timer,
+  },
   player: {
     name,
     assertions,
@@ -137,6 +167,7 @@ const mapStateToProps = ({
     gravatarEmail,
   },
 }) => ({
+  timer,
   name,
   assertions,
   score,
@@ -157,4 +188,6 @@ Quiz.propTypes = {
   assertions: PropTypes.number.isRequired,
   score: PropTypes.number.isRequired,
   gravatarEmail: PropTypes.string.isRequired,
+  difficulty: PropTypes.string.isRequired,
+  timer: PropTypes.number.isRequired,
 };
