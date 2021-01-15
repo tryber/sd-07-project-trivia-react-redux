@@ -27,7 +27,10 @@ class Play extends Component {
   }
 
   componentDidMount() {
-    this.triviaApi();
+    const magicNumber = 2000;
+    setTimeout(() => {
+      this.triviaApi();
+    }, magicNumber);
     this.counter();
   }
 
@@ -104,16 +107,51 @@ class Play extends Component {
     assertionsDispatch(assertions + lvl1);
   }
 
+  //   <div class="ui cards">
+  //   <div class="ui red fluid card">
+  //     <div class="content">
+  //       <div class="header">Option 1</div>
+  //     </div>
+  //   </div>
+  //   <div class="ui orange fluid card">
+  //     <div class="content">
+  //       <div class="header">Option 2</div>
+  //     </div>
+  //   </div>
+  //   <div class="ui yellow fluid card">
+  //     <div class="content">
+  //       <div class="header">Option 3</div>
+  //     </div>
+  //   </div>
+  // </div>
+
   trivia() {
-    const { trivia, disabled, timer, index, btclass, btclassw, btnext } = this.state;
+    const { trivia, disabled, index, btclass, btclassw, btnext } = this.state;
     return (
-      <div>
-        <div>
-          <p>{timer}</p>
-          <p data-testid="question-category">{trivia[index].category}</p>
-          <p data-testid="question-text">{trivia[index].question}</p>
+      <div className="ui cards column centered">
+        <div className="ui cards">
+          <div className="ui fluid card">
+            <div className="content">
+              <p
+                className="header"
+                data-testid="question-category"
+              >
+                {trivia[index].category}
+              </p>
+            </div>
+          </div>
+          <div className="ui fluid card">
+            <div className="content">
+              <p
+                className="header"
+                data-testid="question-text"
+              >
+                {trivia[index].question}
+              </p>
+            </div>
+          </div>
         </div>
-        <div className="ui vertical buttons">
+        <div className="ui fluid card">
           <button
             type="button"
             data-testid="correct-answer"
@@ -122,7 +160,7 @@ class Play extends Component {
             className={ `ui button ${btclass}` }
             value={ trivia[index].correct_answer }
           >
-            <p className="">{trivia[index].correct_answer}</p>
+            {trivia[index].correct_answer}
           </button>
           {trivia[index].incorrect_answers.map((incorrect, index2) => (
             <button
@@ -164,7 +202,7 @@ class Play extends Component {
 
   render() {
     const { name, score, assertions } = this.props;
-    const { isLoading } = this.state;
+    const { isLoading, timer } = this.state;
     return (
       <div>
         <header>
@@ -180,8 +218,11 @@ class Play extends Component {
           >
             {name}
           </h1>
-          <p data-testid="header-score">{`Pontos: ${score}`}</p>
-          <p>{`Assertions: ${assertions}`}</p>
+          <div className="ui cards centered">
+            <p className="fluid card">{`Timer: ${timer}`}</p>
+            <p className="fluid card" data-testid="header-score">{`Pontos: ${score}`}</p>
+            <p className="fluid card">{`Assertions: ${assertions}`}</p>
+          </div>
         </header>
         { isLoading ? this.trivia() : (
           <div className="ui icon message">

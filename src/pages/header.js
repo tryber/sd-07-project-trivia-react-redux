@@ -3,7 +3,6 @@ import 'semantic-ui-css/semantic.min.css';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import md5 from 'crypto-js/md5';
-import { trivia } from '../trivia.png';
 
 class Header extends Component {
   render() {
@@ -11,15 +10,14 @@ class Header extends Component {
     const hash = md5(email);
     return (
       <div className="header-nav">
-        <div className="header-logo">
-          <img src={ trivia } alt="TRIVIA" />
-        </div>
+        <br />
         <div className="header-player">
           <span data-testid="header-player-name">{ name }</span>
           <span data-testid="header-score">{ `${score} points` }</span>
         </div>
         <div className="header-gravatar">
           <img
+            className="ui small circular image centered"
             data-testid="header-profile-picture"
             alt="gravatar"
             src={ `https://www.gravatar.com/avatar/${hash}` }
