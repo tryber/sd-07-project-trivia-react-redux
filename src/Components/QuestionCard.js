@@ -117,69 +117,73 @@ class QuestionCard extends Component {
       disableButton: true,
     });
 
-    const { questions, indexQuestion, seconds, score, assertions } = this.state;
+    const { questions, indexQuestion, seconds, assertions, score } = this.state;
     const { updateScore } = this.props;
     const { value } = event.target;
     const ten = 10;
     const one = 1;
     const two = 2;
     const three = 3;
-    console.log(score);
     if (value === 'correct') {
-      updateScore(score + 1);
       switch (questions[indexQuestion].difficulty) {
       case 'easy':
-        this.updateItensInLocalStorage(score + 1, assertions + (ten + (seconds * one)));
+        this.updateItensInLocalStorage(assertions + 1, score + (ten + (seconds * one)));
+        updateScore(assertions + 1, score + (ten + (seconds * one)));
         this.setState(
           {
-            assertions: assertions + (ten + (seconds * one)),
+            score: score + (ten + (seconds * one)),
           },
         );
         break;
       case 'medium':
-        this.updateItensInLocalStorage(score + 1, assertions + (ten + (seconds * two)));
+        this.updateItensInLocalStorage(assertions + 1, score + (ten + (seconds * two)));
+        updateScore(assertions + 1, score + (ten + (seconds * two)));
         this.setState(
           {
-            assertions: assertions + (ten + (seconds * two)),
+            score: score + (ten + (seconds * two)),
           },
         );
         break;
       case 'hard':
-        this.updateItensInLocalStorage(score + 1, assertions + (ten + (seconds * three)));
+        this.updateItensInLocalStorage(assertions + 1, score + (ten + (seconds * three)));
+        updateScore(assertions + 1, score + (ten + (seconds * three)));
         this.setState(
           {
-            assertions: assertions + (ten + (seconds * three)),
+            score: score + (ten + (seconds * three)),
           },
         );
         break;
       default:
         break;
       }
-      this.setState((prevState) => ({ score: prevState.score + 1 }));
+      this.setState((prevState) => ({ assertions: prevState.assertions + 1 }));
     } else {
-      this.updateItensInLocalStorage(score, assertions);
+      this.updateItensInLocalStorage(assertions, score);
     }
   }
 
-  updateItensInLocalStorage(score, assertions) {
+  updateItensInLocalStorage(assertions = 0, score = 0) {
     const { name, email } = this.props;
     const localStorageItem = localStorage.getItem('state');
     if (!localStorageItem) {
-      const player = {
-        name,
-        assertions: 0,
-        score: 0,
-        gravatarEmail: email,
+      const playerToStorage = {
+        player: {
+          name,
+          assertions,
+          score,
+          gravatarEmail: email },
       };
-      localStorage.setItem('state', JSON.stringify(player));
+      localStorage.setItem('state', JSON.stringify(playerToStorage));
     } else {
-      const player = {
-        name,
-        assertions,
-        score,
-        gravatarEmail: email,
+      const playerToStorage = {
+        player: {
+          name,
+          assertions,
+          score,
+          gravatarEmail: email,
+        },
       };
-      localStorage.setItem('state', JSON.stringify(player));
+      localStorage.setItem('state', JSON.stringify(playerToStorage));
     }
   }
 
@@ -226,11 +230,13 @@ const mapStateToProps = (state) => ({
   name: state.userReducer.name,
   email: state.userReducer.email,
   token: state.tokenReducer.token,
-  score: state.userReducer.score,
+  assertions: state.userReducer.assertions,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  updateScore: (newScore) => dispatch(updateScoreAction(newScore)),
+  updateScore: (newAssertions, newScore) => dispatch(
+    updateScoreAction(newAssertions, newScore),
+  ),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(QuestionCard);

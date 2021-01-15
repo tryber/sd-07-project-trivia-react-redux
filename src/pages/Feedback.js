@@ -6,7 +6,7 @@ import Header from '../Components/Header';
 
 class Feedback extends Component {
   render() {
-    const { score } = this.props;
+    const { assertions } = this.props;
     const goodMessage = <p data-testid="feedback-text">Podia ser melhor...</p>;
     const badMessage = <p data-testid="feedback-text">Mandou bem!</p>;
     const two = 2;
@@ -22,18 +22,18 @@ class Feedback extends Component {
             Ver Ranking
           </button>
         </Link>
-        { score > two ? badMessage : goodMessage }
+        { assertions > two ? badMessage : goodMessage }
       </div>
     );
   }
 }
 
 Feedback.propTypes = {
-  score: PropTypes.number.isRequired,
+  assertions: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  score: state.userReducer.score,
+  assertions: state.userReducer.assertions,
 });
 
 export default connect(mapStateToProps)(Feedback);
