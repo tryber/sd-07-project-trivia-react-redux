@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 import { fetchTriviaQuestions } from '../../store/ducks/triviaQuestions';
 import { addScore } from '../../store/ducks/user';
 import './GameQuestions.css';
@@ -21,7 +22,8 @@ class GameQuestions extends Component {
     this.clickNextQuestion = this.clickNextQuestion.bind(this);
 
     this.CORRECT_ANSWER_VALUE = 10;
-    this.difficultyLevel = {
+    this.TOTAL_QUESTIONS = 5;
+    this.DIFFICULTY_LEVEL = {
       hard: 3,
       medium: 2,
       easy: 1,
@@ -38,12 +40,18 @@ class GameQuestions extends Component {
   }
 
   clickNextQuestion() {
-    this.setState((state) => ({
-      currentQuestion: state.currentQuestion + 1,
-      revealAnswer: false,
-    }));
-    this.timer.current.resetTimer();
-    this.timer.current.startTimer();
+    const { currentQuestion } = this.state;
+    const { history } = this.props;
+    if (currentQuestion < this.TOTAL_QUESTIONS - 1) {
+      this.setState((state) => ({
+        currentQuestion: state.currentQuestion + 1,
+        revealAnswer: false,
+      }));
+      this.timer.current.resetTimer();
+      this.timer.current.startTimer();
+    } else {
+      history.push('/feedback');
+    }
   }
 
   clickAnswer(isCorrect, difficulty) {
@@ -52,7 +60,7 @@ class GameQuestions extends Component {
     const timeLeft = this.timer.current.stopTimer();
     if (isCorrect) {
       const scoreQuestion = this.CORRECT_ANSWER_VALUE
-        + (this.difficultyLevel[difficulty] * timeLeft);
+        + (this.DIFFICULTY_LEVEL[difficulty] * timeLeft);
       addScoreQuestion(scoreQuestion);
     }
   }
@@ -122,6 +130,9 @@ GameQuestions.propTypes = {
   addScoreQuestion: PropTypes.func.isRequired,
   questions: PropTypes.arrayOf(PropTypes.object).isRequired,
   isLoading: PropTypes.bool.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -134,4 +145,4 @@ const mapDispatchToProps = (dispatch) => ({
   addScoreQuestion: (score) => dispatch(addScore(score)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(GameQuestions);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(GameQuestions));

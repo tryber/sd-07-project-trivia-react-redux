@@ -2,7 +2,7 @@ import Header from './Header';
 import GameQuestions from './GameQuestions';
 import Timer from './Timer';
 
-export default {
+export {
   Header,
   GameQuestions,
   Timer,
