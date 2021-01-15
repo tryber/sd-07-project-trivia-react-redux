@@ -4,6 +4,9 @@ import { connect } from 'react-redux';
 import { fetchQuestions, getScore } from '../actions';
 import '../App.css';
 import GameHeader from '../components/GameHeader';
+import Loading from '../components/Loading';
+import '../css/App.css';
+import '../css/Game.css';
 
 class Game extends Component {
   constructor() {
@@ -14,23 +17,38 @@ class Game extends Component {
     this.timer = this.timer.bind(this);
     this.renderTime = this.renderTime.bind(this);
     this.shuffle = this.shuffle.bind(this);
+    this.nextQuestion = this.nextQuestion.bind(this);
+    this.handleClasses = this.handleClasses.bind(this);
+    this.savingShuffleAnswers = this.savingShuffleAnswers.bind(this);
+    this.convertQuestionAndAnswers = this.convertQuestionAndAnswers.bind(this);
+    this.stopTimer = this.stopTimer.bind(this);
 
     this.state = {
       questionIndex: 0,
       timer: 30,
       disableButton: true,
-      shuffle: true,
+      shuffleAnswers: [],
+      correctAnswer: '',
+      showBtn: false,
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     const { getQuestions } = this.props;
-    getQuestions();
+    await getQuestions();
+    this.savingShuffleAnswers();
     this.renderTime();
   }
 
   componentDidUpdate() {
     this.timer();
+  }
+
+  savingShuffleAnswers() {
+    // console.log(this.renderAllDataQuestion());
+    this.setState({
+      shuffleAnswers: [...this.renderAllDataQuestion()],
+    });
   }
 
   timer() {
@@ -39,28 +57,61 @@ class Game extends Component {
     const lastSecondDisableButton = 0;
     if (timer === lastSecondDisableButton) {
       this.handleUserAnswer();
-      this.setState({
+      this.setState((prevState) => ({
+        ...prevState,
         timer: 30,
         disableButton: true,
-      });
+      }));
     }
 
     if (timer === initialSecondEnableButton) {
-      this.setState((prevState) => ({
-        ...prevState,
+      this.setState({
         timer: 24,
         disableButton: false,
-      }));
+      });
     }
   }
 
-  handleUserAnswer() {
-    document.querySelectorAll('button').forEach((button) => {
-      const { id } = button;
-      if (id === 'ok') {
-        button.classList.add('btnColorGreen');
+  handleClasses(type) {
+    document.querySelectorAll('.btnAnswer').forEach((button) => {
+      if (type === 'add') {
+        const { id } = button;
+        if (id === 'ok') {
+          button.classList.add('btnColorGreen');
+        }
+        button.classList.add('btnColorRed');
+      } else {
+        button.classList.remove('btnColorGreen');
+        button.classList.remove('btnColorRed');
       }
-      button.classList.add('btnColorRed');
+    });
+  }
+
+  handleUserAnswer() {
+    this.handleClasses('add');
+    this.setState((prevState) => ({
+      ...prevState,
+      showBtn: true,
+      disableButton: true,
+    }));
+  }
+
+  nextQuestion() {
+    const { questions, history } = this.props;
+    const { questionIndex } = this.state;
+    const questionsLength = questions.results.length - 1;
+    // console.log(typeof history);
+    if (questionIndex === questionsLength) return history.push('/feedback');
+    this.setState((previous) => ({
+      ...previous,
+      questionIndex: previous.questionIndex + 1,
+      timer: 30,
+      showBtn: false,
+      disableButton: true,
+    }),
+    () => {
+      this.handleClasses('remove');
+      this.savingShuffleAnswers();
     });
   }
 
@@ -79,18 +130,49 @@ class Game extends Component {
   }
 
   shuffle(array) {
-    // let currentIndex = array.length, temporaryValue, randomIndex;
-    // // While there remain elements to shuffle...
-    // while (currentIndex !== 0) {
-    //   // Pick a remaining element...
-    //   randomIndex = Math.floor(Math.random() * currentIndex);
-    //   currentIndex -= 1;
-    //   // And swap it with the current element.
-    //   temporaryValue = array[currentIndex];
-    //   array[currentIndex] = array[randomIndex];
-    //   array[randomIndex] = temporaryValue;
-    // }
+    for (let i = array.length - 1; i > 0; i -= 1) {
+      const j = Math.floor(Math.random() * (i + 1));
+      const temp = array[i];
+      array[i] = array[j];
+      array[j] = temp;
+    }
     return array;
+  }
+
+  stopTimer(interval) {
+    clearInterval(interval);
+  }
+
+  convertQuestionAndAnswers(question) {
+    const errors = ['&#039;', '&quot;'];
+    let finalQuestion = question;
+    errors.forEach((error) => {
+      if (question.includes(error)) {
+        const newQuestion = finalQuestion.split(error);
+        finalQuestion = newQuestion.join('');
+      }
+    });
+    console.log(question);
+    return finalQuestion;
+  }
+
+  renderAllDataQuestion() {
+    const { questionIndex } = this.state;
+    const { questions } = this.props;
+    // console.log(questions);
+
+    if (questions.results) {
+      const correctAnswer = questions.results[questionIndex].correct_answer;
+      const wrongAnswer = questions.results[questionIndex].incorrect_answers
+        .map((answer) => answer);
+
+      this.setState({
+        correctAnswer,
+      });
+
+      const arrayAnswers = this.shuffle([...wrongAnswer, correctAnswer]);
+      return arrayAnswers;
+    }
   }
 
   renderTime() {
@@ -106,68 +188,91 @@ class Game extends Component {
     }, secondTimerFunction);
   }
 
-  renderAllDataQuestion() {
-    const { questionIndex, disableButton } = this.state;
-    const { questions } = this.props;
-    console.log(questions);
-
-    if (questions.results) {
-      const correctAnswer = (
-        <button
-          type="button"
-          data-testid="correct-answer"
-          onClick={ () => { this.handleUserAnswer(); this.calculateScore(); } }
-          key="correct"
-          id="ok"
-          disabled={ disableButton }
-        >
-          { questions.results[questionIndex].correct_answer }
-        </button>
-      );
-      const wrongAnswer = questions.results[questionIndex].incorrect_answers
-        .map((answer, index) => (
-          <button
-            onClick={ this.handleUserAnswer }
-            type="button"
-            key={ answer }
-            data-testid={ `wrong-answer-${index}` }
-            id="notOk"
-            disabled={ disableButton }
-          >
-            {answer}
-          </button>
-        ));
-
-      const arrayAnswers = [...wrongAnswer, correctAnswer];
-      return arrayAnswers;
-    }
-  }
-
   render() {
-    const { questionIndex, timer } = this.state;
+    const {
+      questionIndex,
+      timer,
+      shuffleAnswers,
+      correctAnswer,
+      disableButton,
+      showBtn,
+    } = this.state;
     const { questions } = this.props;
     return questions.results ? (
       <div>
         <GameHeader />
-        <h1>TELA DE JOGO</h1>
-        <h3 data-testid="question-category">
-          {questions.results[questionIndex].category}
-        </h3>
-        <h2 data-testid="question-text">
-          {questions.results[questionIndex].question}
-        </h2>
-        <div>{this.renderAllDataQuestion()}</div>
-        <p>{timer}</p>
+        <section className="container-game">
+          <header className="container-header-game">
+            <h1>TELA DE JOGO</h1>
+            <h3 data-testid="question-category">
+              {questions.results[questionIndex].category}
+            </h3>
+          </header>
+          <section className="container-questions-answers">
+            <h2 data-testid="question-text">
+              {this.convertQuestionAndAnswers(questions.results[questionIndex].question)}
+            </h2>
+            <div className="container-buttons">
+              {
+                shuffleAnswers.map((answer, index) => {
+                  if (answer === correctAnswer) {
+                    return (
+                      <div key={ answer }>
+                        <button
+                          type="button"
+                          className="btnAnswer"
+                          id="ok"
+                          key="correct"
+                          disabled={ disableButton }
+                          onClick={ this.handleUserAnswer }
+                          data-testid="correct-answer"
+                        >
+                          {this.convertQuestionAndAnswers(answer)}
+                        </button>
+                      </div>
+                    );
+                  }
+                  return (
+                    <div key={ answer }>
+                      <button
+                        type="button"
+                        className="btnAnswer"
+                        id="notOk"
+                        key={ answer }
+                        disabled={ disableButton }
+                        onClick={ this.handleUserAnswer }
+                        data-testid={ `wrong-answer-${index}` }
+                      >
+                        {this.convertQuestionAndAnswers(answer)}
+                      </button>
+                    </div>
+                  );
+                })
+              }
+            </div>
+          </section>
+        </section>
+        <section className="timer-nextQuestion-container">
+          <p>{timer}</p>
+          { showBtn && (
+            <button
+              type="button"
+              data-testid="btn-next"
+              onClick={ this.nextQuestion }
+            >
+              Próxima pergunta
+            </button>
+          )}
+        </section>
       </div>
     ) : (
-      <p>loading</p>
+      <Loading />
     );
   }
 }
 
 const mapStateToProps = ({ gameReducer, scoreReducer }) => ({
   questions: gameReducer.questions,
-  isFetching: gameReducer.isFetching,
   score: scoreReducer.score,
 });
 
@@ -183,6 +288,9 @@ Game.propTypes = {
   getQuestions: PropTypes.func.isRequired,
   score: PropTypes.number.isRequired,
   sendScore: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);

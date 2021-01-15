@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import md5 from 'crypto-js/md5';
 import { connect } from 'react-redux';
+import '../css/Header.css';
 
 class GameHeader extends Component {
   constructor() {
@@ -42,7 +43,7 @@ class GameHeader extends Component {
   render() {
     const { getName, getScore } = this.props;
     return (
-      <header>
+      <header className="game-header-container">
         <img
           data-testid="header-profile-picture"
           src={ this.fetchGravatar() }
