@@ -14,10 +14,10 @@ class Feedback extends Component {
 
   renderMessage(assertions) {
     const parameter = 3;
-    if (assertions < parameter) {
-      return (<h1 data-testid="feedback-text">Podia ser melhor...</h1>);
+    if (assertions >= parameter) {
+      return (<h1 data-testid="feedback-text">Mandou bem!</h1>);
     }
-    return (<h1 data-testid="feedback-text">Mandou bem!</h1>);
+    return (<h1 data-testid="feedback-text">Podia ser melhor...</h1>);
   }
 
   render() {
@@ -28,14 +28,10 @@ class Feedback extends Component {
         <Header />
         { this.renderMessage(assertions) }
         <div className="score-questions-container">
-          <h3
-            data-testid="feedback-total-quesiton"
-          >
+          <h3 data-testid="feedback-total-quesiton">
             { `Você acertou ${assertions} questões!` }
           </h3>
-          <h3
-            data-testid="feedback-total-score"
-          >
+          <h3 data-testid="feedback-total-score">
             { `Um total de ${score} pontos!` }
           </h3>
         </div>
@@ -46,7 +42,7 @@ class Feedback extends Component {
               data-testid="btn-ranking"
             >
               Ver Ranking
-            </button>
+            </button>Main group 16 req19 20 21
           </Link>
         </div>
       </div>
@@ -58,7 +54,12 @@ const mapDispatchToProps = (dispatch) => ({
   inFeedback: (string) => dispatch(redirect(string)),
 });
 
-export default connect(null, mapDispatchToProps)(Feedback);
+const mapStateToProps = (state) => ({
+  assertions: state.player.assertions,
+  score: state.player.score,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Feedback);
 
 Feedback.propTypes = {
   src: propTypes.string,
