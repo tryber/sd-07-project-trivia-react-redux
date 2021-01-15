@@ -7,9 +7,7 @@ import md5 from 'crypto-js/md5';
 
 class Header extends Component {
   render() {
-    const { email, nome } = this.props;
-    const { score } = JSON.parse(localStorage
-      .getItem('state')).player;
+    const { email, nome, score } = this.props;
 
     return (
       <header className="header">
@@ -37,11 +35,13 @@ class Header extends Component {
 Header.propTypes = {
   nome: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
+  score: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   nome: state.player.name,
   email: state.player.email,
+  score: state.player.score,
 });
 
 export default connect(mapStateToProps)(Header);

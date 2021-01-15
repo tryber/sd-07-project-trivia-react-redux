@@ -6,6 +6,7 @@ export const FAILED_REQUEST = 'FAILED_REQUEST';
 export const ADD_ANSWERS = 'ADD_ANSWERS';
 export const ADD_QUESTIONS = 'ADD_QUESTIONS';
 export const ADD_CATEGORYS = 'ADD_CATEGORYS';
+export const UPDATE_SCORE = 'UPDATE_SCORE';
 
 const requestToken = () => ({ type: REQUEST_TOKEN });
 const failedRequest = (error) => ({ type: FAILED_REQUEST, error });
@@ -26,7 +27,6 @@ export const login = ({ name, email }) => async (dispatch) => {
         score: 0,
         gravatarEmail: email,
       } });
-    console.log(state);
     dispatch(receiveToken({ name, email, token, image }));
     localStorage.setItem('token', token);
     localStorage.setItem('state', state);
@@ -51,3 +51,5 @@ export function fetchQuestionAnswers() {
     return dispatch(questionUpdate(questionJson.results));
   };
 }
+
+export const updateScore = (value) => ({ type: UPDATE_SCORE, value });
