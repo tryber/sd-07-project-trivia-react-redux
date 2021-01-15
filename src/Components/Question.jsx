@@ -6,7 +6,7 @@ class Question extends React.Component {
     const { content } = this.props;
     return (
       <div className="questions" data-testeid="question-text">
-        { content }
+        <p data-testeid="question-text">{ content }</p>
       </div>);
   }
 }
