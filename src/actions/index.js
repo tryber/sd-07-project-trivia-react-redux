@@ -37,6 +37,10 @@ export const updateScore = (timer, difficulty) => {
   };
 };
 
+export const UPDATE_RANDOM_ANSWERS = 'UPDATE_RANDOM_ANSWERS';
+export const updateRandomAnswers = (payload) => (
+  { type: UPDATE_RANDOM_ANSWERS, payload });
+
 export function fetchToken() {
   return async (dispatch) => {
     try {

@@ -1,8 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchQuestions, updateScore, updateAssertions } from '../actions';
+import {
+  fetchQuestions,
+  updateAssertions,
+  updateRandomAnswers,
+  updateScore,
+} from '../actions';
 import GameHeader from '../components/GameHeader';
+import { setStorage } from '../services';
 import '../style/game.css';
 
 class Game extends React.Component {
@@ -24,6 +30,13 @@ class Game extends React.Component {
 
   async componentDidMount() {
     this.timeOut();
+    const mockData = {
+      player: {
+        score: 0,
+        assertions: 0,
+      },
+    };
+    setStorage('state', mockData);
     const { requestQuestions, token } = this.props;
     await requestQuestions(token);
     this.playerLocalStorage();
@@ -52,9 +65,17 @@ class Game extends React.Component {
   }
 
   handleNext() {
-    const { questions, history } = this.props;
+    const { questions, history, assertions, randomAnswersAction } = this.props;
     const { currentQuestion } = this.state;
+    const mockData = {
+      player: {
+        score: assertions,
+        assertions,
+      },
+    };
+    setStorage('state', mockData);
     if (currentQuestion !== questions.length - 1) {
+      randomAnswersAction({ randomAnswers: [], sorted: false });
       this.setState((prevSate) => ({
         currentQuestion: prevSate.currentQuestion + 1,
         nextQuestion: false,
@@ -100,7 +121,7 @@ class Game extends React.Component {
   }
 
   render() {
-    const { questions } = this.props;
+    const { questions, randomAnswersAction, randomAnswers, sorted } = this.props;
     const { currentQuestion, nextQuestion, timer, disabledTimeOut } = this.state;
     if (questions === undefined) return <p>Loading...</p>;
     const question = questions[currentQuestion];
@@ -144,7 +165,8 @@ class Game extends React.Component {
         index: 0,
         difficulty,
       }];
-    const randomAnswers = this.shuffle(taggedAnswers);
+    const randomAnswersLocal = sorted ? randomAnswers : this.shuffle(taggedAnswers);
+    randomAnswersAction({ randomAnswers: randomAnswersLocal, sorted: true });
     return (
       <div>
         <GameHeader />
@@ -155,7 +177,7 @@ class Game extends React.Component {
           <h3 data-testid="question-text">
             {question.question}
           </h3>
-          {randomAnswers.map((answer) => (
+          {randomAnswersLocal.map((answer) => (
             <button
               className={ `hidden ${answer.correct ? 'rightGreen' : 'wrongRed'}` }
               type="button"
@@ -203,12 +225,17 @@ Game.propTypes = {
   assertions: PropTypes.number.isRequired,
   score: PropTypes.number.isRequired,
   scoreAction: PropTypes.func.isRequired,
+  randomAnswersAction: PropTypes.func.isRequired,
+  randomAnswers: PropTypes.arrayOf(PropTypes.object).isRequired,
+  sorted: PropTypes.bool.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
   requestQuestions: (questions) => dispatch(fetchQuestions(questions)),
   assertionsAction: () => dispatch(updateAssertions()),
   scoreAction: (payload, difficulty) => dispatch(updateScore(payload, difficulty)),
+  randomAnswersAction: (payload) => dispatch(updateRandomAnswers(payload)),
+
 });
 
 const mapStateToProps = (state) => ({
@@ -219,6 +246,8 @@ const mapStateToProps = (state) => ({
   email: state.login.email,
   score: state.game.score,
   assertions: state.game.assertions,
+  randomAnswers: state.game.randomAnswers,
+  sorted: state.game.sorted,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);

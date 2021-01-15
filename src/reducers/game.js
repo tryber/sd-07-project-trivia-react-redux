@@ -5,6 +5,7 @@ import {
   EMAIL_HASH,
   UPDATE_ASSERTIONS,
   UPDATE_SCORE,
+  UPDATE_RANDOM_ANSWERS,
 } from '../actions';
 
 const INITIAL_STATE = {
@@ -16,6 +17,9 @@ const INITIAL_STATE = {
   hash: '',
   timeLeft: 0,
   difficulty: null,
+  randomAnswers: [],
+  sorted: false,
+
 };
 
 function updateScoreFunc(state, action) {
@@ -59,7 +63,11 @@ const gameReducer = (state = INITIAL_STATE, action) => {
     return updateScoreFunc(state, action);
   case UPDATE_ASSERTIONS:
     return { ...state,
-      assertions: state.assertions + 1,
+      assertions: state.assertions + 1 };
+  case UPDATE_RANDOM_ANSWERS:
+    return { ...state,
+      randomAnswers: action.payload.randomAnswers,
+      sorted: action.payload.sorted,
     };
   default:
     return state;

@@ -22,7 +22,7 @@ class GameHeader extends React.Component {
   }
 
   render() {
-    const { name, score, hash } = this.props;
+    const { name, assertions, hash } = this.props;
     const src = `https://www.gravatar.com/avatar/${hash}`;
     return (
       <header>
@@ -32,7 +32,7 @@ class GameHeader extends React.Component {
           alt=""
         />
         <span data-testid="header-player-name">{ name }</span>
-        <span data-testid="header-score">{ score }</span>
+        <span data-testid="header-score">{ assertions }</span>
       </header>
     );
   }
@@ -45,13 +45,13 @@ const mapDispatchToProps = (dispatch) => ({
 const mapStateToProps = (state) => ({
   name: state.login.name,
   email: state.login.email,
-  score: state.game.score,
+  assertions: state.game.assertions,
 });
 
 GameHeader.propTypes = {
   name: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
-  score: PropTypes.number.isRequired,
+  assertions: PropTypes.number.isRequired,
   hash: PropTypes.string,
   hashAction: PropTypes.func.isRequired,
 };
