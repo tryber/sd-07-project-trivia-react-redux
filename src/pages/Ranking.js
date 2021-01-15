@@ -7,6 +7,7 @@ export default class Ranking extends Component {
     return (
       <div>
         <h2 data-testid="ranking-title">Ranking</h2>
+
         {getRank().map((person, index) => (
           <div key={ index }>
             <span data-testid={ `player-name-${index}` }>
@@ -15,7 +16,18 @@ export default class Ranking extends Component {
             <span data-testid={ `player-score-${index}` }>{person.Score}</span>
           </div>
         ))}
-        <Link data-testid="btn-go-home" to="/">Home</Link>
+
+        <div>
+          <Link to="/">
+            <button
+              data-testid="btn-go-home"
+              type="button"
+            >
+              Voltar Inicio
+            </button>
+          </Link>
+        </div>
+
       </div>
     );
   }
