@@ -16,9 +16,19 @@ class Game extends Component {
           <GridQuestions />
         </div>
         <div className="timer">
-          <Timer initialTime={ 30000 } direction="backward">
+          <Timer
+            initialTime={ 30000 }
+            direction="backward"
+            checkpoints={[
+              {
+                time: 0,
+                callback: () => console.log('Checkpoint A'),
+              },
+            ] }
+          >
             {() => (
-              <Timer.Seconds />)}
+              <Timer.Seconds />
+            )}
           </Timer>
         </div>
       </div>
