@@ -53,6 +53,7 @@ class Game extends React.Component {
       this.setState((prevSate) => ({
         currentQuestion: prevSate.currentQuestion + 1,
         nextQuestion: false,
+        timer: 30,
       }));
     } else {
       history.push('/feedbacks');
