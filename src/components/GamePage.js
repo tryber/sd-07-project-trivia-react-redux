@@ -12,6 +12,7 @@ class GamePage extends React.Component {
     this.fetchGame = this.fetchGame.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.start = this.start.bind(this);
+    this.stop = this.stop.bind(this);
     this.state = {
       games: [],
       loading: true,
@@ -22,6 +23,7 @@ class GamePage extends React.Component {
   componentDidMount() {
     const { token } = this.props;
     this.fetchGame(token);
+    this.start();
   }
 
   handleClick() {
@@ -33,10 +35,15 @@ class GamePage extends React.Component {
       enableOptions,
       inactivateButton } = this.props;
     const maxQuestionNumber = 4;
+    const { interval } = this.state;
     resetClasses();
     inactivateButton();
     if (questionNumber < maxQuestionNumber) {
       changeQuestion();
+      this.setState({
+        timer: 30,
+      });
+      this.stop(interval);
       this.start();
       enableOptions();
     } else {
@@ -53,16 +60,19 @@ class GamePage extends React.Component {
         this.setState(({ timer: previous }) => ({
           timer: previous - 1,
         }));
-        console.log(timer);
       } else {
-        clearInterval(interval);
+        this.stop(interval);
         enableNextButton();
-        this.setState({
-          timer: 30,
-        });
         disableOptions();
       }
     }, oneSecond);
+    this.setState(
+      { interval },
+    );
+  }
+
+  stop(interval) {
+    clearInterval(interval);
   }
 
   async fetchGame(token) {
@@ -73,7 +83,6 @@ class GamePage extends React.Component {
         games: gameInfo.results,
         loading: false,
       });
-      this.start();
     } catch (error) {
       return error;
     }
