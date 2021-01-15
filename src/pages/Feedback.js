@@ -1,5 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
+import { updateRanking } from '../actions/index';
 import PropTypes from 'prop-types';
 import Header from '../components';
 
@@ -8,6 +10,12 @@ class FeedBack extends React.Component {
     super(props);
     this.handleAssertions = this.handleAssertions.bind(this);
     this.handleTotalQuestions = this.handleTotalQuestions.bind(this);
+    this.updateRank = this.updateRank.bind(this);
+    this.updateLocalStorageRank = this.updateLocalStorageRank.bind(this);
+
+    this.state = {
+      redirect: '',
+    };
   }
 
   handleAssertions() {
@@ -30,8 +38,39 @@ class FeedBack extends React.Component {
     );
   }
 
+  updateRank() {
+    const { name, email, points, addRank } = this.props;
+    const newRank = {
+      name,
+      score: points,
+      picture: email,
+    };
+    addRank(newRank);
+  }
+
+  updateLocalStorageRank() {
+    const { ranking } = this.props;
+    function compare( a, b ) {
+      if ( a.score < b.score ){
+        return -1;
+      }
+      if ( a.score > b.score ){
+        return 1;
+      }
+      return 0;
+    }
+    ranking.sort( compare );
+    const savedRanking = JSON.stringify(ranking);
+    localStorage.setItem('ranking', savedRanking);
+  }
+  async componentDidMount() {
+    await this.updateRank();
+    this.updateLocalStorageRank()
+  }
+
   render() {
     const { points, history } = this.props;
+    const { redirect } = this.state;
 
     return (
       <div>
@@ -52,10 +91,13 @@ class FeedBack extends React.Component {
           <button
             data-testid="btn-play-again"
             type="button"
-            onClick={ () => history.push('/') }
+            onClick={ () => {
+              this.setState({ redirect: <Redirect path="/play" /> });
+            } }
           >
             Jogar novamente
           </button>
+          { redirect }
         </main>
       </div>
     );
@@ -65,7 +107,14 @@ class FeedBack extends React.Component {
 const mapStateToProps = (state) => ({
   assertions: state.token.assertions,
   points: state.token.points,
+  name: state.token.name,
+  email: state.token.email,
+  ranking: state.token.ranking,
 });
+
+const mapDispatchToProps = (dispatch) =>({
+  addRank: (value) => dispatch(updateRanking(value)),
+})
 
 FeedBack.propTypes = {
   assertions: PropTypes.number.isRequired,
@@ -73,4 +122,4 @@ FeedBack.propTypes = {
   history: PropTypes.shape().isRequired,
 };
 
-export default connect(mapStateToProps)(FeedBack);
+export default connect(mapStateToProps,mapDispatchToProps)(FeedBack);

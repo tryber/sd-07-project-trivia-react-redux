@@ -4,6 +4,7 @@ const ADD_NAME = 'ADD_NAME';
 const ADD_POINT = 'ADD_POINT';
 const SET_COUNTER = 'SET_COUNTER';
 const RESET_COUNTER = 'RESET_COUNTER';
+const UPDATE_RANKING = 'UPDATE_RANKING';
 
 const INITIAL_STATE = {
   token: '',
@@ -12,6 +13,7 @@ const INITIAL_STATE = {
   points: 0,
   count: 30,
   assertions: 0,
+  ranking: [],
 };
 
 const tokenReducer = (state = INITIAL_STATE, action) => {
@@ -43,6 +45,8 @@ const tokenReducer = (state = INITIAL_STATE, action) => {
     return { ...state, count: count - 1 };
   case RESET_COUNTER:
     return { ...state, count: 30 };
+  case UPDATE_RANKING:
+    return { ...state, ranking:[...state.ranking, value]};
   default:
     return state;
   }

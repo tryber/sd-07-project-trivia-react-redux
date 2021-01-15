@@ -7,6 +7,11 @@ class Header extends React.Component {
   render() {
     const { email, name, points } = this.props;
     const hashEmail = md5(email);
+    const newRank = {
+      name,
+      score: points,
+      picture: email,
+    };
 
     return (
       <header className="header">

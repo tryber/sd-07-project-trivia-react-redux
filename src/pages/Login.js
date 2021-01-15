@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import { tokenAction, addEmailAction, addNameAction } from '../actions';
 import api from '../services/api';
 import trivia from '../trivia.png';
@@ -40,6 +41,8 @@ class Login extends Component {
     const { history, addToken, addEmail, addName } = this.props;
     const { email, name } = this.state;
     const { returnToken } = api;
+
+    let redirect = '';
     return (
       <form>
         <img
@@ -76,7 +79,7 @@ class Login extends Component {
             disabled={ this.valida() }
             onClick={ async () => {
               const token = await returnToken();
-              localStorage.clear();
+              // localStorage.clear();
               localStorage.setItem('token', token);
               localStorage.setItem('state', JSON.stringify(
                 {
@@ -101,7 +104,7 @@ class Login extends Component {
             data-testid="btn-settings"
             className="btn-config"
             onClick={ () => {
-              history.push('/config');
+              redirect = <Redirect path="/play" />;
             } }
           >
             <img
@@ -110,6 +113,7 @@ class Login extends Component {
               alt="Configurações"
             />
           </button>
+          {redirect}
         </div>
       </form>
     );
