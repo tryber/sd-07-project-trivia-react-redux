@@ -17,15 +17,15 @@ class Questions extends Component {
     this.resetCounter = this.resetCounter.bind(this);
     this.calculateScore = this.calculateScore.bind(this);
     this.setLocalStorage = this.setLocalStorage.bind(this);
+    this.getQuestionLevelScore = this.getQuestionLevelScore.bind(this);
 
     this.state = {
       questions: [],
       isLoading: true,
-      questionNumber: 0,
+      questionIndex: 0,
       isDisabled: false,
       counterInterval: 30,
       counter: 0,
-      toStorage: false,
     };
   }
 
@@ -33,11 +33,10 @@ class Questions extends Component {
     this.fetchQuestions();
     const milisegundos = 1000;
     setInterval(this.countdown, milisegundos);
-    this.setLocalStorage(0, 0);
+    this.setLocalStorage();
   }
 
-  setLocalStorage(totalScore, assertions) {
-    console.log('chamou setLocalStorge');
+  setLocalStorage(totalScore = 0, assertions = 0) {
     const { playerProps } = this.props;
     const { name, gravatarEmail } = playerProps;
     const playerToStorage = { player: {
@@ -48,16 +47,42 @@ class Questions extends Component {
     localStorage.setItem('state', JSON.stringify(playerToStorage));
   }
 
-  resetCounter() {
-    const milisegundos = 1000;
-    this.setState({ counterInterval: 30, counter: 0 });
-    setInterval(this.countdown, milisegundos);
+  getQuestionLevelScore(questionLevel, levelScore) {
+    switch (questionLevel) {
+    case 'easy': {
+      levelScore = 1;
+      return levelScore;
+    }
+    case 'medium': {
+      levelScore = 2;
+      return levelScore;
+    }
+    case 'hard': {
+      const hardLevelScore = 3;
+      levelScore = hardLevelScore;
+      return levelScore;
+    }
+    default:
+      return levelScore;
+    }
   }
 
-  async fetchQuestions() {
-    const token = localStorage.getItem('token');
-    const result = await fetchQuestionNAnswer(token);
-    this.setState({ questions: result, isLoading: false });
+  calculateScore() {
+    const { questions, questionIndex, counterInterval } = this.state;
+    const { scoreProps, addScoreAction, assertionsProps } = this.props;
+    const questionLevel = questions[questionIndex].difficulty;
+    const levelScore = 1;
+    const defaultPoint = 10;
+
+    this.getQuestionLevelScore(questionLevel, levelScore);
+
+    const totalScore = scoreProps + (defaultPoint + counterInterval * levelScore);
+
+    const assertions = assertionsProps + 1;
+
+    addScoreAction(totalScore, assertions);
+
+    this.setLocalStorage(totalScore, assertions);
   }
 
   countdown() {
@@ -68,41 +93,26 @@ class Questions extends Component {
       : this.setState({ counterInterval: 0, isDisabled: true });
   }
 
-  calculateScore() {
-    console.log('chamou a calculate');
-    const { questions, questionNumber, counterInterval } = this.state;
-    const { scoreProps, addScoreAction, assertionsProps } = this.props;
-    const questionLevel = questions[questionNumber].difficulty;
-    let levelScore = 1;
-    const hardLevelScore = 3;
-    const defaultPoint = 10;
+  async fetchQuestions() {
+    const token = localStorage.getItem('token');
+    const result = await fetchQuestionNAnswer(token);
+    this.setState({ questions: result, isLoading: false });
+  }
 
-    if (questionLevel === 'easy') {
-      levelScore = 1;
-    } else if (questionLevel === 'medium') {
-      levelScore = 2;
-    } else {
-      levelScore = hardLevelScore;
-    }
-
-    const totalScore = scoreProps + (defaultPoint + counterInterval * levelScore);
-    console.log(totalScore);
-
-    const assertions = assertionsProps + 1;
-
-    addScoreAction(totalScore, assertions);
-    this.setLocalStorage(totalScore, assertions);
+  resetCounter() {
+    const milisegundos = 1000;
+    this.setState({ counterInterval: 30, counter: 0 });
+    setInterval(this.countdown, milisegundos);
   }
 
   handleClick({ target }) {
-    console.log('click');
     this.setState({ isDisabled: true });
-    if (target.className === 'correct-answer') this.calculateScore();
+    return target.className === 'correct-answer' ? this.calculateScore() : 0;
   }
 
   handleClickNextQuestion() {
     this.setState((prevState) => ({ ...prevState,
-      questionNumber: prevState.questionNumber + 1 }));
+      questionIndex: prevState.questionIndex + 1 }));
     this.resetCounter();
     this.setState({ isDisabled: false });
   }
@@ -110,16 +120,16 @@ class Questions extends Component {
   render() {
     const { questions,
       isLoading,
-      questionNumber,
+      questionIndex,
       isDisabled,
       counterInterval } = this.state;
 
     if (isLoading) return <h1>Is Loading</h1>;
 
     const numberOfQuestions = 4;
-    if (questionNumber > numberOfQuestions) return <Redirect to="/feedback" />;
+    if (questionIndex > numberOfQuestions) return <Redirect to="/feedback" />;
 
-    const questionToLoad = questions[questionNumber];
+    const questionToLoad = questions[questionIndex];
 
     return (
       <div className="questions-display">
@@ -127,7 +137,7 @@ class Questions extends Component {
           <h2 className="timer">{`Timer: ${counterInterval}` }</h2>
         </div>
         <div>
-          <h1>{`Question: ${questionNumber + 1}`}</h1>
+          <h1>{`Question: ${questionIndex + 1}`}</h1>
           <h2 data-testid="question-category">{ questionToLoad.category }</h2>
           <h2 data-testid="question-text">{ questionToLoad.question }</h2>
           <button
