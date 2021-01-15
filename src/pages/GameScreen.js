@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { CustomHeader, CustomGame, CustomNextButton } from '../components';
-import { getStorage } from '../services/localStorage';
+import { CustomHeader, CustomGame, CustomNextButton, CustomTimer } from '../components';
+import { getStorage, countdown, stopTimer } from '../services';
 import { fetchTrivia } from '../actions';
 
 class GameScreen extends Component {
@@ -11,10 +11,12 @@ class GameScreen extends Component {
     this.state = {
       answered: false,
       count: 0,
-      stopTimer: false,
+      time: 30,
+      timeout: false,
     };
     this.submitAnswer = this.submitAnswer.bind(this);
     this.changeCount = this.changeCount.bind(this);
+    this.timerInit = this.timerInit.bind(this);
   }
 
   componentDidMount() {
@@ -22,22 +24,44 @@ class GameScreen extends Component {
     dispatchTrivia(getStorage('token'));
   }
 
+  componentDidUpdate() {
+    this.checkTimer();
+  }
+
+  checkTimer() {
+    const { time } = this.state;
+    if (time === 0) {
+      this.submitAnswer();
+    }
+  }
+
+  timerInit() {
+    clearInterval(this.timer);
+    this.timer = countdown((stop) => {
+      this.setState(({ time }) => (
+        time
+          ? { time: time - 1 }
+          : stop(this.timer)
+      ));
+    });
+  }
+
   submitAnswer() {
-    // this.changeSstyles();
-    this.setState({ answered: true, stopTimer: true });
+    this.setState({ answered: true, timeout: true, time: 30 }, stopTimer(this.timer));
   }
 
   changeCount() {
     const { count } = this.state;
     const { history } = this.props;
     const four = 4;
+    this.timerInit();
     if (count >= four) history.push('/feedback');
-    else this.setState({ count: count + 1, answered: false });
+    else this.setState({ count: count + 1, answered: false, timeout: false });
   }
 
   render() {
     const { name, email, trivia, loading } = this.props;
-    const { answered, count, stopTimer } = this.state;
+    const { answered, count, time, timeout } = this.state;
     return (
       <div>
         <CustomHeader name={ name } email={ email } />
@@ -51,7 +75,9 @@ class GameScreen extends Component {
               challenge={ trivia }
               correct={ this.submitAnswer }
               stopTimer={ stopTimer }
+              timeout={ timeout }
             />
+            <CustomTimer time={ time } timerInit={ this.timerInit } />
           </div>
         )}
         {answered && <CustomNextButton next={ this.changeCount } />}
@@ -69,7 +95,7 @@ const mapStateToProps = ({
   trivia,
   loading,
   loadingToken,
-  
+
 });
 const mapDispatchToProps = (dispatch) => ({
   dispatchTrivia: (a) => dispatch(fetchTrivia(a)),

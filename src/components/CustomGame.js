@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { CustomTimer } from '.';
 
 import '../App.css';
 
-const CustomGame = ({ challenge, correct, changeStyle, index, stopTimer }) => (
+const CustomGame = ({ challenge, correct, changeStyle, index, timeout }) => (
   <div>
     <h1 data-testid="question-category">{challenge[index].category}</h1>
     <h3 data-testid="question-text">{challenge[index].question}</h3>
@@ -14,6 +13,7 @@ const CustomGame = ({ challenge, correct, changeStyle, index, stopTimer }) => (
       key="correct"
       data-testid="correct-answer"
       className={ changeStyle ? 'correct' : '' }
+      disabled={ timeout }
     >
       {challenge[index].correct_answer}
     </button>
@@ -25,12 +25,12 @@ const CustomGame = ({ challenge, correct, changeStyle, index, stopTimer }) => (
         key="incorrect"
         data-testid={ `wrong-answer-${index1}` }
         className={ changeStyle ? 'incorrect' : '' }
+        disabled={ timeout }
       >
         {item}
       </button>
 
     ))}
-    <CustomTimer stopTimer={ stopTimer } />
 
   </div>
 );
