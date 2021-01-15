@@ -27,7 +27,6 @@ class Feedback extends Component {
 
     return (
       <>
-        <Header />
         <section data-testid="feedback-text">
           {FeedbackMsg(rightAnswers)}
           {rightAnswers < three ? <h1>Podia ser melhor...</h1> : <h1>Mandou bem!</h1>}

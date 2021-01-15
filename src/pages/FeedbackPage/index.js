@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
+import Header from '../../components/Header';
+import Feedback from '../../components/Feedback';
 
 class FeedbackPage extends Component {
   render() {
     return (
-      <h1 data-testid="feedback-text">Feedback Page</h1>
+      <>
+        <Header />
+        <Feedback />
+        {/* <h1 data-testid="feedback-text">Feedback Page</h1> */}
+      </>
     );
   }
 }
