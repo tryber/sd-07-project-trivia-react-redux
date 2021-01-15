@@ -20,14 +20,14 @@ class Timer extends Component {
   }
 
   setContagem() {
-    const { contagem, seconds } = this.state;
+    const { contagem } = this.state;
     const { secondsProps } = this.props;
     if (contagem > 0) {
       this.setState((anterior) => ({
         ...anterior,
         contagem: anterior.contagem - 1,
       }));
-      secondsProps(seconds);
+      secondsProps(contagem);
     } else {
       this.setState({
         contagem: 0,
