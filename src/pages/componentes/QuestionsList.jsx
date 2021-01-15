@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { changeScore } from '../../actions';
 
 class QuestionsList extends React.Component {
   constructor(props) {
@@ -16,6 +18,8 @@ class QuestionsList extends React.Component {
 
     this.shuffle = this.shuffle.bind(this);
     this.mountArrayOfAnswer = this.mountArrayOfAnswer.bind(this);
+    this.scoreCalculete = this.scoreCalculete.bind(this);
+    this.wrongAnswer = this.wrongAnswer.bind(this);
     this.handleButton = this.handleButton.bind(this);
     this.answers = this.answers.bind(this);
     this.nextQuestion = this.nextQuestion.bind(this);
@@ -24,9 +28,11 @@ class QuestionsList extends React.Component {
   componentDidMount() {
     const { disableButton } = this.state;
     let { time } = this.state;
+    const initialScore = 0;
     const interval = 1000;
     const timeOut = 30000;
     this.mountArrayOfAnswer();
+    localStorage.setItem('playerScore', initialScore);
     setInterval(() => {
       if (!disableButton && time > 0) {
         this.setState({ time: (time -= 1) });
@@ -55,6 +61,42 @@ class QuestionsList extends React.Component {
     const array = [correct, ...incorrect];
     const randomArray = this.shuffle(array);
     this.setState({ array: randomArray });
+  }
+
+  scoreCalculete() {
+    this.handleButton();
+    const { time } = this.state;
+    let difficultyNum = 0;
+    const { question, dispatchScore, name, gravatarEmail, assertions } = this.props;
+    const scoreStorege = localStorage.getItem('playerScore');
+    const pointForHit = 10;
+    const timer = time;
+
+    if (question.results[0].difficulty === 'easy') {
+      const levelDifficult = 1;
+      difficultyNum = levelDifficult;
+    }
+
+    if (question.results[0].difficulty === 'medium') {
+      const levelDifficult = 2;
+      difficultyNum = levelDifficult;
+    }
+    if (question.results[0].difficulty === 'hard') {
+      const levelDifficult = 3;
+      difficultyNum = levelDifficult;
+    }
+    const newScore = parseInt(scoreStorege, 10) + pointForHit + (timer * difficultyNum);
+
+    localStorage.setItem('playerScore', newScore);
+
+    localStorage.setItem('state', JSON
+      .stringify({ player: { name, assertions, score: newScore, gravatarEmail } }));
+    dispatchScore(newScore);
+  }
+
+  wrongAnswer() {
+    this.handleButton();
+    console.log('Game Over :(');
   }
 
   answers() {
@@ -101,10 +143,10 @@ class QuestionsList extends React.Component {
             return (
               <button
                 className={ nameClassCorrect }
-                onClick={ this.handleButton }
-                disabled={ disableButton }
                 type="button"
                 data-testid="correct-answer"
+                disabled={ disableButon }
+                onClick={ this.scoreCalculete }
               >
                 { answers }
               </button>
@@ -113,12 +155,12 @@ class QuestionsList extends React.Component {
           index += 1;
           return (
             <button
-              onClick={ this.handleButton }
               className={ nameClassWrong }
-              disabled={ disableButton }
               key={ index }
               type="button"
               data-testid={ `wrong-answer-${index}` }
+              onClick={ this.wrongAnswer }
+              disabled={ disableButon }
             >
               { answers }
             </button>
@@ -162,4 +204,18 @@ QuestionsList.propTypes = {
   }),
 }.isRequired;
 
-export default QuestionsList;
+const mapDispatchToProps = (dispatch) => ({
+  dispatchScore: (score) => dispatch(changeScore(score)),
+});
+
+const mapStateToProps = (state) => ({
+  name: state.player.name,
+  assertions: state.player.assertions,
+  score: state.player.score,
+  gravatarEmail: state.player.gravatarEmail,
+  loading: state.player.loading,
+  token: state.player.token,
+  question: state.player.question,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(QuestionsList);

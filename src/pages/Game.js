@@ -16,8 +16,17 @@ class Game extends React.Component {
   }
 
   componentDidMount() {
-    const { requestQuestions } = this.props;
+    const { requestQuestions, name, score, email } = this.props;
+    const objPlayer = {
+      player: {
+        name,
+        assertions: '',
+        score,
+        gravatarEmail: email,
+      },
+    };
     requestQuestions(localStorage.token);
+    localStorage.setItem('state', JSON.stringify(objPlayer));
   }
 
   nextQuestion(index) {
@@ -50,18 +59,20 @@ class Game extends React.Component {
 }
 
 Game.propTypes = {
-  name: PropTypes.string,
-  assertions: PropTypes.string,
-  score: PropTypes.number,
-  gravatarEmail: PropTypes.bool,
-  loading: PropTypes.number,
-  token: PropTypes.string,
-  question: PropTypes.shape({
-    results: PropTypes.arrayOf(PropTypes.string),
-    question: PropTypes.string,
-    correct_answer: PropTypes.string,
-    incorrect_answers: PropTypes.arrayOf(PropTypes.string),
-  }),
+  player: PropTypes.shape({
+    name: PropTypes.string,
+    assertions: PropTypes.string,
+    score: PropTypes.number,
+    gravatarEmail: PropTypes.bool,
+    loading: PropTypes.number,
+    token: PropTypes.string,
+    question: PropTypes.shape({
+      results: PropTypes.arrayOf(PropTypes.string),
+      question: PropTypes.string,
+      correct_answer: PropTypes.string,
+      incorrect_answers: PropTypes.arrayOf(PropTypes.string),
+    }),
+  }).isRequired,
 }.isRequired;
 
 const mapDispatchToProps = (dispatch) => ({
