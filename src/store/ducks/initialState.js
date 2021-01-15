@@ -5,11 +5,15 @@ const INITIAL_STATE = {
       assertions: 0,
       score: 0,
       gravatarEmail: '',
+      picture: '',
     },
     isLoading: false,
     gravatarProfile: {},
   },
-  /* ranking: [], */
+  ranking: {
+    ranking: [],
+    nextIndex: 0,
+  },
   triviaToken: {
     token: '',
     isLoading: false,
