@@ -14,6 +14,19 @@ class Login extends React.Component {
     this.handleInput = this.handleInput.bind(this);
     this.verifyLogin = this.verifyLogin.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.fillLocalStorage = this.fillLocalStorage.bind(this);
+  }
+
+  fillLocalStorage() {
+    console.log('login');
+    console.log(this.state.name);
+    const player = {
+      name: this.state.name,
+      assertions: 0,
+      score: 0,
+      gravatarEmail: '',
+    };
+    localStorage.setItem('state', JSON.stringify({ player }));
   }
 
   handleInput({ target }) {
@@ -35,6 +48,7 @@ class Login extends React.Component {
     const { history } = this.props;
     const { email, name } = this.state;
     const { getUserProps, getToken } = this.props;
+    this.fillLocalStorage();
     const responseToken = await getToken();
     getUserProps(email, name);
     history.push('/game');
