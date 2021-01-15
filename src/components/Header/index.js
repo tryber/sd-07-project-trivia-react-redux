@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 const Header = ({ name, email, score }) => (
-  <div>
+  <header>
     <img
       src={ `https://www.gravatar.com/avatar/${md5(email)}` }
       alt={ `Imagem de ${name}` }
@@ -12,7 +12,7 @@ const Header = ({ name, email, score }) => (
     />
     <span data-testid="header-player-name">{name}</span>
     <span data-testid="header-score">{score}</span>
-  </div>
+  </header>
 );
 
 const mapStateToProps = (state) => ({

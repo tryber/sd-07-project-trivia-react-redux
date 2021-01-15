@@ -2,18 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Header, FeedbackMessage } from '../../components';
+import { Header, FeedbackMessage, HomeButton } from '../../components';
 
 const Feedback = ({ score, assertions }) => (
   <div>
-    <header>
-      <Header />
-    </header>
+    <Header />
     <h1>Tela de Feedback</h1>
     <FeedbackMessage score={ score } assertions={ assertions } />
-    <Link to="/">
-      <button type="button" data-testid="btn-play-again">Jogar novamente</button>
-    </Link>
+    <HomeButton test="btn-play-again" />
     <Link to="/ranking">
       <button type="button" data-testid="btn-ranking">Ver Ranking</button>
     </Link>
