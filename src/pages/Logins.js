@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { requestToken, changeName, changeGravatarEmail } from '../actions';
+import { requestToken, changeName, changeGravatarEmail, changeScore } from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -22,7 +22,8 @@ class Login extends React.Component {
 
   handleInputs({ target }) {
     const { value, name } = target;
-    const { newName, changeEmail } = this.props;
+    const { newName, changeEmail, setScore } = this.props;
+    const score = 0;
     this.setState({ [name]: value }, () => {
       const { email, name: nameState } = this.state;
       const validacaoByStackOf = /[\w.-]+@[\w-]+\.[\w-.]+/gi;
@@ -30,6 +31,7 @@ class Login extends React.Component {
       this.matchingEmail(matchEmail);
       newName(nameState);
       changeEmail(email);
+      setScore(score);
     });
   }
 
@@ -47,7 +49,7 @@ class Login extends React.Component {
   startGame() {
     const { requestAPI, history } = this.props;
     const { name, email } = this.state;
-    const noMagicNumber = 1000;
+    const noMagicNumber = 2000;
     changeName(name);
     changeGravatarEmail(email);
     requestAPI();
@@ -99,6 +101,7 @@ const mapDispatchToProps = (dispatch) => ({
   requestAPI: () => dispatch(requestToken()),
   changeEmail: (email) => dispatch(changeGravatarEmail(email)),
   newName: (name) => dispatch(changeName(name)),
+  setScore: (score) => dispatch(changeScore(score)),
 });
 
 const mapStateToProps = (state) => ({
@@ -115,6 +118,7 @@ Login.propTypes = {
   newName: PropTypes.func.isRequired,
   changeEmail: PropTypes.func.isRequired,
   history: PropTypes.string.isRequired,
+  setScore: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

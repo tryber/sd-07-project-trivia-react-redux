@@ -1,8 +1,10 @@
 const initialState = {
-  name: '',
-  assertions: '',
-  score: 0,
-  gravatarEmail: '',
+  player: {
+    name: '',
+    assertions: '',
+    score: 0,
+    gravatarEmail: '',
+  },
   loading: false,
   question: {
     results: [{
