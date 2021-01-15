@@ -17,6 +17,7 @@ class HomeButton extends React.Component {
           ? <Redirect to={ redirect } />
           : (
             <button
+              className="ui medium button"
               type="button"
               data-testid="btn-go-home"
               onClick={ () => this.setState({ redirect: '/' }) }

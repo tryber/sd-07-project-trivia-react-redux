@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import 'semantic-ui-css/semantic.min.css';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import '../css/header.css';
 import { login, userEmail, getToken } from '../actions';
 
 class Login extends Component {
@@ -39,13 +41,27 @@ class Login extends Component {
     history.push('/play');
   }
 
+  // <div>
+  //   <div class="ui icon input">
+  //     <input type="text" placeholder="Search..."/>
+  //       <i aria-hidden="true" class="search icon" /i>
+  //   </div>
+  //   <br/>
+  //   <br/>
+  // <div class="ui left icon input">
+  //   <i aria-hidden="true" class="at icon" />
+  //     <input type="text" placeholder="Email"/>
+  //   </div>
+  // </div>
+
   render() {
     const { name, email, auth } = this.state;
     return (
-      <div>
-        <label htmlFor="input-name">
-          Nome:
+      <div className="centralizando">
+        <div className="ui left icon input">
+          <i aria-hidden="true" className="users icon" />
           <input
+            type="text"
             id="input-name"
             placeholder="Seu nome"
             name="name"
@@ -53,34 +69,40 @@ class Login extends Component {
             data-testid="input-player-name"
             onChange={ (event) => this.handleChange(event) }
           />
-        </label>
-        <label htmlFor="input-email">
-          Email:
+        </div>
+        <div className="ui left icon input">
+          <i aria-hidden="true" className="at icon" />
           <input
+            type="text"
             id="input-email"
-            placeholder="seu@email.com"
+            placeholder="Email"
             name="email"
             value={ email }
             data-testid="input-gravatar-email"
             onChange={ (event) => this.handleChange(event) }
           />
-        </label>
-        <button
-          data-testid="btn-play"
-          type="button"
-          onClick={ this.click }
-          disabled={ !auth }
-        >
-          Jogar
-        </button>
-        <Link to="/settings">
+        </div>
+        <div>
+          <br />
           <button
-            data-testid="btn-settings"
+            className="ui medium button"
+            data-testid="btn-play"
             type="button"
+            onClick={ this.click }
+            disabled={ !auth }
           >
-            Settings
+            Jogar
           </button>
-        </Link>
+          <Link to="/settings">
+            <button
+              className="ui medium button"
+              data-testid="btn-settings"
+              type="button"
+            >
+              Settings
+            </button>
+          </Link>
+        </div>
       </div>
     );
   }
