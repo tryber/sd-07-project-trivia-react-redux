@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import './Score.css';
 
 class Score extends Component {
   render() {
@@ -30,6 +31,7 @@ class Score extends Component {
     }
 
     return (
+
       <div className="score-grid">
         <div className="score-header">
           <img src={ picture } data-testid="header-profile-picture" alt="gravatar" />
@@ -39,29 +41,30 @@ class Score extends Component {
           <p data-testid="header-score">
             { score }
           </p>
-        </div>
-        <div className="score-notice">
-          <p data-testid="feedback-text">
-            { assertionMessage }
-          </p>
-          <p data-testid="feedback-total-score">
-            { score }
-          </p>
-          <p data-testid="feedback-total-question">
-            { assertions }
-          </p>
-        </div>
-        <div className="score-buttons">
-          <button type="button" data-testid="btn-play-again">
-            <Link to="/" className="btn">
-              Play Again
-            </Link>
-          </button>
-          <button type="button" data-testid="btn-ranking">
-            <Link to="/ranking" className="btn">
-              Ranking
-            </Link>
-          </button>
+
+          <div className="score-notice">
+            <p data-testid="feedback-text">
+              { assertionMessage }
+            </p>
+            <p data-testid="feedback-total-score">
+              { score }
+            </p>
+            <p data-testid="feedback-total-question">
+              { assertions }
+            </p>
+          </div>
+          <div className="score-buttons">
+            <button type="button" data-testid="btn-play-again" className="button">
+              <Link to="/" className="btn">
+                Play Again
+              </Link>
+            </button>
+            <button type="button" data-testid="btn-ranking" className="button">
+              <Link to="/ranking" className="btn">
+                Ranking
+              </Link>
+            </button>
+          </div>
         </div>
       </div>
     );
