@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export default function CustomNextButton({ next }) {
   return (
@@ -9,3 +10,6 @@ export default function CustomNextButton({ next }) {
     </div>
   );
 }
+CustomNextButton.propTypes = {
+  next: PropTypes.func.isRequired,
+};
