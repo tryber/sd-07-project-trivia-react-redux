@@ -100,6 +100,18 @@
   padding: 10px;
 }
 
+.btn-actions-correct {
+  border: 3px solid rgb(6, 240, 15);
+}
+
+.btn-actions-wrong {
+  border: 3px solid red;
+}
+
+.btn-actions:focus, .btn-actions-correct:focus, .btn-actions-wrong:focus {
+  outline: none;
+}
+
 .btn-actions:hover {
   box-shadow: 1px 1px 4px rgba(11, 148, 182, 0.63);
 }
