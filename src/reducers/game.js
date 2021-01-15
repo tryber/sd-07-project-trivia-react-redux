@@ -4,6 +4,7 @@ import {
   FETCH_QUESTIONS_SUCCESS,
   EMAIL_HASH,
   UPDATE_ASSERTIONS,
+  UPDATE_RANDOM_ANSWERS,
 } from '../actions';
 
 const INITIAL_STATE = {
@@ -12,6 +13,8 @@ const INITIAL_STATE = {
   questions: {},
   assertions: 0,
   hash: '',
+  randomAnswers: [],
+  sorted: false,
 };
 
 const gameReducer = (state = INITIAL_STATE, action) => {
@@ -33,6 +36,11 @@ const gameReducer = (state = INITIAL_STATE, action) => {
   case UPDATE_ASSERTIONS:
     return { ...state,
       assertions: state.assertions + 1,
+    };
+  case UPDATE_RANDOM_ANSWERS:
+    return { ...state,
+      randomAnswers: action.payload.randomAnswers,
+      sorted: action.payload.sorted,
     };
   default:
     return state;

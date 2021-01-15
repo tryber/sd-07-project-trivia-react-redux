@@ -28,6 +28,10 @@ export const fetchQuestionsSuccess = (payload) => (
 export const UPDATE_ASSERTIONS = 'UPDATE_ASSERTIONS';
 export const updateAssertions = () => ({ type: UPDATE_ASSERTIONS });
 
+export const UPDATE_RANDOM_ANSWERS = 'UPDATE_RANDOM_ANSWERS';
+export const updateRandomAnswers = (payload) => (
+  { type: UPDATE_RANDOM_ANSWERS, payload });
+
 export function fetchToken() {
   return async (dispatch) => {
     try {
