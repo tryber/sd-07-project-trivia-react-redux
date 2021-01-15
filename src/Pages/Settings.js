@@ -1,6 +1,6 @@
 import React from 'react';
 
-class Config extends React.Component {
+class Settings extends React.Component {
   render() {
     return (
       <div>
@@ -10,4 +10,4 @@ class Config extends React.Component {
   }
 }
 
-export default Config;
+export default Settings;
