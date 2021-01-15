@@ -43,14 +43,14 @@ class Feedback extends Component {
             data-testid="btn-ranking"
             onClick={ this.goToRaking }
           >
-            VER RANKING
+            Ver ranking
           </button>
           <button
             type="button"
             data-testid="btn-play-again"
             onClick={ this.goToLogin }
           >
-            JOGAR NOVAMENTE
+            Jogar novamente
           </button>
         </div>
       </div>
