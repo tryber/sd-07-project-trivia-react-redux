@@ -29,7 +29,13 @@ export const UPDATE_ASSERTIONS = 'UPDATE_ASSERTIONS';
 export const updateAssertions = () => ({ type: UPDATE_ASSERTIONS });
 
 export const UPDATE_SCORE = 'UPDATE_SCORE';
-export const updateScore = () => ({ type: UPDATE_SCORE });
+export const updateScore = (timer, difficulty) => {
+  console.log('ACTION', difficulty);
+  return {
+    type: UPDATE_SCORE,
+    payload: { timer, difficulty },
+  };
+};
 
 export function fetchToken() {
   return async (dispatch) => {
@@ -37,6 +43,8 @@ export function fetchToken() {
       dispatch(requestStarted());
       const fetchAPI = await fetch('https://opentdb.com/api_token.php?command=request');
       const token = await fetchAPI.json();
+      localStorage.setItem('token', token.token);
+      console.log(token);
       dispatch(tokenRequest(token));
     } catch (erro) {
       dispatch(requestFail());

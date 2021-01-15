@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchQuestions, updateScore } from '../actions';
+import { fetchQuestions, updateScore, updateAssertions } from '../actions';
 import GameHeader from '../components/GameHeader';
 import '../style/game.css';
 
@@ -19,13 +19,14 @@ class Game extends React.Component {
     this.handleNext = this.handleNext.bind(this);
     this.timeOut = this.timeOut.bind(this);
     this.disableQuestion = this.disableQuestion.bind(this);
+    this.playerLocalStorage = this.playerLocalStorage.bind(this);
   }
 
   async componentDidMount() {
     this.timeOut();
     const { requestQuestions, token } = this.props;
     await requestQuestions(token);
-    console.log(token);
+    this.playerLocalStorage();
   }
 
   shuffle(answers) {
@@ -36,16 +37,18 @@ class Game extends React.Component {
     return answers;
   }
 
-  handleAnswer({ target: { name } }) {
-    const { assertionsAction } = this.props;
+  async handleAnswer({ target: { name } }, difficulty) {
+    console.log('handle', difficulty);
+    const { assertionsAction, scoreAction } = this.props;
+    const { timer } = this.state;
     const answerButtons = document.querySelectorAll('.hidden');
     answerButtons.forEach((button) => button.classList.remove('hidden'));
     if (name === 'correct') {
-      assertionsAction();
+      await scoreAction(timer, difficulty);
+      await assertionsAction();
     }
-    this.setState({
-      nextQuestion: true,
-    });
+    this.setState({ nextQuestion: true });
+    this.playerLocalStorage();
   }
 
   handleNext() {
@@ -55,7 +58,6 @@ class Game extends React.Component {
       this.setState((prevSate) => ({
         currentQuestion: prevSate.currentQuestion + 1,
         nextQuestion: false,
-        timeLeft: prevSate.timer,
         timer: 30,
       }));
     } else {
@@ -65,6 +67,7 @@ class Game extends React.Component {
 
   disableQuestion() {
     const { timer } = this.state;
+    console.log('disableQuestion');
     if (timer <= 0) {
       this.setState({ disabledTimeOut: true });
     }
@@ -72,6 +75,7 @@ class Game extends React.Component {
 
   timeOut() {
     const ONE_SEC = 1000;
+    console.log('timeOut');
     setInterval(() => {
       this.setState(
         (state) => ({
@@ -82,6 +86,19 @@ class Game extends React.Component {
     }, ONE_SEC);
   }
 
+  playerLocalStorage() {
+    const { name, assertions, email, score } = this.props;
+    const state = {
+      player: {
+        name,
+        assertions,
+        score,
+        gravatarEmail: email,
+      },
+    };
+    localStorage.setItem('state', JSON.stringify(state));
+  }
+
   render() {
     const { questions } = this.props;
     const { currentQuestion, nextQuestion, timer, disabledTimeOut } = this.state;
@@ -90,35 +107,42 @@ class Game extends React.Component {
     const {
       correct_answer: correctAnswer,
       incorrect_answers: incorrectAnswers,
+      difficulty,
     } = question;
     const answers = [correctAnswer, ...incorrectAnswers];
     const taggedAnswers = question.type !== 'boolean' ? [{
       correct: true,
       answer: answers[0],
+      difficulty,
     },
     {
       correct: false,
       answer: answers[1],
       index: 0,
+      difficulty,
     },
     {
       correct: false,
       answer: answers[2],
       index: 1,
+      difficulty,
     },
     {
       correct: false,
       answer: answers[3],
       index: 2,
+      difficulty,
     }]
       : [{
         correct: true,
         answer: answers[0],
+        difficulty,
       },
       {
         correct: false,
         answer: answers[1],
         index: 0,
+        difficulty,
       }];
     const randomAnswers = this.shuffle(taggedAnswers);
     return (
@@ -142,11 +166,10 @@ class Game extends React.Component {
               data-testid={ answer.correct
                 ? 'correct-answer'
                 : `wrong-answer-${answer.index}` }
-              onClick={ (e) => this.handleAnswer(e) }
+              onClick={ (e) => this.handleAnswer(e, answer.difficulty) }
               disabled={ disabledTimeOut }
             >
               {answer.answer}
-
             </button>
           ))}
           <button
@@ -154,6 +177,7 @@ class Game extends React.Component {
             data-testid="btn-next"
             onClick={ this.handleNext }
             style={ nextQuestion ? { visibility: 'visible' } : { visibility: 'hidden' } }
+            disabled={ disabledTimeOut }
           >
             Próxima pergunta
           </button>
@@ -174,17 +198,27 @@ Game.propTypes = {
   requestQuestions: PropTypes.func.isRequired,
   assertionsAction: PropTypes.func.isRequired,
   token: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  email: PropTypes.string.isRequired,
+  assertions: PropTypes.number.isRequired,
+  score: PropTypes.number.isRequired,
+  scoreAction: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
   requestQuestions: (questions) => dispatch(fetchQuestions(questions)),
-  assertionsAction: () => dispatch(updateScore()),
+  assertionsAction: () => dispatch(updateAssertions()),
+  scoreAction: (payload, difficulty) => dispatch(updateScore(payload, difficulty)),
 });
 
 const mapStateToProps = (state) => ({
   isLoading: state.game.isLoading,
   questions: state.game.questions.results,
   token: state.login.token,
+  name: state.login.name,
+  email: state.login.email,
+  score: state.game.score,
+  assertions: state.game.assertions,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);

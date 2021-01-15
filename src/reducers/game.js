@@ -11,9 +11,33 @@ const INITIAL_STATE = {
   isLoading: false,
   error: '',
   questions: {},
+  assertions: 0,
   score: 0,
   hash: '',
+  timeLeft: 0,
+  difficulty: null,
 };
+
+function updateScoreFunc(state, action) {
+  const { payload } = action;
+  const { difficulty } = payload;
+  const { timer } = payload;
+  const level = {
+    hard: {
+      value: 3,
+    },
+    medium: {
+      value: 2,
+    },
+    easy: {
+      value: 1,
+    },
+  };
+  const count = 10;
+  const totalScore = count + (level[difficulty].value * timer);
+  console.log(totalScore);
+  return { ...state, score: state.score + totalScore };
+}
 
 const gameReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
@@ -32,22 +56,7 @@ const gameReducer = (state = INITIAL_STATE, action) => {
       questions: action.payload,
     };
   case UPDATE_SCORE:
-    // const point = 10 *
-    // 10 + (timer * dificuldade)
-    return { ...state };
-  // score: [...state.score, action.payload],
-  // playerLocalStorage() {
-  //   const { name, assertions, email, score } = this.state;
-  //   console.log(name)
-  //   localStorage.setItem('token', token);
-  //   history.push('/game');
-  //   player: {
-  //     name,
-  //     assertions,
-  //     score,
-  //     gravatarEmail
-  //   }
-  // }
+    return updateScoreFunc(state, action);
   case UPDATE_ASSERTIONS:
     return { ...state,
       assertions: state.assertions + 1,
