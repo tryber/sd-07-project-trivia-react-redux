@@ -21,6 +21,15 @@ class Questions extends Component {
   handleClass() {
     const { disableButton, next } = this.props;
     const maxQuestion = 4;
+    this.handleClass = this.handleClass.bind(this);
+    this.randomChoice = this.randomChoice.bind(this);
+    this.state = {
+      green: '',
+      red: '',
+    };
+  }
+
+  handleClass() {
     this.setState({
       green: 'green',
       red: 'red',
@@ -43,6 +52,7 @@ class Questions extends Component {
     const correta = (
       <button
         type="button"
+        key="correct"
         className={ green }
         data-testid="correct-answer"
         onClick={ (event) => this.handleClass(event) }
