@@ -4,6 +4,17 @@ import PropTypes from 'prop-types';
 import { Header } from '../../components';
 
 class Feedback extends Component {
+  constructor() {
+    super();
+
+    this.clickPlayAgain = this.clickPlayAgain.bind(this);
+  }
+
+  clickPlayAgain() {
+    const { history } = this.props;
+    history.push('/');
+  }
+
   render() {
     const RULE_ASSERTIONS = 3;
     const { assertions, score } = this.props;
@@ -23,6 +34,13 @@ class Feedback extends Component {
           <span data-testid="feedback-total-score">{score || '0'}</span>
           {' pontos'}
         </h2>
+        <button
+          type="button"
+          data-testid="btn-play-again"
+          onClick={ () => this.clickPlayAgain() }
+        >
+          Play Again
+        </button>
       </>
     );
   }
@@ -31,7 +49,9 @@ class Feedback extends Component {
 Feedback.propTypes = {
   assertions: PropTypes.number.isRequired,
   score: PropTypes.number.isRequired,
-
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 const mapStateToProps = (state) => ({
