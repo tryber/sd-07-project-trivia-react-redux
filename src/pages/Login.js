@@ -27,13 +27,6 @@ class Login extends Component {
     history.push('/settings');
   }
 
-  // async setToken() {
-  //   const { token } = this.state;
-  //   this.setState({
-  //     token: token.token,
-  //   });
-  // }
-
   getHash() {
     const { email } = this.state;
     const { getHashAction } = this.props;
@@ -101,14 +94,10 @@ Login.propTypes = {
   }).isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  questions: state.questionsReducer.questions,
-});
-
 const mapDispatchToProps = (dispatch) => ({
   fetchTokenAction: () => dispatch(fetchToken()),
   userLogin: (email, name) => dispatch(login(email, name)),
   getHashAction: (hash) => dispatch(hashAction(hash)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(null, mapDispatchToProps)(Login);

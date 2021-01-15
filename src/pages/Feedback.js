@@ -15,7 +15,7 @@ class Feedback extends Component {
       <div>
         <h1>FeedBack</h1>
         <Header />
-        <Link to="/settings">
+        <Link to="/ranking">
           <button
             type="button"
             data-testiid="btn-ranking"

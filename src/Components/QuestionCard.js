@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import fetchQuestions from '../services/api';
 
@@ -9,9 +10,11 @@ class QuestionCard extends Component {
     this.state = {
       indexQuestion: 0,
       buttonColorVisible: false,
+      disableButton: false,
       seconds: 30,
       questions: [],
       isLoading: true,
+      lastQuestion: false,
     };
     this.timer = 0;
     this.oneQuestion = this.oneQuestion.bind(this);
@@ -23,16 +26,16 @@ class QuestionCard extends Component {
   }
 
   componentDidMount() {
-    // this.startTimer();
+    this.startTimer();
     this.getQuestions();
   }
 
   oneQuestion(indexQuestion) {
-    const { buttonColorVisible, questions } = this.state;
+    const { buttonColorVisible, questions, disableButton, lastQuestion } = this.state;
     const options = [...questions[indexQuestion].incorrect_answers,
       questions[indexQuestion].correct_answer].sort();
     console.log(questions);
-
+    if (lastQuestion) return <Redirect to="/feedback" />;
     return (
       <div>
         <div key={ Math.random() }>
@@ -56,10 +59,19 @@ class QuestionCard extends Component {
                 value={ answer === questions[indexQuestion].correct_answer
                   ? 'correct' : 'incorrect' }
                 type="button"
+                disabled={ disableButton }
                 onClick={ () => this.answerAnalyze() }
               >
                 { answer }
               </button>))}
+          <button
+            data-testid="btn-next"
+            type="button"
+            hidden={ !disableButton }
+            onClick={ () => this.clickNextQuestion() }
+          >
+            Next Question
+          </button>
         </div>
       </div>
     );
@@ -93,11 +105,29 @@ class QuestionCard extends Component {
     // Check if we're at zero.
     if (seconds === 0) {
       clearInterval(this.timer);
+      this.setState({ disableButton: true });
     }
   }
 
   answerAnalyze() {
-    this.setState({ buttonColorVisible: true });
+    this.setState({
+      buttonColorVisible: true,
+      disableButton: true,
+    });
+  }
+
+  clickNextQuestion() {
+    const { indexQuestion } = this.state;
+    const lastQuestionIndex = 4;
+
+    if (indexQuestion < lastQuestionIndex) {
+      this.setState({
+        indexQuestion: indexQuestion + 1,
+        seconds: 30,
+        disableButton: false,
+        buttonColorVisible: false,
+      });
+    } else this.setState({ lastQuestion: true });
   }
 
   render() {
@@ -124,7 +154,6 @@ QuestionCard.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  questions: state.questionsReducer.questions,
   token: state.tokenReducer.token,
 });
 
