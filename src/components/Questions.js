@@ -10,6 +10,8 @@ class Questions extends React.Component {
     this.state = {
       buttonCorrect: '',
       buttonError: '',
+      counter: 0,
+      buttonDisable: false,
     };
 
     this.givesIfTrue = this.givesIfTrue.bind(this);
@@ -26,40 +28,63 @@ class Questions extends React.Component {
     this.setState({
       buttonCorrect: 'correct',
       buttonError: 'wrong-answer',
+      buttonDisable: true,
     });
   }
 
   givesIfFalse(question) {
-    const { buttonCorrect, buttonError } = this.state;
+    const { buttonCorrect, buttonError, buttonDisable } = this.state;
+    const answers = [...question.incorrect_answers, question.correct_answer];
+    const sortAnswers = answers
+      .map((answer, index) => {
+        if (answer === question.correct_answer) {
+          return (
+            <button
+              key={ answer }
+              type="button"
+              disabled={ buttonDisable }
+              data-testid="correct-answer"
+              className={ buttonCorrect }
+              onClick={ this.borderButton }
+            >
+              { answer }
+            </button>
+          );
+        }
+        return (
+          <button
+            key={ answer }
+            type="button"
+            disabled={ buttonDisable }
+            data-testid={ `wrong-answer-${index}` }
+            className={ buttonError }
+            onClick={ this.borderButton }
+          >
+            { answer }
+          </button>
+        );
+      })
+      .sort(() => {
+        const magicNumber = 0.5;
+        return Math.random() - magicNumber;
+      });
+
     return (
       <div>
         <div data-testid="question-category">{question.category}</div>
         <div>
           Pergunta:
-          <div data-testid="question-text">{ question.question }</div>
+          <div data-testid="question-text">{question.question}</div>
         </div>
         <div>
           Alternativas:
-          <button
-            className={ buttonCorrect }
-            type="button"
-            data-testid="correct-answer"
-            onClick={ this.borderButton }
-          >
-            { question.correct_answer }
-          </button>
-          { question.incorrect_answers.map((wrong, index) => (
-            <button
-              className={ buttonError }
-              key={ index }
-              type="button"
-              data-testid={ `wrong-answer-${index}` }
-              onClick={ this.borderButton }
-            >
-              { wrong }
-            </button>
-          ))}
+          {sortAnswers}
         </div>
+        <button
+          type="button"
+        >
+          Próxima Pergunta
+        </button>
       </div>
     );
   }
@@ -70,9 +95,10 @@ class Questions extends React.Component {
 
   render() {
     const { questions } = this.props;
+    const { counter } = this.state;
     return questions === undefined || questions.length === 0
       ? this.givesIfTrue()
-      : this.givesIfFalse(questions[0]);
+      : this.givesIfFalse(questions[counter]);
   }
 }
 
