@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Question from '../Question';
+import NextButton from '../NextButton';
 
 import './questionList.css';
 import { gameActions } from '../../actions';
@@ -13,10 +14,12 @@ class QuestionsList extends Component {
       clicked: false,
       score: 0,
       assertions: 0,
+      question: 0,
     };
 
     this.calculateScore = this.calculateScore.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.nextQuestion = this.nextQuestion.bind(this);
   }
 
   componentDidUpdate() {
@@ -58,20 +61,27 @@ class QuestionsList extends Component {
     this.setState({ score, assertions });
   }
 
+  nextQuestion() {
+    const { resetTimer } = this.props;
+    resetTimer();
+    this.setState((prev) => ({ question: prev.question + 1, clicked: false }));
+  }
+
   render() {
     const { list, count } = this.props;
-    const { clicked } = this.state;
+    const { clicked, question } = this.state;
 
     if (!list[0]) return <h1>...Carregando</h1>;
 
     return (
       <div>
         <Question
-          listObjct={ list[0] }
+          listObjct={ list[question] }
           clicked={ clicked }
           count={ count }
           handleClick={ this.handleClick }
         />
+        { clicked && <NextButton nextQuestion={ this.nextQuestion } />}
       </div>
     );
   }
@@ -94,6 +104,7 @@ QuestionsList.propTypes = {
   count: PropTypes.number.isRequired,
   upScore: PropTypes.func.isRequired,
   stopTimer: PropTypes.func.isRequired,
+  resetTimer: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(QuestionsList);
