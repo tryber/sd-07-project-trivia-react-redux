@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import './index.css';
+import { Redirect } from 'react-router-dom';
 import { addScore, getQuestions } from '../../redux/actions/gameActions';
 
 class GameScreen extends Component {
@@ -243,7 +244,8 @@ class GameScreen extends Component {
 
   render() {
     const { playerEmail, playerName, assertions, scoreSession } = this.props;
-    const { solved } = this.state;
+    const { solved, actual } = this.state;
+    const limitQuest = 4;
     const player = {
       name: playerName,
       assertions,
@@ -254,6 +256,9 @@ class GameScreen extends Component {
     localStorage.setItem('state', JSON.stringify({ player }));
 
     const { timer } = this.state;
+
+    if (actual > limitQuest) return <Redirect to="/feedback" />;
+
     return (
       <>
         <p data-testid="question-category">Categoria</p>
