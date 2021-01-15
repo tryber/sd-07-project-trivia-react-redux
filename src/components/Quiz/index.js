@@ -57,8 +57,10 @@ class Quiz extends React.Component {
     const buttonNext = document.querySelector('.button-next-deactive');
     buttonNext.className = 'button-next-active';
     rightAnswer.className = 'correct-answer';
+    rightAnswer.setAttribute('disabled', 'disabled');
     incorrectAnswers.forEach((incorrectAnswer) => {
       incorrectAnswer.className = 'incorrect-answer';
+      incorrectAnswer.setAttribute('disabled', 'disabled');
     });
     if (rightAnswer === event.target) {
       this.setScore();
