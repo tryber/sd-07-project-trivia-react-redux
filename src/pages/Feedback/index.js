@@ -8,11 +8,17 @@ class Feedback extends Component {
     super();
 
     this.clickPlayAgain = this.clickPlayAgain.bind(this);
+    this.clickRanking = this.clickRanking.bind(this);
   }
 
   clickPlayAgain() {
     const { history } = this.props;
     history.push('/');
+  }
+
+  clickRanking() {
+    const { history } = this.props;
+    history.push('/ranking');
   }
 
   render() {
@@ -40,6 +46,13 @@ class Feedback extends Component {
           onClick={ () => this.clickPlayAgain() }
         >
           Play Again
+        </button>
+        <button
+          type="button"
+          data-testid="btn-ranking"
+          onClick={ () => this.clickRanking() }
+        >
+          Ranking
         </button>
       </>
     );
