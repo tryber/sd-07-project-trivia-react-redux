@@ -11,11 +11,10 @@ class GameScreen extends Component {
     this.state = {
       answered: false,
       count: 0,
+      stopTimer: false,
     };
     this.submitAnswer = this.submitAnswer.bind(this);
     this.changeCount = this.changeCount.bind(this);
-   // this.changeStyle = this.changeStyle.bind(this);
-    // this.changeSstyles = this.changeSstyles.bind(this);
   }
 
   componentDidMount() {
@@ -23,47 +22,36 @@ class GameScreen extends Component {
     dispatchTrivia(getStorage('token'));
   }
 
-  // changeSstyles() {
-  //   const correctAnswer = document.querySelector('.correct-not');
-  //   correctAnswer.className = 'correct';
-  //   const incorrectAnswer = document.querySelectorAll('.incorrect-not');
-  //   for (let index = 0; index < incorrectAnswer.length; index += 1) {
-  //     incorrectAnswer[index].className = 'incorrect';
-  //   }
-  // }
-
   submitAnswer() {
     // this.changeSstyles();
-    this.setState({ answered: true });
+    this.setState({ answered: true, stopTimer: true });
   }
-
-  // changeStyle() {
-  //   const correctAnswer = document.querySelector('.correct');
-  //   correctAnswer.className = 'correct-not';
-  //   const incorrectAnswer = document.querySelectorAll('.incorrect');
-  //   for (let index = 0; index < incorrectAnswer.length; index += 1) {
-  //     incorrectAnswer[index].className = 'incorrect-not';
-  //   }
-  // }
 
   changeCount() {
     const { count } = this.state;
-    this.setState({ count: count + 1,
-    answered:false });
+    this.setState({ count: count + 1, answered: false });
   }
 
   render() {
     const { name, email, trivia, loading } = this.props;
-    const { answered, count } = this.state;
+    const { answered, count, stopTimer } = this.state;
     return (
       <div>
         <CustomHeader name={ name } email={ email } />
-        { loading && (
-          <p>...Loading</p>
-        ) }
-        { trivia.length > 0
-          && <CustomGame changeStyle={ answered } index={ count } challenge={ trivia } correct={ this.submitAnswer } />}
-        {answered && <CustomNextButton next={ this.changeCount } /> }
+        {loading && <p>...Loading</p>}
+
+        {trivia.length > 0 && (
+          <div>
+            <CustomGame
+              changeStyle={ answered }
+              index={ count }
+              challenge={ trivia }
+              correct={ this.submitAnswer }
+              stopTimer={ stopTimer }
+            />
+          </div>
+        )}
+        {answered && <CustomNextButton next={ this.changeCount } />}
       </div>
     );
   }

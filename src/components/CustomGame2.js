@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { scrambler } from '../services';
-const CustomGame = ({ challenge, correct, changeStyle , index  }) => {
+
+const CustomGame = ({ challenge, correct, changeStyle, index }) => {
   const correctAnswer = challenge[index].correct_answer;
   const answersArray = scrambler([...challenge[index].incorrect_answers, correctAnswer]);
   return (
