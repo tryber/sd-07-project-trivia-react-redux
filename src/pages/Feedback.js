@@ -42,7 +42,13 @@ class FeedBack extends React.Component {
           <h2 data-testid="feedback-total-score">
             {points}
           </h2>
-          <button data-testid="btn-ranking" type="button">Ver ranking</button>
+          <button
+            data-testid="btn-ranking"
+            type="button"
+            onClick={ () => history.push('/ranking') }
+          >
+            Ver ranking
+          </button>
           <button
             data-testid="btn-play-again"
             type="button"
