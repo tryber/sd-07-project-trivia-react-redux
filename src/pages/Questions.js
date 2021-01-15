@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { addScore } from '../Redux/Actions';
+import ButtonAnswer from '../components/ButtonAnswer';
+
 import './Questions.css';
 
 class Questions extends React.Component {
@@ -15,13 +17,21 @@ class Questions extends React.Component {
       assertions: 0,
       showAnswers: false,
       seconds: 30,
+      answers: [],
     };
     this.nextQuestion = this.nextQuestion.bind(this);
     this.clickRightAnswer = this.clickRightAnswer.bind(this);
     this.clickButtonAnswer = this.clickButtonAnswer.bind(this);
+    this.setTimer = this.setTimer.bind(this);
+    this.shuffle = this.shuffle.bind(this);
   }
 
   componentDidMount() {
+    this.setTimer();
+    this.shuffle();
+  }
+
+  setTimer() {
     const oneSecond = 1000;
     const myInterval = setInterval(() => {
       const { seconds } = this.state;
@@ -32,6 +42,9 @@ class Questions extends React.Component {
       }
       if (seconds === 0) {
         clearInterval(myInterval);
+        this.setState({
+          status: false,
+        });
       }
     }, oneSecond);
   }
@@ -44,11 +57,13 @@ class Questions extends React.Component {
         index: index + 1,
         seconds: 30,
         status: true,
-      });
+        showAnswers: false,
+      }, () => this.shuffle());
     } else {
       const { push } = this.props;
       push('/feedback');
     }
+    this.setTimer();
   }
 
   clickRightAnswer() {
@@ -84,12 +99,26 @@ class Questions extends React.Component {
     this.setState({
       status: false,
       showAnswers: true,
+      seconds: 0,
     });
   }
 
-  render() {
-    const { questions, index, status, showAnswers, seconds } = this.state;
+  shuffle() {
+    const { index, questions } = this.state;
+    const {
+      correct_answer: correctAnswer, incorrect_answers: incorrectAnswer,
+    } = questions[index];
+    const shuffleNumber = 0.5;
+    const shuffleAnswers = [...incorrectAnswer, correctAnswer]
+      .sort(() => shuffleNumber - Math.random());
 
+    this.setState({ answers: shuffleAnswers });
+  }
+
+  render() {
+    const {
+      questions, index, status, showAnswers, seconds, answers,
+    } = this.state;
     return (
       <div>
         <h3>
@@ -109,28 +138,24 @@ class Questions extends React.Component {
           {questions[index].question}
         </span>
         <div id="bloco-respostas">
-          <button
-            onClick={ this.clickRightAnswer }
-            disabled={ seconds === 0 }
-            type="button"
-            key="correct"
-            data-testid="correct-answer"
-            className={ showAnswers ? 'correct' : '' }
-          >
-            {questions[index].correct_answer}
-          </button>
-          {questions[index].incorrect_answers
+          {answers
             .map((item, itemIndex) => (
-              <button
-                onClick={ this.clickButtonAnswer }
-                disabled={ seconds === 0 }
+              <ButtonAnswer
+                onClick={ questions[index].correct_answer === item
+                  ? this.clickRightAnswer
+                  : this.clickButtonAnswer }
+                disabled={ (seconds === 0 || !status) }
                 type="button"
                 key={ itemIndex }
-                data-testid={ `wrong-answer-${itemIndex}` }
-                className={ showAnswers ? 'incorrect' : '' }
-              >
-                { item}
-              </button>))}
+                dataTestid={ questions[index].correct_answer === item
+                  ? 'correct-answer'
+                  : 'wrong-answer' }
+                className={ questions[index].correct_answer === item
+                  ? 'correct'
+                  : 'incorrect' }
+                item={ item }
+                showAnswers={ showAnswers }
+              />))}
         </div>
         <button
           className={ status ? 'unvisible' : '' }

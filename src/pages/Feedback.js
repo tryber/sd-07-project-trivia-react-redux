@@ -75,7 +75,6 @@ class Feedback extends React.Component {
           <p data-testid="feedback-total-question">{ assertions }</p>
           <p data-testid="feedback-total-score">{ score }</p>
         </div>
-
         <button
           onClick={ this.handleClick }
           data-testid="btn-ranking"
