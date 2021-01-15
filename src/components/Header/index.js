@@ -16,8 +16,8 @@ class Header extends React.Component {
           Nome:
           { name }
         </p>
+        Placar:
         <p data-testid="header-score">
-          Placar:
           { score }
         </p>
       </header>
