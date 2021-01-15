@@ -9,7 +9,7 @@ class Header extends Component {
   render() {
     const { player } = this.props;
     const { gravatarEmail, name, score } = player;
-    const hash = () => md5(gravatarEmail.trim().toLowerCase());
+    const hash = md5(gravatarEmail.trim().toLowerCase());
 
     return (
       <header className="header__container">

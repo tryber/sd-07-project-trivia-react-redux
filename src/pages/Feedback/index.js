@@ -1,19 +1,36 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import md5 from 'crypto-js/md5';
 
+import { saveRanking } from '../../services/storageService';
 import Header from '../../components/Header';
 import './index.css';
 
 class Feedback extends Component {
+  componentDidMount() {
+    const { player } = this.props;
+    console.log('ComponentDidMount: ', player);
+    const hash = md5(player.gravatarEmail.trim().toLowerCase());
+    const playerPicture = `https://www.gravatar.com/avatar/${hash}?s=36`;
+    const newPlayerRanking = {
+      name: player.name,
+      score: player.score,
+      picture: playerPicture,
+    };
+    saveRanking(newPlayerRanking);
+  }
+
   handleRedirect(path) {
     const { history } = this.props;
     history.push(path);
   }
 
   render() {
-    const { assertions, score } = this.props;
+    const { player } = this.props;
+    const { assertions, score } = player;
     const sufficientAssertion = 3;
+    console.log('Render: ', player);
     return (
       <main className="wrapper">
         <Header />
@@ -75,16 +92,19 @@ class Feedback extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  assertions: state.player.assertions,
-  score: state.player.score,
+  player: state.player,
 });
 
 Feedback.propTypes = {
-  assertions: PropTypes.number.isRequired,
+  player: PropTypes.shape({
+    assertions: PropTypes.number.isRequired,
+    score: PropTypes.number.isRequired,
+    gravatarEmail: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+  }).isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
-  score: PropTypes.number.isRequired,
 };
 
 export default connect(mapStateToProps)(Feedback);

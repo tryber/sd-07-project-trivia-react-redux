@@ -77,6 +77,7 @@ class Questions extends Component {
         },
       );
     } else {
+      // actionNextQuestion();
       history.push('/feedback');
     }
   }
