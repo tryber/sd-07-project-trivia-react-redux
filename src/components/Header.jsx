@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import propTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+
 class Header extends Component {
+ 
   render() {
     const { info } = this.props;
     const { imageSrc, name, score } = info;
@@ -22,7 +24,7 @@ class Header extends Component {
         </div>
         <div className="score-container">
           <p data-testid="header-score">
-            { score }
+            { `Seu Score: ${score}` }
           </p>
         </div>
       </header>
@@ -31,6 +33,7 @@ class Header extends Component {
 }
 
 const mapStateToProps = (state) => ({
+  score: state.player.score,
   info: state.player,
 });
 

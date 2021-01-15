@@ -16,3 +16,10 @@ export function changeColor() {
     type: 'CLICK',
   });
 }
+
+export function changeScore(payload) {
+  return ({
+    type: 'CHANGE_SCORE',
+    payload,
+  })
+}

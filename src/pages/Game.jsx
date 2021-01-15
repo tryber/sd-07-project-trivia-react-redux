@@ -38,7 +38,7 @@ class Game extends Component {
     const { clicked } = this.props;
     return (
       <div>
-        <Header />
+        <Header  />
         <Timer />
         { questions[0] ? <Question item={ questions[0] } /> : null }
         { clicked ? this.renderButton() : null }
@@ -48,6 +48,7 @@ class Game extends Component {
 }
 
 const mapStateToProps = (state) => ({
+  score: state.player.score,
   token: state.player.token,
   clicked: state.color.clicked,
 });
