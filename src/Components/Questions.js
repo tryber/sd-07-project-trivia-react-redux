@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import Feedback from '../pages/Feedback';
 import { pointsGen, assertionsGen } from '../actions';
 
 class Questions extends React.Component {
@@ -91,10 +92,10 @@ class Questions extends React.Component {
     const { questionsList } = questions;
     const { questionNumber, wrongAnswer, correctAnswer, visibleClick } = this.state;
     const five = 5;
-    console.log(questionsList[questionNumber].difficulty);
     if (questionsList < five) {
       return <div>Efetue o login novamente</div>;
     }
+
     return (
       <div>
         {`Questão número ${questionNumber + 1}`}
@@ -176,4 +177,5 @@ Questions.propTypes = {
   realAssertions: PropTypes.number.isRequired,
   timer: PropTypes.bool.isRequired,
 };
+
 export default connect(mapStateToProps, mapDispatchToProps)(Questions);
