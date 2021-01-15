@@ -38,15 +38,15 @@ class Login extends React.Component {
       token,
     };
 
-    localStorage.setItem('token', JSON.stringify(info));
+    localStorage.setItem('state', JSON.stringify(info));
   }
 
   async requestToken() {
     const endpoint = 'https://opentdb.com/api_token.php?command=request';
     const response = await fetch(endpoint);
-    const token = await response.json();
+    const data = await response.json();
     this.setState({
-      token,
+      token: data.token,
     });
   }
 
