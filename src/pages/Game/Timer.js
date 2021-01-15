@@ -17,7 +17,6 @@ class Timer extends Component {
   componentDidUpdate() {
     const { restart } = this.props;
     if (restart) {
-      console.log('atualizei');
       this.displayTime();
     }
   }

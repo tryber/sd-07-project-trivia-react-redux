@@ -4,7 +4,13 @@ import Header from '../../components/Header';
 import Questions from './Questions';
 import './index.css';
 
+import { initialize } from '../../services/storageService';
+
 class Game extends Component {
+  componentDidMount() {
+    initialize();
+  }
+
   render() {
     const { history } = this.props;
     return (
