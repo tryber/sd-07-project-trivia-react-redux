@@ -1,11 +1,14 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import md5 from 'crypto-js/md5';
 
 import { getTokenAction } from '../../actions/tokenAction';
 import { playerAction } from '../../actions/playerAction';
+
+import Logo from '../../trivia.png';
+
+import './styles.css';
 
 class Login extends React.Component {
   constructor(props) {
@@ -17,6 +20,12 @@ class Login extends React.Component {
     };
     this.changeInputs = this.changeInputs.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
+    this.setSettings = this.setSettings.bind(this);
+  }
+
+  setSettings() {
+    const { history } = this.props;
+    if (history) history.push('/settings');
   }
 
   async setDisabled() {
@@ -55,10 +64,14 @@ class Login extends React.Component {
     const { disabled, email, name } = this.state;
     const { isFetchingToken, error } = this.props;
     return (
-      <div>
+      <div className="login-container">
         <form>
           {isFetchingToken && <div>loading</div>}
           {error && <div>error</div>}
+          <img
+            src={ Logo }
+            alt="logo"
+          />
           <label htmlFor="email">
             Email do Gravatar:
             <input
@@ -88,13 +101,17 @@ class Login extends React.Component {
             data-testid="btn-play"
             disabled={ disabled }
             onClick={ this.handleLogin }
+            className="btn-play"
           >
             Jogar
           </button>
-          <button type="button" data-testid="btn-settings">
-            <Link to="/Settings">
-              Configurações
-            </Link>
+          <button
+            type="button"
+            data-testid="btn-settings"
+            onClick={ this.setSettings }
+            className="btn-settings"
+          >
+            settings
           </button>
         </form>
       </div>
