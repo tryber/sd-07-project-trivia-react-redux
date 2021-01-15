@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getEmail, getName } from '../actions';
-import '../css/Login.css'
+import '../css/Login.css';
 
 class Login extends React.Component {
   constructor(props) {
@@ -79,8 +79,8 @@ class Login extends React.Component {
   render() {
     const { email, name } = this.state;
     return (
-      <div className="container-login" >
-        <header className="header-container" >
+      <div className="container-login">
+        <header className="header-container">
           <h1>Trivia Project</h1>
         </header>
         <form className="container-form">
@@ -107,7 +107,7 @@ class Login extends React.Component {
             />
           </label>
         </form>
-        <section className="container-buttons" >
+        <section className="container-buttons">
           <button
             type="button"
             data-testid="btn-play"

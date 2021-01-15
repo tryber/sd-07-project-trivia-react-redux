@@ -5,7 +5,7 @@ import { fetchQuestions } from '../actions';
 import GameHeader from '../components/GameHeader';
 import Loading from '../components/Loading';
 import '../css/App.css';
-import '../css/Game.css'
+import '../css/Game.css';
 
 class Game extends Component {
   constructor() {
@@ -122,21 +122,21 @@ class Game extends Component {
     return array;
   }
 
-  renderTime() {
-    const secondTimerFunction = 1000;
-    const lastSecondDisableButton = 0;
-    const { timer } = this.state;
-    const loop = setInterval(() => {
-      if (timer > lastSecondDisableButton) {
-        this.setState((prevState) => ({
-          timer: prevState.timer - 1,
-        }));
-      }
-    }, secondTimerFunction);
-  }
-
   stopTimer(interval) {
     clearInterval(interval);
+  }
+
+  convertQuestionAndAnswers(question) {
+    const errors = ['&#039;', '&quot;'];
+    let finalQuestion = question;
+    errors.forEach((error) => {
+      if (question.includes(error)) {
+        const newQuestion = finalQuestion.split(error);
+        finalQuestion = newQuestion.join('');
+      }
+    });
+    console.log(question);
+    return finalQuestion;
   }
 
   renderAllDataQuestion() {
@@ -158,17 +158,17 @@ class Game extends Component {
     }
   }
 
-  convertQuestionAndAnswers(question) {
-    const errors = ['&#039;', '&quot;'];
-    let finalQuestion = question;
-    errors.forEach((error) => {
-      if (question.includes(error)) {
-        const newQuestion = finalQuestion.split(error);
-        finalQuestion = newQuestion.join('');
+  renderTime() {
+    const secondTimerFunction = 1000;
+    const lastSecondDisableButton = 0;
+    const { timer } = this.state;
+    setInterval(() => {
+      if (timer > lastSecondDisableButton) {
+        this.setState((prevState) => ({
+          timer: prevState.timer - 1,
+        }));
       }
-    })
-    console.log(question);
-    return finalQuestion;
+    }, secondTimerFunction);
   }
 
   render() {
@@ -185,7 +185,7 @@ class Game extends Component {
       <div>
         <GameHeader />
         <section className="container-game">
-          <header className="container-header-game" >
+          <header className="container-header-game">
             <h1>TELA DE JOGO</h1>
             <h3 data-testid="question-category">
               {questions.results[questionIndex].category}
