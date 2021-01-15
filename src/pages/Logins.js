@@ -118,6 +118,7 @@ Login.propTypes = {
   newName: PropTypes.func.isRequired,
   changeEmail: PropTypes.func.isRequired,
   history: PropTypes.string.isRequired,
+  setScore: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

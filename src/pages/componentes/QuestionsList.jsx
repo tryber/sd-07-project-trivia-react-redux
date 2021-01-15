@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { changeName, changeScore } from '../../actions';
+import { changeScore } from '../../actions';
 
 class QuestionsList extends React.Component {
   constructor(props) {
@@ -59,32 +59,37 @@ class QuestionsList extends React.Component {
 
   scoreCalculete() {
     this.handleButton();
+    const { time } = this.state;
     let difficultyNum = 0;
     const { question, dispatchScore, name, gravatarEmail, assertions } = this.props;
     const scoreStorege = localStorage.getItem('playerScore');
     const pointForHit = 10;
-    const timer = this.state.time;
+    const timer = time;
 
     if (question.results[0].difficulty === 'easy') {
-      difficultyNum = 1;
+      const levelDifficult = 1;
+      difficultyNum = levelDifficult;
     }
 
     if (question.results[0].difficulty === 'medium') {
-      difficultyNum = 2;
+      const levelDifficult = 2;
+      difficultyNum = levelDifficult;
     }
     if (question.results[0].difficulty === 'hard') {
-      difficultyNum = 3;
+      const levelDifficult = 3;
+      difficultyNum = levelDifficult;
     }
     const newScore = parseInt(scoreStorege, 10) + pointForHit + (timer * difficultyNum);
 
     localStorage.setItem('playerScore', newScore);
 
-    localStorage.setItem('state', JSON.stringify({ player: {name, assertions, score: newScore, gravatarEmail}}));
+    localStorage.setItem('state', JSON
+      .stringify({ player: { name, assertions, score: newScore, gravatarEmail } }));
     dispatchScore(newScore);
   }
 
   wrongAnswer() {
-    this.handleButton()
+    this.handleButton();
     console.log('Game Over :(');
   }
 

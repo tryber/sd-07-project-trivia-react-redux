@@ -9,13 +9,13 @@ import Loading from './componentes/Loading';
 class Game extends React.Component {
   componentDidMount() {
     const { requestQuestions, name, score, email } = this.props;
-    const objPlayer = { 
+    const objPlayer = {
       player: {
         name,
         assertions: '',
         score,
         gravatarEmail: email,
-      }
+      },
     };
     requestQuestions(localStorage.token);
     localStorage.setItem('state', JSON.stringify(objPlayer));
@@ -52,7 +52,7 @@ Game.propTypes = {
       correct_answer: PropTypes.string,
       incorrect_answers: PropTypes.arrayOf(PropTypes.string),
     }),
-  }).isRequired
+  }).isRequired,
 }.isRequired;
 
 const mapDispatchToProps = (dispatch) => ({
