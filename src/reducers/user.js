@@ -3,12 +3,11 @@ import { LOGIN, REQUEST_TOKEN,
 
 const INITIAL_STATE = {
   user: {},
-  apiToken: [],
+  apiToken: {},
   isFetching: true,
 };
 
 export default function userReducer(state = INITIAL_STATE, action) {
-  console.log(action.type);
   switch (action.type) {
   case LOGIN:
     return {
@@ -16,8 +15,7 @@ export default function userReducer(state = INITIAL_STATE, action) {
     };
   // estou fazendo a requisição, espere...
   case REQUEST_TOKEN:
-    return { ...state,
-      isFetching: true };
+    return { ...state, isFetching: true };
   // terminei, receba o objeto.
   case REQUEST_API_SUCCESS:
     return { ...state, apiToken: { ...action.value }, isFetching: false };
