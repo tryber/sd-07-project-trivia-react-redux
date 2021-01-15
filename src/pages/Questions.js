@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { addScore } from '../Redux/Actions';
+import ButtonAnswer from '../components/ButtonAnswer';
+
 import './Questions.css';
 
 class Questions extends React.Component {
@@ -15,15 +17,18 @@ class Questions extends React.Component {
       assertions: 0,
       showAnswers: false,
       seconds: 30,
+      answers: [],
     };
     this.nextQuestion = this.nextQuestion.bind(this);
     this.clickRightAnswer = this.clickRightAnswer.bind(this);
     this.clickButtonAnswer = this.clickButtonAnswer.bind(this);
     this.setTimer = this.setTimer.bind(this);
+    this.shuffle = this.shuffle.bind(this);
   }
 
   componentDidMount() {
     this.setTimer();
+    this.shuffle();
   }
 
   setTimer() {
@@ -53,7 +58,7 @@ class Questions extends React.Component {
         seconds: 30,
         status: true,
         showAnswers: false,
-      });
+      }, () => this.shuffle() );
     } else {
       const { push } = this.props;
       push('/feedback');
@@ -98,8 +103,16 @@ class Questions extends React.Component {
     });
   }
 
+  shuffle() {
+    const { index, questions } = this.state;
+    const {correct_answer, incorrect_answers} = questions[index];
+    const shuffleAnswers = [...incorrect_answers, correct_answer].sort(() => 0.5 - Math.random());
+
+    this.setState({ answers: shuffleAnswers });
+  }
+
   render() {
-    const { questions, index, status, showAnswers, seconds } = this.state;
+    const { questions, index, status, showAnswers, seconds, answers } = this.state;
     return (
       <div>
         <h3>
@@ -119,28 +132,28 @@ class Questions extends React.Component {
           {questions[index].question}
         </span>
         <div id="bloco-respostas">
-          <button
+          {/* <ButtonAnswer
             onClick={ this.clickRightAnswer }
             disabled={ (seconds === 0 || !status) }
             type="button"
             key="correct"
             data-testid="correct-answer"
             className={ showAnswers ? 'correct' : '' }
-          >
-            {questions[index].correct_answer}
-          </button>
-          {questions[index].incorrect_answers
+            item={questions[index].correct_answer}
+          /> */}
+          {answers
             .map((item, itemIndex) => (
-              <button
-                onClick={ this.clickButtonAnswer }
+              <ButtonAnswer
+                onClick={ questions[index].correct_answer === item ? this.clickRightAnswer : this.clickButtonAnswer }
                 disabled={ (seconds === 0 || !status) }
                 type="button"
                 key={ itemIndex }
-                data-testid="wrong-answer"
-                className={ showAnswers ? 'incorrect' : '' }
-              >
-                { item}
-              </button>))}
+                data-testid={ questions[index].correct_answer === item ? 'correct-answer' : 'wrong-answer' }
+                className={ questions[index].correct_answer === item ? 'correct' : 'incorrect' }
+                item={ item }
+                showAnswers ={ showAnswers }
+               />))
+              }
         </div>
         <button
           className={ status ? 'unvisible' : '' }
