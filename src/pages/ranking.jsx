@@ -15,15 +15,33 @@ class Ranking extends Component {
     return (
       <div>
         <h1 data-testid="ranking-title">Ranking</h1>
-        {allplayer.map((score) => score)
-          .sort((b, a) => a.score - b.score)
-          .map((player, index) => (
-            <div key={ index }>
-              <img src={ player.picture } alt="player-pic" />
-              <p data-testid={ `player-name-${index}` }>{player.name}</p>
-              <p data-testid={ `player-score-${index}` }>{player.score}</p>
-            </div>
-          ))}
+        <div className="ui cards column centered">
+          {allplayer.map((score) => score)
+            .sort((b, a) => a.score - b.score)
+            .map((player, index) => (
+              <div className="ui card" key={ index }>
+                <img
+                  className="ui small circular image centered"
+                  src={ player.picture }
+                  alt="player-pic"
+                />
+                <div className="content">
+                  <p
+                    className="ui header"
+                    data-testid={ `player-name-${index}` }
+                  >
+                    {player.name}
+                  </p>
+                  <p
+                    className="ui header"
+                    data-testid={ `player-score-${index}` }
+                  >
+                    {player.score}
+                  </p>
+                </div>
+              </div>
+            ))}
+        </div>
         <HomeButton />
       </div>
     );
