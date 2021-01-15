@@ -30,7 +30,6 @@ class Questions extends Component {
     } else {
       this.WinnerOrLoser();
     }
-    // next !== maxQuestion ? disableButton() : this.WinnerOrLoser();
   }
 
   randomChoice(arr) {
