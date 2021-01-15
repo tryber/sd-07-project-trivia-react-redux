@@ -5,15 +5,30 @@ import md5 from 'crypto-js/md5';
 import { getQuestions } from '../actions';
 
 class TelaDeJogo extends Component {
+  constructor() {
+    super();
+    this.state = { index: 0, randomResponses: [] };
+    this.handleQuestions = this.handleQuestions.bind(this);
+  }
+
   componentDidMount() {
     const { getAPIQuestions } = this.props;
     getAPIQuestions();
   }
 
+  handleQuestions() {
+    const { questions } = this.props;
+    const { index } = this.state;
+    let arr = [];
+    if (questions.length > 0) {
+      arr = [...questions[index].incorrect_answers, questions[index].correct_answer].sort();
+    }
+  }
+
   render() {
     const { email, name, score } = this.props;
     const hash = md5(email);
-
+    this.handleQuestions();
     return (
       <div>
         <header>
@@ -32,15 +47,6 @@ class TelaDeJogo extends Component {
         </header>
         <div>
           <h3 data-testid="question-category">categoria</h3>
-          <label data-testid="question-text">
-            pergunta
-            <select>
-              <option data-testid="correct-answer">resposta correta</option>
-              <option data-testid={ `wrong-answer-${index}` }>
-                respostas incorretas
-              </option>
-            </select>
-          </label>
         </div>
       </div>
     );
@@ -65,4 +71,4 @@ TelaDeJogo.propTypes = {
   name: PropTypes.string,
 }.isRequired;
 
-export default connect(mapStateToProps)(TelaDeJogo);
+export default connect(mapStateToProps, mapDispatchToProps)(TelaDeJogo);

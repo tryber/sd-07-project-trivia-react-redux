@@ -7,8 +7,8 @@ import TelaDeConfiguracoes from '../pages/TelaDeConfiguracoes';
 const Routes = () => (
   <Switch>
     <Route exact path="/" component={ Login } />
-    <Route patch="/tela-de-configuracoes" component={ TelaDeConfiguracoes } />
-    <Route patch="/tela-de-jogo" component={ TelaDeJogo } />
+    <Route path="/telaDeConfiguracoes" component={ TelaDeConfiguracoes } />
+    <Route path="/telaDeJogo" component={ TelaDeJogo } />
   </Switch>
 );
 
