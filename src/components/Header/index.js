@@ -12,14 +12,18 @@ class Header extends React.Component {
           src={ gravatarEmail }
           alt="imagem de avatar"
         />
-        <p data-testid="header-player-name">
-          Nome:
+        <div data-testid="header-player-name">
+          <p> Nome: </p>
           { name }
-        </p>
-        Placar:
-        <p data-testid="header-score">
-          { score }
-        </p>
+        </div>
+        <div>
+          <p>
+            Placar:
+          </p>
+          <span data-testid="header-score">
+            { score }
+          </span>
+        </div>
       </header>
     );
   }
