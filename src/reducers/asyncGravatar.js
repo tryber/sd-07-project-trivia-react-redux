@@ -4,7 +4,6 @@ const INITIAL_STATE = {
 
 const gravatar = (state = INITIAL_STATE, action) => {
   const { type, hashData } = action;
-  console.log(action);
   switch (type) {
   case 'fetchSucessGravatar':
     return { ...state, hashData };
