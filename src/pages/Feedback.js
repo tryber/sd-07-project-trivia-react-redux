@@ -15,15 +15,15 @@ class Feedback extends Component {
 
   renderMSG() {
     const state = JSON.parse(localStorage.getItem('state'));
-    const { player: { assertions } } = state;
-    return assertions;
+    const { player } = state;
+    return player;
   }
 
   render() {
     return (
       <div>
         <Header playerProfile={ this.getPlayerProfile() } />
-        <FeedbackMSG assertions={ this.renderMSG() } />
+        <FeedbackMSG player={ this.renderMSG() } />
       </div>
     );
   }
