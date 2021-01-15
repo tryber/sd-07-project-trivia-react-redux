@@ -38,7 +38,7 @@ export function fetchQuestions() {
   return async (dispatch) => {
     dispatch(startRequest());
     try {
-      const { token } = JSON.parse(localStorage.getItem('state')).token;
+      const { token } = JSON.parse(localStorage.getItem('token')).token;
       const endpoint = `https://opentdb.com/api.php?amount=5&token=${token}`;
       const response = await fetch(endpoint);
       const data = await response.json();

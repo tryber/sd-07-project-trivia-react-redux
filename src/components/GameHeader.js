@@ -27,15 +27,16 @@ class GameHeader extends Component {
   }
 
   readLocalStorage() {
-    const readStorage = JSON.parse(localStorage.getItem('state'));
+    const readStorage = JSON.parse(localStorage.getItem('token'));
     return readStorage;
   }
 
   updateLocalStorage() {
     const { getScore } = this.props;
     const currentStorage = this.readLocalStorage();
-    const newStorage = { ...currentStorage, player: { ...currentStorage.player, score: getScore } };
-    localStorage.setItem('state', JSON.stringify(newStorage));
+    const newStorage = { ...currentStorage,
+      player: { ...currentStorage.player, score: getScore } };
+    localStorage.setItem('token', JSON.stringify(newStorage));
   }
 
   render() {
