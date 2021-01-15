@@ -5,7 +5,7 @@ import { CustomTimer } from '.';
 import '../App.css';
 
 const CustomGame = ({ challenge, correct, changeStyle, index, stopTimer }) => (
-  <div>
+  <div className="questions">
     <h1 data-testid="question-category">{challenge[index].category}</h1>
     <h3 data-testid="question-text">{challenge[index].question}</h3>
     <button

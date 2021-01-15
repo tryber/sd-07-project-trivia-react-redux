@@ -6,7 +6,7 @@ const CustomGame = ({ challenge, correct, changeStyle, index }) => {
   const correctAnswer = challenge[index].correct_answer;
   const answersArray = scrambler([...challenge[index].incorrect_answers, correctAnswer]);
   return (
-    <div>
+    <div className="questions">
       <h1 data-testid="question-category">{ challenge[index].category}</h1>
       <h3 data-testid="question-text">{ challenge[index].question}</h3>
       {answersArray.map((item, index1) => (
