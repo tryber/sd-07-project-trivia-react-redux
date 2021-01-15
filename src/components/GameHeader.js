@@ -8,7 +8,8 @@ class GameHeader extends Component {
   constructor() {
     super();
     this.fetchGravatar = this.fetchGravatar.bind(this);
-    this.readLocalStorage = this.readLocalStorage.bind(this);
+    this.readLocalState = this.readLocalState.bind(this);
+    this.readLocalRanking = this.readLocalRanking.bind(this);
     this.updateLocalStorage = this.updateLocalStorage.bind(this);
   }
 
@@ -27,17 +28,27 @@ class GameHeader extends Component {
     return endPoint;
   }
 
-  readLocalStorage() {
-    const readStorage = JSON.parse(localStorage.getItem('state'));
-    return readStorage;
+  readLocalState() {
+    const readState = JSON.parse(localStorage.getItem('state'));
+    return readState;
+  }
+
+  readLocalRanking() {
+    const readRanking = JSON.parse(localStorage.getItem('ranking'));
+    return readRanking;
   }
 
   updateLocalStorage() {
     const { getScore } = this.props;
-    const currentStorage = this.readLocalStorage();
-    const newStorage = { ...currentStorage,
-      player: { ...currentStorage.player, score: getScore } };
-    localStorage.setItem('state', JSON.stringify(newStorage));
+    const currentState = this.readLocalState();
+    const currentRanking = this.readLocalRanking();
+    const newStateStorage = { ...currentState,
+      player: { ...currentState.player, score: getScore } };
+    localStorage.setItem('state', JSON.stringify(newStateStorage));
+
+    const newRankingStorage = { ...currentRanking,
+      score: getScore };
+    localStorage.setItem('ranking', JSON.stringify(newRankingStorage));
   }
 
   render() {
