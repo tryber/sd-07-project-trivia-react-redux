@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
+import addScore from '../store/ducks/Score/actions';
 
 class FeedBack extends Component {
   constructor() {
@@ -11,12 +12,14 @@ class FeedBack extends Component {
   }
 
   handleRedirectHome() {
-    const { history } = this.props;
+    const { history, actionScore } = this.props;
+    actionScore(0);
     history.push('/');
   }
 
   handleRedirectRanking() {
-    const { history } = this.props;
+    const { history, actionScore } = this.props;
+    actionScore(0);
     history.push('/ranking');
   }
 
@@ -54,10 +57,15 @@ class FeedBack extends Component {
 const mapStateToProps = (state) => ({
   assertions: state.QuestionRequest.assertions,
 });
+const mapDispatchToProps = {
 
-export default connect(mapStateToProps)(FeedBack);
+  actionScore: addScore,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(FeedBack);
 
 FeedBack.propTypes = {
   history: PropTypes.objectOf(PropTypes.any).isRequired,
   assertions: PropTypes.string.isRequired,
+  actionScore: PropTypes.func.isRequired,
 };

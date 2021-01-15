@@ -7,6 +7,7 @@ import { handleAsyncQuestion,
 } from '../store/ducks/QuestionsRequest/actions';
 import addScore from '../store/ducks/Score/actions';
 import './styles.css';
+import { setRank } from '../services/handleRank';
 
 class GameScreen extends Component {
   constructor() {
@@ -40,19 +41,20 @@ class GameScreen extends Component {
   async componentDidMount() {
     const { actionRequest } = this.props;
     await actionRequest();
-    this.handleNextQuest();
+    // this.handleNextQuest();
     this.timeOut();
   }
 
   handleRedirect() {
-    const { history } = this.props;
+    const { history, name, Score } = this.props;
+    setRank({ name, Score });
     history.push('/feedback');
   }
 
   async handleNextQuest() {
     const { quest } = this.props;
     const { id } = this.state;
-    const MAX_QUESTIONS = 5;
+    const MAX_QUESTIONS = 4;
     await this.setState((state) => ({ id: state.id + 1 }));
     console.log(id);
     if (id >= MAX_QUESTIONS) {
@@ -222,8 +224,10 @@ class GameScreen extends Component {
   }
 }
 
-const mapStateToProps = ({ QuestionRequest: { quest } }) => ({
+const mapStateToProps = ({ QuestionRequest: { quest }, UserInfo: { name }, Score }) => ({
   quest,
+  name,
+  Score,
 });
 const mapDispatchToProps = {
   actionRequest: handleAsyncQuestion,
@@ -238,4 +242,6 @@ GameScreen.propTypes = {
   actionScore: PropTypes.func.isRequired,
   correctAnswers: PropTypes.func.isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
+  name: PropTypes.string.isRequired,
+  Score: PropTypes.number.isRequired,
 };
