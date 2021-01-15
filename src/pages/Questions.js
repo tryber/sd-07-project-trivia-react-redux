@@ -19,9 +19,14 @@ class Questions extends React.Component {
     this.nextQuestion = this.nextQuestion.bind(this);
     this.clickRightAnswer = this.clickRightAnswer.bind(this);
     this.clickButtonAnswer = this.clickButtonAnswer.bind(this);
+    this.setTimer = this.setTimer.bind(this);
   }
 
   componentDidMount() {
+    this.setTimer();
+  }
+
+  setTimer() {
     const oneSecond = 1000;
     const myInterval = setInterval(() => {
       const { seconds } = this.state;
@@ -32,6 +37,9 @@ class Questions extends React.Component {
       }
       if (seconds === 0) {
         clearInterval(myInterval);
+        this.setState({
+          status: false,
+        });
       }
     }, oneSecond);
   }
@@ -44,11 +52,13 @@ class Questions extends React.Component {
         index: index + 1,
         seconds: 30,
         status: true,
+        showAnswers: false,
       });
     } else {
       const { push } = this.props;
       push('/feedback');
     }
+    this.setTimer();
   }
 
   clickRightAnswer() {
@@ -84,12 +94,12 @@ class Questions extends React.Component {
     this.setState({
       status: false,
       showAnswers: true,
+      seconds: 0,
     });
   }
 
   render() {
     const { questions, index, status, showAnswers, seconds } = this.state;
-
     return (
       <div>
         <h3>
@@ -111,7 +121,7 @@ class Questions extends React.Component {
         <div id="bloco-respostas">
           <button
             onClick={ this.clickRightAnswer }
-            disabled={ seconds === 0 }
+            disabled={ (seconds === 0 || !status) }
             type="button"
             key="correct"
             data-testid="correct-answer"
@@ -123,10 +133,10 @@ class Questions extends React.Component {
             .map((item, itemIndex) => (
               <button
                 onClick={ this.clickButtonAnswer }
-                disabled={ seconds === 0 }
+                disabled={ (seconds === 0 || !status) }
                 type="button"
                 key={ itemIndex }
-                data-testid={ `wrong-answer-${itemIndex}` }
+                data-testid="wrong-answer"
                 className={ showAnswers ? 'incorrect' : '' }
               >
                 { item}
