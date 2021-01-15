@@ -8,6 +8,9 @@ class Questions extends React.Component {
     super(props);
     this.givesIfTrue = this.givesIfTrue.bind(this);
     this.givesIfFalse = this.givesIfFalse.bind(this);
+    this.state = {
+      counter: 0,
+    };
   }
 
   componentDidMount() {
@@ -16,27 +19,41 @@ class Questions extends React.Component {
   }
 
   givesIfFalse(question) {
+    const answers = [...question.incorrect_answers, question.correct_answer];
+    const sortAnswers = answers
+      .map((answer, index) => {
+        if (answer === question.correct_answer) {
+          return (
+            <button key={ answer } type="button" data-testid="correct-answer">
+              { answer }
+            </button>
+          );
+        }
+        return (
+          <button
+            key={ answer }
+            type="button"
+            data-testid={ `wrong-answer-${index}` }
+          >
+            { answer }
+          </button>
+        );
+      })
+      .sort(() => {
+        const magicNumber = 0.5;
+        return Math.random() - magicNumber;
+      });
+
     return (
       <div>
         <div data-testid="question-category">{question.category}</div>
         <div>
           Pergunta:
-          <div data-testid="question-text">{ question.question }</div>
+          <div data-testid="question-text">{question.question}</div>
         </div>
         <div>
           Alternativas:
-          <button type="button" data-testid="correct-answer">
-            { question.correct_answer }
-          </button>
-          { question.incorrect_answers.map((wrong, index) => (
-            <button
-              key={ index }
-              type="button"
-              data-testid={ `wrong-answer-${index}` }
-            >
-              { wrong }
-            </button>
-          ))}
+          {sortAnswers}
         </div>
       </div>
     );
@@ -48,9 +65,10 @@ class Questions extends React.Component {
 
   render() {
     const { questions } = this.props;
+    const { counter } = this.state;
     return questions === undefined || questions.length === 0
       ? this.givesIfTrue()
-      : this.givesIfFalse(questions[0]);
+      : this.givesIfFalse(questions[counter]);
   }
 }
 
