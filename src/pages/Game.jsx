@@ -92,7 +92,7 @@ const Game = (props) => {
             score,
             email: user.email,
           },
-        })
+        },)
       );
     } else {
       setAssertion(false);
@@ -147,7 +147,7 @@ const Game = (props) => {
                 onClick={ handleClickAnswer }
                 disabled={ isEnable }
               >
-              {results[counter].correct_answer}
+                {results[counter].correct_answer}
               </button>
             </div>
             {results[counter].incorrect_answers.map((answer, index) => (
@@ -168,19 +168,19 @@ const Game = (props) => {
           </div>
           <div>
             {showButton ? (
-            <button
-              className="border-neutral next-button"
-              type="button"
-              data-testid="btn-next"
-              onClick={ handleQuestion }
-            >
-              Próxima
-            </button>
+              <button
+                className="border-neutral next-button"
+                type="button"
+                data-testid="btn-next"
+                onClick={ handleQuestion }
+              >
+                Próxima
+              </button>
             ) : (
               <Empty />
             )}
           </div>
-        </div>        
+        </div>
         <div className="timer">
           <p className="timer-text">{ time }</p>
         </div>
@@ -199,7 +199,7 @@ Game.propTypes = {
       results: PropTypes.arrayOf(
         PropTypes.shape({
           difficulty: PropTypes.string,
-        })
+        },)
       ),
     }),
     score: PropTypes.number,

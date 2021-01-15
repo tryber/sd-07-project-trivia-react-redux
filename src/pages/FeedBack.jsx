@@ -22,13 +22,13 @@ class FeedBack extends React.Component {
           )}
           <div data-testid="feedback-total-score">
             <h4>
-              Pontuação final: 
+              Pontuação final:
               {playerStorage.player.score}
             </h4>
           </div>
           <div data-testid="feedback-total-question">
             <h5>
-              Respostas corretas: 
+              Respostas corretas:
               {playerStorage.player.assertions}
             </h5>
           </div>
