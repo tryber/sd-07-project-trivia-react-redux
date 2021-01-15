@@ -11,11 +11,11 @@ const game = (state = INITIAL_STATE, action) => {
 
   switch (type) {
   case REQUEST_SUCESS:
-    return { QuestionsList: action.payload };
+    return { ...state, QuestionsList: action.payload };
   case REQUEST_FAIL:
     return { ...state, error: action.payload.message };
   case UPDATE_SCORE:
-    return { ...state, score: action.payload, assertions: state.assertions + 1 };
+    return { ...state, score: action.payload, assertions: Number(state.assertions) + 1 };
   default:
     return state;
   }
