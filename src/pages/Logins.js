@@ -47,7 +47,7 @@ class Login extends React.Component {
   startGame() {
     const { requestAPI, history } = this.props;
     const { name, email } = this.state;
-    const noMagicNumber = 1000;
+    const noMagicNumber = 2000;
     changeName(name);
     changeGravatarEmail(email);
     requestAPI();

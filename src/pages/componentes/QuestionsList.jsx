@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { changeName, changeScore } from '../../actions';
 
 class QuestionsList extends React.Component {
   constructor(props) {
@@ -7,17 +9,33 @@ class QuestionsList extends React.Component {
 
     this.state = {
       array: [],
+      time: 30,
+      disableButon: false,
     };
 
     this.shuffle = this.shuffle.bind(this);
     this.mountArrayOfAnswer = this.mountArrayOfAnswer.bind(this);
-
     this.scoreCalculete = this.scoreCalculete.bind(this);
     this.wrongAnswer = this.wrongAnswer.bind(this);
+    this.handleButton = this.handleButton.bind(this);
   }
 
   componentDidMount() {
+    const { disableButon } = this.state;
+    let { time } = this.state;
+    const interval = 1000;
+    const timeOut = 30000;
     this.mountArrayOfAnswer();
+    setInterval(() => {
+      if (!disableButon && time > 0) {
+        this.setState({ time: (time -= 1) });
+      }
+    }, interval);
+    setTimeout(() => { this.setState({ disableButon: true }); }, timeOut);
+  }
+
+  handleButton() {
+    this.setState({ disableButon: true });
   }
 
   shuffle(array) {
@@ -38,15 +56,16 @@ class QuestionsList extends React.Component {
   }
 
   scoreCalculete() {
-    const { question } = this.props;
+    this.handleButton();
+    const { question, dispatchScore } = this.props;
     const scoreStorege = localStorage.getItem('playerScore');
-    console.log(scoreStorege);
-    const timer = 30; /* n sei ainda */
 
     if (question.results[0].difficulty === 'easy') {
       const difficultyNum = 1;
       const pointForHit = 10;
+      const timer = this.state.time;
       const newScore = parseInt(scoreStorege, 10) + pointForHit + (timer * difficultyNum);
+      dispatchScore(newScore);
 
       return localStorage.setItem('playerScore', newScore);
     }
@@ -54,25 +73,30 @@ class QuestionsList extends React.Component {
     if (question.results[0].difficulty === 'medium') {
       const difficultyNum = 2;
       const pointForHit = 10;
+      const timer = this.state.time;
       const newScore = parseInt(scoreStorege, 10) + pointForHit + (timer * difficultyNum);
+      dispatchScore(newScore);
 
       return localStorage.setItem('playerScore', newScore);
     }
     if (question.results[0].difficulty === 'hard') {
       const difficultyNum = 3;
       const pointForHit = 10;
+      const timer = this.state.time;
       const newScore = parseInt(scoreStorege, 10) + pointForHit + (timer * difficultyNum);
+      dispatchScore(newScore);
 
       return localStorage.setItem('playerScore', newScore);
     }
   }
 
   wrongAnswer() {
+    this.handleButton()
     console.log('Game Over :(');
   }
 
   render() {
-    const { array } = this.state;
+    const { array, time, disableButon } = this.state;
     const { question } = this.props;
     const correto = question.results[0].correct_answer;
     const numberForIterat = -1;
@@ -85,6 +109,7 @@ class QuestionsList extends React.Component {
               <button
                 type="button"
                 data-testid="correct-answer"
+                disabled={ disableButon }
                 onClick={ this.scoreCalculete }
               >
                 { answers }
@@ -98,11 +123,15 @@ class QuestionsList extends React.Component {
               type="button"
               data-testid={ `wrong-answer-${index}` }
               onClick={ this.wrongAnswer }
+              disabled={ disableButon }
             >
               { answers }
             </button>
           );
         })}
+        <span>
+          {time}
+        </span>
       </div>
     );
   }
@@ -123,4 +152,8 @@ QuestionsList.propTypes = {
   }),
 }.isRequired;
 
-export default QuestionsList;
+const mapDispatchToProps = (dispatch) => ({
+  dispatchScore: (score) => dispatch(changeScore(score)),
+});
+
+export default connect(null, mapDispatchToProps)(QuestionsList);

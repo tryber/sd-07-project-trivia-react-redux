@@ -5,13 +5,21 @@ import { requestQuestionAndAnsewrs } from '../actions';
 import QuestionsList from './componentes/QuestionsList';
 import Header from './componentes/Header';
 import Loading from './componentes/Loading';
+import player from '../reducers/player';
 
 class Game extends React.Component {
   componentDidMount() {
-    const { requestQuestions, name, score } = this.props;
+    const { requestQuestions, name, score, email } = this.props;
+    const objPlayer = { 
+      player: {
+        name: name,
+        assertions: '',
+        score: score,
+        gravatarEmail: email,
+      }
+    };
     requestQuestions(localStorage.token);
-    localStorage.setItem('playerName', name);
-    localStorage.setItem('playerScore', score);
+    localStorage.setItem('player', JSON.stringify(objPlayer));
   }
 
   render() {
@@ -32,18 +40,20 @@ class Game extends React.Component {
 }
 
 Game.propTypes = {
-  name: PropTypes.string,
-  assertions: PropTypes.string,
-  score: PropTypes.number,
-  gravatarEmail: PropTypes.bool,
-  loading: PropTypes.number,
-  token: PropTypes.string,
-  question: PropTypes.shape({
-    results: PropTypes.arrayOf(PropTypes.string),
-    question: PropTypes.string,
-    correct_answer: PropTypes.string,
-    incorrect_answers: PropTypes.arrayOf(PropTypes.string),
-  }),
+  player: PropTypes.shape({
+    name: PropTypes.string,
+    assertions: PropTypes.string,
+    score: PropTypes.number,
+    gravatarEmail: PropTypes.bool,
+    loading: PropTypes.number,
+    token: PropTypes.string,
+    question: PropTypes.shape({
+      results: PropTypes.arrayOf(PropTypes.string),
+      question: PropTypes.string,
+      correct_answer: PropTypes.string,
+      incorrect_answers: PropTypes.arrayOf(PropTypes.string),
+    }),
+  }).isRequired
 }.isRequired;
 
 const mapDispatchToProps = (dispatch) => ({
