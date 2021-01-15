@@ -11,6 +11,8 @@ class QuestionsList extends React.Component {
       array: [],
       time: 30,
       disableButon: false,
+      nameClassCorrect: '',
+      nameClassWrong: '',
     };
 
     this.shuffle = this.shuffle.bind(this);
@@ -18,6 +20,7 @@ class QuestionsList extends React.Component {
     this.scoreCalculete = this.scoreCalculete.bind(this);
     this.wrongAnswer = this.wrongAnswer.bind(this);
     this.handleButton = this.handleButton.bind(this);
+    this.answers = this.answers.bind(this);
   }
 
   componentDidMount() {
@@ -38,6 +41,7 @@ class QuestionsList extends React.Component {
 
   handleButton() {
     this.setState({ disableButon: true });
+    this.answers();
   }
 
   shuffle(array) {
@@ -91,10 +95,14 @@ class QuestionsList extends React.Component {
   wrongAnswer() {
     this.handleButton();
     console.log('Game Over :(');
+      
+  answers() {
+    this.setState({ nameClassCorrect: 'correctAnswer' });
+    this.setState({ nameClassWrong: 'wrongAnswer' });
   }
 
   render() {
-    const { array, time, disableButon } = this.state;
+    const { array, time, disableButon, nameClassCorrect, nameClassWrong } = this.state;
     const { question } = this.props;
     const correto = question.results[0].correct_answer;
     const numberForIterat = -1;
@@ -105,6 +113,7 @@ class QuestionsList extends React.Component {
           if (answers === correto) {
             return (
               <button
+                className={ nameClassCorrect }
                 type="button"
                 data-testid="correct-answer"
                 disabled={ disableButon }
@@ -117,6 +126,7 @@ class QuestionsList extends React.Component {
           index += 1;
           return (
             <button
+              className={ nameClassWrong }
               key={ index }
               type="button"
               data-testid={ `wrong-answer-${index}` }
@@ -130,6 +140,17 @@ class QuestionsList extends React.Component {
         <span>
           {time}
         </span>
+        <div>
+          {
+            disableButon ? (
+              <button data-testid="btn-next" type="button">
+                Próxima
+              </button>
+            ) : (
+              <span> </span>
+            )
+          }
+        </div>
       </div>
     );
   }
