@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { CustomHeader, CustomGame, CustomNextButton } from '../components';
-import { getStorage } from '../services/localStorage';
+import { CustomHeader, CustomGame, CustomNextButton, CustomTimer } from '../components';
+import { getStorage, countdown } from '../services';
 import { fetchTrivia } from '../actions';
 
 class GameScreen extends Component {
@@ -11,10 +11,12 @@ class GameScreen extends Component {
     this.state = {
       answered: false,
       count: 0,
-      stopTimer: false,
+      time: 30,
+      assertions: 0,
     };
     this.submitAnswer = this.submitAnswer.bind(this);
     this.changeCount = this.changeCount.bind(this);
+    this.timerInit = this.timerInit.bind(this);
   }
 
   componentDidMount() {
@@ -22,9 +24,29 @@ class GameScreen extends Component {
     dispatchTrivia(getStorage('token'));
   }
 
-  submitAnswer() {
+  submitAnswer({ target: { 'data-testid': response } }) {
+    if (response === 'correct-answer') {
+      this.setState(({ assertions }) => ({ assertions: assertions + 1 }));
+    }
     // this.changeSstyles();
-    this.setState({ answered: true, stopTimer: true });
+    this.setState({ answered: true });
+  }
+
+  timerInit() {
+    this.setState({ time: 30 });
+    clearInterval(this.timer);
+    this.timer = countdown((stop) => {
+      this.setState(({ time }) => (
+        time
+          ? { time: time - 1 }
+          : stop(this.timer)
+      ));
+    });
+  }
+
+  userDates() {
+    // const { name, assertions, score, gravatarEmail } = this.props;
+    // setStorage('player', { name, assertions, score, gravatarEmail });
   }
 
   changeCount() {
@@ -34,24 +56,27 @@ class GameScreen extends Component {
 
   render() {
     const { name, email, trivia, loading } = this.props;
-    const { answered, count, stopTimer } = this.state;
+    const { answered, count, time } = this.state;
     return (
       <div>
         <CustomHeader name={ name } email={ email } />
-        {loading && <p>...Loading</p>}
-
-        {trivia.length > 0 && (
-          <div>
-            <CustomGame
-              changeStyle={ answered }
-              index={ count }
-              challenge={ trivia }
-              correct={ this.submitAnswer }
-              stopTimer={ stopTimer }
-            />
-          </div>
-        )}
-        {answered && <CustomNextButton next={ this.changeCount } />}
+        {
+          loading && trivia.length === 0
+            ? (<p>...Loading</p>)
+            : (
+              <div>
+                <CustomGame
+                  changeStyle={ answered }
+                  index={ count }
+                  challenge={ trivia }
+                  correct={ this.submitAnswer }
+                  timerInit={ this.timerInit }
+                />
+                <CustomTimer time={ time } timerInit={ this.timerInit } />
+                {answered && <CustomNextButton next={ this.changeCount } />}
+              </div>
+            )
+        }
       </div>
     );
   }

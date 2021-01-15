@@ -6,7 +6,7 @@ import {
 
 const INITIAL_STATE = {
   trivia: [],
-  loading: false,
+  loading: true,
 };
 
 export default function triviaReducer(state = INITIAL_STATE, action) {
