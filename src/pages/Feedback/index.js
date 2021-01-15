@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { Header } from '../../components';
 
 class Feedback extends Component {
@@ -33,6 +34,9 @@ class Feedback extends Component {
         </header>
         <h1>Tela de Feedback</h1>
         { this.feedbackMessage() }
+        <Link to="/">
+          <button type="button" data-testid="btn-play-again">Jogar novamente</button>
+        </Link>
       </div>
     );
   }
