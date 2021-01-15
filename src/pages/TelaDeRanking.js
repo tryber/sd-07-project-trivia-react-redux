@@ -7,11 +7,14 @@ class TelaDeRanking extends React.Component {
     }
     render() {
         return (
-            <Link to='/'>
-            <button type="button" data-testid="btn-go-home">
-                Home
-            </button>
-            </Link>
+            <div>
+                <h1 data-testid="ranking-title">Ranking</h1>
+                  <Link to='/'>
+                    <button type="button" data-testid="btn-go-home">
+                        Home
+                    </button>
+                </Link>
+            </div>
         )
     }
 }

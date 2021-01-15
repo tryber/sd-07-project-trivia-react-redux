@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import md5 from 'crypto-js/md5';
 
@@ -23,6 +24,9 @@ class TelaDeFeedBack extends Component {
             <p data-testid="header-score">{ score }</p>
           </div>
         </header>
+        <Link to="/telaDeRanking">
+        <button type="button" data-testid="btn-ranking">Ver Ranking</button>
+        </Link>
       </div>
     );
   }
