@@ -45,7 +45,7 @@ Header.propTypes = {
   requestAPI: PropTypes.func.isRequired,
   gravatarEmail: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  score: PropTypes.string.isRequired,
+  score: PropTypes.number.isRequired,
   hash: PropTypes.string.isRequired,
 };
 

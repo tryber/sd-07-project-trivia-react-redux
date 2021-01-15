@@ -23,9 +23,11 @@ class QuestionsList extends React.Component {
   componentDidMount() {
     const { disableButon } = this.state;
     let { time } = this.state;
+    const initialScore = 0;
     const interval = 1000;
     const timeOut = 30000;
     this.mountArrayOfAnswer();
+    localStorage.setItem('playerScore', initialScore);
     setInterval(() => {
       if (!disableButon && time > 0) {
         this.setState({ time: (time -= 1) });
