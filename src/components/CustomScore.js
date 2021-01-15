@@ -3,7 +3,7 @@ import { getStorage } from '../services';
 
 
 export default function Scoreboard() {
-  const { score = 0 } = getStorage('player');
+  const { score } = getStorage('state');
   return (
     <spam data-testid="header-score">{score}</spam>
   );
