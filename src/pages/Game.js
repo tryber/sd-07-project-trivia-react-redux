@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchQuestions, getScore } from '../actions';
+import { fetchQuestions, getScore, updateCorrectCount } from '../actions';
 import GameHeader from '../components/GameHeader';
 import Loading from '../components/Loading';
 import '../css/App.css';
@@ -196,7 +196,7 @@ class Game extends Component {
       disableButton,
       showBtn,
     } = this.state;
-    const { questions } = this.props;
+    const { questions, sendCorrectAnswers } = this.props;
     return questions.results ? (
       <div>
         <GameHeader />
@@ -226,6 +226,7 @@ class Game extends Component {
                           onClick={ () => {
                             this.handleUserAnswer();
                             this.calculateScore();
+                            sendCorrectAnswers();
                           } }
                           data-testid="correct-answer"
                         >
@@ -281,6 +282,7 @@ const mapStateToProps = ({ gameReducer, scoreReducer }) => ({
 const mapDispatchToProps = (dispatch) => ({
   getQuestions: () => dispatch(fetchQuestions()),
   sendScore: (score) => dispatch(getScore(score)),
+  sendCorrectAnswers: () => dispatch(updateCorrectCount()),
 });
 
 Game.propTypes = {
@@ -293,6 +295,7 @@ Game.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
+  sendCorrectAnswers: PropTypes.number.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);

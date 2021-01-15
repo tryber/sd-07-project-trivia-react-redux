@@ -4,9 +4,16 @@ const RECEIVED_QUESTIONS = 'RECEIVED_QUESTIONS';
 const FAILED_REQUEST = 'FAILED_REQUEST';
 const USER_NAME = 'USER_NAME';
 const GET_SCORE = 'GET_SCORE';
+const UPDATE_CORRECT_COUNT = 'UPDATE_CORRECT_COUNT';
 
 export default {
-  USER_EMAIL, START_REQUEST, RECEIVED_QUESTIONS, FAILED_REQUEST, USER_NAME, GET_SCORE,
+  USER_EMAIL,
+  START_REQUEST,
+  RECEIVED_QUESTIONS,
+  FAILED_REQUEST,
+  USER_NAME,
+  GET_SCORE,
+  UPDATE_CORRECT_COUNT,
 };
 
 export const getEmail = (email) => ({
@@ -51,4 +58,8 @@ export function fetchQuestions() {
 export const getScore = (score) => ({
   type: GET_SCORE,
   score,
+});
+
+export const updateCorrectCount = () => ({
+  type: UPDATE_CORRECT_COUNT,
 });
