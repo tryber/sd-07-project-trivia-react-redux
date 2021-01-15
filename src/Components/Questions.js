@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Feedback from '../pages/Feedback';
 
 class Questions extends React.Component {
   constructor() {
@@ -33,9 +32,6 @@ class Questions extends React.Component {
     const { questionNumber, wrongAnswer, correctAnswer } = this.state;
     const five = 5;
 
-    if (questionNumber === five) {
-      return (<Feedback />);
-    }
     if (questionsList < five) {
       console.log(questionsList);
       return <div>Efetue o login novamente</div>;
