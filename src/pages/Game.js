@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchQuestions, getScore } from '../actions';
-import '../App.css';
 import GameHeader from '../components/GameHeader';
 import Loading from '../components/Loading';
 import '../css/App.css';
