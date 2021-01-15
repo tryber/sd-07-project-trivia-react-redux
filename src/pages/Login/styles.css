@@ -1,6 +1,6 @@
 .login-container {
   align-items: center;
-  background-color: #0FA36B;
+  background-color: #0fa36b;
   display: flex;
   height: 100%;
   justify-content: center;
@@ -20,16 +20,16 @@
 }
 
 .login-container form label {
-  display: flex;
   color: #343333;
+  display: flex;
   flex-direction: column;
   font-size: 20px;
-  font-weight: bold;
+  font-weight: 500;
   width: 100%;
 }
 
 .login-container form label input {
-  background-color: #BAE2BE;
+  background-color: #bae2be;
   border-radius: 8px;
   font-size: 20px;
   line-height: 28px;
@@ -54,7 +54,7 @@
 
 .btn-settings {
   align-items: center;
-  background-color: #1D7551;
+  background-color: #1d7551;
   border-radius: 10px;
   color: whitesmoke;
   display: flex;
