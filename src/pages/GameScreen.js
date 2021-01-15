@@ -54,7 +54,8 @@ class GameScreen extends Component {
     const { id } = this.state;
     const MAX_QUESTIONS = 5;
     await this.setState((state) => ({ id: state.id + 1 }));
-    if (id === MAX_QUESTIONS) {
+    console.log(id);
+    if (id >= MAX_QUESTIONS) {
       return this.handleRedirect();
     }
     if (quest.length === 0) {
@@ -141,8 +142,6 @@ class GameScreen extends Component {
   }
 
   render() {
-    console.log('state:', this.state);
-    console.log('props:', this.props);
     const {
       category,
       question,
