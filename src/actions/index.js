@@ -25,6 +25,9 @@ export const FETCH_QUESTIONS_SUCCESS = 'FETCH_QUESTIONS_SUCCESS';
 export const fetchQuestionsSuccess = (payload) => (
   { type: 'FETCH_QUESTIONS_SUCCESS', payload });
 
+export const UPDATE_ASSERTIONS = 'UPDATE_ASSERTIONS';
+export const updateAssertions = () => ({ type: UPDATE_ASSERTIONS });
+
 export const UPDATE_SCORE = 'UPDATE_SCORE';
 export const updateScore = () => ({ type: UPDATE_SCORE });
 

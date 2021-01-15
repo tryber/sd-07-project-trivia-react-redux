@@ -37,10 +37,12 @@ class Game extends React.Component {
   }
 
   handleAnswer({ target: { name } }) {
-    const { scoreAction } = this.props;
+    const { assertionsAction } = this.props;
     const answerButtons = document.querySelectorAll('.hidden');
     answerButtons.forEach((button) => button.classList.remove('hidden'));
-    if (name === 'correct') scoreAction();
+    if (name === 'correct') {
+      assertionsAction();
+    }
     this.setState({
       nextQuestion: true,
     });
@@ -53,6 +55,7 @@ class Game extends React.Component {
       this.setState((prevSate) => ({
         currentQuestion: prevSate.currentQuestion + 1,
         nextQuestion: false,
+        timeLeft: prevSate.timer,
         timer: 30,
       }));
     } else {
@@ -169,13 +172,13 @@ Game.propTypes = {
     length: PropTypes.number.isRequired,
   }).isRequired,
   requestQuestions: PropTypes.func.isRequired,
-  scoreAction: PropTypes.func.isRequired,
+  assertionsAction: PropTypes.func.isRequired,
   token: PropTypes.string.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
   requestQuestions: (questions) => dispatch(fetchQuestions(questions)),
-  scoreAction: () => dispatch(updateScore()),
+  assertionsAction: () => dispatch(updateScore()),
 });
 
 const mapStateToProps = (state) => ({

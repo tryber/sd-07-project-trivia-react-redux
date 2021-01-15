@@ -3,6 +3,7 @@ import {
   REQUEST_FAIL,
   FETCH_QUESTIONS_SUCCESS,
   EMAIL_HASH,
+  UPDATE_ASSERTIONS,
   UPDATE_SCORE,
 } from '../actions';
 
@@ -31,8 +32,25 @@ const gameReducer = (state = INITIAL_STATE, action) => {
       questions: action.payload,
     };
   case UPDATE_SCORE:
+    // const point = 10 *
+    // 10 + (timer * dificuldade)
+    return { ...state };
+  // score: [...state.score, action.payload],
+  // playerLocalStorage() {
+  //   const { name, assertions, email, score } = this.state;
+  //   console.log(name)
+  //   localStorage.setItem('token', token);
+  //   history.push('/game');
+  //   player: {
+  //     name,
+  //     assertions,
+  //     score,
+  //     gravatarEmail
+  //   }
+  // }
+  case UPDATE_ASSERTIONS:
     return { ...state,
-      score: state.score + 1,
+      assertions: state.assertions + 1,
     };
   default:
     return state;
