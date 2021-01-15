@@ -80,10 +80,18 @@ class Questions extends React.Component {
             </button>
           ))}
         </div>
-        {visibleClick
-        || timer
-          ? <button data-testid="btn-next" type="button" onClick={ this.incrementIndex }>Next</button>
-          : null}
+        {
+          visibleClick || timer
+            ? (
+              <button
+                data-testid="btn-next"
+                type="button"
+                onClick={ this.incrementIndex }
+              >
+                Next
+              </button>
+            ) : null
+        }
       </div>
     );
   }
