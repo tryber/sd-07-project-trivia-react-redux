@@ -50,7 +50,6 @@ class Quiz extends React.Component {
     player.assertions += 1;
     setPlayer(player);
     localStorage.setItem('state', JSON.stringify({ player }));
-    console.log(JSON.parse(localStorage.getItem('state')).player)
   }
 
   showAnswer(event) {
