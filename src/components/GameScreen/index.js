@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import './index.css';
-import { getQuestions } from '../../redux/actions/gameActions';
+import { Redirect } from 'react-router-dom';
+import { addScore, getQuestions } from '../../redux/actions/gameActions';
 
 class GameScreen extends Component {
   constructor(props) {
@@ -13,13 +14,14 @@ class GameScreen extends Component {
       actual: 0,
       solved: false,
       timer: 30,
-      // idTimer: 0,
+      idTimer: 0,
     };
 
     this.questFrame = this.questFrame.bind(this);
     this.questFrameSolved = this.questFrameSolved.bind(this);
     this.renderScreen = this.renderScreen.bind(this);
     this.starTimer = this.starTimer.bind(this);
+    this.calcScore = this.calcScore.bind(this);
   }
 
   componentDidMount() {
@@ -30,16 +32,53 @@ class GameScreen extends Component {
 
   starTimer() {
     const timeDesc = 1000;
-    // const tempId =
-    setInterval(() => {
+    const tempId = setInterval(() => {
       this.setState((prevState) => {
         if (prevState.timer > 0) {
-          return ({ timer: prevState.timer - 1 });
+          return { timer: prevState.timer - 1 };
         }
       });
     }, timeDesc);
 
-    // this.setState({ idTimer: tempId });
+    this.setState({ idTimer: tempId });
+  }
+
+  calcScore() {
+    const { questions, addPoints } = this.props;
+    const { idTimer, actual, timer } = this.state;
+    clearInterval(idTimer);
+    const easy = 1;
+    const medium = 2;
+    const hard = 3;
+    const minimumQuest = 10;
+
+    let valueQuest;
+
+    switch (questions[actual].difficulty) {
+    case 'easy':
+      valueQuest = easy;
+      break;
+    case 'medium':
+      valueQuest = medium;
+      break;
+    case 'hard':
+      valueQuest = hard;
+      break;
+
+    default:
+      break;
+    }
+
+    const calcQuest = minimumQuest + (timer * valueQuest);
+
+    addPoints(calcQuest);
+
+    // localStorage.setItem('state', `player: {
+    //   name: ${playerName},
+    //   assertions: ${assertions},
+    //   score: ${scoreSession},
+    //   gravatarEmail: ${playerEmail},
+    // }`);
   }
 
   questFrame() {
@@ -56,7 +95,10 @@ class GameScreen extends Component {
       return questions[actual].type === 'boolean' ? (
         <div>
           <button
-            onClick={ () => this.setState({ solved: true }) }
+            onClick={ () => {
+              if (questions[actual].correct_answer === 'True') this.calcScore();
+              this.setState({ solved: true });
+            } }
             type="button"
             data-testid={
               questions[actual].correct_answer === 'True'
@@ -67,7 +109,10 @@ class GameScreen extends Component {
             Verdadeiro
           </button>
           <button
-            onClick={ () => this.setState({ solved: true }) }
+            onClick={ () => {
+              if (questions[actual].correct_answer === 'False') this.calcScore();
+              this.setState({ solved: true });
+            } }
             type="button"
             data-testid={
               questions[actual].correct_answer === 'False'
@@ -84,7 +129,10 @@ class GameScreen extends Component {
             if (index === correct) {
               return (
                 <button
-                  onClick={ () => this.setState({ solved: true }) }
+                  onClick={ () => {
+                    this.calcScore();
+                    this.setState({ solved: true });
+                  } }
                   key={ questions[actual].correct_answer }
                   type="button"
                   data-testid="correct-answer"
@@ -111,8 +159,6 @@ class GameScreen extends Component {
   }
 
   questFrameSolved() {
-    // return <p>Loading</p>;
-
     const { questions } = this.props;
     const { actual, correct } = this.state;
     let counter = 0;
@@ -197,7 +243,22 @@ class GameScreen extends Component {
   }
 
   render() {
+    const { playerEmail, playerName, assertions, scoreSession } = this.props;
+    const { solved, actual } = this.state;
+    const limitQuest = 4;
+    const player = {
+      name: playerName,
+      assertions,
+      score: scoreSession,
+      gravatarEmail: playerEmail,
+    };
+
+    localStorage.setItem('state', JSON.stringify({ player }));
+
     const { timer } = this.state;
+
+    if (actual > limitQuest) return <Redirect to="/feedback" />;
+
     return (
       <>
         <p data-testid="question-category">Categoria</p>
@@ -205,6 +266,18 @@ class GameScreen extends Component {
         {this.renderScreen()}
         {/* {this.questFrame()} */}
         <h2>{timer}</h2>
+        {solved && (
+          <button
+            type="button"
+            onClick={ () => this.setState((prevState) => ({
+              actual: prevState.actual + 1,
+              timer: 30,
+              solved: false,
+            })) }
+            data-testid="btn-next"
+          >
+            Próximo
+          </button>)}
       </>
     );
   }
@@ -213,15 +286,25 @@ class GameScreen extends Component {
 const mapStateToProps = (state) => ({
   playerToken: state.user.token,
   questions: state.session.questions,
+  scoreSession: state.session.score,
+  assertions: state.session.rightAnswers,
+  playerName: state.user.userName,
+  playerEmail: state.user.email,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   getQuest: (token) => dispatch(getQuestions(token)),
+  addPoints: (points) => dispatch(addScore(points)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(GameScreen);
 
 GameScreen.propTypes = {
+  scoreSession: PropTypes.number.isRequired,
+  assertions: PropTypes.number.isRequired,
+  playerName: PropTypes.string.isRequired,
+  playerEmail: PropTypes.string.isRequired,
+  addPoints: PropTypes.func.isRequired,
   getQuest: PropTypes.func.isRequired,
   playerToken: PropTypes.string.isRequired,
   questions: PropTypes.arrayOf(PropTypes.object).isRequired,
