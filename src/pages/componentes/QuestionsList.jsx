@@ -11,12 +11,14 @@ class QuestionsList extends React.Component {
       disableButon: false,
       nameClassCorrect: '',
       nameClassWrong: '',
+      indexQuestions: 0,
     };
 
     this.shuffle = this.shuffle.bind(this);
     this.mountArrayOfAnswer = this.mountArrayOfAnswer.bind(this);
     this.handleButton = this.handleButton.bind(this);
     this.answers = this.answers.bind(this);
+    this.nextQuestion = this.nextQuestion.bind(this);
   }
 
   componentDidMount() {
@@ -60,8 +62,16 @@ class QuestionsList extends React.Component {
     this.setState({ nameClassWrong: 'wrongAnswer' });
   }
 
+  nextQuestion(index) {
+    const { question } = this.props;
+    const { indexQuestions } = this.state;
+    index = indexQuestions + 1;
+    this.setState({ indexQuestions: index });
+    return question.results[index];
+  }
+
   render() {
-    const { array, time, disableButon, nameClassCorrect, nameClassWrong } = this.state;
+    const { array, time, disableButon, nameClassCorrect, nameClassWrong, indexQuestions } = this.state;
     const { question } = this.props;
     const correto = question.results[0].correct_answer;
     const numberForIterat = -1;
@@ -102,7 +112,11 @@ class QuestionsList extends React.Component {
         <div>
           {
             disableButon ? (
-              <button data-testid="btn-next" type="button">
+              <button
+                data-testid="btn-next"
+                type="button"
+                onClick={ () => this.nextQuestion(indexQuestions) }
+              >
                 Próxima
               </button>
             ) : (

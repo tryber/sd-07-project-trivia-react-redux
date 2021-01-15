@@ -14,9 +14,9 @@ class Game extends React.Component {
 
   render() {
     const { question, loading } = this.props;
-    console.log(question);
-    console.log(question.results);
-    console.log(loading);
+   // console.log(question);
+   // console.log(question.results);
+   // console.log(loading);
     return (
       loading ? <Loading />
         : (

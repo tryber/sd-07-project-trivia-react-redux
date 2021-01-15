@@ -7,6 +7,10 @@ import { requestGravatar } from '../../actions';
 class Header extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      name: props.name,
+      score: props.score,
+    };
 
     this.geraImagem = this.geraImagem.bind(this);
   }
@@ -17,7 +21,7 @@ class Header extends React.Component {
   }
 
   render() {
-    const { name, score, hash } = this.props;
+    const { name, score, hash } = this.state;
     const avatar = `https://www.gravatar.com/avatar/${hash}`;
     return (
       <header>

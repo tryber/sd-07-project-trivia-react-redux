@@ -79,7 +79,7 @@ export function requestToken() {
 export function requestQuestionAndAnsewrs(token) {
   return (dispatch) => {
     dispatch(requestApiQuestion());
-    return fetch(`https://opentdb.com/api.php?amount=3&token=${token}`)
+    return fetch(`https://opentdb.com/api.php?amount=5&token=${token}`)
       .then((response) => {
         response.json().then(
           (data) => dispatch(requestApiQuestionSucess(data)),
