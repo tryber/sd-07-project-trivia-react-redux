@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import questionsRequest from '../services/QuestionsRequest';
 import Header from '../components/Header';
 import Questions from './Questions';
@@ -8,8 +7,6 @@ class Game extends Component {
   constructor() {
     super();
     this.fetchQuestions = this.fetchQuestions.bind(this);
-    this.goToLogin = this.goToLogin.bind(this);
-
     this.state = {
       questionsArray: [],
       currentQuestion: 0,
@@ -18,11 +15,6 @@ class Game extends Component {
 
   componentDidMount() {
     this.fetchQuestions();
-  }
-
-  goToLogin() {
-    const { history } = this.props;
-    history.push('/');
   }
 
   async fetchQuestions() {
@@ -49,22 +41,9 @@ class Game extends Component {
           Próxima
         </button>
 
-        <button
-          data-testid="btn-go-home"
-          type="button"
-          onClick={ this.goToLogin }
-        >
-          Go to Login
-        </button>
       </div>
     );
   }
 }
-
-Game.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func,
-  }).isRequired,
-};
 
 export default Game;
