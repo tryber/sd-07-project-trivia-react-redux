@@ -1,39 +1,30 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import Header from '../Components/Header';
 
 class Feedback extends React.Component {
   constructor() {
     super();
-    this.state = {
-      testScore: 0,
-      testScorePoint: 0,
-    };
+
     this.renderFeedback = this.renderFeedback.bind(this);
     this.renderTotalAnswer = this.renderTotalAnswer.bind(this);
     this.renderTotalScore = this.renderTotalScore.bind(this);
   }
 
-  /*   componentWillMount() {
-    const state = JSON.parse(localStorage.getItem('state'));
-    this.setState({
-      testScore: state.player.assertions,
-      testScorePoint: state.player.score,
-    });
-  }
- */
   renderFeedback() {
     const three = 3;
-    const { testScore } = this.state;
-    if (testScore < three) {
+    const { realAssertions } = this.props;
+    if (realAssertions < three) {
       return <h1 data-testid="feedback-text">Podia ser melhor...</h1>;
     }
     return <h1 data-testid="feedback-text">Mandou bem!</h1>;
   }
 
   renderTotalAnswer() {
-    const { testScore } = this.state;
-    if (testScore === 0) {
+    const { realAssertions } = this.props;
+    if (realAssertions === 0) {
       return <h2 data-testid="feedback-total-question">Não acertou nenhuma pergunta</h2>;
     }
     return (
@@ -41,20 +32,20 @@ class Feedback extends React.Component {
         <span
           data-testid="feedback-total-question"
         >
-          {`Você acertou ${testScore} questões!`}
+          {`Você acertou ${realAssertions} questões!`}
         </span>
       </h2>
     );
   }
 
   renderTotalScore() {
-    const { testScorePoint } = this.state;
+    const { realScore } = this.props;
     return (
       <h2>
         <span
           data-testid="feedback-total-score"
         >
-          {`Um total de ${testScorePoint} pontos`}
+          {`Um total de ${realScore} pontos`}
         </span>
       </h2>
     );
@@ -90,4 +81,14 @@ class Feedback extends React.Component {
   }
 }
 
-export default Feedback;
+const mapStateToProps = (state) => ({
+  realScore: state.score.points,
+  realAssertions: state.score.assertions,
+});
+
+Feedback.propTypes = {
+  realAssertions: PropTypes.number.isRequired,
+  realScore: PropTypes.number.isRequired,
+};
+
+export default connect(mapStateToProps, null)(Feedback);
