@@ -71,6 +71,11 @@
   width: 100%;
 }
 
+button:disabled {
+  background: rgb(204, 204, 204);
+  color: whitesmoke;
+}
+
 .timer-nextQuestion-container button {
   background-color: #b4000c;
   color: white;
@@ -106,9 +111,4 @@
 .timer-nextQuestion-container button:hover {
   background-color: black;
   cursor: pointer;
-}
-
-button:disabled {
-  background: rgb(204, 204, 204);
-  color: whitesmoke;
 }
