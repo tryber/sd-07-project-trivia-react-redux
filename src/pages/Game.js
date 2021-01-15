@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchQuestions } from '../actions';
-import '../App.css';
 import GameHeader from '../components/GameHeader';
+import Loading from '../components/Loading';
+import '../css/App.css';
+import '../css/Game.css'
 
 class Game extends Component {
   constructor() {
@@ -16,6 +18,8 @@ class Game extends Component {
     this.nextQuestion = this.nextQuestion.bind(this);
     this.handleClasses = this.handleClasses.bind(this);
     this.savingShuffleAnswers = this.savingShuffleAnswers.bind(this);
+    this.convertQuestionAndAnswers = this.convertQuestionAndAnswers.bind(this);
+    this.stopTimer = this.stopTimer.bind(this);
 
     this.state = {
       questionIndex: 0,
@@ -30,8 +34,8 @@ class Game extends Component {
   async componentDidMount() {
     const { getQuestions } = this.props;
     await getQuestions();
-    this.renderTime();
     this.savingShuffleAnswers();
+    this.renderTime();
   }
 
   componentDidUpdate() {
@@ -51,10 +55,11 @@ class Game extends Component {
     const lastSecondDisableButton = 0;
     if (timer === lastSecondDisableButton) {
       this.handleUserAnswer();
-      this.setState({
+      this.setState((prevState) => ({
+        ...prevState,
         timer: 30,
         disableButton: true,
-      });
+      }));
     }
     if (timer === initialSecondEnableButton) {
       this.setState({
@@ -121,13 +126,17 @@ class Game extends Component {
     const secondTimerFunction = 1000;
     const lastSecondDisableButton = 0;
     const { timer } = this.state;
-    setInterval(() => {
+    const loop = setInterval(() => {
       if (timer > lastSecondDisableButton) {
         this.setState((prevState) => ({
           timer: prevState.timer - 1,
         }));
       }
     }, secondTimerFunction);
+  }
+
+  stopTimer(interval) {
+    clearInterval(interval);
   }
 
   renderAllDataQuestion() {
@@ -149,6 +158,19 @@ class Game extends Component {
     }
   }
 
+  convertQuestionAndAnswers(question) {
+    const errors = ['&#039;', '&quot;'];
+    let finalQuestion = question;
+    errors.forEach((error) => {
+      if (question.includes(error)) {
+        const newQuestion = finalQuestion.split(error);
+        finalQuestion = newQuestion.join('');
+      }
+    })
+    console.log(question);
+    return finalQuestion;
+  }
+
   render() {
     const {
       questionIndex,
@@ -162,64 +184,72 @@ class Game extends Component {
     return questions.results ? (
       <div>
         <GameHeader />
-        <h1>TELA DE JOGO</h1>
-        <h3 data-testid="question-category">
-          {questions.results[questionIndex].category}
-        </h3>
-        <h2 data-testid="question-text">
-          {questions.results[questionIndex].question}
-        </h2>
-        <div>
-          {
-            shuffleAnswers.map((answer, index) => {
-              if (answer === correctAnswer) {
-                return (
-                  <div key={ answer }>
-                    <button
-                      type="button"
-                      className="btnAnswer"
-                      id="ok"
-                      key="correct"
-                      disabled={ disableButton }
-                      onClick={ this.handleUserAnswer }
-                      data-testid="correct-answer"
-                    >
-                      {answer}
-                    </button>
-                  </div>
-                );
+        <section className="container-game">
+          <header className="container-header-game" >
+            <h1>TELA DE JOGO</h1>
+            <h3 data-testid="question-category">
+              {questions.results[questionIndex].category}
+            </h3>
+          </header>
+          <section className="container-questions-answers">
+            <h2 data-testid="question-text">
+              {this.convertQuestionAndAnswers(questions.results[questionIndex].question)}
+            </h2>
+            <div className="container-buttons">
+              {
+                shuffleAnswers.map((answer, index) => {
+                  if (answer === correctAnswer) {
+                    return (
+                      <div key={ answer }>
+                        <button
+                          type="button"
+                          className="btnAnswer"
+                          id="ok"
+                          key="correct"
+                          disabled={ disableButton }
+                          onClick={ this.handleUserAnswer }
+                          data-testid="correct-answer"
+                        >
+                          {this.convertQuestionAndAnswers(answer)}
+                        </button>
+                      </div>
+                    );
+                  }
+                  return (
+                    <div key={ answer }>
+                      <button
+                        type="button"
+                        className="btnAnswer"
+                        id="notOk"
+                        key={ answer }
+                        disabled={ disableButton }
+                        onClick={ this.handleUserAnswer }
+                        data-testid={ `wrong-answer-${index}` }
+                      >
+                        {this.convertQuestionAndAnswers(answer)}
+                      </button>
+                    </div>
+                  );
+                })
               }
-              return (
-                <div key={ answer }>
-                  <button
-                    type="button"
-                    className="btnAnswer"
-                    id="notOk"
-                    key={ answer }
-                    disabled={ disableButton }
-                    onClick={ this.handleUserAnswer }
-                    data-testid={ `wrong-answer-${index}` }
-                  >
-                    {answer}
-                  </button>
-                </div>
-              );
-            })
-          }
-        </div>
-        <p>{timer}</p>
-        { showBtn && (
-          <button
-            type="button"
-            data-testid="btn-next"
-            onClick={ this.nextQuestion }
-          >
-            Próxima pergunta
-          </button>
-        )}
+            </div>
+          </section>
+        </section>
+        <section className="timer-nextQuestion-container">
+          <p>{timer}</p>
+          { showBtn && (
+            <button
+              type="button"
+              data-testid="btn-next"
+              onClick={ this.nextQuestion }
+            >
+              Próxima pergunta
+            </button>
+          )}
+        </section>
       </div>
     ) : (
-      <p>loading</p>
+      <Loading />
     );
   }
 }
