@@ -1,17 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import md5 from 'crypto-js/md5';
 
 class Header extends Component {
   render() {
-    const { player: { name, gravatarEmail, score } } = this.props;
-    const URL_AVATAR = `https://www.gravatar.com/avatar/${md5(gravatarEmail)}`;
-
+    const { player: { name, picture, score } } = this.props;
     return (
       <div>
         <img
-          src={ URL_AVATAR }
+          src={ picture }
           alt="Profile"
           data-testid="header-profile-picture"
         />
@@ -31,8 +28,8 @@ class Header extends Component {
 Header.propTypes = {
   player: PropTypes.shape({
     name: PropTypes.string.isRequired,
-    gravatarEmail: PropTypes.string.isRequired,
     score: PropTypes.number.isRequired,
+    picture: PropTypes.string.isRequired,
   }).isRequired,
 
 };

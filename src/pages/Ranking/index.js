@@ -1,7 +1,54 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
-const Ranking = () => (
-  <h1 data-testid="ranking-title">RANKING PAGE</h1>
-);
+class Ranking extends Component {
+  render() {
+    const { ranking, history } = this.props;
+    return (
+      <>
+        <h1 data-testid="ranking-title">RANKING PAGE</h1>
+        <button
+          type="button"
+          data-testid="btn-go-home"
+          onClick={ () => history.push('/') }
+        >
+          Home
+        </button>
+        <ul>
+          { ranking
+          && ranking
+            .sort((a, b) => (b.score - a.score))
+            .map((player) => (
+              <li key={ player.index }>
+                <img
+                  src={ player.picture }
+                  alt="Profile"
+                  data-testid="player-picture"
+                />
+                <h3 data-testid={ `player-name-${player.index}` }>
+                  {` ${player.name} - `}
+                </h3>
+                <h3 data-testid={ `player-score-${player.index}` }>
+                  {`${player.score} pontos `}
+                </h3>
+              </li>
+            ))}
+        </ul>
+      </>
+    );
+  }
+}
 
-export default Ranking;
+Ranking.propTypes = {
+  ranking: PropTypes.arrayOf(PropTypes.object).isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  ranking: state.ranking.ranking,
+});
+
+export default connect(mapStateToProps)(Ranking);

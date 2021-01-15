@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { fetchTriviaQuestions } from '../../store/ducks/triviaQuestions';
 import { addScore } from '../../store/ducks/user';
+import { addPlayer } from '../../store/ducks/ranking';
 import './GameQuestions.css';
 import Timer from '../Timer';
 
@@ -41,7 +42,7 @@ class GameQuestions extends Component {
 
   clickNextQuestion() {
     const { currentQuestion } = this.state;
-    const { history } = this.props;
+    const { history, player, addPlayerToRanking } = this.props;
     if (currentQuestion < this.TOTAL_QUESTIONS - 1) {
       this.setState((state) => ({
         currentQuestion: state.currentQuestion + 1,
@@ -50,6 +51,12 @@ class GameQuestions extends Component {
       this.timer.current.resetTimer();
       this.timer.current.startTimer();
     } else {
+      const plaerRanking = {
+        name: player.name,
+        score: player.score,
+        picture: player.picture,
+      };
+      addPlayerToRanking(plaerRanking);
       history.push('/feedback');
     }
   }
@@ -128,8 +135,10 @@ class GameQuestions extends Component {
 GameQuestions.propTypes = {
   getTriviaQuestions: PropTypes.func.isRequired,
   addScoreQuestion: PropTypes.func.isRequired,
+  addPlayerToRanking: PropTypes.func.isRequired,
   questions: PropTypes.arrayOf(PropTypes.object).isRequired,
   isLoading: PropTypes.bool.isRequired,
+  player: PropTypes.shape(PropTypes.object).isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
@@ -138,11 +147,13 @@ GameQuestions.propTypes = {
 const mapStateToProps = (state) => ({
   questions: state.triviaQuestions.questions,
   isLoading: state.triviaQuestions.isLoading,
+  player: state.user.player,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   getTriviaQuestions: () => dispatch(fetchTriviaQuestions()),
   addScoreQuestion: (score) => dispatch(addScore(score)),
+  addPlayerToRanking: (player) => dispatch(addPlayer(player)),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(GameQuestions));

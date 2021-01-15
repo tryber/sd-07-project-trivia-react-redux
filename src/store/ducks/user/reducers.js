@@ -1,3 +1,4 @@
+import md5 from 'crypto-js/md5';
 import userTypes from './types';
 import initialState from '../initialState';
 
@@ -9,10 +10,11 @@ const user = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       player: {
-        ...state.player,
         name: action.payload.name,
         gravatarEmail: action.payload.gravatarEmail,
+        picture: `https://www.gravatar.com/avatar/${md5(action.payload.gravatarEmail)}`,
         score: 0,
+        assertions: 0,
       },
     };
   case userTypes.ADD_SCORE:
@@ -20,8 +22,8 @@ const user = (state = INITIAL_STATE, action) => {
       ...state,
       player: {
         ...state.player,
-        score: state.player.score + action.payload,
-        assertions: state.player.assertions + 1,
+        score: state.player.score + Number(action.payload),
+        assertions: Number(state.player.assertions) + 1,
       },
     };
   default:
