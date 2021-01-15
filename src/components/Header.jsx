@@ -19,16 +19,14 @@ class Header extends React.Component {
     const gravatarUrl = this.createGravatarUrl(user.email);
     return (
       <header className="header">
-       <div> 
-         <h1>
-           Trivia Game
-         </h1>
-       </div>
-       <div className="user-info">
-        <img
+        <div>
+          <h1>Trivia Game</h1>
+        </div>
+        <div className="user-info">
+          <img
             data-testid="header-profile-picture"
-            alt={ user.name }
-            src={ gravatarUrl }
+            alt={user.name}
+            src={gravatarUrl}
           />
           <div data-testid="header-player-name">{user.name}</div>
           <div data-testid="header-score">{game.score}</div>

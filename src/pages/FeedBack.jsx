@@ -21,14 +21,20 @@ class FeedBack extends React.Component {
             </div>
           )}
           <div data-testid="feedback-total-score">
-            <h4>Pontuação final: {playerStorage.player.score}</h4>
+            <h4>
+              Pontuação final: 
+              {playerStorage.player.score}
+            </h4>
           </div>
           <div data-testid="feedback-total-question">
-            <h5>Respostas corretas: {playerStorage.player.assertions}</h5>
+            <h5>
+              Respostas corretas: 
+              {playerStorage.player.assertions}
+            </h5>
           </div>
-            <Link to="/" data-testid="btn-play-again" className="play-again-button">
-              Jogar novamente
-            </Link>
+          <Link to="/" data-testid="btn-play-again" className="play-again-button">
+            Jogar novamente
+          </Link>
         </div>
       </div>
     );
