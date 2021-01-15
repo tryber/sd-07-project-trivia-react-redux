@@ -1,7 +1,15 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { Header } from '../../components';
 
-const Feedback = () => (
-  <h1 data-testid="feedback-text">FEEDBACK PAGE</h1>
-);
+class Feedback extends Component {
+  render() {
+    return (
+      <>
+        <Header />
+        <h1 data-testid="feedback-text">FEEDBACK PAGE</h1>
+      </>
+    );
+  }
+}
 
 export default Feedback;
