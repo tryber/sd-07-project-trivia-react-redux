@@ -1,8 +1,8 @@
-.App {
+/* .App {
   text-align: center;
-}
+} */
 
-.App-logo {
+/* .App-logo {
   height: 40vmin;
   pointer-events: none;
 }
@@ -20,20 +20,18 @@
   .App-logo {
     animation: shake infinite 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
   }
-}
+} */
 
-.App-header {
-  align-items: center;
-  background-color: #282c34;
+.App-page {
+  background-color: rgb(69, 163, 229);
   color: white;
-  display: flex;
-  flex-direction: column;
+  font-family: Montserrat , sans-serif;
   font-size: calc(10px + 2vmin);
-  justify-content: center;
+  font-weight: 700;
   min-height: 100vh;
 }
 
-.App-link {
+/* .App-link {
   color: #61dafb;
 }
 
@@ -54,4 +52,44 @@
   40%, 60% {
     transform: translate3d(4px, 0, 0);
   }
+} */
+
+.right {
+  border: 3px solid rgb(6, 240, 15);
+}
+
+.wrong {
+  border: 3px solid red;
+}
+
+.button-next-visible {
+  visibility: visible;
+}
+
+.button-next-invisible {
+  visibility: hidden;
+}
+
+.login {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.login-header {
+  align-content: flex-end;
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.title {
+  display: flex;
+  font-family: Carter One , cursive;
+  justify-content: center;
+}
+
+.input {
+  text-align: center;
 }
