@@ -14,7 +14,7 @@
   box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.384);
   flex-flow: row nowrap;
   height: auto;
-  justify-content: center; */
+  justify-content: center;
   margin: auto;
   width: clamp(40vw, 70rem, 70vw);
   width: max-content;

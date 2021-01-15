@@ -1,8 +1,8 @@
 .ranking-container {
   align-items: center;
   background-color: whitesmoke;
-  border-radius: 20px;
   border: 2px solid black;
+  border-radius: 20px;
   box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.384);
   display: flex;
   flex-flow: column nowrap;
@@ -11,7 +11,6 @@
   margin: auto;
   padding: 30px;
   width: clamp(20vw, 40rem, 60vw);
-  width: max-content;
 }
 
 .ranking-container h1 {

@@ -17,8 +17,8 @@ body {
 .container-login {
   align-items: center;
   background-color: whitesmoke;
-  border-radius: 20px;
   border: 2px solid black;
+  border-radius: 20px;
   box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.384);
   display: flex;
   flex-flow: column nowrap;
@@ -27,7 +27,6 @@ body {
   margin: auto;
   padding: 30px;
   width: clamp(20vw, 20rem, 60vw);
-  width: max-content;
 }
 
 .header-container {
