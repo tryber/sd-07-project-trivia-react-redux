@@ -5,7 +5,8 @@ import './style.css';
 class Login extends Component {
   render() {
     return (
-      <div>
+      <div className="loginPage-container">
+        <div style={ { visibility: 'hidden' } }>a</div>
         <LoginForm />
         <ConfigButton />
       </div>
