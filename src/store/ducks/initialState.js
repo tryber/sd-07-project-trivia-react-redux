@@ -9,9 +9,13 @@ const INITIAL_STATE = {
     isLoading: false,
     gravatarProfile: {},
   },
-  ranking: [],
+  /* ranking: [], */
   triviaToken: {
     token: '',
+    isLoading: false,
+  },
+  triviaQuestions: {
+    questions: [],
     isLoading: false,
   },
 };

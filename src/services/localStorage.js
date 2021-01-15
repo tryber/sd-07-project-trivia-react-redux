@@ -10,19 +10,18 @@ const KEYS = [
   TOKEN_KEY,
 ];
 
-export const loadState = () => {
-  const state = {};
+export const loadState = (state) => {
   try {
     KEYS.forEach((KEY) => {
       const serializedState = localStorage.getItem(KEY);
       const resultState = JSON.parse(serializedState);
       switch (KEY) {
       case STATE_KEY:
-        state.user = resultState || {};
+        state.user = { ...state.user, ...resultState };
         break;
       case TOKEN_KEY:
         state.triviaToken = {
-          isLoading: false,
+          ...state.triviaToken,
           token: resultState || '',
         };
         break;
