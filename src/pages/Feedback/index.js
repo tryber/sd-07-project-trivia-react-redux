@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import md5 from 'crypto-js/md5';
 
 import Header from '../../components/Header';
 import './index.css';
+import * as storageService from '../../services/storageService';
 
 class Feedback extends Component {
   handleRedirect(path) {
@@ -12,8 +14,16 @@ class Feedback extends Component {
   }
 
   render() {
-    const { assertions, score } = this.props;
     const sufficientAssertion = 3;
+    const { player } = this.props;
+    const { gravatarEmail, name, assertions, score } = player;
+    const hash = () => md5(gravatarEmail.trim().toLowerCase());
+
+    const img = `https://www.gravatar.com/avatar/${hash}?s=36`;
+
+    const { pushToRaking } = storageService;
+    pushToRaking(img, name, score);
+
     return (
       <main className="wrapper">
         <Header />
@@ -75,12 +85,16 @@ class Feedback extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  assertions: state.player.assertions,
-  score: state.player.score,
+  player: state.player,
 });
 
 Feedback.propTypes = {
-  assertions: PropTypes.number.isRequired,
+  player: PropTypes.shape({
+    assertions: PropTypes.number.isRequired,
+    score: PropTypes.number.isRequired,
+    gravatarEmail: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+  }).isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
