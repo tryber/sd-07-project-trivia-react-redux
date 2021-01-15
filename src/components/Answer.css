@@ -1,6 +1,6 @@
 .wrong {
-  border: 3px solid rgb(255, 0, 0);
   background-color: white;
+  border: 3px solid red;
 }
 
 .correct {

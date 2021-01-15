@@ -25,7 +25,6 @@ class Answer extends React.Component {
     this.state = {
       count: 0,
       showAnswer: false,
-      disableAnswer: false,
     };
     this.test = this.test.bind(this);
     this.respond = this.respond.bind(this);
@@ -40,20 +39,19 @@ class Answer extends React.Component {
     this.setState((previous) => ({
       count: previous.count + 1,
       showAnswer: false,
-      disableAnswer: false,
     }));
   }
 
   respond({ target: { name } }) {
     const { update } = this.props;
-    this.setState({ showAnswer: true, disableAnswer: true });
+    this.setState({ showAnswer: true });
     if (name === 'correct') {
       update(100);
     }
   }
 
   render() {
-    const { count, showAnswer, disableAnswer } = this.state;
+    const { count, showAnswer } = this.state;
     const { resAnswer, resQuest, resCategory } = this.props;
 
     const categorys = Object.values(resAnswer).map(({ category: cat }) => cat);
@@ -85,7 +83,7 @@ class Answer extends React.Component {
               name={ answerClass }
               data-testid={ testId }
               onClick={ this.respond }
-              disabled={ disableAnswer }
+              disabled={ showAnswer }
             >
               { answer }
             </button>
