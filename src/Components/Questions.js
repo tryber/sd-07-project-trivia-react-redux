@@ -12,7 +12,7 @@ class Questions extends React.Component {
     this.funcaoDoNonato = this.funcaoDoNonato.bind(this);
     this.state = {
       questionNumber: 0,
-      timer: 10,
+      timer: 30,
     };
   }
 
@@ -32,7 +32,6 @@ class Questions extends React.Component {
     const { questionsList } = questions;
     const { difficulty } = questionsList[questionNumber];
     const { timer } = this.state;
-    console.log(answer);
     if (answer === questionsList[questionNumber].correct_answer) {
       if (difficulty === 'hard') value = tree;
       if (difficulty === 'medium') value = two;
