@@ -56,45 +56,45 @@ class Login extends React.Component {
         <div className="top-bar">
           <div>
             <h1>Trivia Game</h1>
-          </div>  
-        <button
-          type="button"
-          data-testid="btn-settings"
-          onClick={ this.handleClickSettings }
-        >
-          Configurações
-        </button>
-        </div>
-        <div className="login-container">
-        <input
-          type="text"
-          name="nome"
-          value={ nome }
-          data-testid="input-player-name"
-          placeholder="Nome"
-          onChange={ this.handleChange }
-        />
-        <input
-          type="email"
-          name="email"
-          value={ email }
-          data-testid="input-gravatar-email"
-          placeholder="E-mail"
-          onChange={ this.handleChange }
-        />
-        {email.length !== 0 && nome.length !== 0 ? (
+          </div>
           <button
             type="button"
-            data-testid="btn-play"
-            onClick={ this.handleClickGame }
+            data-testid="btn-settings"
+            onClick={ this.handleClickSettings }
           >
-            Jogar
+            Configurações
           </button>
-        ) : (
-          <button type="button" data-testid="btn-play" disabled>
-            Jogar
-          </button>
-        )}
+        </div>
+        <div className="login-container">
+          <input
+            type="text"
+            name="nome"
+            value={ nome }
+            data-testid="input-player-name"
+            placeholder="Nome"
+            onChange={ this.handleChange }
+          />
+          <input
+            type="email"
+            name="email"
+            value={ email }
+            data-testid="input-gravatar-email"
+            placeholder="E-mail"
+            onChange={ this.handleChange }
+          />
+          {email.length !== 0 && nome.length !== 0 ? (
+            <button
+              type="button"
+              data-testid="btn-play"
+              onClick={ this.handleClickGame }
+            >
+              Jogar
+            </button>
+          ) : (
+            <button type="button" data-testid="btn-play" disabled>
+              Jogar
+            </button>
+          )}
         </div>
       </div>
     );
