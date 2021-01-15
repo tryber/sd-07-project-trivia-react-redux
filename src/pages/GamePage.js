@@ -5,23 +5,26 @@ import { connect } from 'react-redux';
 import { getQuestions } from '../services/api';
 
 import Quiz from '../components/Quiz';
+import Timer from '../components/Timer';
 import Header from '../components/Header';
 
 class GamePage extends React.Component {
-  constructor() {
-    super();
-
+  constructor(props) {
+    super(props);
     this.state = {
       queries: [],
       load: true,
       count: 30,
       index: 0,
+      disableButton: false,
     };
+    this.disableButton = this.disableButton.bind(this);
     this.getFetchQuestion = this.getFetchQuestion.bind(this);
     this.updateIndex = this.updateIndex.bind(this);
   }
 
   async componentDidMount() {
+    this.myTime();
     await this.getFetchQuestion();
   }
 
@@ -35,6 +38,24 @@ class GamePage extends React.Component {
     });
   }
 
+  myTime() {
+    const number = 1000;
+    const timerResponse = setInterval(() => {
+      this.setState((prevSate) => ({
+        count: prevSate.count - 1,
+      }));
+      const { count } = this.state;
+      if (count === 0) {
+        this.disableButton();
+        clearInterval(timerResponse);
+      }
+    }, number);
+  }
+
+  disableButton() {
+    this.setState({ disableButton: true });
+  }
+
   updateIndex(index) {
     const { queries } = this.state;
     if (queries.length - 1 >= index) {
@@ -46,7 +67,7 @@ class GamePage extends React.Component {
   }
 
   render() {
-    const { load, queries, count, index } = this.state;
+    const { load, queries, count, index, disableButton } = this.state;
 
     if (load) {
       return <h2>Loading...</h2>;
@@ -62,7 +83,11 @@ class GamePage extends React.Component {
     return (
       <div>
         <Header />
+        <Timer
+          count={ count }
+        />
         <Quiz
+          disabledButton={ disableButton }
           index={ index }
           count={ count }
           category={ category }
