@@ -18,21 +18,11 @@ class Login extends Component {
     this.validaInput = this.validaInput.bind(this);
   }
 
-  validaInput() {
-    const { email, nome } = this.state;
-    const number = 1;
-    if (email.match(/\S+@\S+\.\S+/) && nome.length > number) {
-      this.setState({ permitir: false });
-    } else {
-      this.setState({ permitir: true });
-    }
-  }
-
   async handleSubmit() {
     const { dispatchEmail, dispatchToken, dispatchNome, history } = this.props;
     const { email, nome } = this.state;
     await dispatchToken(setStorage);
-    setStorage('player')
+    setStorage('player');
     dispatchEmail(email);
     dispatchNome(nome);
     history.push('/gamescreen');
@@ -42,6 +32,16 @@ class Login extends Component {
     this.setState({ [name]: value }, this.validaInput);
     // validaInput é chamada assim que o estado se atualiza
     // ou seja , a cada momento que o onchange é modificado
+  }
+
+  validaInput() {
+    const { email, nome } = this.state;
+    const number = 1;
+    if (email.match(/\S+@\S+\.\S+/) && nome.length > number) {
+      this.setState({ permitir: false });
+    } else {
+      this.setState({ permitir: true });
+    }
   }
 
   render() {

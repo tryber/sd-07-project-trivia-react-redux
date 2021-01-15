@@ -10,7 +10,6 @@ function App() {
       <Route path="/settings" component={ Settings } />
       <Route path="/feedback" component={ FeedBack } />
 
-
     </Switch>
   );
 }
