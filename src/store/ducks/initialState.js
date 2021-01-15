@@ -5,8 +5,6 @@ export default {
     token: '',
     hash: '',
     score: 0,
-  },
-  game: {
-    questions: [],
+    assertions: 0,
   },
 };

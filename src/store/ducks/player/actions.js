@@ -11,6 +11,12 @@ export const includeToken = (token) => ({
   token,
 });
 
+export const addScore = (score, assertions) => ({
+  type: PlayerTypes.ADD_SCORE,
+  score,
+  assertions,
+});
+
 export function getToken() {
   return async (dispatch) => {
     const response = await fetchToken();
@@ -18,4 +24,13 @@ export function getToken() {
     dispatch(includeToken(recevedToken));
     localStorage.setItem('token', recevedToken);
   };
+}
+
+export function setLocalStorage() {
+  console.log('chamou setLocalStorge');
+  const { player } = this.props;
+  const { name, gravatarEmail: email, score, assertions } = player;
+  addScore(score, assertions);
+  const playerToStorage = { player: { name, assertions, score, email } };
+  localStorage.setItem('state', JSON.stringify(playerToStorage));
 }
