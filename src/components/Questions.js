@@ -21,15 +21,6 @@ class Questions extends Component {
   handleClass() {
     const { disableButton, next } = this.props;
     const maxQuestion = 4;
-    this.handleClass = this.handleClass.bind(this);
-    this.randomChoice = this.randomChoice.bind(this);
-    this.state = {
-      green: '',
-      red: '',
-    };
-  }
-
-  handleClass() {
     this.setState({
       green: 'green',
       red: 'red',
