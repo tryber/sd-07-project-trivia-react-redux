@@ -19,7 +19,7 @@ export default function App() {
         <Route exact path="/settings" component={ Settings } />
         <Route exact path="/game" component={ Game } />
         <Route exact path="/feedback" component={ Feedback } />
-        <Route exact path="/ranking" component={ Ranking } />
+        <Route exact path="/rank" component={ Ranking } />
       </Switch>
     </div>
   );

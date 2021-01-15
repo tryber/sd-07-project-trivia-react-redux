@@ -15,7 +15,7 @@ class Login extends React.Component {
     this.enableButton = this.enableButton.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.verificationEmail = this.verificationEmail.bind(this);
-    this.routeChangeConfig = this.routeChangeConfig.bind(this);
+    this.routeChangeSettings = this.routeChangeSettings.bind(this);
     this.routeChangeGame = this.routeChangeGame.bind(this);
   }
 
@@ -32,9 +32,9 @@ class Login extends React.Component {
     });
   }
 
-  routeChangeConfig() {
+  routeChangeSettings() {
     const { history } = this.props;
-    history.push('/configuracoes');
+    history.push('/settings');
   }
 
   routeChangeGame() {
@@ -62,7 +62,7 @@ class Login extends React.Component {
         <button
           type="button"
           data-testid="btn-settings"
-          onClick={ this.routeChangeConfig }
+          onClick={ this.routeChangeSettings }
         >
           Configurações
         </button>
