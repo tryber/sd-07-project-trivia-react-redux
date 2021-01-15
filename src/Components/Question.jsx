@@ -5,8 +5,8 @@ class Question extends React.Component {
   render() {
     const { content } = this.props;
     return (
-      <div className="questions" data-testeid="question-text">
-        <p data-testeid="question-text">{ content }</p>
+      <div className="questions" data-testid="question-text">
+        { content === '' ? 'Carregando...' : content }
       </div>);
   }
 }
