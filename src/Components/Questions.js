@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import Feedback from '../pages/Feedback';
 
 class Questions extends React.Component {
   constructor() {
@@ -10,7 +11,7 @@ class Questions extends React.Component {
     this.state = {
       questionNumber: 0,
       correctAnswer: 'neutral',
-      wrongAnswer: 'neutralAnswer',
+      wrongAnswer: 'neutral',
     };
   }
 
@@ -30,12 +31,16 @@ class Questions extends React.Component {
     const { questions, timer } = this.props;
     const { questionsList } = questions;
     const { questionNumber, wrongAnswer, correctAnswer } = this.state;
-    console.log(questionsList);
     const five = 5;
+
+    if (questionNumber === five) {
+      return (<Feedback />);
+    }
     if (questionsList < five) {
       console.log(questionsList);
       return <div>Efetue o login novamente</div>;
     }
+
     return (
       <div>
         {`Questão número ${questionNumber + 1}`}
@@ -61,9 +66,9 @@ class Questions extends React.Component {
             <button
               key={ q }
               data-testid={ `wrong-answer-${index}` }
+              type="button"
               disabled={ timer }
               className={ wrongAnswer }
-              type="button"
               onClick={ () => this.buttonColor() }
             >
               {q}
