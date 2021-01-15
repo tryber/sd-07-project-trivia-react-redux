@@ -42,9 +42,12 @@ class Login extends React.Component {
     const gravatar = md5(email).toString();
     const player = {
       name,
+      score: 0,
+      assertions: 0,
       gravatarEmail: `https://www.gravatar.com/avatar/${gravatar}`,
     };
     logarPlayer(player);
+    localStorage.setItem('state', JSON.stringify({ player }));
     if (history) history.push('/game');
   }
 
