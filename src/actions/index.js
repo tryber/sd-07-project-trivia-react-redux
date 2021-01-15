@@ -3,9 +3,10 @@ const START_REQUEST = 'START_REQUEST';
 const RECEIVED_QUESTIONS = 'RECEIVED_QUESTIONS';
 const FAILED_REQUEST = 'FAILED_REQUEST';
 const USER_NAME = 'USER_NAME';
+const GET_SCORE = 'GET_SCORE';
 
 export default {
-  USER_EMAIL, START_REQUEST, RECEIVED_QUESTIONS, FAILED_REQUEST, USER_NAME,
+  USER_EMAIL, START_REQUEST, RECEIVED_QUESTIONS, FAILED_REQUEST, USER_NAME, GET_SCORE,
 };
 
 export const getEmail = (email) => ({
@@ -36,14 +37,18 @@ export function fetchQuestions() {
   return async (dispatch) => {
     dispatch(startRequest());
     try {
-      const { token } = JSON.parse(localStorage.getItem('token')).token;
+      const { token } = JSON.parse(localStorage.getItem('token'));
       const endpoint = `https://opentdb.com/api.php?amount=5&token=${token}`;
       const response = await fetch(endpoint);
       const data = await response.json();
-      // console.log(data);
       dispatch(receivedQuestions(data));
     } catch (error) {
       dispatch(failedRequest(error));
     }
   };
 }
+
+export const getScore = (score) => ({
+  type: GET_SCORE,
+  score,
+});

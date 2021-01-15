@@ -28,26 +28,27 @@ class Login extends React.Component {
   createLocalStorage() {
     const { name, email, token } = this.state;
 
-    const info = {
+    const state = {
       player: {
         name,
         assertions: 0,
         score: 0,
         gravatarEmail: email,
       },
-      ranking: [{ name, score: 10, picture: 'url-da-foto-no-gravatar' }],
-      token,
     };
-
-    localStorage.setItem('token', JSON.stringify(info));
+    const ranking = { name, score: 10, picture: 'url-da-foto-no-gravatar' };
+    const tokenData = { token };
+    localStorage.setItem('state', JSON.stringify(state));
+    localStorage.setItem('ranking', JSON.stringify(ranking));
+    localStorage.setItem('token', JSON.stringify(tokenData));
   }
 
   async requestToken() {
     const endpoint = 'https://opentdb.com/api_token.php?command=request';
     const response = await fetch(endpoint);
-    const token = await response.json();
+    const data = await response.json();
     this.setState({
-      token,
+      token: data.token,
     });
   }
 

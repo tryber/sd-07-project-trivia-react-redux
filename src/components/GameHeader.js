@@ -8,10 +8,16 @@ class GameHeader extends Component {
   constructor() {
     super();
     this.fetchGravatar = this.fetchGravatar.bind(this);
+    this.readLocalStorage = this.readLocalStorage.bind(this);
+    this.updateLocalStorage = this.updateLocalStorage.bind(this);
   }
 
   componentDidMount() {
     this.fetchGravatar();
+  }
+
+  componentDidUpdate() {
+    this.updateLocalStorage();
   }
 
   fetchGravatar() {
@@ -21,8 +27,21 @@ class GameHeader extends Component {
     return endPoint;
   }
 
+  readLocalStorage() {
+    const readStorage = JSON.parse(localStorage.getItem('state'));
+    return readStorage;
+  }
+
+  updateLocalStorage() {
+    const { getScore } = this.props;
+    const currentStorage = this.readLocalStorage();
+    const newStorage = { ...currentStorage,
+      player: { ...currentStorage.player, score: getScore } };
+    localStorage.setItem('state', JSON.stringify(newStorage));
+  }
+
   render() {
-    const { getName } = this.props;
+    const { getName, getScore } = this.props;
     return (
       <header className="game-header-container">
         <img
@@ -31,20 +50,22 @@ class GameHeader extends Component {
           alt={ getName }
         />
         <p data-testid="header-player-name">{ getName }</p>
-        <p data-testid="header-score">0</p>
+        <p data-testid="header-score">{ getScore }</p>
       </header>
     );
   }
 }
 
-const mapStateToProps = ({ userReducer }) => ({
+const mapStateToProps = ({ userReducer, scoreReducer }) => ({
   getEmail: userReducer.email,
   getName: userReducer.name,
+  getScore: scoreReducer.score,
 });
 
 GameHeader.propTypes = {
   getEmail: PropTypes.string.isRequired,
   getName: PropTypes.string.isRequired,
+  getScore: PropTypes.number.isRequired,
 };
 
 export default connect(mapStateToProps)(GameHeader);

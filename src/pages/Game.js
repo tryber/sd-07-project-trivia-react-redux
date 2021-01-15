@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchQuestions } from '../actions';
+import { fetchQuestions, getScore } from '../actions';
 import GameHeader from '../components/GameHeader';
 import Loading from '../components/Loading';
 import '../css/App.css';
@@ -12,6 +12,7 @@ class Game extends Component {
     super();
     this.renderAllDataQuestion = this.renderAllDataQuestion.bind(this);
     this.handleUserAnswer = this.handleUserAnswer.bind(this);
+    this.calculateScore = this.calculateScore.bind(this);
     this.timer = this.timer.bind(this);
     this.renderTime = this.renderTime.bind(this);
     this.shuffle = this.shuffle.bind(this);
@@ -61,6 +62,7 @@ class Game extends Component {
         disableButton: true,
       }));
     }
+
     if (timer === initialSecondEnableButton) {
       this.setState({
         timer: 24,
@@ -110,6 +112,20 @@ class Game extends Component {
       this.handleClasses('remove');
       this.savingShuffleAnswers();
     });
+  }
+
+  calculateScore() {
+    const { questions, score, sendScore } = this.props;
+    const { timer } = this.state;
+    const three = 3;
+    const ten = 10;
+    const questionLevel = questions.results[0].difficulty;
+    let multiplier = 1;
+    if (questionLevel === 'easy') multiplier = 1;
+    if (questionLevel === 'medium') multiplier = 2;
+    if (questionLevel === 'hard') multiplier = three;
+    const finalScore = score + (ten + timer * multiplier);
+    sendScore(finalScore);
   }
 
   shuffle(array) {
@@ -254,12 +270,14 @@ class Game extends Component {
   }
 }
 
-const mapStateToProps = ({ gameReducer }) => ({
+const mapStateToProps = ({ gameReducer, scoreReducer }) => ({
   questions: gameReducer.questions,
+  score: scoreReducer.score,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   getQuestions: () => dispatch(fetchQuestions()),
+  sendScore: (score) => dispatch(getScore(score)),
 });
 
 Game.propTypes = {
@@ -267,6 +285,8 @@ Game.propTypes = {
     results: PropTypes.arrayOf(Object),
   }).isRequired,
   getQuestions: PropTypes.func.isRequired,
+  score: PropTypes.number.isRequired,
+  sendScore: PropTypes.func.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
