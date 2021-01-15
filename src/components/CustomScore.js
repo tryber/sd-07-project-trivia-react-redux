@@ -1,8 +1,10 @@
 import React from 'react';
+import { getStorage } from '../services';
+
 
 export default function Scoreboard() {
-  // const { score } = getStorage('player');
+  const { score = 0 } = getStorage('player');
   return (
-    <spam data-testid="header-score">0</spam>
+    <spam data-testid="header-score">{score}</spam>
   );
 }

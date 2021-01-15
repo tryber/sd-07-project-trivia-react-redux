@@ -8,13 +8,14 @@ const ADD_SCORE = 'ADD_SCORE';
 const INITIAL_STATE = {
   player: {
     name: '',
-    assertions: '',
-    score: '',
+    assertions: 0,
+    score: 0,
     gravatarEmail: '',
   },
 };
-
 function playerReducer(state = INITIAL_STATE, action) {
+  setStorage('player', INITIAL_STATE);
+
   switch (action.type) {
   case ADD_EMAIL:
     setStorage('player', {
@@ -32,14 +33,26 @@ function playerReducer(state = INITIAL_STATE, action) {
     });
     return { ...state, player: { ...state.player, name: action.name } };
   case ADD_ASSERTIONS:
-    setStorage('player', state);
+    setStorage('player', {
+      ...state.player,
+      assertions: state.player.assertions + action.assertions,
+    });
     return {
       ...state.player,
-      player: state.player.assertions + action.assertions,
+      player: {
+        ...state.player,
+        assertions: state.player.assertions + action.assertions,
+      },
     };
   case ADD_SCORE:
-    setStorage('player', state);
-    return { ...state.player, player: state.player.score + action.payload };
+    setStorage('player', {
+      ...state.player,
+      score: state.player.score + action.payload,
+    });
+    return {
+      ...state.player,
+      player: { ...state.player, score: state.player.score + action.payload },
+    };
   default:
     return state;
   }

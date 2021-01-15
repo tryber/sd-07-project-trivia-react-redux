@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { CustomHeader, CustomGame, CustomNextButton, CustomTimer } from '../components';
-import { getStorage, countdown, stopTimer } from '../services';
-import { fetchTrivia } from '../actions';
+import { getStorage, countdown, stopTimer, getScore } from '../services';
+import { fetchTrivia, addScore, addAssertions } from '../actions';
 
 class GameScreen extends Component {
   constructor() {
@@ -31,7 +31,7 @@ class GameScreen extends Component {
   checkTimer() {
     const { time } = this.state;
     if (time === 0) {
-      this.submitAnswer();
+      this.submitAnswer({ target: { id: '' } });
     }
   }
 
@@ -46,7 +46,15 @@ class GameScreen extends Component {
     });
   }
 
-  submitAnswer() {
+  submitAnswer({ target: { id } }) {
+    const { time } = this.state;
+    const { dispatchScore, dispatchAssertions } = this.props;
+    if (id.length) {
+      const score = getScore(id, time);
+      dispatchScore(score);
+      const countAssertion = 1;
+      dispatchAssertions(countAssertion);
+    }
     this.setState({ answered: true, timeout: true, time: 30 }, stopTimer(this.timer));
   }
 
@@ -101,6 +109,8 @@ const mapStateToProps = ({
 });
 const mapDispatchToProps = (dispatch) => ({
   dispatchTrivia: (a) => dispatch(fetchTrivia(a)),
+  dispatchScore: (score) => dispatch(addScore(score)),
+  dispatchAssertions: (assertions) => dispatch(addAssertions(assertions)),
 });
 
 GameScreen.propTypes = {
