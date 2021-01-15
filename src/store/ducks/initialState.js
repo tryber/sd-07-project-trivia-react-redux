@@ -2,7 +2,7 @@ const INITIAL_STATE = {
   user: {
     player: {
       name: '',
-      assertions: '',
+      assertions: 0,
       score: 0,
       gravatarEmail: '',
     },
