@@ -88,46 +88,60 @@ class Questions extends Component {
     const { difficulty } = questions[currentQuestion];
     const { isAnswered } = this.props;
     return (
-      <div>
-        <div data-testid="question-category">
-          { questions[currentQuestion].category }
+      <main className="question__container">
+        <div className="question__content">
+          <div className="question">
+            <div className="question__info">
+              <div
+                className="question__category"
+                data-testid="question-category"
+              >
+                { questions[currentQuestion].category }
+              </div>
+              <div data-testid="question-text">
+                { questions[currentQuestion].question }
+              </div>
+            </div>
+            <Timer restart={ setRestart } />
+          </div>
+          <div className="answers__container">
+            <div className="answers__content">
+              { numberArray.map((value) => {
+                if (value === Math.max(...numberArray)) {
+                  return (
+                    <CorrectAnswer
+                      key={ value }
+                      difficulty={ difficulty }
+                      answer={ questions[currentQuestion].correct_answer }
+                    />
+                  );
+                }
+                return (
+                  <WrongAnswer
+                    key={ value }
+                    index={ value }
+                    answer={ questions[currentQuestion].incorrect_answers[value] }
+                  />
+                );
+              })}
+            </div>
+            <div className="question__next__container">
+              {
+                isAnswered && (
+                  <button
+                    type="button"
+                    className="question__next"
+                    data-testid="btn-next"
+                    onClick={ () => this.handleNextQuestion() }
+                  >
+                    Próxima
+                  </button>
+                )
+              }
+            </div>
+          </div>
         </div>
-        <div data-testid="question-text">
-          { questions[currentQuestion].question }
-        </div>
-        <div>
-          { numberArray.map((value) => {
-            if (value === Math.max(...numberArray)) {
-              return (
-                <CorrectAnswer
-                  key={ value }
-                  difficulty={ difficulty }
-                  answer={ questions[currentQuestion].correct_answer }
-                />
-              );
-            }
-            return (
-              <WrongAnswer
-                key={ value }
-                index={ value }
-                answer={ questions[currentQuestion].incorrect_answers[value] }
-              />
-            );
-          })}
-        </div>
-        <Timer restart={ setRestart } />
-        {
-          isAnswered && (
-            <button
-              type="button"
-              data-testid="btn-next"
-              onClick={ () => this.handleNextQuestion() }
-            >
-              Próxima
-            </button>
-          )
-        }
-      </div>
+      </main>
     );
   }
 }

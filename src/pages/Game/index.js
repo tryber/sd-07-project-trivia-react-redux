@@ -14,7 +14,7 @@ class Game extends Component {
   render() {
     const { history } = this.props;
     return (
-      <div>
+      <div className="wrapper">
         <Header />
         <Questions history={ history } />
       </div>
