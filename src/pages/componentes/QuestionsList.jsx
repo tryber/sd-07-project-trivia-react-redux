@@ -9,11 +9,14 @@ class QuestionsList extends React.Component {
       array: [],
       time: 30,
       disableButon: false,
+      nameClassCorrect: '',
+      nameClassWrong: '',
     };
 
     this.shuffle = this.shuffle.bind(this);
     this.mountArrayOfAnswer = this.mountArrayOfAnswer.bind(this);
     this.handleButton = this.handleButton.bind(this);
+    this.answers = this.answers.bind(this);
   }
 
   componentDidMount() {
@@ -32,6 +35,7 @@ class QuestionsList extends React.Component {
 
   handleButton() {
     this.setState({ disableButon: true });
+    this.answers();
   }
 
   shuffle(array) {
@@ -51,8 +55,13 @@ class QuestionsList extends React.Component {
     this.setState({ array: randomArray });
   }
 
+  answers() {
+    this.setState({ nameClassCorrect: 'correctAnswer' });
+    this.setState({ nameClassWrong: 'wrongAnswer' });
+  }
+
   render() {
-    const { array, time, disableButon } = this.state;
+    const { array, time, disableButon, nameClassCorrect, nameClassWrong } = this.state;
     const { question } = this.props;
     const correto = question.results[0].correct_answer;
     const numberForIterat = -1;
@@ -63,6 +72,7 @@ class QuestionsList extends React.Component {
           if (answers === correto) {
             return (
               <button
+                className={ nameClassCorrect }
                 onClick={ this.handleButton }
                 disabled={ disableButon }
                 type="button"
@@ -76,6 +86,7 @@ class QuestionsList extends React.Component {
           return (
             <button
               onClick={ this.handleButton }
+              className={ nameClassWrong }
               disabled={ disableButon }
               key={ index }
               type="button"
