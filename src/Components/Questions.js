@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Feedback from '../pages/Feedback';
 import { pointsGen, assertionsGen } from '../actions';
 
 class Questions extends React.Component {
@@ -10,12 +9,10 @@ class Questions extends React.Component {
     this.incrementIndex = this.incrementIndex.bind(this);
     this.scoreFunc = this.scoreFunc.bind(this);
     this.funcStorageAndAssertions = this.funcStorageAndAssertions.bind(this);
-    this.funcaoDoNonato = this.funcaoDoNonato.bind(this);
     this.buttonColor = this.buttonColor.bind(this);
     this.renderNextButton = this.renderNextButton.bind(this);
 
     this.state = {
-      timer: 30,
       questionNumber: 0,
       correctAnswer: 'neutral',
       wrongAnswer: 'neutral',
@@ -34,16 +31,15 @@ class Questions extends React.Component {
     const tree = 3;
     const two = 2;
     const one = 1;
-    const { scoreGen, questions, assertionsG, realScore } = this.props;
+    const { scoreGen, questions, assertionsG, realScore, seconds } = this.props;
     const { questionNumber } = this.state;
     const { questionsList } = questions;
     const { difficulty } = questionsList[questionNumber];
-    const { timer } = this.state;
     if (answer === questionsList[questionNumber].correct_answer) {
       if (difficulty === 'hard') value = tree;
       if (difficulty === 'medium') value = two;
       if (difficulty === 'easy') value = one;
-      scoreGen(realScore + (ten + (timer * value)));
+      scoreGen(realScore + (ten + (seconds * value)));
       assertionsG(one);
     }
   }
@@ -62,11 +58,6 @@ class Questions extends React.Component {
     return storage;
   }
 
-  async funcaoDoNonato(e) {
-    await this.scoreFunc(e);
-    this.funcStorageAndAssertions();
-  }
-
   incrementIndex() {
     this.setState((anterior) => ({
       questionNumber: anterior.questionNumber + 1,
@@ -74,7 +65,9 @@ class Questions extends React.Component {
     }));
   }
 
-  allFunctionsOfButton() {
+  async allFunctionsOfButton(e) {
+    await this.scoreFunc(e);
+    this.funcStorageAndAssertions();
     this.buttonColor();
     this.renderNextButton();
   }
@@ -155,12 +148,13 @@ const mapStateToProps = (state) => ({
   email: state.login.email,
   realScore: state.score.points,
   realAssertions: state.score.assertions,
+  seconds: state.questions.seconds,
+  timer: state.questions.timer,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   scoreGen: (points) => dispatch(pointsGen(points)),
   assertionsG: (assertions) => dispatch(assertionsGen(assertions)),
-  timer: state.questions.timer,
 });
 
 Questions.propTypes = {
@@ -176,6 +170,7 @@ Questions.propTypes = {
   realScore: PropTypes.number.isRequired,
   realAssertions: PropTypes.number.isRequired,
   timer: PropTypes.bool.isRequired,
+  seconds: PropTypes.number.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Questions);
