@@ -1,21 +1,16 @@
-import React, { Component } from "react";
-
-// import { Container } from './styles';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class Question extends Component {
   render() {
     const {
-      questionProp,
-      onClickHandler,
+      currentQuestion: {
+        category, question, correct_answer, incorrect_answers,
+      },
+      onClickNext,
       onClickQuestion,
-      enable,
+      nextButtonVisible,
     } = this.props;
-    const {
-      category,
-      question,
-      correct_answer,
-      incorrect_answers,
-    } = questionProp;
 
     const allAnswers = [...incorrect_answers, correct_answer];
 
@@ -26,43 +21,47 @@ class Question extends Component {
           <p data-testid="question-text">{question}</p>
         </div>
         <div>
-          {allAnswers.map((answer, index) => {
-            if (answer === correct_answer) {
-              return (
-                <button
-                  key={index}
-                  type="button"
-                  data-testid={`wrong-answer-${index}`}
-                  onClick={onClickQuestion}
-                >
-                  {answer}
-                </button>
-              );
-            }
-            return (
+          {
+            allAnswers.map((answer, index) => (
               <button
-                key="correct"
+                key={ answer }
                 type="button"
-                data-testid="correct-answer"
-                onClick={onClickQuestion}
+                data-testid={
+                  answer === correct_answer ? 'correct-answer' : `wrong-answer-${index}`
+                }
+                onClick={ onClickQuestion }
               >
                 {answer}
               </button>
-            );
-          })}
-          {!enable && (
-            <button
-              type="button"
-              onClick={onClickHandler}
-              data-testid="btn-next"
-            >
-              Próxima pergunta!
-            </button>
-          )}
+            ))
+          }
+          {
+            nextButtonVisible && (
+              <button
+                type="button"
+                data-testid="btn-next"
+                onClick={ onClickNext }
+              >
+                Próxima pergunta!
+              </button>
+            )
+          }
         </div>
       </div>
     );
   }
 }
+
+Question.propTypes = {
+  currentQuestion: PropTypes.shape({
+    category: PropTypes.string.isRequired,
+    question: PropTypes.string.isRequired,
+    correct_answer: PropTypes.string.isRequired,
+    incorrect_answers: PropTypes.arrayOf(PropTypes.string).isRequired,
+  }).isRequired,
+  onClickNext: PropTypes.func.isRequired,
+  onClickQuestion: PropTypes.func.isRequired,
+  nextButtonVisible: PropTypes.bool.isRequired,
+};
 
 export default Question;

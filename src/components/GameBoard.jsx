@@ -9,10 +9,10 @@ class GameBoard extends Component {
     super(props);
     this.state = {
       currentQuestion: 0,
-      nextQuestion: true,
+      nextButton: false,
     };
 
-    this.onClickHandlerNext = this.onClickHandlerNext.bind(this);
+    this.onClickNext = this.onClickNext.bind(this);
     this.onClickQuestion = this.onClickQuestion.bind(this);
   }
 
@@ -23,24 +23,24 @@ class GameBoard extends Component {
 
   onClickQuestion() {
     this.setState({
-      nextQuestion: false,
+      nextButton: true,
     });
   }
 
-  onClickHandlerNext() {
-    this.setState((state) => {
-      const { currentQuestion } = state;
-      return { currentQuestion: currentQuestion + 1 };
-    });
+  onClickNext() {
+    const { questions } = this.props;
+    const { currentQuestion } = this.state;
 
-    this.setState({
-      nextQuestion: true,
-    });
+    if (currentQuestion < questions.length - 1) {
+      this.setState((state) => ({
+        currentQuestion: state.currentQuestion + 1,
+      }), () => this.setState({ nextButton: false }));
+    }
   }
 
   render() {
     const { questions } = this.props;
-    const { currentQuestion, nextQuestion } = this.state;
+    const { currentQuestion, nextButton } = this.state;
 
     if (questions.length > 0) {
       return (
@@ -48,14 +48,12 @@ class GameBoard extends Component {
           <h1>
             Vamos Jogar!
           </h1>
-          <p>
-            <Question
-              questionProp={ questions[currentQuestion] }
-              onClickHandler={ this.onClickHandlerNext }
-              onClickQuestion={ this.onClickQuestion }
-              enable={ nextQuestion }
-            />
-          </p>
+          <Question
+            currentQuestion={ questions[currentQuestion] }
+            onClickNext={ this.onClickNext }
+            onClickQuestion={ this.onClickQuestion }
+            nextButtonVisible={ nextButton }
+          />
         </div>
       );
     }
