@@ -19,6 +19,10 @@ class Questions extends Component {
     };
   }
 
+  WinnerOrLoser() {
+    console.log('entrei aqui');
+  }
+
   componentDidUpdate(prevProps) {
     const { questions } = this.props;
     const { results } = questions;
@@ -59,10 +63,6 @@ class Questions extends Component {
       };
       return objectToBeReturned;
     });
-    this.setState({
-      shuffledAnswers: newResults,
-    });
-  }
 
   startCountDown() {
     const milliseconds = 30000;
@@ -99,10 +99,18 @@ class Questions extends Component {
   }
 
   handleClick(event) {
+    const { disableButton, next } = this.props;
+    const maxQuestion = 4;
     this.setState({
+      shuffledAnswers: newResults,
       green: 'green',
       red: 'red',
     });
+    if (next !== maxQuestion) {
+      disableButton();
+    } else {
+      this.WinnerOrLoser();
+    }
     this.saveScore(event);
   }
 
@@ -144,7 +152,10 @@ class Questions extends Component {
 
   render() {
     const { timer, shuffledAnswers, green, red, disabled } = this.state;
-    console.log(shuffledAnswers);
+    const {
+      questions: { results },
+      next,
+    } = this.props;
 
     if (shuffledAnswers) {
       return (
@@ -203,6 +214,8 @@ class Questions extends Component {
 
 Questions.propTypes = {
   questions: PropTypes.objectOf.isRequired,
+  disableButton: PropTypes.func.isRequired,
+  next: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = (state) => ({
