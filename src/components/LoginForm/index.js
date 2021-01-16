@@ -113,6 +113,7 @@ class LoginForm extends Component {
                 disabled={ isDisabled }
                 data-testid="btn-play"
                 onClick={ this.handleClick }
+                onKeyPress={ this.handleClick }
               >
                 Jogar
               </button>

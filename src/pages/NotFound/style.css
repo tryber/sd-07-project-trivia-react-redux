@@ -1,0 +1,13 @@
+.notFound-Container {
+  align-items: center;
+  background-color: #ff9914;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  min-width: 100vw;
+}
+
+.notFound-content {
+  width: 80%;
+}

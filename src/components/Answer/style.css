@@ -3,6 +3,7 @@
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
+  width: 100%;
 }
 
 .answer-box {
@@ -11,10 +12,14 @@
   box-sizing: border-box;
   display: flex;
   flex-flow: row wrap;
-  height: 200px;
+  height: 150px;
   justify-content: space-around;
   margin: 25px;
-  width: 45%;
+  width: 40%;
+}
+
+.answer-box {
+  cursor: pointer;
 }
 
 .green {
