@@ -44,7 +44,7 @@ class Game extends React.Component {
     if (index === question.results.length) {
       return <Redirect to="/feedback" />;
     }
-    
+
     return (
       loading ? <Loading />
       : (
@@ -59,7 +59,8 @@ class Game extends React.Component {
             onClick={ this.nextQuestion }
             index={ index }
           />
-        </div>) 
+        </div>
+        )
     );
   }
 }

@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { changeScore } from '../../actions';
 
@@ -106,9 +105,8 @@ class QuestionsList extends React.Component {
 
   nextQuestion(index) {
     const { question, onClick } = this.props;
-    const numQuestions = 5;
     index += 1;
-    if(index < question.results.length) {
+    if (index < question.results.length) {
       const correct = question.results[index].correct_answer;
       const incorrect = question.results[index].incorrect_answers;
       const array = [correct, ...incorrect];
@@ -121,7 +119,6 @@ class QuestionsList extends React.Component {
         nameClassWrong: '',
       });
     }
-
 
     onClick(index);
 
