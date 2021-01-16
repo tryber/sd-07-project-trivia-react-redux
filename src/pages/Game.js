@@ -21,9 +21,9 @@ class Game extends React.Component {
     this.fetchAPI();
   }
 
-  fetchAPI() {
+  async fetchAPI() {
     const { questionsAction } = this.props;
-    questionsAction();
+    await questionsAction();
   }
 
   disableButton() {

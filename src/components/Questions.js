@@ -5,23 +5,104 @@ import PropTypes from 'prop-types';
 class Questions extends Component {
   constructor() {
     super();
+    this.handleClass = this.handleClick.bind(this);
+    this.randomChoice = this.randomChoice.bind(this);
+    this.saveScore = this.saveScore.bind(this);
+    this.startCountDown = this.startCountDown.bind(this);
+    this.calcDifficultyPoints = this.calcDifficultyPoints.bind(this);
     this.state = {
       green: '',
       red: '',
+      timer: '',
+      disabled: false,
+      shuffledAnswers: '',
     };
-    this.handleClass = this.handleClass.bind(this);
-    this.randomChoice = this.randomChoice.bind(this);
-    this.WinnerOrLoser = this.WinnerOrLoser.bind(this);
   }
 
   WinnerOrLoser() {
     console.log('entrei aqui');
   }
 
-  handleClass() {
+  componentDidUpdate(prevProps) {
+    const { questions } = this.props;
+    const { results } = questions;
+    if (prevProps.questions.results !== results) {
+      this.randomChoice(results);
+      this.startCountDown();
+    }
+  }
+
+  randomChoice(results) {
+    const newResults = results.map((result) => {
+      const categoryAndQuestion = {
+        category: result.category,
+        question: result.question,
+        difficulty: result.difficulty,
+      };
+      const shuffledAnswers = [
+        ...result.incorrect_answers.map((incorrect) => (
+          {
+            text: incorrect,
+            correct: false,
+          }
+        )),
+        {
+          text: result.correct_answer,
+          correct: true,
+        }];
+      // Durstenfeld shuffle algorithm
+      for (let i = shuffledAnswers.length - 1; i > 0; i -= 1) {
+        const j = Math.floor(Math.random() * (i + 1));
+        const aux = shuffledAnswers[i];
+        shuffledAnswers[i] = shuffledAnswers[j];
+        shuffledAnswers[j] = aux;
+      }
+      const objectToBeReturned = {
+        answers: shuffledAnswers,
+        ...categoryAndQuestion,
+      };
+      return objectToBeReturned;
+    });
+
+  startCountDown() {
+    const milliseconds = 30000;
+    const convertNumber = 1000;
+    const minuteSeconds = 60;
+    const updateTime = 1000;
+    const countDownSeconds = new Date().getTime() + milliseconds;
+    const startSeconds = (countDownSeconds - new Date().getTime()) / convertNumber;
+    this.setState({
+      timer: startSeconds,
+    });
+    const updateTimerWithOneSecond = setInterval(() => {
+      const now = new Date().getTime();
+      const gap = countDownSeconds - now;
+      const seconds = Math.ceil((gap % (convertNumber * minuteSeconds)) / convertNumber);
+      this.setState({
+        timer: seconds,
+      });
+
+      if (gap <= 0) {
+        clearInterval(updateTimerWithOneSecond);
+        this.setState({
+          timer: 'Tempo expirado',
+        });
+        this.stopButtons();
+      }
+    }, updateTime);
+  }
+
+  stopButtons() {
+    this.setState({
+      disabled: true,
+    });
+  }
+
+  handleClick(event) {
     const { disableButton, next } = this.props;
     const maxQuestion = 4;
     this.setState({
+      shuffledAnswers: newResults,
       green: 'green',
       red: 'red',
     });
@@ -30,69 +111,100 @@ class Questions extends Component {
     } else {
       this.WinnerOrLoser();
     }
+    this.saveScore(event);
   }
 
-  randomChoice(arr) {
-    const random = 0.5;
-    return arr.sort(() => Math.random() - random);
+  saveScore({ target }) {
+    const { timer } = this.state;
+    const getLocalStorage = JSON.parse(localStorage.getItem('state'));
+    const getTestId = target.getAttribute('data-testid');
+    const getDifficulty = target.getAttribute('data-difficulty');
+    const { player: { name, score, email } } = getLocalStorage;
+    let { player: { assertions } } = getLocalStorage;
+    if (getTestId === 'correct-answer') {
+      const standardCalcNumber = 10;
+      const getDifficultyPoints = this.calcDifficultyPoints(getDifficulty);
+      const calculation = standardCalcNumber + (timer * getDifficultyPoints);
+      score.push(calculation);
+      const newScore = score.reduce((acc, next) => acc + next, 0);
+      assertions += 1;
+      const newPlayer = { player: { name, assertions, score: newScore, email } };
+      localStorage.setItem('state', JSON.stringify(newPlayer));
+    }
   }
 
-  renderQuestions(correctAnswers, incorrectAnswers) {
-    const incorreta = [];
-    const { green, red } = this.state;
-    const correta = (
-      <button
-        type="button"
-        key="correct"
-        className={ green }
-        data-testid="correct-answer"
-        onClick={ (event) => this.handleClass(event) }
-      >
-        {correctAnswers}
-      </button>
-    );
-
-    incorrectAnswers.map((incorrect, index) => incorreta.push(
-      <button
-        type="button"
-        key={ index }
-        className={ red }
-        data-testid={ `wrong-answer-${index}` }
-        onClick={ (event) => this.handleClass(event) }
-      >
-        {incorrect}
-      </button>,
-    ));
-    const answers = [correta, ...incorreta];
-    const answersRandom = this.randomChoice(answers);
-    return answersRandom;
+  calcDifficultyPoints(getDifficulty) {
+    const noPoint = 0;
+    const easyPoint = 1;
+    const mediumPoint = 2;
+    const hardPoint = 3;
+    switch (getDifficulty) {
+    case 'easy':
+      return easyPoint;
+    case 'medium':
+      return mediumPoint;
+    case 'hard':
+      return hardPoint;
+    default:
+      return noPoint;
+    }
   }
 
   render() {
+    const { timer, shuffledAnswers, green, red, disabled } = this.state;
     const {
       questions: { results },
       next,
     } = this.props;
 
-    if (results) {
-      const { category, question } = results[next];
-
-      const { incorrect_answers: incorrect, correct_answer: correct } = results[
-        next
-      ];
-
+    if (shuffledAnswers) {
       return (
         <div>
-          <div data-testid="question-category">
+          <div>{timer}</div>
+          <label htmlFor="div">
             Categoria:
-            {category}
-          </div>
-          <div data-testid="question-text">
-            {' '}
+            <div data-testid="question-category">
+              {shuffledAnswers[0].category}
+            </div>
+          </label>
+          <label htmlFor="div">
             Pergunta:
-            {question}
+            <div data-testid="question-text">
+              {shuffledAnswers[0].question}
+            </div>
+          </label>
+          <div>
+            {shuffledAnswers[0].answers.map((answer, index) => {
+              if (answer.correct === true) {
+                return (
+                  <button
+                    type="button"
+                    key={ index }
+                    className={ green }
+                    data-testid="correct-answer"
+                    data-difficulty={ shuffledAnswers[0].difficulty }
+                    disabled={ disabled }
+                    onClick={ (event) => this.handleClick(event) }
+                  >
+                    { answer.text}
+                  </button>
+                );
+              }
+              return (
+                <button
+                  type="button"
+                  key={ index }
+                  className={ red }
+                  data-testid={ `wrong-answer-${index}` }
+                  data-difficulty={ shuffledAnswers[0].difficulty }
+                  disabled={ disabled }
+                  onClick={ (event) => this.handleClick(event) }
+                >
+                  {answer.text}
+                </button>
+              );
+            })}
           </div>
-          <div>{this.renderQuestions(correct, incorrect)}</div>
         </div>
       );
     }

@@ -6,13 +6,11 @@ import md5 from 'crypto-js/md5';
 class Header extends Component {
   constructor() {
     super();
-
     this.convertEmail = this.convertEmail.bind(this);
   }
 
   // função que retorna o endereço da imagem do player lá do GRAVATAR
   convertEmail(email) {
-    console.log(email);
     const user = md5(email);
     const hash = `https://www.gravatar.com/avatar/${user}`;
     return hash;
@@ -32,13 +30,13 @@ class Header extends Component {
             data-testid="header-player-name"
           >
             Usuário:
-            <span>{name}</span>
+            <span>{ name }</span>
           </p>
           <p
             data-testid="header-score"
           >
             Placar:
-            <span>{score}</span>
+            <span>{ score }</span>
           </p>
         </header>
       </div>

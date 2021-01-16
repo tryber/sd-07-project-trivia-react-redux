@@ -44,6 +44,20 @@ class Login extends React.Component {
     await token();
     history.push('./game');
     createPlayer(nameInput, emailInput, score);
+    const newPlayer = {
+      player: {
+        name: nameInput,
+        assertions: 0,
+        score: [],
+        email: emailInput,
+      },
+    };
+    const getLocalStorage = JSON.parse(localStorage.getItem('player'));
+    if (getLocalStorage) {
+      localStorage.removeItem('state');
+      localStorage.setItem('state', JSON.stringify(newPlayer));
+    }
+    localStorage.setItem('state', JSON.stringify(newPlayer));
   }
 
   goToSettings() {
