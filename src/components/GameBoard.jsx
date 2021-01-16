@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getQuestions } from '../actions';
+import { getQuestions } from '../Redux/actions';
 import Question from './Question';
 
 class GameBoard extends Component {
