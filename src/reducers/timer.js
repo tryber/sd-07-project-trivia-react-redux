@@ -14,7 +14,7 @@ function timerReducer(state = INITIAL_STATE, action) {
   case 'TIME_RUNNING':
     return {
       ...state,
-      time: state.time -1,
+      time: state.time - 1,
     };
   case 'RESET':
     return {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import propTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { timer, time } from '../actions';
+import { totalTime, countDown } from '../actions';
 import Clock from './Clock';
 
 class Timer extends Component {
@@ -23,8 +23,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  sendTimeOut: () => dispatch(timer()),
-  lessTime: () => dispatch(time()),
+  sendTimeOut: () => dispatch(totalTime()),
+  lessTime: () => dispatch(countDown()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Timer);

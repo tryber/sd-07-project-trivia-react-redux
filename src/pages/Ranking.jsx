@@ -5,7 +5,7 @@ import RankingItem from '../components/RankingItem';
 
 class Ranking extends Component {
   constructor() {
-    super()
+    super();
 
     this.renderRanking = this.renderRanking.bind(this);
   }
@@ -17,7 +17,7 @@ class Ranking extends Component {
         key={ player.picture }
         player={ player }
         index={ index }
-      />))
+      />));
   }
 
   render() {

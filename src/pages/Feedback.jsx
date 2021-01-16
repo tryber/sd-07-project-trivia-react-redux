@@ -49,7 +49,7 @@ class Feedback extends Component {
         <Header />
         { this.renderMessage(assertions) }
         <div className="score-questions-container">
-          <h3 data-testid="feedback-total-quesiton">
+          <h3 data-testid="feedback-total-question">
             { `Você acertou ${assertions} questões!` }
           </h3>
           <h3 data-testid="feedback-total-score">

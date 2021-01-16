@@ -7,7 +7,7 @@ export function login(object) {
   });
 }
 
-export function correctAnswer(number) {
+export function rightAnswer(number) {
   return ({
     type: 'CORRECT_ANSWER',
     points: number,
@@ -26,16 +26,18 @@ export function resetTimer() {
   });
 }
 
-export function time() {
+export function countDown() {
   return (dispatch, getState) => {
     const second = 1000;
-    const timer = setInterval(() => {
-      const time = getState().timer.time;
-      const click = getState().questions.click;
-      if (time === 0 || click !== '') return clearInterval(timer);
+    const clock = setInterval(() => {
+      const store = getState();
+      const { questions, timer } = store;
+      const { click } = questions;
+      const { time } = timer;
+      if (time === 0 || click !== '') return clearInterval(clock);
       dispatch(lessTime());
     }, second);
-    return timer
+    return clock;
   };
 }
 
@@ -51,19 +53,23 @@ export function timeOut() {
   });
 }
 
-export function timer() {
+export function totalTime() {
   return (dispatch, getState) => {
-    const time = 30000;
+    const questionTime = 30000;
     const second = 1000;
-    const timer = setTimeout(() => {
-      const click = getState().questions.click;
+    const questionTimer = setTimeout(() => {
+      const store = getState();
+      const { questions } = store;
+      const { click } = questions;
       if (click === '') return dispatch(timeOut());
-    }, time);
+    }, questionTime);
     setInterval(() => {
-      const click = getState().questions.click;
-      if (click !== '') return clearTimeout(timer);
+      const store = getState();
+      const { questions } = store;
+      const { click } = questions;
+      if (click !== '') return clearTimeout(questionTimer);
     }, second);
-    return timer
+    return questionTimer;
   };
 }
 
