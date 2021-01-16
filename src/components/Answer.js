@@ -31,8 +31,8 @@ class Answer extends React.Component {
   }
 
   componentDidMount() {
-    const { fetchAnswers } = this.props;
-    fetchAnswers();
+    const { fetchAnswers, tok } = this.props;
+    fetchAnswers(tok);
   }
 
   test() {
@@ -103,14 +103,16 @@ Answer.propTypes = {
   resQuest: PropTypes.func.isRequired,
   resCategory: PropTypes.func.isRequired,
   update: PropTypes.func.isRequired,
+  tok: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   resAnswer: state.question.responses,
+  tok: state.player.token,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchAnswers: () => dispatch(fetchQuestionAnswers()),
+  fetchAnswers: (token) => dispatch(fetchQuestionAnswers(token)),
   resQuest: (quest) => dispatch(resQuestionAction(quest)),
   resCategory: (cat) => dispatch(resCategoryAction(cat)),
   update: (points) => dispatch(updateScore(points)),
