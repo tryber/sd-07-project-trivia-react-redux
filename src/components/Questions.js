@@ -156,6 +156,7 @@ class Questions extends Component {
 
   render() {
     const { timer, shuffledAnswers, green, red, disabled } = this.state;
+    const { next } = this.props;
 
     if (shuffledAnswers) {
       return (
@@ -164,13 +165,13 @@ class Questions extends Component {
           <label htmlFor="div">
             Categoria:
             <div data-testid="question-category">
-              {shuffledAnswers[0].category}
+              {shuffledAnswers[next].category}
             </div>
           </label>
           <label htmlFor="div">
             Pergunta:
             <div data-testid="question-text">
-              {shuffledAnswers[0].question}
+              {shuffledAnswers[next].question}
             </div>
           </label>
           <div>
@@ -182,7 +183,7 @@ class Questions extends Component {
                     key={ index }
                     className={ green }
                     data-testid="correct-answer"
-                    data-difficulty={ shuffledAnswers[0].difficulty }
+                    data-difficulty={ shuffledAnswers[next].difficulty }
                     disabled={ disabled }
                     onClick={ (event) => this.handleClick(event) }
                   >
@@ -196,7 +197,7 @@ class Questions extends Component {
                   key={ index }
                   className={ red }
                   data-testid={ `wrong-answer-${index}` }
-                  data-difficulty={ shuffledAnswers[0].difficulty }
+                  data-difficulty={ shuffledAnswers[next].difficulty }
                   disabled={ disabled }
                   onClick={ (event) => this.handleClick(event) }
                 >
