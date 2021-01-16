@@ -11,7 +11,6 @@ class Answer extends React.Component {
       questionAnsered: false,
     };
     this.handleAnswerStyle = this.handleAnswerStyle.bind(this);
-    this.handleClickAnswer = this.handleClickAnswer.bind(this);
     this.handleDataTestId = this.handleDataTestId.bind(this);
   }
 
@@ -22,13 +21,12 @@ class Answer extends React.Component {
 
     if (!questionAnsered) {
       return (`answer-box ${ansersStyle[index]}`);
-    } if (answers[index] === curQuestion.correct_answer) {
+    }
+    
+    if (answers[index] === curQuestion.correct_answer) {
       return (`answer-box ${ansersStyle[index]} right`);
-    } return (`answer-box ${ansersStyle[index]} wrong`);
-  }
-
-  handleClickAnswer() {
-    this.setState({ questionAnsered: true });
+    }
+    return (`answer-box ${ansersStyle[index]} wrong`);
   }
 
   handleDataTestId(index) {
@@ -54,8 +52,14 @@ class Answer extends React.Component {
             key={ index }
             className={ this.handleAnswerStyle(index) }
             data-testid={ this.handleDataTestId(index) }
-            onClick={ this.handleClickAnswer }
-            onKeyDown={ this.handleClickAnswer }
+            onClick={ () => {
+              this.props.click(index);
+              this.setState({ questionAnsered: true });
+            }}
+            onKeyDown={ () => {
+              this.props.click(index);
+              this.setState({ questionAnsered: true });
+            }}
           >
             <p className="message">{ answers[index] }</p>
           </div>
