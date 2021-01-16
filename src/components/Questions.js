@@ -111,17 +111,17 @@ class Questions extends Component {
     const getLocalStorage = JSON.parse(localStorage.getItem('state'));
     const getTestId = target.getAttribute('data-testid');
     const getDifficulty = target.getAttribute('data-difficulty');
-    const { player: { name, score, email } } = getLocalStorage;
-    let { player: { assertions } } = getLocalStorage;
+    const { player: { name, email } } = getLocalStorage;
+    let { player: { assertions, score } } = getLocalStorage;
     if (getTestId === 'correct-answer') {
       const standardCalcNumber = 10;
       const getDifficultyPoints = this.calcDifficultyPoints(getDifficulty);
       const calculation = standardCalcNumber + (timer * getDifficultyPoints);
-      score.push(calculation);
-      const newScore = score.reduce((acc, next) => acc + next, 0);
       assertions += 1;
-      const newPlayer = { player: { name, assertions, score: newScore, email } };
+      score += calculation;
+      const newPlayer = { player: { name, assertions, score, email } };
       localStorage.setItem('state', JSON.stringify(newPlayer));
+      console.log('if', score);
     }
   }
 
