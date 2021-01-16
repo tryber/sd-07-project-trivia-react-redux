@@ -22,7 +22,6 @@ class Answer extends React.Component {
     if (!questionAnsered) {
       return (`answer-box ${ansersStyle[index]}`);
     }
-    
     if (answers[index] === curQuestion.correct_answer) {
       return (`answer-box ${ansersStyle[index]} right`);
     }
@@ -40,7 +39,7 @@ class Answer extends React.Component {
   }
 
   render() {
-    const { curQuestion } = this.props;
+    const { curQuestion, click } = this.props;
     const answers = [...curQuestion.incorrect_answers, curQuestion.correct_answer];
 
     return (
@@ -53,13 +52,13 @@ class Answer extends React.Component {
             className={ this.handleAnswerStyle(index) }
             data-testid={ this.handleDataTestId(index) }
             onClick={ () => {
-              this.props.click(index);
+              click(index);
               this.setState({ questionAnsered: true });
-            }}
+            } }
             onKeyDown={ () => {
-              this.props.click(index);
+              click(index);
               this.setState({ questionAnsered: true });
-            }}
+            } }
           >
             <p className="message">{ answers[index] }</p>
           </div>
@@ -73,6 +72,7 @@ Answer.propTypes = {
   correct_answer: PropTypes.string,
   incorrect_answers: PropTypes.string,
   curQuestion: PropTypes.objectOf(Array),
+  click: PropTypes.func.isRequired,
 };
 
 Answer.defaultProps = {

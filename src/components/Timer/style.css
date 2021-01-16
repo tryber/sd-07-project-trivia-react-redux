@@ -11,8 +11,8 @@
   border-radius: 50%;
   box-shadow: 4px 4px 4px 3px #00000040;
   box-sizing: border-box;
-  height: 120px;
   display: flex;
+  height: 120px;
   width: 120px;
 }
 
