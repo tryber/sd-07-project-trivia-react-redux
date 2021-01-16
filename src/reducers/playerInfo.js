@@ -11,7 +11,7 @@ const INITIAL_STATE = {
 };
 
 function playerReducer(state = INITIAL_STATE, action) {
-  const { player, type } = action;
+  const { player, type, points } = action;
   switch (type) {
   case 'LOGIN':
     return {
@@ -20,6 +20,12 @@ function playerReducer(state = INITIAL_STATE, action) {
       email: player.email,
       token: player.token,
       imageSrc: player.imageSrc,
+    };
+  case 'CORRECT_ANSWER':
+    return {
+      ...state,
+      score: state.score + points,
+      assertions: state.assertions +1,
     };
   default:
     return state;

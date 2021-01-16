@@ -1,29 +1,17 @@
 import React, { Component } from 'react';
 import propTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { timer } from '../actions';
+import { timer, time } from '../actions';
+import Clock from './Clock';
 
 class Timer extends Component {
-  constructor() {
-    super();
-
-    this.setTimer = this.setTimer.bind(this);
-  }
-
-  setTimer() {
-    const { sendTimeOut } = this.props;
-    const time = 30000;
-    setTimeout(() => {
-      const { click } = this.props;
-      if (click === '') return sendTimeOut();
-    }, time);
-  }
-
   render() {
-    this.setTimer();
+    const { sendTimeOut, lessTime } = this.props;
+    sendTimeOut();
+    lessTime();
     return (
       <div className="timer-container">
-        <h1 className="timer">30</h1>
+        <Clock />
       </div>
     );
   }
@@ -31,10 +19,13 @@ class Timer extends Component {
 
 const mapStateToProps = (state) => ({
   click: state.questions.click,
+  disable: state.timer.disable,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  sendTimeOut: () => dispatch(timer()) });
+  sendTimeOut: () => dispatch(timer()),
+  lessTime: () => dispatch(time()),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Timer);
 
