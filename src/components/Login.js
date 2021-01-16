@@ -18,6 +18,7 @@ class Login extends Component {
     this.isDisabled = this.isDisabled.bind(this);
     this.sendPlayerInfo = this.sendPlayerInfo.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.setStorage = this.setState.bind(this);
   }
 
   async handleSubmit(event) {
@@ -32,14 +33,15 @@ class Login extends Component {
     return callingApi;
   }
 
-  sendPlayerInfo(token) {
-    const { sendInfoToStore } = this.props;
+  setStorage() {
     const { name, email } = this.state;
-    const hash = md5(email).toString();
-    const imageSrc = `https://www.gravatar.com/avatar/${hash}`;
-    const playerInfo = { name, email, token, imageSrc };
-    sendInfoToStore(playerInfo);
-    return this.setState({ redirect: true });
+    const playerObject = { player: {
+      name,
+      assertions: 0,
+      score: 0,
+      gravatarEmail: email,
+    } };
+    localStorage.setItem('state', JSON.stringify(playerObject));
   }
 
   isDisabled() {
@@ -48,6 +50,16 @@ class Login extends Component {
       return false;
     }
     return true;
+  }
+
+  sendPlayerInfo(token) {
+    const { sendInfoToStore } = this.props;
+    const { name, email } = this.state;
+    const hash = md5(email).toString();
+    const imageSrc = `https://www.gravatar.com/avatar/${hash}`;
+    const playerInfo = { name, email, token, imageSrc };
+    sendInfoToStore(playerInfo);
+    return this.setState({ redirect: true });
   }
 
   render() {
@@ -72,7 +84,12 @@ class Login extends Component {
             data-testid="input-gravatar-email"
             onChange={ (e) => this.setState({ email: e.target.value }) }
           />
-          <button type="submit" data-testid="btn-play" disabled={ this.isDisabled() }>
+          <button
+            type="submit"
+            data-testid="btn-play"
+            disabled={ this.isDisabled() }
+            onClick={ this.setStorage }
+          >
             Jogar
           </button>
         </form>

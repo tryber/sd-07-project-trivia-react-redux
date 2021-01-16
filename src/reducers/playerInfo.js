@@ -20,6 +20,8 @@ function playerReducer(state = INITIAL_STATE, action) {
       email: player.email,
       token: player.token,
       imageSrc: player.imageSrc,
+      score: 0,
+      assertions: 0,
     };
   case 'CORRECT_ANSWER':
     return {
