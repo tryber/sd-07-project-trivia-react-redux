@@ -25,6 +25,7 @@ class GameScreen extends Component {
   componentDidMount() {
     const { dispatchTrivia } = this.props;
     dispatchTrivia(getStorage('token'));
+    this.updateStorage();
   }
 
   componentDidUpdate() {
@@ -50,7 +51,7 @@ class GameScreen extends Component {
   }
 
   updateStorage() {
-    const { name, score, gravatarEmail, assertions } = this.props;
+    const { name, gravatarEmail, score, assertions } = this.props;
     const userRanking = { name, score, gravatarEmail };
     const newLocalStorage = checkDuplicatesInStorage(userRanking);
     setStorage('ranking', newLocalStorage);
@@ -78,13 +79,13 @@ class GameScreen extends Component {
   }
 
   render() {
-    const { name, trivia, loading, email } = this.props;
+    const { name, trivia, loading, email, score } = this.props;
     const { answered, count, time, timeout } = this.state;
     return (
       <div
         className="margin-page"
       >
-        <CustomHeader name={ name } email={ email } />
+        <CustomHeader name={ name } email={ email } score={ score } />
         {loading && <p>...Loading</p>}
 
         {trivia.length > 0 && (

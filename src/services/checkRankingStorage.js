@@ -1,23 +1,11 @@
 import { getStorage } from '.';
 
-function comparation(score, scoreB) {
-  if (score < scoreB) {
-    const oneN = -1;
-    return oneN;
-  }
-  if (score < scoreB) {
-    const one = 1;
-    return one;
-  }
-  const zero = 0;
-  return zero;
+function sortRanking(old) {
+  return old.sort((a, b) => (a.score > b.score)
+    ? 1
+    : ((b.score > a.score) ? -1 : 0) ).reverse();
 }
 
-function sortRanking(old) {
-  return old.sort((
-    { score }, { scoreB },
-  ) => comparation(score, scoreB));
-}
 
 export default function checkDuplicatesInStorage(userRanking) {
   const { name, score } = userRanking;
@@ -32,3 +20,4 @@ export default function checkDuplicatesInStorage(userRanking) {
   }
   return ([userRanking]);
 }
+  
