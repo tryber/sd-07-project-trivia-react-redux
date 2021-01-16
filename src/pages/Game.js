@@ -27,7 +27,6 @@ class Game extends Component {
   }
 
   componentDidMount() {
-    console.log('montou');
     this.fetchQuestions();
     this.runTimer();
   }
@@ -95,9 +94,7 @@ class Game extends Component {
   runTimer() {
     const seconds = 1000;
     this.myInterval = setInterval(() => {
-      console.log();
       const { timer, questionWasAnswered } = this.state;
-      console.log(`Timer: ${timer} question:${questionWasAnswered}`);
       if (timer > 0 && questionWasAnswered === false) this.setState({ timer: timer - 1 });
       if (timer === 0 || questionWasAnswered) {
         clearInterval(this.myInterval);
