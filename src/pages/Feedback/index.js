@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Title, Header } from '../../components';
+import { TitleFeedback, Header } from '../../components';
 import { getStorage } from '../../services';
 import './style.css';
 
 class Feedback extends Component {
   contentHeader() {
-    const { assertions, score } = getStorage('player');
+    const state = getStorage('state');
+    const { assertions, score } = state.player;
     const min = 3;
     let title = '';
     if (assertions >= min) {
@@ -18,12 +19,12 @@ class Feedback extends Component {
       <div className="feed-content-child feed-header">
         <div className="feed-flex-basis-corners" />
         <div className="feed-flex-basis-center">
-          <Title
+          <TitleFeedback
             title={ title }
             dataTestid="feedback-text"
-            subTitle1={ `Você acertou ${assertions} questões!` }
+            subTitle1={ assertions }
             dataTestid1="feedback-total-question"
-            subTitle2={ `Um total de ${score} pontos` }
+            subTitle2={ score }
             dataTestid2="feedback-total-score"
           />
         </div>

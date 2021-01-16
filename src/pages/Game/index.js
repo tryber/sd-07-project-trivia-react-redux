@@ -9,7 +9,7 @@ import {
   Title,
   // QuestionCategory,
 } from '../../components';
-import { getStorage } from '../../services';
+import { getStorage, setStorage } from '../../services';
 import getApi from '../../services/api';
 import './style.css';
 
@@ -106,8 +106,11 @@ class Game extends Component {
 
     if (answers[index] === curQuestion.correct_answer) {
       console.log('clicou');
+      const state = getStorage('state');
+      state.player.assertions += 1;
+      setStorage('state', state);
     }
-    console.log('errrouu');
+    // console.log('errrouu');
 
     const { intervalID } = this.state;
     clearInterval(intervalID);

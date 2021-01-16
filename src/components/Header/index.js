@@ -33,7 +33,8 @@ class Header extends React.Component {
   }
 
   render() {
-    const player = getStorage('player');
+    const state = getStorage('state');
+    const { player } = state;
     return (
       <header className="header-section">
         {this.renderJogador(player)}
