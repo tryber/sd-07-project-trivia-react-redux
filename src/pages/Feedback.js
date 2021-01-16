@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { updateRanking } from '../actions/index';
 import PropTypes from 'prop-types';
+import { updateRanking } from '../actions/index';
 import Header from '../components';
 
 class FeedBack extends React.Component {
@@ -18,24 +18,9 @@ class FeedBack extends React.Component {
     };
   }
 
-  handleAssertions() {
-    const { assertions } = this.props;
-    const lowScore = 3;
-
-    if (assertions < lowScore) {
-      return <h2 data-testid="feedback-text">Podia ser melhor...</h2>;
-    }
-    return <h2 data-testid="feedback-text">Mandou bem!</h2>;
-  }
-
-  handleTotalQuestions() {
-    const { assertions } = this.props;
-
-    return (
-      <p data-testid="feedback-total-question">
-        {assertions}
-      </p>
-    );
+  async componentDidMount() {
+    await this.updateRank();
+    this.updateLocalStorageRank();
   }
 
   updateRank() {
@@ -50,22 +35,40 @@ class FeedBack extends React.Component {
 
   updateLocalStorageRank() {
     const { ranking } = this.props;
-    function compare( a, b ) {
-      if ( a.score < b.score ){
-        return -1;
+    const retorno = 1;
+    function compare(a, b) {
+      if (a.score < b.score) {
+        return retorno;
       }
-      if ( a.score > b.score ){
-        return 1;
+
+      if (a.score > b.score) {
+        return -retorno;
       }
       return 0;
     }
-    ranking.sort( compare );
+    ranking.sort(compare);
     const savedRanking = JSON.stringify(ranking);
     localStorage.setItem('ranking', savedRanking);
   }
-  async componentDidMount() {
-    await this.updateRank();
-    this.updateLocalStorageRank()
+
+  handleTotalQuestions() {
+    const { assertions } = this.props;
+
+    return (
+      <p data-testid="feedback-total-question">
+        {assertions}
+      </p>
+    );
+  }
+
+  handleAssertions() {
+    const { assertions } = this.props;
+    const lowScore = 3;
+
+    if (assertions < lowScore) {
+      return <h2 data-testid="feedback-text">Podia ser melhor...</h2>;
+    }
+    return <h2 data-testid="feedback-text">Mandou bem!</h2>;
   }
 
   render() {
@@ -112,14 +115,18 @@ const mapStateToProps = (state) => ({
   ranking: state.token.ranking,
 });
 
-const mapDispatchToProps = (dispatch) =>({
+const mapDispatchToProps = (dispatch) => ({
   addRank: (value) => dispatch(updateRanking(value)),
-})
+});
 
 FeedBack.propTypes = {
   assertions: PropTypes.number.isRequired,
   points: PropTypes.number.isRequired,
   history: PropTypes.shape().isRequired,
+  ranking: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  addRank: PropTypes.func.isRequired,
+  email: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
 };
 
-export default connect(mapStateToProps,mapDispatchToProps)(FeedBack);
+export default connect(mapStateToProps, mapDispatchToProps)(FeedBack);

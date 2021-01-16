@@ -46,7 +46,7 @@ const tokenReducer = (state = INITIAL_STATE, action) => {
   case RESET_COUNTER:
     return { ...state, count: 30 };
   case UPDATE_RANKING:
-    return { ...state, ranking:[...state.ranking, value]};
+    return { ...state, ranking: [...state.ranking, value] };
   default:
     return state;
   }

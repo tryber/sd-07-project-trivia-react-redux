@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import md5 from 'crypto-js/md5';
 import PropTypes from 'prop-types';
 
 class Ranking extends React.Component {
@@ -10,33 +9,23 @@ class Ranking extends React.Component {
     this.getRanking = this.getRanking.bind(this);
 
     this.state = {
-      ranking:[],
-    }
+      ranking: [],
+    };
+  }
+
+  componentDidMount() {
+    this.getRanking();
   }
 
   getRanking() {
     const rank = localStorage.getItem('ranking');
     console.log(rank);
     const rankObj = JSON.parse(rank);
-
-    // function compare( a, b ) {
-    //   if ( a.score < b.score ){
-    //     return 1;
-    //   }
-    //   if ( a.score > b.score ){
-    //     return -1;
-    //   }
-    //   return 0;
-    // }
-    // rankObj.sort( compare );
     this.setState({ ranking: rankObj });
   }
-  componentDidMount(){
-    this.getRanking();
-  }
+
   render() {
-    const { email, history } = this.props;
-    const hashEmail = md5(email);
+    const { history } = this.props;
     const { ranking } = this.state;
     return (
       <div>
@@ -44,7 +33,7 @@ class Ranking extends React.Component {
         {ranking.map((element, index) => {
           const { name, score, picture } = element;
           return (
-            <div>
+            <div key={ index }>
               <div>
                 <img
                   className="gamer-avatar"
@@ -59,10 +48,9 @@ class Ranking extends React.Component {
               <div>
                 <h3 data-testid={ `player-score-${index}` }>{ score }</h3>
               </div>
-            </div>  
+            </div>
           );
-          })
-        }
+        })}
         <button
           data-testid="btn-go-home"
           type="button"
@@ -82,9 +70,6 @@ const mapStateToProps = (state) => ({
 });
 
 Ranking.propTypes = {
-  email: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  points: PropTypes.number.isRequired,
   history: PropTypes.shape().isRequired,
 };
 

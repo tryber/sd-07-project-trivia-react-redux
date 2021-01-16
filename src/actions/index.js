@@ -33,5 +33,5 @@ export const resetCounter = () => ({
 
 export const updateRanking = (value) => ({
   type: UPDATE_RANKING,
-  value: value,
+  value,
 });
