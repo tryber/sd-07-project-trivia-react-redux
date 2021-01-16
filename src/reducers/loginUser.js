@@ -1,19 +1,17 @@
-const ADD_EMAIL = 'ADD_EMAIL';
-const ADD_NOME = 'ADD_NOME';
+import { ADD_EMAIL, ADD_NAME } from '../actions';
 
 const INITIAL_STATE = {
   email: '',
   name: '',
 };
 
-function loginReducer(state = INITIAL_STATE, action) {
+export default function loginReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
   case ADD_EMAIL:
     return { ...state, email: action.email };
-  case ADD_NOME:
+  case ADD_NAME:
     return { ...state, name: action.name };
   default:
     return state;
   }
 }
-export default loginReducer;

@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-
 export default function CustomPlayAgain({ goHome }) {
   return (
     <button
@@ -14,7 +13,5 @@ export default function CustomPlayAgain({ goHome }) {
   );
 }
 CustomPlayAgain.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
+  goHome: PropTypes.func.isRequired,
 };

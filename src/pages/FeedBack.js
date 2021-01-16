@@ -4,21 +4,23 @@ import { connect } from 'react-redux';
 import { CustomHeader, CustomPlayAgain } from '../components';
 
 class FeedBack extends Component {
-  constructor(){
-    super()
+  constructor() {
+    super();
     this.goHomeAgain = this.goHomeAgain.bind(this);
   }
+
   goHomeAgain() {
     const { history } = this.props;
-    history.push('/')
+    history.push('/');
   }
+
   render() {
     const { name } = this.props;
     return (
       <div>
         <CustomHeader name={ name } />
         <h1 data-testid="settings-title">FeedBack</h1>
-        <CustomPlayAgain goHome= { this.goHomeAgain } />
+        <CustomPlayAgain goHome={ this.goHomeAgain } />
       </div>
     );
   }
@@ -31,3 +33,10 @@ const mapStateToProps = ({
 });
 
 export default connect(mapStateToProps)(FeedBack);
+
+FeedBack.propTypes = {
+  name: PropTypes.string.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};

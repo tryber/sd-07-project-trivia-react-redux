@@ -9,3 +9,7 @@ export default function CustomNextButton({ next }) {
     </div>
   );
 }
+
+CustomNextButton.propTypes = {
+  next: PropTypes.number.isRequired,
+};

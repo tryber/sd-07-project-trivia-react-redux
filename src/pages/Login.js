@@ -22,7 +22,6 @@ class Login extends Component {
     const { dispatchEmail, dispatchToken, dispatchNome, history } = this.props;
     const { email, nome } = this.state;
     await dispatchToken(setStorage);
-    setStorage('player');
     dispatchEmail(email);
     dispatchNome(nome);
     history.push('/gamescreen');

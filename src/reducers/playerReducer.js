@@ -1,58 +1,27 @@
-import { setStorage } from '../services/localStorage';
-
-const ADD_EMAIL = 'ADD_EMAIL';
-const ADD_NOME = 'ADD_NOME';
-const ADD_ASSERTIONS = 'ADD_ASSERTIONS';
-const ADD_SCORE = 'ADD_SCORE';
+import { ADD_EMAIL, ADD_GAMEDATES } from '../actions';
+import { getPicture } from '../services';
 
 const INITIAL_STATE = {
-  player: {
-    name: '',
-    assertions: 0,
-    score: 0,
-    gravatarEmail: '',
-  },
+  assertions: 0,
+  score: 0,
+  gravatarEmail: '',
 };
-function playerReducer(state = INITIAL_STATE, action) {
+
+export default function playerReducer(state = INITIAL_STATE, action) {
+  const { score, assertions } = state;
   switch (action.type) {
   case ADD_EMAIL:
-    setStorage('state', {
-      ...state,
-      email: action.email
-    });
     return {
       ...state,
-      player: { ...state.player, gravatarEmail: action.email },
+      gravatarEmail: getPicture(action.email),
     };
-  case ADD_NOME:
-    setStorage('state', {
-      ...state.player,
-     name: action.name },
-    );
-    return { ...state, player: { ...state.player, name: action.name } };
-  case ADD_ASSERTIONS:
-    setStorage('state', {
-      ...state.player,
-      assertions: state.player.assertions + action.assertions,
-    });
+  case ADD_GAMEDATES:
     return {
-      ...state.player,
-      player: {
-        ...state.player,
-        assertions: state.player.assertions + action.assertions,
-      },
-    };
-  case ADD_SCORE:
-    setStorage('state', {
-      ...state.player,
-      score: state.player.score + action.payload,
-    });
-    return {
-      ...state.player,
-      player: { ...state.player, score: state.player.score + action.payload },
+      ...state,
+      score: action.payload + score,
+      assertions: assertions + 1,
     };
   default:
     return state;
   }
 }
-export default playerReducer;
