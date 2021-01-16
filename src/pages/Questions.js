@@ -45,7 +45,8 @@ export default class Questions extends Component {
       nextQuestion,
       answeredQuestionFunction,
       questionWasAnswered,
-      shuffledAnswers } = this.props;
+      shuffledAnswers,
+      isLoading } = this.props;
     // const { shuffledAnswers } = this.state;
     console.log('--questions--');
     console.log(question);
@@ -55,7 +56,7 @@ export default class Questions extends Component {
         <div>
           <h3 data-testid="question-category">{question.category}</h3>
           <h4 data-testid="question-text">{question.question}</h4>
-          {shuffledAnswers && shuffledAnswers.map((answer, index) => {
+          {!isLoading && shuffledAnswers.map((answer, index) => {
             if (answer === question.correct_answer) {
               return (
                 <button
@@ -109,4 +110,5 @@ Questions.propTypes = {
   answeredQuestionFunction: PropTypes.func.isRequired,
   questionWasAnswered: PropTypes.bool.isRequired,
   shuffledAnswers: PropTypes.arrayOf(PropTypes.string).isRequired,
+  isLoading: PropTypes.bool.isRequired,
 };

@@ -71,6 +71,7 @@ class Game extends Component {
 
   answeredQuestion(e) {
     const { name } = e.target;
+    console.log('answered question');
 
     if (name === 'correct') {
       this.handleScore();
@@ -98,32 +99,36 @@ class Game extends Component {
       questionsArray: myQuestions,
       isLoading: true,
     });
-    this.shuffleAnswers(myQuestions);
+    this.shuffleAnswers(myQuestions, 0);
   }
 
   nextQuestion() {
-    const lastQuestion = 5;
+    const lastQuestion = 4;
     const { currentQuestion, questionsArray } = this.state;
+    console.log('next-question-function');
     console.log(questionsArray);
     const { history } = this.props;
     if (currentQuestion === lastQuestion) {
+      console.log('last question');
       history.push('/feedback');
+    } else {
+      this.setState({
+        currentQuestion: currentQuestion + 1,
+        timer: 30,
+        questionWasAnswered: false,
+        isLoading: true,
+      });
+      this.shuffleAnswers(questionsArray, currentQuestion + 1);
+      this.runTimer();
     }
-    this.setState({
-      currentQuestion: currentQuestion + 1,
-      timer: 30,
-      questionWasAnswered: false,
-    });
-    this.shuffleAnswers(questionsArray);
-    this.runTimer();
   }
 
-  shuffleAnswers(myQuestions) {
-    const { currentQuestion } = this.state;
+  shuffleAnswers(myQuestions, currentQuestion) {
     const question = myQuestions[currentQuestion];
     // const { question } = this.props;
     // define keys to new array
     console.log('shuffle');
+    console.log(currentQuestion);
     console.log(question);
     const correctAnswer = question.correct_answer;
     const incorrectAnswer = question.incorrect_answers;
@@ -159,15 +164,15 @@ class Game extends Component {
         <h1>{timer}</h1>
         <h1>Token da requisição</h1>
         {localStorage.token}
-        {!isLoading
-          && <Questions
-            timer={ timer }
-            question={ questionsArray[currentQuestion] }
-            nextQuestion={ this.nextQuestion }
-            answeredQuestionFunction={ this.answeredQuestion }
-            questionWasAnswered={ questionWasAnswered }
-            shuffledAnswers={ shuffledAnswers }
-          />}
+        <Questions
+          timer={ timer }
+          question={ questionsArray[currentQuestion] }
+          nextQuestion={ this.nextQuestion }
+          answeredQuestionFunction={ this.answeredQuestion }
+          questionWasAnswered={ questionWasAnswered }
+          shuffledAnswers={ shuffledAnswers }
+          isLoading={ isLoading }
+        />
       </div>
     );
   }
