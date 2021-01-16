@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Header, Title, RankingItem, Next } from '../../components';
+import { Title, RankingItem, Next } from '../../components';
 import './style.css';
 
 class Ranking extends Component {
