@@ -33,38 +33,38 @@ class Game extends Component {
   }
 
   handleScore() {
-    let score = 0;
+    let questionScore = 0;
     const difficulty = {
       easy: 1,
       medium: 2,
       hard: 3,
     };
     const base = 10;
-    const { questionsArray, currentQuestion, timer, assertions } = this.state;
+    const { questionsArray, currentQuestion, timer, assertions, score } = this.state;
     const answer = questionsArray[currentQuestion];
 
     switch (answer.difficulty) {
     case 'easy':
-      score = base + (timer * difficulty.easy);
+      questionScore = base + (timer * difficulty.easy);
       break;
     case 'medium':
-      score = base + (timer * difficulty.medium);
+      questionScore = base + (timer * difficulty.medium);
       break;
     case 'hard':
-      score = base + (timer * difficulty.hard);
+      questionScore = base + (timer * difficulty.hard);
       break;
     default:
-      score = 0;
+      questionScore = 0;
     }
     this.setState({
-      score,
+      score: score + questionScore,
       assertions: assertions + 1,
     });
 
     const player = { player: {
       name: localStorage.username,
       assertions: assertions + 1,
-      score,
+      score: score + questionScore,
       gravatar: localStorage.email,
     },
     };
@@ -72,13 +72,24 @@ class Game extends Component {
   }
 
   answeredQuestion(e) {
+    const { score, assertions } = this.state;
     const { name } = e.target;
     console.log('answered question');
 
     if (name === 'correct') {
       this.handleScore();
+      this.setState({ questionWasAnswered: true });
+    } else {
+      const player = { player: {
+        name: localStorage.username,
+        assertions: assertions + 0,
+        score: score + 0,
+        gravatar: localStorage.email,
+      },
+      };
+      localStorage.setItem('state', JSON.stringify(player));
+      this.setState({ questionWasAnswered: true });
     }
-    this.setState({ questionWasAnswered: true });
   }
 
   runTimer() {
