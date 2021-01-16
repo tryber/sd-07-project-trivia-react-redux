@@ -2,14 +2,26 @@ import React, { Component } from 'react';
 import { getStorage } from '../services';
 
 export default class Ranking extends Component {
+  constructor() {
+    super();
+    this.state = {
+      ranking: [],
+    };
+  }
+
   componentDidMount() {
-    this.ranking = getStorage('ranking')
+    this.setRanking();
+  }
+
+  setRanking() {
+    this.setState({ ranking: getStorage('ranking') });
   }
 
   render() {
+    const { ranking } = this.state;
     return (
       <ol>
-        {this.ranking.map(({ name, score, gravatarEmail }, index) => (
+        {ranking.map(({ name, score, gravatarEmail }, index) => (
           <li key={ index }>
             <div>
               <img
@@ -26,7 +38,3 @@ export default class Ranking extends Component {
     );
   }
 }
-
-CustomRanking.propTypes = {
-  ranking: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
-};
