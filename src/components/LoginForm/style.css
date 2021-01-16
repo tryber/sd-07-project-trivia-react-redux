@@ -1,0 +1,40 @@
+.login-section {
+  align-items: center;
+  box-sizing: border-box;
+  display: flex;
+  flex-basis: 100%;
+  justify-content: center;
+}
+
+.field {
+  align-items: center;
+  left: 50%;
+  margin: 25px 50px;
+  width: 100%;
+}
+
+.field input {
+  box-sizing: border-box;
+  height: 50px;
+  text-align: center;
+  width: 300px;
+}
+
+button {
+  background: #333;
+  color: white;
+  height: 50px;
+  width: 300px;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+button:disabled {
+  background: #333;
+  color: white;
+  cursor: pointer;
+  opacity: 0.3;
+  width: 300px;
+}

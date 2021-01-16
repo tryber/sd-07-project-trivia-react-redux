@@ -1,0 +1,58 @@
+.answer-section {
+  align-items: center;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  width: 100%;
+}
+
+.answer-box {
+  align-items: center;
+  border: 3px solid white;
+  border-radius: 30px;
+  box-sizing: border-box;
+  display: flex;
+  flex-flow: row wrap;
+  height: 150px;
+  justify-content: center;
+  margin: 25px;
+  outline: 0;
+  width: 40%;
+}
+
+.answer-box:disabled {
+  height: 150px;
+  width: 40%;
+}
+
+.answer-box:hover {
+  cursor: pointer;
+}
+
+.green, .green:disabled {
+  background-color: #29bf12;
+}
+
+.pink, .pink:disabled {
+  background-color: #f21b3f;
+}
+
+.orange, .orange:disabled {
+  background-color: #ff9914;
+}
+
+.purple, .purple:disabled {
+  background-color: #824ab9;
+}
+
+.right {
+  border: 3px solid #06f00f;
+}
+
+.wrong {
+  border: 3px solid red;
+}
+
+.message {
+  font-size: 28px;
+}

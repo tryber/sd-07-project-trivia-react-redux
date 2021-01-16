@@ -1,0 +1,43 @@
+.circle {
+  align-items: center;
+  background: rgba(0, 0, 0, 0.2);
+  border: 5px solid white;
+  border-radius: 50%;
+  box-sizing: border-box;
+  display: flex;
+  height: 100px;
+  justify-content: center;
+  outline: 0;
+  transition: 0.3s;
+  width: 100px;
+
+}
+
+.circle-visibility {
+  visibility: hidden;
+}
+
+.circle:hover {
+  box-shadow: 0 0 6px 5px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.circle:active {
+  transform: translate(2px, 2px);
+  transition: 0.3s;
+}
+
+.triangle-right {
+  border: 0 solid transparent;
+  border-bottom-width: 30px;
+  border-left: 50px solid white;
+  border-top-width: 30px;
+  height: 0;
+  margin-left: 12px;
+  width: 0;
+}
+
+.transparency {
+  opacity: 0;
+}

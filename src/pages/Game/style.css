@@ -1,0 +1,52 @@
+body {
+  background-color: #08bdbd;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.game-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.game-content {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: space-between;
+  margin: 20px;
+}
+
+.game-content-child {
+  display: flex;
+  flex-basis: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.game-header {
+  align-items: flex-start;
+}
+
+.game-main {
+  align-items: center;
+  justify-content: center;
+}
+
+.game-footer {
+  align-items: flex-end;
+}
+
+.game-flex-basis-corners {
+  width: 200px;
+}
+
+.game-flex-basis-center {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}

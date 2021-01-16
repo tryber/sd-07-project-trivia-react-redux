@@ -1,0 +1,37 @@
+body {
+  background-color: #08bfbf;
+  display: flex;
+  flex-direction: column;
+}
+
+.feed-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.feed-content {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: space-around;
+  margin: 20px;
+}
+
+.feed-header {
+  width: 80vw;
+}
+
+.feed-buttons-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.feed-button-ranking {
+  margin: 20px;
+}
+
+.feed-button-again {
+  margin: 20px;
+}

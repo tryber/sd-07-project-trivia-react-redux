@@ -1,0 +1,16 @@
+.configButton-icon {
+  transition: 0.2s;
+  width: 36px;
+}
+
+.configButton-icon:hover {
+  cursor: pointer;
+  filter: drop-shadow(2px 2px 2px rgb(34, 34, 34));
+  transition: 0.2s;
+}
+
+.configButton-icon:active {
+  filter: none;
+  transform: translate(1px, 1px);
+  transition: 0.2s;
+}

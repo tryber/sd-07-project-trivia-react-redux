@@ -1,0 +1,10 @@
+.loginPage-container {
+  align-content: space-between;
+  background-color: #ff9914;
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  min-height: 100vh;
+  min-width: 100vw;
+  padding: 20px;
+}
