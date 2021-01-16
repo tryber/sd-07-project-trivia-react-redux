@@ -5,11 +5,12 @@ import PropTypes from 'prop-types';
 class Questions extends Component {
   constructor() {
     super();
-    this.handleClass = this.handleClick.bind(this);
+    this.handleClick = this.handleClick.bind(this);
     this.randomChoice = this.randomChoice.bind(this);
     this.saveScore = this.saveScore.bind(this);
     this.startCountDown = this.startCountDown.bind(this);
     this.calcDifficultyPoints = this.calcDifficultyPoints.bind(this);
+    this.WinnerOrLoser = this.WinnerOrLoser.bind(this);
     this.state = {
       green: '',
       red: '',
@@ -19,10 +20,6 @@ class Questions extends Component {
     };
   }
 
-  WinnerOrLoser() {
-    console.log('entrei aqui');
-  }
-
   componentDidUpdate(prevProps) {
     const { questions } = this.props;
     const { results } = questions;
@@ -30,6 +27,10 @@ class Questions extends Component {
       this.randomChoice(results);
       this.startCountDown();
     }
+  }
+
+  WinnerOrLoser() {
+    console.log('entrei aqui');
   }
 
   randomChoice(results) {
@@ -63,6 +64,10 @@ class Questions extends Component {
       };
       return objectToBeReturned;
     });
+    this.setState({
+      shuffledAnswers: newResults,
+    });
+  }
 
   startCountDown() {
     const milliseconds = 30000;
@@ -102,7 +107,6 @@ class Questions extends Component {
     const { disableButton, next } = this.props;
     const maxQuestion = 4;
     this.setState({
-      shuffledAnswers: newResults,
       green: 'green',
       red: 'red',
     });
@@ -119,17 +123,17 @@ class Questions extends Component {
     const getLocalStorage = JSON.parse(localStorage.getItem('state'));
     const getTestId = target.getAttribute('data-testid');
     const getDifficulty = target.getAttribute('data-difficulty');
-    const { player: { name, score, email } } = getLocalStorage;
-    let { player: { assertions } } = getLocalStorage;
+    const { player: { name, email } } = getLocalStorage;
+    let { player: { assertions, score } } = getLocalStorage;
     if (getTestId === 'correct-answer') {
       const standardCalcNumber = 10;
       const getDifficultyPoints = this.calcDifficultyPoints(getDifficulty);
       const calculation = standardCalcNumber + (timer * getDifficultyPoints);
-      score.push(calculation);
-      const newScore = score.reduce((acc, next) => acc + next, 0);
       assertions += 1;
-      const newPlayer = { player: { name, assertions, score: newScore, email } };
+      score += calculation;
+      const newPlayer = { player: { name, assertions, score, email } };
       localStorage.setItem('state', JSON.stringify(newPlayer));
+      console.log('if', score);
     }
   }
 
@@ -152,10 +156,6 @@ class Questions extends Component {
 
   render() {
     const { timer, shuffledAnswers, green, red, disabled } = this.state;
-    const {
-      questions: { results },
-      next,
-    } = this.props;
 
     if (shuffledAnswers) {
       return (

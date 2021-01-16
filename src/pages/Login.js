@@ -48,7 +48,7 @@ class Login extends React.Component {
       player: {
         name: nameInput,
         assertions: 0,
-        score: [],
+        score: 0,
         email: emailInput,
       },
     };
