@@ -85,7 +85,7 @@ class Game extends Component {
     const { questions, turn } = this.state;
     const curQuestion = questions[turn];
     const answers = [...curQuestion.incorrect_answers, curQuestion.correct_answer];
-    
+
     if (answers[index] === curQuestion.correct_answer) {
       console.log('clicou');
     }
@@ -105,8 +105,9 @@ class Game extends Component {
   }
 
   handleClickNext() {
-    if(this.state.next) {
-      this.setState((prevState) => ({ 
+    const { next } = this.state;
+    if (next) {
+      this.setState((prevState) => ({
         turn: prevState.turn + 1,
         timer: 10,
         next: false,
@@ -114,7 +115,7 @@ class Game extends Component {
       const ID = this.changeTimer();
       this.clearTimer(ID);
     }
-    console.log("trybe36k")
+    console.log('trybe36k');
   }
 
   contentFooter() {

@@ -23,9 +23,6 @@ body {
   width: 80vw;
 }
 
-.feed-footer {
-}
-
 .feed-buttons-container {
   display: flex;
   flex-direction: column;
