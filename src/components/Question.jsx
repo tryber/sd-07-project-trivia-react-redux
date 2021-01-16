@@ -4,21 +4,21 @@ import PropTypes from 'prop-types';
 class Question extends Component {
   render() {
     const {
-      currentQuestion: {
-        category, question, correct_answer, incorrect_answers,
-      },
+      currentQuestion,
       onClickNext,
       onClickQuestion,
       nextButtonVisible,
     } = this.props;
 
-    const allAnswers = [...incorrect_answers, correct_answer];
+    const allAnswers = [
+      ...currentQuestion.incorrect_answers, currentQuestion.correct_answer,
+    ];
 
     return (
       <div>
         <div>
-          <h2 data-testid="question-category">{category}</h2>
-          <p data-testid="question-text">{question}</p>
+          <h2 data-testid="question-category">{currentQuestion.category}</h2>
+          <p data-testid="question-text">{currentQuestion.question}</p>
         </div>
         <div>
           {
@@ -27,7 +27,9 @@ class Question extends Component {
                 key={ answer }
                 type="button"
                 data-testid={
-                  answer === correct_answer ? 'correct-answer' : `wrong-answer-${index}`
+                  answer === currentQuestion.correct_answer
+                    ? 'correct-answer'
+                    : `wrong-answer-${index}`
                 }
                 onClick={ onClickQuestion }
               >
