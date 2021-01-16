@@ -56,7 +56,7 @@ class Game extends React.Component {
         <div>
           <Questions next={ next } disableButton={ this.disableButton } />
           <button
-            className={ !disable ? 'btn-visible' : 'btn-visible-hidden' }
+            className={ !(disable) ? 'btn-visible' : 'btn-visible-hidden' }
             data-testid="btn-next"
             onClick={ this.handleNext }
             type="button"
