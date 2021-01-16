@@ -53,7 +53,7 @@ class Login extends React.Component {
             name="email"
             data-testid="input-gravatar-email"
           />
-          <Link to="/tela-de-jogo">
+          <Link to="/telaDeJogo">
             <button
               onClick={ this.handleSubmit }
               disabled={ subimitDisabled }
@@ -63,7 +63,7 @@ class Login extends React.Component {
               Jogar
             </button>
           </Link>
-          <Link to="/tela-de-configuracoes">
+          <Link to="/telaDeConfiguracoes">
             <button type="button" data-testid="btn-settings">
               Configurações
             </button>
