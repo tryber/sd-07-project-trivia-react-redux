@@ -2,13 +2,16 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import md5 from 'crypto-js/md5';
+import '../css/Button.css';
 
 class TelaDeJogo extends Component {
   constructor() {
     super();
-    this.state = { next: 0 };
+    this.state = { next: 0, response: false };
+
     this.handleQuestions = this.handleQuestions.bind(this);
     this.nextQuestion = this.nextQuestion.bind(this);
+    this.handleToggle = this.handleToggle.bind(this);
   }
 
   handleQuestions() {
@@ -21,6 +24,7 @@ class TelaDeJogo extends Component {
       randomResponses.push({
         answer: questions[next].correct_answer,
         dataTestid: 'correct-answer',
+        className: 'correct-answer',
         randomIndex: Math.floor(Math.random() * number),
       });
     }
@@ -30,12 +34,18 @@ class TelaDeJogo extends Component {
         randomResponses.push({
           answer: element,
           dataTestid: `wrong-answer-${index}`,
-          randomIndex: Math.floor(Math.random() * index),
+          className: 'wrong-answer',
+          randomIndex: Math.floor(Math.random() * number),
         });
       });
     }
 
-    return randomResponses.sort((a, b) => a.randomIndex - b.randomIndex);
+    return randomResponses.sort((a, b) => b.randomIndex - a.randomIndex);
+  }
+
+  handleToggle() {
+    const { response } = this.state;
+    this.setState({ response: !response });
   }
 
   nextQuestion() {
@@ -46,9 +56,9 @@ class TelaDeJogo extends Component {
 
   render() {
     const { email, name, score, questions } = this.props;
-    const { next } = this.state;
+    const { next, response } = this.state;
     const hash = md5(email);
-    console.log(name);
+
     return (
       <div>
         <header>
@@ -73,10 +83,14 @@ class TelaDeJogo extends Component {
             { questions.length && questions[next].question }
           </p>
           {
-            questions.length && this.handleQuestions().map((option, i) => (
+            questions.length && this.handleQuestions().map((option, index) => (
               <button
                 type="button"
-                key={ i }
+                key={ index }
+                className={ response
+                && (option.className === 'correct-answer' ? 'correct'
+                  : 'incorrect') }
+                onClick={ () => this.handleToggle() }
                 data-testid={ option.dataTestid }
               >
                 { option.answer }
