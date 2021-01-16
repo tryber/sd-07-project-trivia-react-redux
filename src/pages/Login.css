@@ -1,4 +1,4 @@
-.login {
+.main {
   align-items: center;
   display: flex;
   height: 100vh;
@@ -8,16 +8,16 @@
 
 .form {
   align-items: center;
+  background-image: url('https://brancopapeldeparede.fbitsstatic.net/img/p/papel-de-parede-degrade-amarelo-099-71219/241063-1.jpg?w=542&h=730&v=202010301756');
+  background-size: cover;
   border-radius: 10px;
   box-shadow: 5px 5px 5px black;
   display: flex;
   flex-direction: column;
   height: 400px;
-  background-image: url("https://brancopapeldeparede.fbitsstatic.net/img/p/papel-de-parede-degrade-amarelo-099-71219/241063-1.jpg?w=542&h=730&v=202010301756");
-  background-size: cover;
   justify-content: center;
-  width: 450px;
   margin-left: -59px;
+  width: 450px;
 }
 
 
@@ -29,4 +29,18 @@
 
 .text {
   width: 85%;
+}
+
+.settings {
+  font-size: 3em;
+  margin: 0 50px 30px 0;
+  text-decoration: none;
+}
+
+.footer {
+  align-items: flex-end;
+  display: flex;
+  flex-direction: row-reverse;
+  height: 0;
+  width: 100vw;
 }

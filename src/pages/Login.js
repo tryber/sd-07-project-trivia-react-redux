@@ -44,41 +44,50 @@ class Login extends Component {
     const { signin, redirect } = this.props;
     return (
       <div className="login">
-        <div className="form">
-          <input
-            className="input text"
-            type="name"
-            name="name"
-            placeholder="Name"
-            data-testid="input-player-name"
-            value={ name }
-            onChange={ this.handleInputChange }
-          />
-          <input
-            className="input text"
-            type="text"
-            name="email"
-            placeholder="email"
-            data-testid="input-gravatar-email"
-            value={ email }
-            onChange={ this.handleInputChange }
-          />
-          <button
-            className="button"
-            type="button"
-            disabled={ disabled }
-            data-testid="btn-play"
-            onClick={ () => {
-              signin({ name, email });
-            } }
-          >
-            Jogar
-          </button>
-        </div>
-        {redirect && (
-          <Redirect to="/game" />
-        )}
-        <Link to="/settings" />
+        <main className="main">
+          <div className="form">
+            <h1>
+              Trivia Reduxidil Game
+            </h1>
+            <input
+              className="input text"
+              type="name"
+              name="name"
+              placeholder="Name"
+              data-testid="input-player-name"
+              value={ name }
+              onChange={ this.handleInputChange }
+            />
+            <input
+              className="input text"
+              type="text"
+              name="email"
+              placeholder="email"
+              data-testid="input-gravatar-email"
+              value={ email }
+              onChange={ this.handleInputChange }
+            />
+            <button
+              className="input"
+              type="button"
+              disabled={ disabled }
+              data-testid="btn-play"
+              onClick={ () => {
+                signin({ name, email });
+              } }
+            >
+              Play
+            </button>
+          </div>
+          {redirect && (
+            <Redirect to="/game" />
+          )}
+        </main>
+        <footer className="footer">
+          <Link className="settings" data-testid="btn-settings" to="/settings">
+            +
+          </Link>
+        </footer>
       </div>
     );
   }
