@@ -39,26 +39,36 @@ class Game extends Component {
 
   changeTimer() {
     const interval = 1000;
-    const intervalID = setInterval(() => {
+    const ID = setInterval(() => {
       this.setState((oldState) => ({ timer: oldState.timer - 1 }));
     }, interval);
 
-    return intervalID;
+    return ID;
   }
 
   clearTimer(ID) {
-    const timeOut = 30600;
+    const timeOut = 30000;
     setTimeout(() => {
-      const { questions, turn, timer } = this.state;
-      const curQuestion = questions[turn];
-      let index = 1;
-      if (curQuestion.correct_answer === 1) index += 1;
-      this.handleClickAnswer(index);
+      const { timer } = this.state;
+      // const curQuestion = questions[turn];
+      // let index = 1;
+      // if (curQuestion.correct_answer === 1) index += 1;
+
+      // this.handleClickAnswer(index);
+      // const { intervalID } = this.state;
+      // clearInterval(intervalID);
+      // this.setState({
+      //   visibility: '',
+      //   next: true,
+      //   questionAnsered: true,
+      // timer: 30,
+      // });
 
       clearInterval(ID);
       this.setState({
         next: true,
         visibility: '',
+        questionAnsered: true,
       });
       if (!timer) this.setState({ finishTime: 'wrong' });
     }, timeOut);
@@ -99,6 +109,18 @@ class Game extends Component {
     );
   }
 
+  handleCurrentScore() {
+    const { timer, questions, turn } = this.state;
+    const questionsDifficulty = ['nonUsed', 'easy', 'medium', 'hard'];
+    const pointsCalcPattern = 10;
+    return (
+      pointsCalcPattern + (
+        timer * questionsDifficulty.indexOf(questions[turn].difficulty)
+      )
+    );
+  }
+  // state.player.score += this.handleCurrentScore();
+
   handleClickAnswer(index) {
     const { questions, turn } = this.state;
     const curQuestion = questions[turn];
@@ -108,6 +130,10 @@ class Game extends Component {
       console.log('clicou');
       const state = getStorage('state');
       state.player.assertions += 1;
+
+      // const { score } = state.player;
+      state.player.score += this.handleCurrentScore();
+
       setStorage('state', state);
     }
     // console.log('errrouu');
@@ -118,6 +144,7 @@ class Game extends Component {
       visibility: '',
       next: true,
       questionAnsered: true,
+      timer: 30,
     });
   }
 
@@ -160,6 +187,11 @@ class Game extends Component {
         });
       }
     } else {
+      const ranking = getStorage('ranking');
+      const state = getStorage('state');
+      ranking[ranking.length - 1].score = state.player.score;
+      setStorage('ranking', ranking);
+
       const { history } = this.props;
       history.push('/feedback');
     }

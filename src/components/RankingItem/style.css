@@ -43,8 +43,10 @@
   text-align: right;
 }
 
-.header-name {
-  color: white;
+.header-name, .header-score {
+  margin: 0;
+  padding: 0;
+
 }
 
 .picture {

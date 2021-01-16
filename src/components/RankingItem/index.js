@@ -29,12 +29,12 @@ class RankingItem extends Component {
                 </h2>
               </div>
               <div className="score">
-                <h2
-                  className="header-name"
+                <h3
+                  className="header-score"
                   data-testid={ `player-score-${index}` }
                 >
                   {`${score}`}
-                </h2>
+                </h3>
                 <span>&nbsp;pontos</span>
               </div>
             </div>

@@ -52,3 +52,7 @@
 .wrong {
   border: 3px solid red;
 }
+
+.message {
+  font-size: 28px;
+}
