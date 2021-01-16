@@ -1,26 +1,42 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { CustomHeader, CustomPlayAgain } from '../components';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { CustomHeader, CustomPlayAgain } from "../components";
 
 class FeedBack extends Component {
   constructor() {
     super();
-    this.goHomeAgain = this.goHomeAgain.bind(this);
+    this.goRanking = this.goRanking.bind(this);
+    this.goHome = this.goHome.bind(this);
   }
 
-  goHomeAgain() {
+  goHome() {
     const { history } = this.props;
-    history.push('/');
+    history.push("/");
+  }
+
+  goRanking() {
+    const { history } = this.props;
+    history.push("/ranking");
   }
 
   render() {
-    const { name, email, score } = this.props;
+    const { name, email, score, assertions } = this.props;
     return (
       <div>
         <CustomHeader name={ name } email={ email } score={ score } />
         <h1 data-testid="feedback-text">FeedBack</h1>
-        <CustomPlayAgain goHome={ this.goHomeAgain } />
+        {assertions < 3 ? (
+          <h2 data-testid="feedback-text">Podia ser melhor...</h2>
+        ) : (
+          <h2 data-testid="feedback-text">Mandou bem!</h2>
+        )}
+        <h3 data-testid="feedback-total-score">{ score }</h3>
+        <h3 data-testid="feedback-total-question">{ assertions }</h3>
+        <CustomPlayAgain goHome={this.goHome} />
+        <button data-testid="btn-ranking" onClick={ this.goRanking }>
+          Rankinggg!!!!!!
+        </button>
       </div>
     );
   }
@@ -28,9 +44,12 @@ class FeedBack extends Component {
 
 const mapStateToProps = ({
   loginReducer: { name, email },
-  playerReducer: { score },
+  playerReducer: { score, assertions },
 }) => ({
-  name, email, score,
+  name,
+  email,
+  score,
+  assertions,
 });
 
 export default connect(mapStateToProps)(FeedBack);
