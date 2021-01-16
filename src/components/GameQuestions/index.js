@@ -36,6 +36,15 @@ class GameQuestions extends Component {
     await getTriviaQuestions();
   }
 
+  escapeHtml(unsafeText) {
+    return unsafeText
+      .replace(/&amp;/g, '&')
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&quot;/g, '"')
+      .replace(/&#039;/g, '\'');
+  }
+
   timeOver() {
     this.setState({ revealAnswer: true });
   }
@@ -81,13 +90,13 @@ class GameQuestions extends Component {
         <h3>
           Category:
           <span data-testid="question-category">
-            {questions.length && questions[currentQuestion].category}
+            {questions.length && this.escapeHtml(questions[currentQuestion].category)}
           </span>
         </h3>
         <h3>
           {`Question ${currentQuestion + 1}: `}
           <span data-testid="question-text">
-            {questions.length && questions[currentQuestion].question}
+            {questions.length && this.escapeHtml(questions[currentQuestion].question)}
           </span>
         </h3>
         <h3>
@@ -109,7 +118,7 @@ class GameQuestions extends Component {
                       questions[currentQuestion].difficulty,
                     ) }
                   >
-                    {answer.text}
+                    {this.escapeHtml(answer.text)}
                   </button>))
             }
           </span>
@@ -138,7 +147,7 @@ GameQuestions.propTypes = {
   addPlayerToRanking: PropTypes.func.isRequired,
   questions: PropTypes.arrayOf(PropTypes.object).isRequired,
   isLoading: PropTypes.bool.isRequired,
-  player: PropTypes.shape(PropTypes.object).isRequired,
+  player: PropTypes.shape().isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
