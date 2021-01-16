@@ -5,12 +5,19 @@ import PropTypes from 'prop-types';
 class Questions extends Component {
   constructor() {
     super();
+<<<<<<< HEAD
     this.handleClick = this.handleClick.bind(this);
+=======
+    this.handleClass = this.handleClick.bind(this);
+>>>>>>> 97bfe152334bead13b1bed0411a996f9332d17fd
     this.randomChoice = this.randomChoice.bind(this);
     this.saveScore = this.saveScore.bind(this);
     this.startCountDown = this.startCountDown.bind(this);
     this.calcDifficultyPoints = this.calcDifficultyPoints.bind(this);
+<<<<<<< HEAD
     this.WinnerOrLoser = this.WinnerOrLoser.bind(this);
+=======
+>>>>>>> 97bfe152334bead13b1bed0411a996f9332d17fd
     this.state = {
       green: '',
       red: '',
@@ -18,6 +25,13 @@ class Questions extends Component {
       disabled: false,
       shuffledAnswers: '',
     };
+<<<<<<< HEAD
+=======
+  }
+
+  WinnerOrLoser() {
+    console.log('entrei aqui');
+>>>>>>> 97bfe152334bead13b1bed0411a996f9332d17fd
   }
 
   componentDidUpdate(prevProps) {
@@ -64,10 +78,13 @@ class Questions extends Component {
       };
       return objectToBeReturned;
     });
+<<<<<<< HEAD
     this.setState({
       shuffledAnswers: newResults,
     });
   }
+=======
+>>>>>>> 97bfe152334bead13b1bed0411a996f9332d17fd
 
   startCountDown() {
     const milliseconds = 30000;
@@ -107,6 +124,7 @@ class Questions extends Component {
     const { disableButton, next } = this.props;
     const maxQuestion = 4;
     this.setState({
+      shuffledAnswers: newResults,
       green: 'green',
       red: 'red',
     });
@@ -156,6 +174,13 @@ class Questions extends Component {
 
   render() {
     const { timer, shuffledAnswers, green, red, disabled } = this.state;
+<<<<<<< HEAD
+=======
+    const {
+      questions: { results },
+      next,
+    } = this.props;
+>>>>>>> 97bfe152334bead13b1bed0411a996f9332d17fd
 
     if (shuffledAnswers) {
       return (
