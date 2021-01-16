@@ -1,11 +1,13 @@
-import { getStorage } from '.';
+import { getStorage } from './localStorage';
 
 function sortRanking(old) {
-  return old.sort((a, b) => (a.score > b.score)
-    ? 1
-    : ((b.score > a.score) ? -1 : 0) ).reverse();
+  return old.sort((a, b) => {
+    const one = 1;
+    if (a.score > b.score) return one;
+    if (b.score > a.score) return -one;
+    return 0;
+  }).reverse();
 }
-
 
 export default function checkDuplicatesInStorage(userRanking) {
   const { name, score } = userRanking;
@@ -20,4 +22,3 @@ export default function checkDuplicatesInStorage(userRanking) {
   }
   return ([userRanking]);
 }
-  
