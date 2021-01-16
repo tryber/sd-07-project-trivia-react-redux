@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import md5 from 'crypto-js/md5';
 import Question from '../Question';
 import NextButton from '../NextButton';
 
@@ -26,6 +27,19 @@ class QuestionsList extends Component {
   componentDidUpdate() {
     const { count } = this.props;
     if (count === 0) this.stoppingTime();
+  }
+
+  componentWillUnmount() {
+    const { name, email } = this.props;
+    const { score } = this.state;
+
+    const rank = JSON.parse(localStorage.getItem('ranking'));
+    const newRank = [{ name, score, picture: `https://www.gravatar.com/avatar/${md5(email)}` }];
+    if (rank) {
+      const newRankCopy = [...rank, ...newRank];
+      return localStorage.setItem('ranking', JSON.stringify(newRankCopy));
+    }
+    return localStorage.setItem('ranking', JSON.stringify(newRank));
   }
 
   stoppingTime() {
@@ -56,14 +70,15 @@ class QuestionsList extends Component {
   saveLocalData(score, assertions) {
     const { upScore, name, email: gravatarEmail } = this.props;
     const plyrObjct = { player: { assertions, score, name, gravatarEmail } };
-    upScore(score);
 
+    upScore(score);
     localStorage.setItem('state', JSON.stringify(plyrObjct));
     this.setState({ score, assertions });
   }
 
   nextQuestion() {
     const { resetTimer } = this.props;
+
     resetTimer();
     this.setState((prev) => ({ question: prev.question + 1, clicked: false }));
   }
