@@ -29,18 +29,20 @@ class QuestionForm extends React.Component {
   }
 
   handleAnswerClicked() {
-    const { answer } = this.props;
+    const { answer, scorePoint } = this.props;
     const newAnswers = [...answer];
 
     for (let i = 0; i < newAnswers.length; i += 1) {
       newAnswers[i].className = `btn-actions-${newAnswers[i].status}`;
       newAnswers[i].disabled = true;
+      scorePoint();
     }
 
     this.setState({ answers: newAnswers });
   }
 
   render() {
+    // console.log(this.props)
     const { category, questionText } = this.props;
     const { answers } = this.state;
     return (
@@ -72,6 +74,7 @@ QuestionForm.propTypes = {
   category: PropTypes.string.isRequired,
   questionText: PropTypes.string.isRequired,
   answer: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  scorePoint: PropTypes.func.isRequired,
 };
 
 export default QuestionForm;
