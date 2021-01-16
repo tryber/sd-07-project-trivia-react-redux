@@ -6,7 +6,6 @@ import md5 from 'crypto-js/md5';
 class Header extends Component {
   constructor() {
     super();
-
     this.convertEmail = this.convertEmail.bind(this);
   }
 
@@ -31,13 +30,13 @@ class Header extends Component {
             data-testid="header-player-name"
           >
             Usuário:
-            <span>{name}</span>
+            <span>{ name }</span>
           </p>
           <p
             data-testid="header-score"
           >
             Placar:
-            <span>{score}</span>
+            <span>{ score }</span>
           </p>
         </header>
       </div>

@@ -9,6 +9,7 @@ class Questions extends Component {
     this.randomChoice = this.randomChoice.bind(this);
     this.saveScore = this.saveScore.bind(this);
     this.startCountDown = this.startCountDown.bind(this);
+    this.calcDifficultyPoints = this.calcDifficultyPoints.bind(this);
     this.state = {
       green: '',
       red: '',
@@ -32,6 +33,7 @@ class Questions extends Component {
       const categoryAndQuestion = {
         category: result.category,
         question: result.question,
+        difficulty: result.difficulty,
       };
       const shuffledAnswers = [
         ...result.incorrect_answers.map((incorrect) => (
@@ -44,7 +46,7 @@ class Questions extends Component {
           text: result.correct_answer,
           correct: true,
         }];
-        // Durstenfeld shuffle algorithm
+      // Durstenfeld shuffle algorithm
       for (let i = shuffledAnswers.length - 1; i > 0; i -= 1) {
         const j = Math.floor(Math.random() * (i + 1));
         const aux = shuffledAnswers[i];
@@ -63,15 +65,19 @@ class Questions extends Component {
   }
 
   startCountDown() {
-    const countDownSeconds = new Date().getTime() + 30000;
-    const seconds = (countDownSeconds - new Date().getTime()) / 1000;
+    const milliseconds = 30000;
+    const convertNumber = 1000;
+    const minuteSeconds = 60;
+    const updateTime = 1000;
+    const countDownSeconds = new Date().getTime() + milliseconds;
+    const startSeconds = (countDownSeconds - new Date().getTime()) / convertNumber;
     this.setState({
-      timer: seconds,
+      timer: startSeconds,
     });
     const updateTimerWithOneSecond = setInterval(() => {
       const now = new Date().getTime();
       const gap = countDownSeconds - now;
-      const seconds = Math.ceil((gap % (1000 * 60)) / 1000);
+      const seconds = Math.ceil((gap % (convertNumber * minuteSeconds)) / convertNumber);
       this.setState({
         timer: seconds,
       });
@@ -83,7 +89,7 @@ class Questions extends Component {
         });
         this.stopButtons();
       }
-    }, 1000);
+    }, updateTime);
   }
 
   stopButtons() {
@@ -101,37 +107,63 @@ class Questions extends Component {
   }
 
   saveScore({ target }) {
-    const getLocalStorage = JSON.parse(localStorage.getItem('score'));
-    if (getLocalStorage) {
-      localStorage.setItem('score', 'new value');
+    const { timer } = this.state;
+    const getLocalStorage = JSON.parse(localStorage.getItem('state'));
+    const getTestId = target.getAttribute('data-testid');
+    const getDifficulty = target.getAttribute('data-difficulty');
+    const { player: { name, score, email } } = getLocalStorage;
+    let { player: { assertions } } = getLocalStorage;
+    if (getTestId === 'correct-answer') {
+      const standardCalcNumber = 10;
+      const getDifficultyPoints = this.calcDifficultyPoints(getDifficulty);
+      const calculation = standardCalcNumber + (timer * getDifficultyPoints);
+      score.push(calculation);
+      const newScore = score.reduce((acc, next) => acc + next, 0);
+      assertions += 1;
+      const newPlayer = { player: { name, assertions, score: newScore, email } };
+      localStorage.setItem('state', JSON.stringify(newPlayer));
+    }
+  }
+
+  calcDifficultyPoints(getDifficulty) {
+    const noPoint = 0;
+    const easyPoint = 1;
+    const mediumPoint = 2;
+    const hardPoint = 3;
+    switch (getDifficulty) {
+    case 'easy':
+      return easyPoint;
+    case 'medium':
+      return mediumPoint;
+    case 'hard':
+      return hardPoint;
+    default:
+      return noPoint;
     }
   }
 
   render() {
     const { timer, shuffledAnswers, green, red, disabled } = this.state;
+    console.log(shuffledAnswers);
 
-    /* console.log(shuffledAnswers); */
-    console.log(timer);
     if (shuffledAnswers) {
       return (
         <div>
-          <div>{ timer }</div>
+          <div>{timer}</div>
           <label htmlFor="div">
             Categoria:
             <div data-testid="question-category">
-
-              { shuffledAnswers[0].category }
+              {shuffledAnswers[0].category}
             </div>
           </label>
           <label htmlFor="div">
             Pergunta:
             <div data-testid="question-text">
-
-              { shuffledAnswers[0].question }
+              {shuffledAnswers[0].question}
             </div>
           </label>
           <div>
-            { shuffledAnswers[0].answers.map((answer, index) => {
+            {shuffledAnswers[0].answers.map((answer, index) => {
               if (answer.correct === true) {
                 return (
                   <button
@@ -139,6 +171,7 @@ class Questions extends Component {
                     key={ index }
                     className={ green }
                     data-testid="correct-answer"
+                    data-difficulty={ shuffledAnswers[0].difficulty }
                     disabled={ disabled }
                     onClick={ (event) => this.handleClick(event) }
                   >
@@ -152,16 +185,15 @@ class Questions extends Component {
                   key={ index }
                   className={ red }
                   data-testid={ `wrong-answer-${index}` }
+                  data-difficulty={ shuffledAnswers[0].difficulty }
                   disabled={ disabled }
                   onClick={ (event) => this.handleClick(event) }
                 >
                   {answer.text}
                 </button>
               );
-            }) }
-
+            })}
           </div>
-
         </div>
       );
     }
