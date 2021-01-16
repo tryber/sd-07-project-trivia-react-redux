@@ -1,54 +1,49 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
-import isLoginOk from '../helpers/isLoginOk';
-import { loginAction } from '../action';
-import logo from '../trivia.png';
 
-// import { Container } from './styles';
+import { login } from '../Redux/actions';
+import isLoginOk from '../helpers/isLoginOk';
+
+import logo from '../trivia.png';
 
 class Login extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       email: '',
       userName: '',
-      login: false,
-      setting: false,
+      settings: false,
     };
+
     this.onChangeHandler = this.onChangeHandler.bind(this);
-    this.redirectTo = this.redirectTo.bind(this);
-    this.setting = this.setting.bind(this);
+    this.onClickJogar = this.onClickJogar.bind(this);
+    this.onClickSettings = this.onClickSettings.bind(this);
   }
 
   onChangeHandler(event) {
     const { name, value } = event.target;
-    this.setState({
-      [name]: value,
-    });
+    this.setState({ [name]: value });
   }
 
-  setting() {
-    this.setState(
-      {
-        setting: true,
-      },
-    );
+  onClickJogar(email, username) {
+    const { loginDispatch } = this.props;
+    loginDispatch(email, username);
   }
 
-  redirectTo(email, username) {
-    const { userLoggin } = this.props;
-    this.setState({
-      login: true,
-    });
-    userLoggin(email, username);
+  onClickSettings() {
+    this.setState({ settings: true });
   }
 
   render() {
-    const { email, userName, login, setting } = this.state;
-    if (login) return <Redirect to="/playgame" />;
-    if (setting) return <Redirect to="/settings" />;
+    const { email, userName, settings } = this.state;
+    const { logged } = this.props;
+
+    if (logged) return <Redirect to="/playgame" />;
+    if (settings) return <Redirect to="/settings" />;
+
     return (
       <header>
         <div className="imputs">
@@ -60,6 +55,7 @@ class Login extends Component {
               name="email"
               placeholder="Email"
               data-testid="input-gravatar-email"
+              value={ email }
             />
           </div>
           <div>
@@ -69,6 +65,7 @@ class Login extends Component {
               name="userName"
               data-testid="input-player-name"
               placeholder="Nome"
+              value={ userName }
             />
           </div>
           <div>
@@ -76,7 +73,7 @@ class Login extends Component {
               disabled={ isLoginOk(email, userName) }
               type="submit"
               data-testid="btn-play"
-              onClick={ () => this.redirectTo(email, userName) }
+              onClick={ () => this.onClickJogar(email, userName) }
             >
               Jogar
             </button>
@@ -86,7 +83,7 @@ class Login extends Component {
               type="submit"
               className="btn-settings"
               data-testid="btn-settings"
-              onClick={ () => this.setting() }
+              onClick={ this.onClickSettings }
             >
               Configurações
             </button>
@@ -97,12 +94,17 @@ class Login extends Component {
   }
 }
 
+const mapStateToProps = (state) => ({
+  logged: state.userReducer.logged,
+});
+
 const mapDispatchToProps = (dispatch) => ({
-  userLoggin: (email, username) => dispatch(loginAction(email, username)),
+  loginDispatch: (email, username) => dispatch(login(email, username)),
 });
 
 Login.propTypes = {
-  userLoggin: PropTypes.func.isRequired,
+  loginDispatch: PropTypes.func.isRequired,
+  logged: PropTypes.bool.isRequired,
 };
 
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

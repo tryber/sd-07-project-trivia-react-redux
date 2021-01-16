@@ -1,8 +1,10 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import Login from './pages/login';
+
+import Login from './pages/Login';
 import PlayGame from './pages/PlayGame';
 import Settings from './pages/Settings';
+
 import './App.css';
 
 export default function App() {

@@ -2,6 +2,36 @@ body {
   margin: 10px;
 }
 
+.playGame {
+  background-color: #282c34;
+  border: 1px solid white;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  font-size: calc(10px + 2vmin);
+  height: 500px;
+  padding-left: 10px;
+  padding-top: 10px;
+}
+
+img {
+  border-radius: 8%;
+  width: 60%;
+}
+
+.img {
+  margin: 3px;
+  width: 200px;
+}
+
+span {
+  margin-right: 10px;
+}
+
+.score {
+  margin-top: 10px;
+}
+
 .App {
   text-align: center;
 }
@@ -12,7 +42,6 @@ body {
 
 .btn-settings {
   margin-top: 100px;
- 
 }
 
 .imputs {
