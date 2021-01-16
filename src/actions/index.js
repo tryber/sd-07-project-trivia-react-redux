@@ -30,6 +30,7 @@ export const saveUserData = (email, username, token, gravatarImg) => ({
 export const login = (email, username) => async (dispatch) => {
   const token = await getTriviaToken();
   const gravatarImg = getGravatarImg(email);
+  localStorage.setItem('token', token);
   dispatch(saveUserData(email, username, token, gravatarImg));
 };
 

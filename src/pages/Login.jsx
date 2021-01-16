@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { login } from '../action';
+import { login } from '../actions';
 import isLoginOk from '../helpers/isLoginOk';
 
 import logo from '../trivia.png';

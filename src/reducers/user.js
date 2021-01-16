@@ -1,6 +1,6 @@
 import {
   SAVE_USER_DATA,
-} from '../action/index';
+} from '../actions/index';
 
 const INITIAL_STATE = {
   user: {},

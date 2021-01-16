@@ -1,6 +1,6 @@
 import {
   SAVE_QUESTIONS,
-} from '../action';
+} from '../actions';
 
 const INITIAL_STATE = {
   questions: [],
