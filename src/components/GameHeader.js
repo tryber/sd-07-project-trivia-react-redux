@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import md5 from 'crypto-js/md5';
 import { hashRequest } from '../actions/index';
+import GameScore from './GameScore';
 
 class GameHeader extends React.Component {
   constructor() {
@@ -33,6 +34,7 @@ class GameHeader extends React.Component {
         />
         <span data-testid="header-player-name">{ name }</span>
         <span data-testid="header-score">{ assertions }</span>
+        <GameScore />
       </header>
     );
   }
