@@ -3,13 +3,18 @@
   background: rgba(0, 0, 0, 0.2);
   border: 5px solid white;
   border-radius: 50%;
-  
   box-sizing: border-box;
-  height: 100px;
   display: flex;
+  height: 100px;
   justify-content: center;
+  outline: 0;
   transition: 0.3s;
   width: 100px;
+
+}
+
+.circle-visibility {
+  visibility: hidden;
 }
 
 .circle:hover {

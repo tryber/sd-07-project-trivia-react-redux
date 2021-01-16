@@ -4,12 +4,17 @@ import './style.css';
 
 class Next extends Component {
   render() {
-    const { dataTestid } = this.props;
+    const { dataTestid, onClick, visibility } = this.props;
     return (
       <section>
-        <div role="button" onClick={this.props.onClick } className="circle">
-          <div className="triangle-right"  data-testid={ dataTestid } />
-        </div>
+        {/* <div role="button" onClick={ onClick } className="circle"></div> */}
+        <button
+          type="button"
+          onClick={ onClick }
+          className={ `circle ${visibility}` }
+        >
+          <div className="triangle-right" data-testid={ dataTestid } />
+        </button>
       </section>
     );
   }
@@ -17,10 +22,13 @@ class Next extends Component {
 
 Next.propTypes = {
   dataTestid: PropTypes.string,
+  onClick: PropTypes.func.isRequired,
+  visibility: PropTypes.string,
 };
 
 Next.defaultProps = {
   dataTestid: '',
+  visibility: '',
 };
 
 export default Next;

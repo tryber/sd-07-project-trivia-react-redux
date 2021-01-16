@@ -8,21 +8,22 @@ class Answer extends React.Component {
     super();
     this.state = {
       ansersStyle: ['green', 'pink', 'orange', 'purple'],
-      questionAnsered: false,
+      // questionAnsered: false,
     };
     this.handleAnswerStyle = this.handleAnswerStyle.bind(this);
     this.handleDataTestId = this.handleDataTestId.bind(this);
   }
 
   handleAnswerStyle(index) {
-    const { ansersStyle, questionAnsered } = this.state;
+    const { ansersStyle } = this.state;
+    const { questionAnsered } = this.props;
     const { curQuestion } = this.props;
     const answers = [...curQuestion.incorrect_answers, curQuestion.correct_answer];
 
     if (!questionAnsered) {
       return (`answer-box ${ansersStyle[index]}`);
     }
-    
+
     if (answers[index] === curQuestion.correct_answer) {
       return (`answer-box ${ansersStyle[index]} right`);
     }
@@ -40,29 +41,34 @@ class Answer extends React.Component {
   }
 
   render() {
-    const { curQuestion } = this.props;
+    const { curQuestion, click, borderWrong, questionAnsered } = this.props;
     const answers = [...curQuestion.incorrect_answers, curQuestion.correct_answer];
+
+    // if (newQuestion) this.setState({ questionAnsered: false });
 
     return (
       <section className="answer-section">
         {answers.map((question, index) => (
-          <div
-            role="button"
+          <button
+            type="button"
+            // role="button"
             tabIndex={ 0 }
             key={ index }
-            className={ this.handleAnswerStyle(index) }
+            className={ `${borderWrong} ${this.handleAnswerStyle(index)}` }
+            // className={ this.handleAnswerStyle(index) }
             data-testid={ this.handleDataTestId(index) }
+            disabled={ questionAnsered }
             onClick={ () => {
-              this.props.click(index);
-              this.setState({ questionAnsered: true });
-            }}
+              click(index);
+              // this.setState({ questionAnsered: true });
+            } }
             onKeyDown={ () => {
-              this.props.click(index);
-              this.setState({ questionAnsered: true });
-            }}
+              click(index);
+              // this.setState({ questionAnsered: true });
+            } }
           >
             <p className="message">{ answers[index] }</p>
-          </div>
+          </button>
         ))}
       </section>
     );
@@ -73,12 +79,16 @@ Answer.propTypes = {
   correct_answer: PropTypes.string,
   incorrect_answers: PropTypes.string,
   curQuestion: PropTypes.objectOf(Array),
+  click: PropTypes.func.isRequired,
+  borderWrong: PropTypes.string,
+  questionAnsered: PropTypes.bool.isRequired,
 };
 
 Answer.defaultProps = {
   correct_answer: '',
   incorrect_answers: '',
   curQuestion: {},
+  borderWrong: '',
 };
 
 export default Answer;
