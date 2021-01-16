@@ -15,6 +15,7 @@ class Game extends React.Component {
     this.fetchAPI = this.fetchAPI.bind(this);
     this.disableButton = this.disableButton.bind(this);
     this.handleNext = this.handleNext.bind(this);
+    this.lendoPlayer = this.lendoPlayer.bind(this);
   }
 
   componentDidMount() {
@@ -47,9 +48,14 @@ class Game extends React.Component {
       disable: true,
     });
   }
+  lendoPlayer(){
+    const player = JSON.parse(localStorage.getItem('state'));
+    // chave: player.player.name
+  }
 
   render() {
     const { next, disable } = this.state;
+    this.lendoPlayer();
     return (
       <div>
         <Header />
@@ -63,6 +69,8 @@ class Game extends React.Component {
           >
             Próxima
           </button>
+          <div>
+          </div>
         </div>
       </div>
     );
