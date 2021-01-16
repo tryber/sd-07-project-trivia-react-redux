@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class Header extends Component {
   render() {
+    const { score } = this.props;
     return (
       <header>
         <h1>Player Info</h1>
@@ -11,10 +13,13 @@ class Header extends Component {
           alt={ localStorage.username }
         />
         <h2 data-testid="header-player-name">{localStorage.username}</h2>
-        <h2 data-testid="header-score">{`Placar: ${0}`}</h2>
+        <h2 data-testid="header-score">{`Placar: ${score}`}</h2>
       </header>
     );
   }
 }
 
+Header.propTypes = {
+  score: PropTypes.number.isRequired,
+};
 export default Header;

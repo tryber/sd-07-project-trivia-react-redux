@@ -9,39 +9,86 @@ class Game extends Component {
     super();
     this.fetchQuestions = this.fetchQuestions.bind(this);
     this.nextQuestion = this.nextQuestion.bind(this);
-    this.handleTimer = this.handleTimer.bind(this);
-    this.startTimer = this.startTimer.bind(this);
-    this.stopTimer = this.stopTimer.bind(this);
+    this.runTimer = this.runTimer.bind(this);
+    this.answeredQuestion = this.answeredQuestion.bind(this);
+    this.handleScore = this.handleScore.bind(this);
+    this.shuffleAnswers = this.shuffleAnswers.bind(this);
 
     this.state = {
       questionsArray: [],
       currentQuestion: 0,
       timer: 30,
+      questionWasAnswered: false,
+      score: 0,
+      assertions: 0,
+      shuffledAnswers: [],
+      isLoading: false,
     };
   }
 
   componentDidMount() {
+    console.log('montou');
     this.fetchQuestions();
-    this.startTimer();
+    this.runTimer();
   }
 
-  startTimer() {
-    const seconds = 1000;
-    setInterval(this.handleTimer, seconds);
-  }
+  handleScore() {
+    let score = 0;
+    const difficulty = {
+      easy: 1,
+      medium: 2,
+      hard: 3,
+    };
+    const base = 10;
+    const { questionsArray, currentQuestion, timer, assertions } = this.state;
+    const answer = questionsArray[currentQuestion];
 
-  stopTimer() {
-    clearInterval(this.handleTimer);
-  }
-
-  handleTimer() {
-    const { timer } = this.state;
-    if (timer === 0) {
-      return this.stopTimer();
+    switch (answer.difficulty) {
+    case 'easy':
+      score = base + (timer * difficulty.easy);
+      break;
+    case 'medium':
+      score = base + (timer * difficulty.medium);
+      break;
+    case 'hard':
+      score = base + (timer * difficulty.hard);
+      break;
+    default:
+      score = 0;
     }
-    this.setState({ timer: timer - 1 });
+    this.setState({
+      score,
+      assertions: assertions + 1,
+    });
 
-    console.log('será q parou?');
+    localStorage.setItem('state', `player: {
+      name: ${localStorage.username},
+      assertions: ${assertions + 1},
+      score: ${score},
+      gravatarEmail: ${localStorage.email},
+  }`);
+  }
+
+  answeredQuestion(e) {
+    const { name } = e.target;
+
+    if (name === 'correct') {
+      this.handleScore();
+    }
+    this.setState({ questionWasAnswered: true });
+  }
+
+  runTimer() {
+    const seconds = 1000;
+    this.myInterval = setInterval(() => {
+      console.log();
+      const { timer, questionWasAnswered } = this.state;
+      console.log(`Timer: ${timer} question:${questionWasAnswered}`);
+      if (timer > 0 && questionWasAnswered === false) this.setState({ timer: timer - 1 });
+      if (timer === 0 || questionWasAnswered) {
+        clearInterval(this.myInterval);
+      }
+    }, seconds);
   }
 
   async fetchQuestions() {
@@ -49,33 +96,77 @@ class Game extends Component {
     const myQuestions = await questionsRequest(token);
     this.setState({
       questionsArray: myQuestions,
+      isLoading: true,
     });
+    this.shuffleAnswers(myQuestions);
   }
 
   nextQuestion() {
     const lastQuestion = 5;
-    const { currentQuestion } = this.state;
+    const { currentQuestion, questionsArray } = this.state;
+    console.log(questionsArray);
     const { history } = this.props;
     if (currentQuestion === lastQuestion) {
       history.push('/feedback');
     }
-    this.setState({ currentQuestion: currentQuestion + 1 });
-    this.fetchQuestions();
+    this.setState({
+      currentQuestion: currentQuestion + 1,
+      timer: 30,
+      questionWasAnswered: false,
+    });
+    this.shuffleAnswers(questionsArray);
+    this.runTimer();
+  }
+
+  shuffleAnswers(myQuestions) {
+    const { currentQuestion } = this.state;
+    const question = myQuestions[currentQuestion];
+    // const { question } = this.props;
+    // define keys to new array
+    console.log('shuffle');
+    console.log(question);
+    const correctAnswer = question.correct_answer;
+    const incorrectAnswer = question.incorrect_answers;
+    const concatAnswersArr = [correctAnswer, ...incorrectAnswer];
+    // lint purpose - magic number
+    const magic = 0.5;
+    // sort concataned array to shuffle answers
+    const sortedArr = concatAnswersArr.sort(() => Math.random() - magic);
+    console.log('sorted');
+    console.log(sortedArr);
+
+    this.setState({
+      // shuffled: true,
+      shuffledAnswers: sortedArr,
+      isLoading: false,
+    });
   }
 
   render() {
-    const { questionsArray, currentQuestion, timer } = this.state;
+    const {
+      questionsArray,
+      currentQuestion,
+      timer,
+      questionWasAnswered,
+      score,
+      shuffledAnswers,
+      isLoading } = this.state;
+    console.log('---render game---');
+    console.log(shuffledAnswers);
     return (
       <div>
-        <Header />
+        <Header score={ score } />
         <h1>{timer}</h1>
         <h1>Token da requisição</h1>
         {localStorage.token}
-        {questionsArray[currentQuestion]
+        {!isLoading
           && <Questions
             timer={ timer }
             question={ questionsArray[currentQuestion] }
             nextQuestion={ this.nextQuestion }
+            answeredQuestionFunction={ this.answeredQuestion }
+            questionWasAnswered={ questionWasAnswered }
+            shuffledAnswers={ shuffledAnswers }
           />}
       </div>
     );
