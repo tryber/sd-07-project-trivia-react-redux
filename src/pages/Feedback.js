@@ -5,10 +5,6 @@ import Header from '../components/Header';
 class Feedback extends Component {
   constructor() {
     super();
-    this.state = {
-      totalQuestions: 0,
-      score: 0,
-    };
     this.handleClickPlayAgain = this.handleClickPlayAgain.bind(this);
     this.handleClickRanking = this.handleClickRanking.bind(this);
   }
@@ -24,16 +20,17 @@ class Feedback extends Component {
   }
 
   render() {
-    const { totalQuestions, score } = this.state;
+    const state = JSON.parse(localStorage.getItem('state'));
+
     const condition = 3;
     return (
       <div>
-        <Header />
+        <Header score={ state.player.score } />
         <h2 data-testid="feedback-text">
-          {totalQuestions < condition ? 'Podia ser melhor...' : 'Mandou bem!' }
+          {state.player.assertions < condition ? 'Podia ser melhor...' : 'Mandou bem!' }
         </h2>
-        <p data-testid="feedback-total-score">{score}</p>
-        <p data-testid="feedback-total-question">{totalQuestions}</p>
+        <p data-testid="feedback-total-score">{state.player.score}</p>
+        <p data-testid="feedback-total-question">{state.player.assertions}</p>
         <button
           data-testid="btn-play-again"
           type="button"

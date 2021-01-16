@@ -61,12 +61,14 @@ class Game extends Component {
       assertions: assertions + 1,
     });
 
-    localStorage.setItem('state', `player: {
-      name: ${localStorage.username},
-      assertions: ${assertions + 1},
-      score: ${score},
-      gravatarEmail: ${localStorage.email},
-  }`);
+    const player = { player: {
+      name: localStorage.username,
+      assertions: assertions + 1,
+      score,
+      gravatar: localStorage.email,
+    },
+    };
+    localStorage.setItem('state', JSON.stringify(player));
   }
 
   answeredQuestion(e) {
@@ -130,9 +132,9 @@ class Game extends Component {
     console.log('shuffle');
     console.log(currentQuestion);
     console.log(question);
-    const correctAnswer = question.correct_answer;
-    const incorrectAnswer = question.incorrect_answers;
-    const concatAnswersArr = [correctAnswer, ...incorrectAnswer];
+    const correctAnswer = question.correct_answer || null;
+    const incorrectAnswer = question.incorrect_answers || null;
+    const concatAnswersArr = [correctAnswer, ...incorrectAnswer] || null;
     // lint purpose - magic number
     const magic = 0.5;
     // sort concataned array to shuffle answers
