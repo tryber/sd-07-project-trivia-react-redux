@@ -12,7 +12,6 @@ class Header extends Component {
 
   // função que retorna o endereço da imagem do player lá do GRAVATAR
   convertEmail(email) {
-    console.log(email);
     const user = md5(email);
     const hash = `https://www.gravatar.com/avatar/${user}`;
     return hash;
