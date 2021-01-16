@@ -1,9 +1,12 @@
-import { ADD_ANSWERS, ADD_QUESTIONS, ADD_CATEGORYS } from '../actions';
+import { ADD_ANSWERS, ADD_QUESTIONS, ADD_CATEGORYS, ADD_TIME, ADD_RESET, ADD_STOP } from '../actions';
 
 const INITIAL_STATE = {
   responses: {},
   resQuestion: '',
   categoryRes: '',
+  timeEnd: true,
+  reset: false,
+  stop: false,
 };
 
 function question(state = INITIAL_STATE, action) {
@@ -20,6 +23,18 @@ function question(state = INITIAL_STATE, action) {
     return {
       ...state,
       categoryRes: action.category };
+  case ADD_TIME:
+    return {
+      ...state,
+      timeEnd: false };
+  case ADD_RESET:
+    return {
+      ...state,
+      reset: true };
+  case ADD_STOP:
+    return {
+      ...state,
+      stop: true };
   default:
     return state;
   }

@@ -7,6 +7,9 @@ export const ADD_ANSWERS = 'ADD_ANSWERS';
 export const ADD_QUESTIONS = 'ADD_QUESTIONS';
 export const ADD_CATEGORYS = 'ADD_CATEGORYS';
 export const UPDATE_SCORE = 'UPDATE_SCORE';
+export const ADD_TIME = 'ADD_TIME';
+export const ADD_RESET = 'ADD_RESET';
+export const ADD_STOP = 'ADD_STOP';
 
 const requestToken = () => ({ type: REQUEST_TOKEN });
 const failedRequest = (error) => ({ type: FAILED_REQUEST, error });
@@ -53,3 +56,9 @@ export function fetchQuestionAnswers() {
 }
 
 export const updateScore = (value) => ({ type: UPDATE_SCORE, value });
+
+export const endTimeAction = () => ({ type: ADD_TIME });
+
+export const resetTimeAction = () => ({ type: ADD_RESET });
+
+export const stopTimeAction = () => ({ type: ADD_STOP });

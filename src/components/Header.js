@@ -40,7 +40,7 @@ class Header extends Component {
 Header.propTypes = {
   nome: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
-  score: PropTypes.string.isRequired,
+  score: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = (state) => ({

@@ -6,7 +6,10 @@ import {
   resQuestionAction,
   resCategoryAction,
   updateScore,
+  resetTimeAction,
+  stopTimeAction,
 } from '../actions';
+import NextButton from './NextButton';
 import './Answer.css';
 
 let countWrong = 0;
@@ -26,8 +29,9 @@ class Answer extends React.Component {
       count: 0,
       showAnswer: false,
     };
-    this.test = this.test.bind(this);
+    this.nextQuestion = this.nextQuestion.bind(this);
     this.respond = this.respond.bind(this);
+    this.reponseQuestion = this.reponseQuestion.bind(this);
   }
 
   componentDidMount() {
@@ -35,24 +39,33 @@ class Answer extends React.Component {
     fetchAnswers();
   }
 
-  test() {
+  nextQuestion() {
+    const { resetTime } = this.props;
     this.setState((previous) => ({
       count: previous.count + 1,
       showAnswer: false,
     }));
+    resetTime();
   }
 
   respond({ target: { name } }) {
-    const { update } = this.props;
+    const { update, stopTime } = this.props;
     this.setState({ showAnswer: true });
     if (name === 'correct') {
       update(100);
     }
+    stopTime();
+  }
+
+  reponseQuestion(endTime) {
+    const { showAnswer } = this.state;
+    if (!endTime
+      || showAnswer) return <NextButton onclick={ () => this.nextQuestion() } />;
   }
 
   render() {
     const { count, showAnswer } = this.state;
-    const { resAnswer, resQuest, resCategory } = this.props;
+    const { resAnswer, resQuest, resCategory, endTime } = this.props;
 
     const categorys = Object.values(resAnswer).map(({ category: cat }) => cat);
 
@@ -83,15 +96,14 @@ class Answer extends React.Component {
               name={ answerClass }
               data-testid={ testId }
               onClick={ this.respond }
-              disabled={ showAnswer }
+              disabled={ showAnswer || !endTime }
             >
               { answer }
             </button>
             <br />
           </div>
         ))}
-        <br />
-        <button type="button" onClick={ this.test }>Próxima</button>
+        { this.reponseQuestion(endTime) }
       </div>
     );
   }
@@ -103,10 +115,12 @@ Answer.propTypes = {
   resQuest: PropTypes.func.isRequired,
   resCategory: PropTypes.func.isRequired,
   update: PropTypes.func.isRequired,
+  endTime: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   resAnswer: state.question.responses,
+  endTime: state.question.timeEnd,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -114,6 +128,8 @@ const mapDispatchToProps = (dispatch) => ({
   resQuest: (quest) => dispatch(resQuestionAction(quest)),
   resCategory: (cat) => dispatch(resCategoryAction(cat)),
   update: (points) => dispatch(updateScore(points)),
+  resetTime: () => dispatch(resetTimeAction()),
+  stopTime: () => dispatch(stopTimeAction()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Answer);
