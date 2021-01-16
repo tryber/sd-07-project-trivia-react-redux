@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+
 import { getQuestions } from '../Redux/actions';
+
 import Question from './Question';
 
 class GameBoard extends Component {
@@ -12,8 +14,8 @@ class GameBoard extends Component {
       nextButton: false,
     };
 
-    this.onClickNext = this.onClickNext.bind(this);
     this.onClickQuestion = this.onClickQuestion.bind(this);
+    this.onClickNext = this.onClickNext.bind(this);
   }
 
   componentDidMount() {

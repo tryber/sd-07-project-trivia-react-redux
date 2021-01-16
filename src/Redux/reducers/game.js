@@ -1,10 +1,6 @@
-import {
-  SAVE_QUESTIONS,
-} from '../actions';
+import { SAVE_QUESTIONS } from '../actions';
 
-const INITIAL_STATE = {
-  questions: [],
-};
+const INITIAL_STATE = { questions: [] };
 
 export default function gameReducer(state = INITIAL_STATE, action) {
   switch (action.type) {

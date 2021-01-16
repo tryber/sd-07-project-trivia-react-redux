@@ -7,11 +7,11 @@ body {
   border: 1px solid white;
   color: white;
   display: flex;
+  flex-direction: column;
   font-size: calc(10px + 2vmin);
   height: 500px;
   padding-left: 10px;
   padding-top: 10px;
-  flex-direction: column;
 }
 
 img {
@@ -27,6 +27,7 @@ img {
 span {
   margin-right: 10px;
 }
+
 .score {
   margin-top: 10px;
 }
@@ -41,7 +42,6 @@ span {
 
 .btn-settings {
   margin-top: 100px;
- 
 }
 
 .imputs {
