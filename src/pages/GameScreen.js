@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { CustomHeader, CustomGame, CustomNextButton, CustomTimer } from '../components';
 import {
-  getStorage, countdown, setStorage, stopTimer, getScore,
+  getStorage, countdown, setStorage, stopTimer, getScore, checkDuplicatesInStorage,
 } from '../services';
 import { fetchTrivia, updateGameDates } from '../actions';
 
@@ -51,11 +51,11 @@ class GameScreen extends Component {
 
   updateStorage() {
     const { name, score, gravatarEmail, assertions } = this.props;
-    console.log(score);
-    setStorage('ranking', { name, score, gravatarEmail });
-    setStorage('state', {
-      player: { name, score, assertions, gravatarEmail },
-    });
+    const userRanking = { name, score, gravatarEmail };
+    const newLocalStorage = checkDuplicatesInStorage(userRanking);
+    setStorage('ranking', newLocalStorage);
+    const newPlayer = { player: { name, score, assertions, gravatarEmail } };
+    setStorage('state', newPlayer);
   }
 
   submitAnswer({ target: { id } }) {
@@ -94,7 +94,6 @@ class GameScreen extends Component {
               index={ count }
               challenge={ trivia }
               correct={ this.submitAnswer }
-              stopTimer={ stopTimer }
               timeout={ timeout }
             />
             <CustomTimer time={ time } timerInit={ this.timerInit } />
