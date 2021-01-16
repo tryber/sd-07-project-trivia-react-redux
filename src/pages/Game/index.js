@@ -19,10 +19,13 @@ class Game extends Component {
       questions: [],
       isFetching: true,
       turn: 0,
-      timer: 30,
+      timer: 10,
+      next: false,
     };
     this.handleApiRequisition = this.handleApiRequisition.bind(this);
     this.changeTimer = this.changeTimer.bind(this);
+    this.handleClickNext = this.handleClickNext.bind(this);
+    this.handleClickAnswer = this.handleClickAnswer.bind(this);
   }
 
   componentDidMount() {
@@ -39,9 +42,10 @@ class Game extends Component {
   }
 
   clearTimer(ID) {
-    const timeOut = 30000;
+    const timeOut = 10000;
     setTimeout(() => {
       clearInterval(ID);
+      this.setState({ next: true });
     }, timeOut);
   }
 
@@ -77,16 +81,40 @@ class Game extends Component {
     );
   }
 
+  handleClickAnswer(index) {
+    const { questions, turn } = this.state;
+    const curQuestion = questions[turn];
+    const answers = [...curQuestion.incorrect_answers, curQuestion.correct_answer];
+    
+    if (answers[index] === curQuestion.correct_answer) {
+      console.log('clicou');
+    }
+    console.log('errrouu');
+  }
+
   contentButtons(curQuestion) {
     return (
       <div className="game-content-child game-main">
         <div className="game-flex-basis-corners" />
         <div className="game-flex-basis-center">
-          <Answer curQuestion={ curQuestion } />
+          <Answer curQuestion={ curQuestion } click={ this.handleClickAnswer } />
         </div>
         <div className="game-flex-basis-corners" />
       </div>
     );
+  }
+
+  handleClickNext() {
+    if(this.state.next) {
+      this.setState((prevState) => ({ 
+        turn: prevState.turn + 1,
+        timer: 10,
+        next: false,
+      }));
+      const ID = this.changeTimer();
+      this.clearTimer(ID);
+    }
+    console.log("trybe36k")
   }
 
   contentFooter() {
@@ -96,7 +124,7 @@ class Game extends Component {
           <ConfigButton />
         </div>
         <div className="game-flex-basis-center">
-          <Next dataTestid="btn-next" />
+          <Next dataTestid="btn-next" onClick={ this.handleClickNext } />
         </div>
         <div className="game-flex-basis-corners" />
       </div>
