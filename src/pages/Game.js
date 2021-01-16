@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchQuestions, updateAssertions } from '../actions';
 import GameHeader from '../components/GameHeader';
-import { setStorage } from '../services';
+import { setStorage, getStorage } from '../services';
 import '../style/game.css';
 
 class Game extends React.Component {
@@ -20,17 +20,18 @@ class Game extends React.Component {
     this.handleNext = this.handleNext.bind(this);
     this.timeOut = this.timeOut.bind(this);
     this.disableQuestion = this.disableQuestion.bind(this);
+    this.saveRanking = this.saveRanking.bind(this);
   }
 
   async componentDidMount() {
     this.timeOut();
-    const mockData = {
-      player: {
-        score: 0,
-        assertions: 0,
-      },
-    };
-    setStorage('state', mockData);
+    //  const mockData = {
+    //    player: {
+    //      score: 0,
+    //      assertions: 0,
+    //    },
+    //  };
+    //  setStorage('state', mockData);
     const { requestQuestions, token } = this.props;
     await requestQuestions(token);
   }
@@ -58,8 +59,9 @@ class Game extends React.Component {
   handleNext() {
     const { questions, history, assertions } = this.props;
     const { currentQuestion } = this.state;
-    const mockData = {
-      player: {
+    const state = getStorage('state');
+    const mockData = { ...state,
+      player: { ...state.player,
         score: assertions,
         assertions,
       },
@@ -71,7 +73,32 @@ class Game extends React.Component {
         nextQuestion: false,
       }));
     } else {
+      this.saveRanking();
       history.push('/feedbacks');
+    }
+  }
+
+  saveRanking() {
+    const ranking = getStorage('ranking');
+    const { hash, name, assertions } = this.props;
+    const src = `https://www.gravatar.com/avatar/${hash}`;
+    if (!ranking) {
+      const firstRanking = [
+        {
+          name,
+          score: assertions,
+          picture: src,
+        },
+      ];
+      setStorage('ranking', firstRanking);
+    } else {
+      const rankinkNew = {
+        name,
+        score: assertions,
+        picture: src,
+      };
+      ranking.push(rankinkNew);
+      setStorage('ranking', ranking);
     }
   }
 
@@ -187,6 +214,8 @@ Game.propTypes = {
   assertionAction: PropTypes.func.isRequired,
   token: PropTypes.string.isRequired,
   assertions: PropTypes.number.isRequired,
+  hash: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
@@ -199,6 +228,8 @@ const mapStateToProps = (state) => ({
   questions: state.game.questions.results,
   token: state.login.token,
   assertions: state.game.assertions,
+  hash: state.game.hash,
+  name: state.login.name,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);
