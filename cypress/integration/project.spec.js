@@ -289,7 +289,6 @@ describe('11 - [TELA DE JOGO] Desenvolva o jogo de forma que a pessoa que joga d
 
   it('Acerta todas as perguntas', () => {
     const before = JSON.parse(localStorage.getItem(LOCAL_STORAGE_STATE_KEY));
-    console.log(before)
     cy.get(CORRECT_ALTERNATIVE_SELECTOR).click();
     cy.get(BUTTON_NEXT_QUESTION_SELECTOR).click();
     cy.get(CORRECT_ALTERNATIVE_SELECTOR).click();
