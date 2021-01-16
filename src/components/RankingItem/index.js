@@ -5,6 +5,7 @@ import './style.css';
 class RankingItem extends Component {
   render() {
     const ranking = getStorage('ranking');
+    console.log(ranking);
     ranking.sort((a, b) => {
       const change = 1;
       const dontChange = -1;
@@ -12,6 +13,7 @@ class RankingItem extends Component {
       if (a.score > b.score) return dontChange;
       return 0;
     });
+    console.log(ranking);
     return (
       <section className="ranking-section">
         {
@@ -25,7 +27,7 @@ class RankingItem extends Component {
                   className="header-name"
                   data-testid={ `player-name-${index}` }
                 >
-                  {`${name}`}
+                  { name }
                 </h2>
               </div>
               <div className="score">
@@ -33,7 +35,7 @@ class RankingItem extends Component {
                   className="header-score"
                   data-testid={ `player-score-${index}` }
                 >
-                  {`${score}`}
+                  { score }
                 </h3>
                 <span>&nbsp;pontos</span>
               </div>

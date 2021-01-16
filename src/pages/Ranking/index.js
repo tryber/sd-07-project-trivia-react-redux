@@ -47,7 +47,7 @@ class Ranking extends Component {
   render() {
     return (
       <div className="ranking-container">
-        <Header />
+        {/* <Header /> */}
         {/* <QuestionCategory /> */}
         <div className="ranking-content">
           {this.contentHeader()}
