@@ -30,7 +30,8 @@ class Questions extends Component {
   }
 
   WinnerOrLoser() {
-    console.log('entrei aqui');
+    const { history } = this.props;
+    history.push('/ranking');
   }
 
   randomChoice(results) {
@@ -217,6 +218,7 @@ Questions.propTypes = {
   questions: PropTypes.objectOf.isRequired,
   disableButton: PropTypes.func.isRequired,
   next: PropTypes.number.isRequired,
+  history: PropTypes.objectOf.isRequired,
 };
 
 const mapStateToProps = (state) => ({

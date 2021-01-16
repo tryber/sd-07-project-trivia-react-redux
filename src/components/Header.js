@@ -19,11 +19,13 @@ class Header extends Component {
 
   saveUser() {
     const { name, email, score } = this.props;
-    const ranking = [{
-      name,
-      score,
-      picture: this.convertEmail(email),
-    }];
+    const ranking = [
+      {
+        name,
+        score,
+        picture: this.convertEmail(email),
+      },
+    ];
     localStorage.setItem('ranking', JSON.stringify(ranking));
   }
 
@@ -35,17 +37,17 @@ class Header extends Component {
       <div>
         <header>
           <img
-            src={this.convertEmail(email)}
+            src={ this.convertEmail(email) }
             alt="userimage"
             data-testid="header-profile-picture"
           />
           <p data-testid="header-player-name">
             Usuário:
-            <span>{ name }</span>
+            <span>{name}</span>
           </p>
           <p data-testid="header-score">
             Placar:
-            <span>{ score }</span>
+            <span>{score}</span>
           </p>
         </header>
       </div>

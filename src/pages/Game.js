@@ -48,29 +48,35 @@ class Game extends React.Component {
       disable: true,
     });
   }
-  lendoPlayer(){
-    const player = JSON.parse(localStorage.getItem('state'));
+
+  lendoPlayer() {
+    // const player = JSON.parse(localStorage.getItem('state'));
     // chave: player.player.name
+    console.log('vai ser utilizado na 12');
   }
 
   render() {
     const { next, disable } = this.state;
+    const { history } = this.props;
     this.lendoPlayer();
     return (
       <div>
         <Header />
         <div>
-          <Questions next={ next } disableButton={ this.disableButton } />
+          <Questions
+            history={ history }
+            next={ next }
+            disableButton={ this.disableButton }
+          />
           <button
-            className={ !(disable) ? 'btn-visible' : 'btn-visible-hidden' }
+            className={ !disable ? 'btn-visible' : 'btn-visible-hidden' }
             data-testid="btn-next"
             onClick={ this.handleNext }
             type="button"
           >
             Próxima
           </button>
-          <div>
-          </div>
+          <div />
         </div>
       </div>
     );
@@ -79,6 +85,7 @@ class Game extends React.Component {
 
 Game.propTypes = {
   questionsAction: PropTypes.func.isRequired,
+  history: PropTypes.objectOf.isRequired,
 };
 
 const mapStateToProps = (state) => ({
