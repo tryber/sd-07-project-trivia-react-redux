@@ -28,12 +28,12 @@ class Ranking extends React.Component {
     const { history } = this.props;
     const { ranking } = this.state;
     return (
-      <div>
+      <div className="ranking">
         <h2 data-testid="ranking-title">Ranking</h2>
         {ranking.map((element, index) => {
           const { name, score, picture } = element;
           return (
-            <div key={ index }>
+            <div className="ranked" key={ index }>
               <div>
                 <img
                   className="gamer-avatar"

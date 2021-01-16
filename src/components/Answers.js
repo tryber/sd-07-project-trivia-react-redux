@@ -141,10 +141,11 @@ class Answers extends React.Component {
     const maxCounter = 5;
     const setCounter = 4;
     return (
-      <div>
+      <div className="answer">
         <Header />
-        <h1>Joguinho</h1>
-        { this.mountAnswers() }
+        <div className="answer-container">
+          { this.mountAnswers() }
+        </div>
         <Counter
           key={ newCounter === maxCounter ? setCounter : newCounter }
           clicked={ clicked }

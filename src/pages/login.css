@@ -66,9 +66,11 @@ h1 {
 }
 
 .header {
+  align-items: center;
   background-color: black;
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   height: 100px;
   left: 0;
   position: absolute;
@@ -76,11 +78,19 @@ h1 {
   width: 100vw;
 }
 
+.logo-header {
+  animation: shake infinite 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+  margin-left: 40px;
+  margin-top: 15px;
+  height: 80%;
+ }
+
 .gamer-stats {
   align-items: center;
   display: flex;
   height: 100%;
   justify-content: space-around;
+  margin-right: 40px;
   width: 200px;
 }
 
@@ -88,6 +98,52 @@ h1 {
   border-radius: 30px;
   height: 70px;
   width: 70px;
+}
+.answer {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: max-content;
+  width: 100vw;
+}
+
+.answer-container {
+  width: 400px;
+  height: 400px;
+}
+
+.answer-container button {
+  width: 100%;
+  background-color: white;
+  color: black;
+}
+
+.feedback {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.feedback-btn-container {
+  display: flex;
+  align-items: center;
+}
+
+.ranking {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.ranked {
+  align-items: center;
+  height: 80px;
+  width: 400px;
+  display: flex;
+  justify-content: space-evenly;
+  border: 1px solid black;
+  border-radius: 10px;
 }
 
 .stats-container {
@@ -97,8 +153,12 @@ h1 {
 
 .wright-answer {
   border: 3px solid rgb(6, 240, 15);
+  background-color: rgb(6, 240, 15);
+  color: black;
 }
 
 .wrong-answer {
   border: 3px solid red;
+  background-color: red;
+  color: white;
 }
