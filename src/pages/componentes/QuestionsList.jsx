@@ -108,18 +108,21 @@ class QuestionsList extends React.Component {
     const { question, onClick } = this.props;
     const numQuestions = 5;
     index += 1;
+    if(index < question.results.length) {
+      const correct = question.results[index].correct_answer;
+      const incorrect = question.results[index].incorrect_answers;
+      const array = [correct, ...incorrect];
+      const randomArray = this.shuffle(array);
+      this.setState({
+        array: randomArray,
+        time: 30,
+        disableButton: false,
+        nameClassCorrect: '',
+        nameClassWrong: '',
+      });
+    }
 
-    const correct = question.results[index].correct_answer;
-    const incorrect = question.results[index].incorrect_answers;
-    const array = [correct, ...incorrect];
-    const randomArray = this.shuffle(array);
-    this.setState({
-      array: randomArray,
-      time: 30,
-      disableButton: false,
-      nameClassCorrect: '',
-      nameClassWrong: '',
-    });
+
     onClick(index);
 
     return question.results[index];
@@ -133,9 +136,6 @@ class QuestionsList extends React.Component {
     const numberForIterat = -1;
     let index = numberForIterat;
     console.log('Posição: ', indexQuestions, 'Tamanho: ', question.results.length);
-    if (indexQuestions === question.results.length -1 ) {
-      return <Redirect to="/feedback" />;
-    }
     return (
       <div>
         { array.map((answers) => {
@@ -145,7 +145,7 @@ class QuestionsList extends React.Component {
                 className={ nameClassCorrect }
                 type="button"
                 data-testid="correct-answer"
-                disabled={ disableButon }
+                disabled={ disableButton }
                 onClick={ this.scoreCalculete }
               >
                 { answers }
@@ -160,7 +160,7 @@ class QuestionsList extends React.Component {
               type="button"
               data-testid={ `wrong-answer-${index}` }
               onClick={ this.wrongAnswer }
-              disabled={ disableButon }
+              disabled={ disableButton }
             >
               { answers }
             </button>
