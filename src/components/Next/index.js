@@ -7,8 +7,8 @@ class Next extends Component {
     const { dataTestid } = this.props;
     return (
       <section>
-        <div className="circle">
-          <div className="triangle-right" data-testid={ dataTestid } />
+        <div role="button" onClick={this.props.onClick } className="circle">
+          <div className="triangle-right"  data-testid={ dataTestid } />
         </div>
       </section>
     );
