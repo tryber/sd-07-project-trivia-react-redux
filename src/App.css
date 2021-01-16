@@ -12,8 +12,8 @@ body {
   display: flex;
   flex-direction: column;
   margin: 5px;
-  text-align: center;
   overflow: hidden;
+  text-align: center;
   width: 300px;
 }
 
