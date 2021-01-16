@@ -134,28 +134,45 @@ class Questions extends Component {
     return (
       <div className="questions-display">
 
-        <h2 className="timer">{`Timer: ${counterInterval}` }</h2>
-
-        <h1>{`Question: ${questionIndex + 1}`}</h1>
-        <h2 data-testid="question-category">{ questionToLoad.category }</h2>
-        <h2 data-testid="question-text">{ questionToLoad.question }</h2>
-        { questionToLoad.answers.map((answer) => (
-          <button
-            key={ answer.position }
-            data-testid={
-              answer.position === 0
-                ? 'correct-answer'
-                : `wrong-answer-${answer.position - 1}`
-            }
-            type="button"
-            className={ answer.position === 0 ? 'correct-answer' : 'wrong-answer' }
-            disabled={ isDisabled }
-            onClick={ this.handleClick }
+        <div className="header-question-display">
+          <h1 className="question-paragraph">{`Question. ${questionIndex + 1}`}</h1>
+          <h2 className="timer">{`Timer: ${counterInterval}` }</h2>
+        </div>
+        <div className="category-div">
+          <h2
+            className="category-paragraph"
+            data-testid="question-category"
           >
-            { answer.answer }
-          </button>
-        ))}
+            { questionToLoad.category }
+          </h2>
+        </div>
+        <div className="question-and-answer-box">
+
+          <div className="question-box">
+
+            <h3 data-testid="question-text">{ questionToLoad.question }</h3>
+          </div>
+          <div className="answer-box">
+            { questionToLoad.answers.map((answer) => (
+              <button
+                key={ answer.position }
+                data-testid={
+                  answer.position === 0
+                    ? 'correct-answer'
+                    : `wrong-answer-${answer.position - 1}`
+                }
+                type="button"
+                className={ answer.position === 0 ? 'correct-answer' : 'wrong-answer' }
+                disabled={ isDisabled }
+                onClick={ this.handleClick }
+              >
+                { answer.answer }
+              </button>
+            ))}
+          </div>
+        </div>
         <button
+          className="next-question-button"
           data-testid="btn-next"
           type="button"
           hidden={ !isDisabled }
