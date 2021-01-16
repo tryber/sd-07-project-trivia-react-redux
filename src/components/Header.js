@@ -6,8 +6,8 @@ import md5 from 'crypto-js/md5';
 class Header extends Component {
   constructor() {
     super();
-
     this.convertEmail = this.convertEmail.bind(this);
+    this.saveUser = this.saveUser.bind(this);
   }
 
   // função que retorna o endereço da imagem do player lá do GRAVATAR
@@ -17,7 +17,19 @@ class Header extends Component {
     return hash;
   }
 
+  saveUser() {
+    const { name, email, score } = this.props;
+    const ranking = [{
+      name,
+      score,
+      picture: this.convertEmail(email),
+    }];
+    localStorage.setItem('ranking', JSON.stringify(ranking));
+  }
+
   render() {
+    this.saveUser();
+
     const { name, email, score } = this.props;
     return (
       <div>
@@ -29,11 +41,11 @@ class Header extends Component {
           />
           <p data-testid="header-player-name">
             Usuário:
-            <span>{name}</span>
+            <span>{ name }</span>
           </p>
           <p data-testid="header-score">
             Placar:
-            <span>{score}</span>
+            <span>{ score }</span>
           </p>
         </header>
       </div>

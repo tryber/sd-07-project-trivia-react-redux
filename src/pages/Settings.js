@@ -1,5 +1,4 @@
 import React from 'react';
-/* import { connect } from 'react-redux'; */
 
 class Settings extends React.Component {
   constructor() {
@@ -9,7 +8,6 @@ class Settings extends React.Component {
   }
 
   render() {
-    /* const { token } = this.props; */
     return (
       <div>
         <h1
