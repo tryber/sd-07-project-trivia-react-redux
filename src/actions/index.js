@@ -44,11 +44,11 @@ export const resQuestionAction = (question) => ({ type: ADD_QUESTIONS, question 
 
 export const questionUpdate = (json) => ({ type: ADD_ANSWERS, payload: json });
 
-export function fetchQuestionAnswers() {
+export function fetchQuestionAnswers(tok) {
   return async (dispatch) => {
     dispatch(questionUpdate());
-    const token = localStorage.getItem('token');
-    const questionResponse = await fetch(`https://opentdb.com/api.php?amount=5&token=${token}`);
+    // const token = localStorage.getItem('token');
+    const questionResponse = await fetch(`https://opentdb.com/api.php?amount=5&token=${tok}`);
     const questionJson = await questionResponse.json();
 
     return dispatch(questionUpdate(questionJson.results));

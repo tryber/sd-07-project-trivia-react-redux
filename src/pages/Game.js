@@ -34,13 +34,12 @@ class Game extends Component {
             onReset={ () => console.log('onReset hook') }
           >
             { ({ stop, reset }) => (
-              <React.Fragment>
-                <div>
-                  <Timer.Seconds />
-                </div>
-                  { timeStop ? stop : timeStop }
-                  { timeReset ? reset : timeReset }
-              </React.Fragment>
+              <div>
+                <Timer.Seconds />
+                { timeStop ? stop : timeStop }
+                { timeReset ? reset : timeReset }
+              </div>
+
             )}
           </Timer>
         </div>
