@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import md5 from 'crypto-js/md5';
-import { getQuestions } from '../actions';
 
 class TelaDeJogo extends Component {
   constructor() {
@@ -12,27 +11,22 @@ class TelaDeJogo extends Component {
     this.nextQuestion = this.nextQuestion.bind(this);
   }
 
-  componentDidMount() {
-    const { getAPIQuestions } = this.props;
-    getAPIQuestions();
-  }
-
-  handleQuestions(question) {
-    // const { questions } = this.props;
+  handleQuestions() {
+    const { questions } = this.props;
     const { next } = this.state;
     const randomResponses = [];
     const number = 5;
 
-    if (question[next].correct_answer) {
+    if (questions[next].correct_answer) {
       randomResponses.push({
-        answer: question[next].correct_answer,
+        answer: questions[next].correct_answer,
         dataTestid: 'correct-answer',
         randomIndex: Math.floor(Math.random() * number),
       });
     }
 
-    if (question[next].incorrect_answers) {
-      question[next].incorrect_answers.forEach((element, index) => {
+    if (questions[next].incorrect_answers) {
+      questions[next].incorrect_answers.forEach((element, index) => {
         randomResponses.push({
           answer: element,
           dataTestid: `wrong-answer-${index}`,
@@ -54,13 +48,7 @@ class TelaDeJogo extends Component {
     const { email, name, score, questions } = this.props;
     const { next } = this.state;
     const hash = md5(email);
-    // let random = [];
-    const avatarHash = `https://www.gravatar.com/avatar/${hash}`;
-
-    /*  if (questions.length) {
-      random = this.handleQuestions();
-    } */
-
+    console.log(name);
     return (
       <div>
         <header>
@@ -68,7 +56,7 @@ class TelaDeJogo extends Component {
           <img
             data-testid="header-profile-picture"
             alt="User Profile"
-            src={ avatarHash }
+            src={ `https://www.gravatar.com/avatar/${hash}` }
           />
           <div>
             <p data-testid="header-player-name">{name}</p>
@@ -85,7 +73,7 @@ class TelaDeJogo extends Component {
             { questions.length && questions[next].question }
           </p>
           {
-            questions.length && this.handleQuestions(questions).map((option, i) => (
+            questions.length && this.handleQuestions().map((option, i) => (
               <button
                 type="button"
                 key={ i }
@@ -101,10 +89,6 @@ class TelaDeJogo extends Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  getAPIQuestions: () => dispatch(getQuestions()),
-});
-
 function mapStateToProps(state) {
   return ({
     email: state.player.gravatarEmail,
@@ -119,4 +103,4 @@ TelaDeJogo.propTypes = {
   name: PropTypes.string,
 }.isRequired;
 
-export default connect(mapStateToProps, mapDispatchToProps)(TelaDeJogo);
+export default connect(mapStateToProps)(TelaDeJogo);

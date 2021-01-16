@@ -14,7 +14,8 @@ export default function player(state = initialState, action) {
       ...state,
       token: action.payload,
     };
-
+  case 'login':
+    return { name: action.name };
   default:
     return state;
   }
