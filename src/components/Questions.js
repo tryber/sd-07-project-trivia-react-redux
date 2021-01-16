@@ -5,10 +5,6 @@ import PropTypes from 'prop-types';
 class Questions extends Component {
   constructor() {
     super();
-    this.handleClass = this.handleClick.bind(this);
-    this.randomChoice = this.randomChoice.bind(this);
-    this.saveScore = this.saveScore.bind(this);
-    this.startCountDown = this.startCountDown.bind(this);
     this.state = {
       green: '',
       red: '',
@@ -16,8 +12,17 @@ class Questions extends Component {
       disabled: false,
       shuffledAnswers: '',
     };
+    this.handleClass = this.handleClass.bind(this);
+    this.randomChoice = this.randomChoice.bind(this);
+    this.WinnerOrLoser = this.WinnerOrLoser.bind(this);
+      this.saveScore = this.saveScore.bind(this);
+    this.startCountDown = this.startCountDown.bind(this);
   }
 
+  WinnerOrLoser() {
+    console.log('entrei aqui');
+  }
+  
   componentDidUpdate(prevProps) {
     const { questions } = this.props;
     const { results } = questions;
@@ -57,9 +62,18 @@ class Questions extends Component {
       };
       return objectToBeReturned;
     });
+    
+  handleClass() {
+    const { disableButton, next } = this.props;
+    const maxQuestion = 4;
     this.setState({
       shuffledAnswers: newResults,
     });
+    if (next !== maxQuestion) {
+      disableButton();
+    } else {
+      this.WinnerOrLoser();
+    }
   }
 
   startCountDown() {
@@ -109,9 +123,18 @@ class Questions extends Component {
 
   render() {
     const { timer, shuffledAnswers, green, red, disabled } = this.state;
+    const {
+      questions: { results },
+      next,
+    } = this.props;
 
-    /* console.log(shuffledAnswers); */
-    console.log(timer);
+    if (results) {
+      const { category, question } = results[next];
+
+      const { incorrect_answers: incorrect, correct_answer: correct } = results[
+        next
+      ];
+
     if (shuffledAnswers) {
       return (
         <div>
@@ -171,6 +194,8 @@ class Questions extends Component {
 
 Questions.propTypes = {
   questions: PropTypes.objectOf.isRequired,
+  disableButton: PropTypes.func.isRequired,
+  next: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = (state) => ({
