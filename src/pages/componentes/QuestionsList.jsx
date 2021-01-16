@@ -10,7 +10,7 @@ class QuestionsList extends React.Component {
     this.state = {
       array: [],
       time: 30,
-      disableButon: false,
+      disableButton: false,
       nameClassCorrect: '',
       nameClassWrong: '',
     };
@@ -21,10 +21,11 @@ class QuestionsList extends React.Component {
     this.wrongAnswer = this.wrongAnswer.bind(this);
     this.handleButton = this.handleButton.bind(this);
     this.answers = this.answers.bind(this);
+    this.nextQuestion = this.nextQuestion.bind(this);
   }
 
   componentDidMount() {
-    const { disableButon } = this.state;
+    const { disableButton } = this.state;
     let { time } = this.state;
     const initialScore = 0;
     const interval = 1000;
@@ -32,15 +33,15 @@ class QuestionsList extends React.Component {
     this.mountArrayOfAnswer();
     localStorage.setItem('playerScore', initialScore);
     setInterval(() => {
-      if (!disableButon && time > 0) {
+      if (!disableButton && time > 0) {
         this.setState({ time: (time -= 1) });
       }
     }, interval);
-    setTimeout(() => { this.setState({ disableButon: true }); }, timeOut);
+    setTimeout(() => { this.setState({ disableButton: true }); }, timeOut);
   }
 
   handleButton() {
-    this.setState({ disableButon: true });
+    this.setState({ disableButton: true });
     this.answers();
   }
 
@@ -53,9 +54,9 @@ class QuestionsList extends React.Component {
   }
 
   mountArrayOfAnswer() {
-    const { question } = this.props;
-    const correct = question.results[0].correct_answer;
-    const incorrect = question.results[0].incorrect_answers;
+    const { question, index } = this.props;
+    const correct = question.results[index].correct_answer;
+    const incorrect = question.results[index].incorrect_answers;
     const array = [correct, ...incorrect];
     const randomArray = this.shuffle(array);
     this.setState({ array: randomArray });
@@ -102,12 +103,36 @@ class QuestionsList extends React.Component {
     this.setState({ nameClassWrong: 'wrongAnswer' });
   }
 
+  nextQuestion(index) {
+    const { question, onClick } = this.props;
+    index += 1;
+    if (index < question.results.length) {
+      const correct = question.results[index].correct_answer;
+      const incorrect = question.results[index].incorrect_answers;
+      const array = [correct, ...incorrect];
+      const randomArray = this.shuffle(array);
+      this.setState({
+        array: randomArray,
+        time: 30,
+        disableButton: false,
+        nameClassCorrect: '',
+        nameClassWrong: '',
+      });
+    }
+
+    onClick(index);
+
+    return question.results[index];
+  }
+
   render() {
-    const { array, time, disableButon, nameClassCorrect, nameClassWrong } = this.state;
-    const { question } = this.props;
-    const correto = question.results[0].correct_answer;
+    const { array, time, disableButton, nameClassCorrect,
+      nameClassWrong } = this.state;
+    const { question, index: indexQuestions } = this.props;
+    const correto = question.results[indexQuestions].correct_answer;
     const numberForIterat = -1;
     let index = numberForIterat;
+    console.log('Posição: ', indexQuestions, 'Tamanho: ', question.results.length);
     return (
       <div>
         { array.map((answers) => {
@@ -117,7 +142,7 @@ class QuestionsList extends React.Component {
                 className={ nameClassCorrect }
                 type="button"
                 data-testid="correct-answer"
-                disabled={ disableButon }
+                disabled={ disableButton }
                 onClick={ this.scoreCalculete }
               >
                 { answers }
@@ -132,7 +157,7 @@ class QuestionsList extends React.Component {
               type="button"
               data-testid={ `wrong-answer-${index}` }
               onClick={ this.wrongAnswer }
-              disabled={ disableButon }
+              disabled={ disableButton }
             >
               { answers }
             </button>
@@ -143,8 +168,12 @@ class QuestionsList extends React.Component {
         </span>
         <div>
           {
-            disableButon ? (
-              <button data-testid="btn-next" type="button">
+            disableButton ? (
+              <button
+                data-testid="btn-next"
+                type="button"
+                onClick={ () => this.nextQuestion(indexQuestions) }
+              >
                 Próxima
               </button>
             ) : (

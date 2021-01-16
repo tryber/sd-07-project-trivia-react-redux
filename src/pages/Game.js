@@ -1,12 +1,21 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 import { requestQuestionAndAnsewrs } from '../actions';
 import QuestionsList from './componentes/QuestionsList';
 import Header from './componentes/Header';
 import Loading from './componentes/Loading';
 
 class Game extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      index: 0,
+    };
+    this.nextQuestion = this.nextQuestion.bind(this);
+  }
+
   componentDidMount() {
     const { requestQuestions, name, score, email } = this.props;
     const objPlayer = {
@@ -21,19 +30,37 @@ class Game extends React.Component {
     localStorage.setItem('state', JSON.stringify(objPlayer));
   }
 
+  nextQuestion(index) {
+    this.setState({ index });
+  }
+
   render() {
     const { question, loading } = this.props;
+    const { index } = this.state;
+    console.log(index);
+    console.log(question.results);
+    // console.log(loading);
+
+    if (index === question.results.length) {
+      return <Redirect to="/feedback" />;
+    }
+
     return (
       loading ? <Loading />
         : (
           <div>
             <Header />
             <h3>Category:</h3>
-            <p data-testid="question-category">{ question.results[0].category }</p>
+            <p data-testid="question-category">{ question.results[index].category }</p>
             <h3>Question:</h3>
-            <p data-testid="question-text">{ question.results[0].question }</p>
-            <QuestionsList question={ question } />
-          </div>)
+            <p data-testid="question-text">{ question.results[index].question }</p>
+            <QuestionsList
+              question={ question }
+              onClick={ this.nextQuestion }
+              index={ index }
+            />
+          </div>
+        )
     );
   }
 }

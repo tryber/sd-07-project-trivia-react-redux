@@ -15,7 +15,6 @@ const initialState = {
     }],
   },
   token: '',
-  avatar: '',
 };
 
 export default function (state = initialState, action) {
@@ -64,16 +63,6 @@ export default function (state = initialState, action) {
   case 'REQUEST_QUESTIONS_API_FAIL':
     return {
       ...state,
-    };
-  case 'CREATE_GRAVATAR_SUCCESS':
-    return {
-      ...state,
-      avatar: action.payload,
-    };
-  case 'REQUEST_GRAVATAR_API':
-    return {
-      ...state,
-      loading: true,
     };
   default:
     return state;
