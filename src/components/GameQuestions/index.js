@@ -147,7 +147,7 @@ GameQuestions.propTypes = {
   addPlayerToRanking: PropTypes.func.isRequired,
   questions: PropTypes.arrayOf(PropTypes.object).isRequired,
   isLoading: PropTypes.bool.isRequired,
-  player: PropTypes.shape(PropTypes.object).isRequired,
+  player: PropTypes.shape().isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
