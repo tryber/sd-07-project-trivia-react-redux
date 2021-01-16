@@ -48,12 +48,14 @@ class LoginForm extends Component {
 
     const gravatarHash = md5(email);
 
-    const player = {
-      name: playerName,
-      assertions: 0,
-      score: 0,
-      gravatarEmail: email,
-      gravatarURL: `https://www.gravatar.com/avatar/${gravatarHash}`,
+    const state = {
+      player: {
+        name: playerName,
+        assertions: 0,
+        score: 0,
+        gravatarEmail: email,
+        gravatarURL: `https://www.gravatar.com/avatar/${gravatarHash}`,
+      },
     };
 
     const ranking = {
@@ -66,7 +68,7 @@ class LoginForm extends Component {
     const newRanking = [...oldRanking];
     newRanking.push(ranking);
 
-    setStorage('player', player);
+    setStorage('state', state);
     setStorage('token', token);
     setStorage('ranking', newRanking);
   }
@@ -113,6 +115,7 @@ class LoginForm extends Component {
                 disabled={ isDisabled }
                 data-testid="btn-play"
                 onClick={ this.handleClick }
+                onKeyPress={ this.handleClick }
               >
                 Jogar
               </button>

@@ -15,15 +15,26 @@ class RankingItem extends Component {
     return (
       <section className="ranking-section">
         {
-          ranking.map(({ name, score }, index) => (
+          ranking.map(({ picture, name, score }, index) => (
             <div key={ index } className="ranking">
               <div className="name">
+                <img src={ picture } alt={ `Avatar de ${name}` } className="picture" />
                 <span>{`${index + 1} -`}</span>
                 <span>&nbsp;</span>
-                <span data-testid={ `player-name-${index}` }>{` ${name}`}</span>
+                <h2
+                  className="header-name"
+                  data-testid={ `player-name-${index}` }
+                >
+                  {`${name}`}
+                </h2>
               </div>
               <div className="score">
-                <span data-testid={ `player-score-${index}` }>{`${score} `}</span>
+                <h3
+                  className="header-score"
+                  data-testid={ `player-score-${index}` }
+                >
+                  {`${score}`}
+                </h3>
                 <span>&nbsp;pontos</span>
               </div>
             </div>

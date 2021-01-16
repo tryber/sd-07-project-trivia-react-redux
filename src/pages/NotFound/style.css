@@ -1,10 +1,13 @@
-.loginPage-container {
-  align-content: space-between;
+.notFound-Container {
+  align-items: center;
   background-color: #ff9914;
   box-sizing: border-box;
   display: flex;
-  flex-wrap: wrap;
+  justify-content: center;
   min-height: 100vh;
   min-width: 100vw;
-  padding: 20px;
+}
+
+.notFound-content {
+  width: 80%;
 }

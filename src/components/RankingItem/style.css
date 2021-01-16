@@ -1,11 +1,10 @@
 .ranking-section {
-  /* background-color: red; */
   align-items: center;
   display: flex;
   flex-flow: column wrap;
   justify-content: center;
-  width: 100%;
   overflow: hidden;
+  width: 100%;
 }
 
 .ranking {
@@ -16,8 +15,8 @@
   height: 70px;
   justify-content: space-between;
   margin: 0;
-  width: 100%;
   padding: 0 20px;
+  width: 100%;
 }
 
 .ranking:nth-child( even ) {
@@ -42,6 +41,18 @@
   font-weight: 400;
   line-height: 42px;
   text-align: right;
+}
+
+.header-name, .header-score {
+  margin: 0;
+  padding: 0;
+
+}
+
+.picture {
+  border-radius: 50%;
+  height: 55px;
+  margin-right: 20px;
 }
 
 .score {
