@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { updateRanking } from '../actions/index';
 import Header from '../components';
 
 class FeedBack extends React.Component {
@@ -8,16 +10,45 @@ class FeedBack extends React.Component {
     super(props);
     this.handleAssertions = this.handleAssertions.bind(this);
     this.handleTotalQuestions = this.handleTotalQuestions.bind(this);
+    this.updateRank = this.updateRank.bind(this);
+    this.updateLocalStorageRank = this.updateLocalStorageRank.bind(this);
+
+    this.state = {
+      redirect: '',
+    };
   }
 
-  handleAssertions() {
-    const { assertions } = this.props;
-    const lowScore = 3;
+  async componentDidMount() {
+    await this.updateRank();
+    this.updateLocalStorageRank();
+  }
 
-    if (assertions < lowScore) {
-      return <h2 data-testid="feedback-text">Podia ser melhor...</h2>;
+  updateRank() {
+    const { name, email, points, addRank } = this.props;
+    const newRank = {
+      name,
+      score: points,
+      picture: email,
+    };
+    addRank(newRank);
+  }
+
+  updateLocalStorageRank() {
+    const { ranking } = this.props;
+    const retorno = 1;
+    function compare(a, b) {
+      if (a.score < b.score) {
+        return retorno;
+      }
+
+      if (a.score > b.score) {
+        return -retorno;
+      }
+      return 0;
     }
-    return <h2 data-testid="feedback-text">Mandou bem!</h2>;
+    ranking.sort(compare);
+    const savedRanking = JSON.stringify(ranking);
+    localStorage.setItem('ranking', savedRanking);
   }
 
   handleTotalQuestions() {
@@ -30,8 +61,19 @@ class FeedBack extends React.Component {
     );
   }
 
+  handleAssertions() {
+    const { assertions } = this.props;
+    const lowScore = 3;
+
+    if (assertions < lowScore) {
+      return <h2 data-testid="feedback-text">Podia ser melhor...</h2>;
+    }
+    return <h2 data-testid="feedback-text">Mandou bem!</h2>;
+  }
+
   render() {
     const { points, history } = this.props;
+    const { redirect } = this.state;
 
     return (
       <div>
@@ -52,10 +94,13 @@ class FeedBack extends React.Component {
           <button
             data-testid="btn-play-again"
             type="button"
-            onClick={ () => history.push('/') }
+            onClick={ () => {
+              this.setState({ redirect: <Redirect path="/play" /> });
+            } }
           >
             Jogar novamente
           </button>
+          { redirect }
         </main>
       </div>
     );
@@ -65,12 +110,23 @@ class FeedBack extends React.Component {
 const mapStateToProps = (state) => ({
   assertions: state.token.assertions,
   points: state.token.points,
+  name: state.token.name,
+  email: state.token.email,
+  ranking: state.token.ranking,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  addRank: (value) => dispatch(updateRanking(value)),
 });
 
 FeedBack.propTypes = {
   assertions: PropTypes.number.isRequired,
   points: PropTypes.number.isRequired,
   history: PropTypes.shape().isRequired,
+  ranking: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  addRank: PropTypes.func.isRequired,
+  email: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
 };
 
-export default connect(mapStateToProps)(FeedBack);
+export default connect(mapStateToProps, mapDispatchToProps)(FeedBack);

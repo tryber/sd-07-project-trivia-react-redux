@@ -76,7 +76,6 @@ class Login extends Component {
             disabled={ this.valida() }
             onClick={ async () => {
               const token = await returnToken();
-              localStorage.clear();
               localStorage.setItem('token', token);
               localStorage.setItem('state', JSON.stringify(
                 {

@@ -138,14 +138,15 @@ class Answers extends React.Component {
 
   render() {
     const { clicked, next, newCounter, nextUp } = this.state;
-
+    const maxCounter = 5;
+    const setCounter = 4;
     return (
       <div>
         <Header />
         <h1>Joguinho</h1>
         { this.mountAnswers() }
         <Counter
-          key={ newCounter }
+          key={ newCounter === maxCounter ? setCounter : newCounter }
           clicked={ clicked }
           isClicked={ this.isClicked }
           next={ next }

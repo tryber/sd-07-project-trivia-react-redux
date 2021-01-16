@@ -1,29 +1,56 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import md5 from 'crypto-js/md5';
 import PropTypes from 'prop-types';
 
 class Ranking extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.getRanking = this.getRanking.bind(this);
+
+    this.state = {
+      ranking: [],
+    };
+  }
+
+  componentDidMount() {
+    this.getRanking();
+  }
+
+  getRanking() {
+    const rank = localStorage.getItem('ranking');
+    console.log(rank);
+    const rankObj = JSON.parse(rank);
+    this.setState({ ranking: rankObj });
+  }
+
   render() {
-    const { email, name, points, history } = this.props;
-    const hashEmail = md5(email);
+    const { history } = this.props;
+    const { ranking } = this.state;
     return (
       <div>
         <h2 data-testid="ranking-title">Ranking</h2>
-        <div>
-          <img
-            className="gamer-avatar"
-            data-testid="header-profile-picture"
-            src={ `https://www.gravatar.com/avatar/${hashEmail}` }
-            alt="avatar"
-          />
-        </div>
-        <div>
-          <h3 data-testid="header-player-name">{name}</h3>
-        </div>
-        <div>
-          <h3 data-testid="header-score">{ points }</h3>
-        </div>
+        {ranking.map((element, index) => {
+          const { name, score, picture } = element;
+          return (
+            <div key={ index }>
+              <div>
+                <img
+                  className="gamer-avatar"
+                  data-testid="header-profile-picture"
+                  src={ `https://www.gravatar.com/avatar/${picture}` }
+                  alt="avatar"
+                />
+              </div>
+              <div>
+                <h3 data-testid={ `player-name-${index}` }>{ name }</h3>
+              </div>
+              <div>
+                <h3 data-testid={ `player-score-${index}` }>{ score }</h3>
+              </div>
+            </div>
+          );
+        })}
         <button
           data-testid="btn-go-home"
           type="button"
@@ -43,9 +70,6 @@ const mapStateToProps = (state) => ({
 });
 
 Ranking.propTypes = {
-  email: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  points: PropTypes.number.isRequired,
   history: PropTypes.shape().isRequired,
 };
 
