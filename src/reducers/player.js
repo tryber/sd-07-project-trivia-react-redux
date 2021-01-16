@@ -15,7 +15,7 @@ export default function player(state = initialState, action) {
       token: action.payload,
     };
   case 'login':
-    return { name: action.name };
+    return { ...state, name: action.name, gravatarEmail: action.email };
   default:
     return state;
   }

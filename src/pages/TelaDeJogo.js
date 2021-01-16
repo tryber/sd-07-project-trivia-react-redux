@@ -6,11 +6,22 @@ import md5 from 'crypto-js/md5';
 class TelaDeJogo extends Component {
   constructor() {
     super();
-    this.state = { next: 0 };
+    this.state = { 
+      next: 0 ,
+      buttonNext: false,};
     this.handleQuestions = this.handleQuestions.bind(this);
     this.nextQuestion = this.nextQuestion.bind(this);
+    this.buttonNext = this.buttonNext.bind(this);
   }
 
+
+
+  buttonNext() {
+    const { buttonNext } = this.state;
+    if (buttonNext) {
+      return (<button type="button" data-testid="btn-next" onClick={ this.nextQuestion }> Próxima </button>)
+    }
+  }
   handleQuestions() {
     const { questions } = this.props;
     const { next } = this.state;
@@ -41,6 +52,7 @@ class TelaDeJogo extends Component {
   nextQuestion() {
     this.setState((state) => ({
       next: state.next + 1,
+      buttonNext: false
     }));
   }
 
@@ -78,11 +90,12 @@ class TelaDeJogo extends Component {
                 type="button"
                 key={ i }
                 data-testid={ option.dataTestid }
+                onClick={()=>this.setState({buttonNext: true})}
               >
                 { option.answer }
               </button>))
           }
-          <button type="button" onClick={ this.nextQuestion }> Next </button>
+          {this.buttonNext()}
         </div>
       </div>
     );

@@ -3,7 +3,7 @@ export const fetchQuestions = (result) => ({
   payload: result,
 });
 
-export const login = (name) => ({ type: 'login', name });
+export const login = (name, email) => ({ type: 'login', name , email});
 
 export const tokenAPI = (dataToken) => ({
   type: 'token',

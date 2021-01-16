@@ -31,10 +31,10 @@ class Login extends React.Component {
 
   async handleSubmit() {
     const { getToken, getAPIQuestions, history, logiName } = this.props;
-    const { name } = this.state;
+    const { name, email } = this.state;
     await getToken();
     await getAPIQuestions();
-    logiName(name);
+    logiName(name, email);
     history.push('/telaDeJogo');
   }
 
@@ -80,7 +80,7 @@ class Login extends React.Component {
 const mapDispatchToProps = (dispatch) => ({
   getAPIQuestions: () => dispatch(getQuestions()),
   getToken: () => dispatch(getAPIToken()),
-  logiName: (name) => dispatch(login(name)),
+  logiName: (name, email) => dispatch(login(name, email)),
 });
 
 Login.propTypes = {
