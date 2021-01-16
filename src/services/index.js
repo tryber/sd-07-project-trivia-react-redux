@@ -4,3 +4,4 @@ export { stopTimer, countdown } from './countdown';
 export { default as scrambler } from './scrambler';
 export { default as getScore } from './getScore';
 export { default as getPicture } from './getPicture';
+export { default as checkDuplicatesInStorage } from './checkRankingStorage';

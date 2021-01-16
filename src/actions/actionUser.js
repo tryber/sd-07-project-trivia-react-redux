@@ -9,8 +9,8 @@ export const addGameDates = (payload) => ({ type: ADD_GAMEDATES, payload });
 export { ADD_EMAIL, ADD_NAME, ADD_GAMEDATES };
 
 export function updateGameDates(payload, callback) {
-  return (dispatch) => {
-    dispatch(addGameDates(payload));
+  return async (dispatch) => {
+    await dispatch(addGameDates(payload));
     callback();
   };
 }

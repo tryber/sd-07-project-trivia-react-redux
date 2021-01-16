@@ -15,11 +15,11 @@ class FeedBack extends Component {
   }
 
   render() {
-    const { name } = this.props;
+    const { name, email, score } = this.props;
     return (
       <div>
-        <CustomHeader name={ name } />
-        <h1 data-testid="settings-title">FeedBack</h1>
+        <CustomHeader name={ name } email={ email } score={ score } />
+        <h1 data-testid="feedback-text">FeedBack</h1>
         <CustomPlayAgain goHome={ this.goHomeAgain } />
       </div>
     );
@@ -27,15 +27,18 @@ class FeedBack extends Component {
 }
 
 const mapStateToProps = ({
-  loginReducer: { name },
+  loginReducer: { name, email },
+  playerReducer: { score },
 }) => ({
-  name,
+  name, email, score,
 });
 
 export default connect(mapStateToProps)(FeedBack);
 
 FeedBack.propTypes = {
   name: PropTypes.string.isRequired,
+  email: PropTypes.string.isRequired,
+  score: PropTypes.number.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,

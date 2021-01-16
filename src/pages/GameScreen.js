@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { CustomHeader, CustomGame, CustomNextButton, CustomTimer } from '../components';
 import {
-  getStorage, countdown, setStorage, stopTimer, getScore,
+  getStorage, countdown, setStorage, stopTimer, getScore, checkDuplicatesInStorage,
 } from '../services';
 import { fetchTrivia, updateGameDates } from '../actions';
 
@@ -25,6 +25,7 @@ class GameScreen extends Component {
   componentDidMount() {
     const { dispatchTrivia } = this.props;
     dispatchTrivia(getStorage('token'));
+    this.updateStorage();
   }
 
   componentDidUpdate() {
@@ -50,12 +51,12 @@ class GameScreen extends Component {
   }
 
   updateStorage() {
-    const { name, score, gravatarEmail, assertions } = this.props;
-    console.log(score);
-    setStorage('ranking', { name, score, gravatarEmail });
-    setStorage('state', {
-      player: { name, score, assertions, gravatarEmail },
-    });
+    const { name, gravatarEmail, score, assertions } = this.props;
+    const userRanking = { name, score, gravatarEmail };
+    const newLocalStorage = checkDuplicatesInStorage(userRanking);
+    setStorage('ranking', newLocalStorage);
+    const newPlayer = { player: { name, score, assertions, gravatarEmail } };
+    setStorage('state', newPlayer);
   }
 
   submitAnswer({ target: { id } }) {
@@ -78,13 +79,13 @@ class GameScreen extends Component {
   }
 
   render() {
-    const { name, trivia, loading, email } = this.props;
+    const { name, trivia, loading, email, score } = this.props;
     const { answered, count, time, timeout } = this.state;
     return (
       <div
         className="margin-page"
       >
-        <CustomHeader name={ name } email={ email } />
+        <CustomHeader name={ name } email={ email } score={ score } />
         {loading && <p>...Loading</p>}
 
         {trivia.length > 0 && (
@@ -94,7 +95,6 @@ class GameScreen extends Component {
               index={ count }
               challenge={ trivia }
               correct={ this.submitAnswer }
-              stopTimer={ stopTimer }
               timeout={ timeout }
             />
             <CustomTimer time={ time } timerInit={ this.timerInit } />

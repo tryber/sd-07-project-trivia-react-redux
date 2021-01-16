@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { Login, GameScreen, Settings, FeedBack } from './pages';
+import { Login, GameScreen, Settings, FeedBack, Ranking } from './pages';
 
 function App() {
   return (
@@ -9,7 +9,7 @@ function App() {
       <Route path="/gamescreen" component={ GameScreen } />
       <Route path="/settings" component={ Settings } />
       <Route path="/feedback" component={ FeedBack } />
-
+      <Route path="/ranking" component={ Ranking } />
     </Switch>
   );
 }
