@@ -13,10 +13,15 @@ class Header extends Component {
       <header className="header">
         <div className="perfil">
           {' '}
-          <img src={ `https://www.gravatar.com/avatar/${md5(email)}` } className="App-logo" alt="logo" />
+          <img
+            src={ `https://www.gravatar.com/avatar/${md5(email)}` }
+            className="App-logo"
+            alt="logo"
+            data-testid="header-profile-picture"
+          />
         </div>
         <div className="player">
-          <p data-testid="header-player">
+          <p data-testid="header-player-name">
             { nome }
           </p>
         </div>
