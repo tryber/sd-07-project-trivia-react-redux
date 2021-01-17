@@ -1,46 +1,32 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { getEmail, getName } from '../actions';
 import '../css/Login.css';
 
 class Login extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
+
     this.state = {
-      email: '',
       name: '',
+      email: '',
       token: '',
     };
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.verifyEmailName = this.verifyEmailName.bind(this);
     this.requestToken = this.requestToken.bind(this);
+    this.createLocalState = this.createLocalState.bind(this);
+    this.readLocalRanking = this.readLocalRanking.bind(this);
+    this.createLocalRanking = this.createLocalRanking.bind(this);
     this.createLocalStorage = this.createLocalStorage.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.verifyEmailName = this.verifyEmailName.bind(this);
     this.handleSettingsButton = this.handleSettingsButton.bind(this);
   }
 
   componentDidMount() {
     this.requestToken();
-  }
-
-  createLocalStorage() {
-    const { name, email, token } = this.state;
-
-    const state = {
-      player: {
-        name,
-        assertions: 0,
-        score: 0,
-        gravatarEmail: email,
-      },
-    };
-    const ranking = { name, score: 10, picture: 'url-da-foto-no-gravatar' };
-    const tokenData = { token };
-    localStorage.setItem('state', JSON.stringify(state));
-    localStorage.setItem('ranking', JSON.stringify(ranking));
-    localStorage.setItem('token', JSON.stringify(tokenData));
   }
 
   async requestToken() {
@@ -52,11 +38,57 @@ class Login extends React.Component {
     });
   }
 
+  createLocalState() {
+    const { name, email } = this.state;
+    const { getScore, getAssertions } = this.props;
+    const newStateStorage = {
+      player: {
+        name,
+        gravatarEmail: email,
+        score: getScore,
+        assertions: getAssertions,
+      },
+    };
+    localStorage.setItem('state', JSON.stringify(newStateStorage));
+  }
+
+  readLocalRanking() {
+    const readRanking = JSON.parse(localStorage.getItem('ranking'));
+    return readRanking;
+  }
+
+  createLocalRanking() {
+    const { name } = this.state;
+    const { getScore } = this.props;
+    const currentRanking = this.readLocalRanking();
+    let newRankingStorage = [];
+
+    if (currentRanking) {
+      // console.log('Já existe Jogadores');
+      newRankingStorage = [
+        ...currentRanking,
+        { name, picture: '', score: getScore },
+      ];
+      localStorage.setItem('ranking', JSON.stringify(newRankingStorage));
+    } else {
+      // console.log('Não existe jogadores antigos, vc é o Primeiro');
+      newRankingStorage = [{ name, picture: '', score: getScore }];
+      localStorage.setItem('ranking', JSON.stringify(newRankingStorage));
+    }
+  }
+
+  createLocalStorage() {
+    const { token } = this.state;
+    this.createLocalState();
+    this.createLocalRanking();
+    localStorage.setItem('token', JSON.stringify(token));
+  }
+
   handleSubmit() {
-    const { sendEmail, history, sendName } = this.props;
+    const { sendName, sendEmail, history } = this.props;
     const { email, name } = this.state;
-    sendEmail(email);
     sendName(name);
+    sendEmail(email);
     this.createLocalStorage();
     history.push('/game');
   }
@@ -130,9 +162,14 @@ class Login extends React.Component {
   }
 }
 
+const mapStateToProps = ({ scoreReducer }) => ({
+  getScore: scoreReducer.score,
+  getAssertions: scoreReducer.correctAnswers,
+});
+
 const mapDispatchToProps = (dispatch) => ({
-  sendEmail: (email) => dispatch(getEmail(email)),
   sendName: (name) => dispatch(getName(name)),
+  sendEmail: (email) => dispatch(getEmail(email)),
 });
 
 Login.propTypes = {
@@ -141,6 +178,8 @@ Login.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
+  getScore: PropTypes.number.isRequired,
+  getAssertions: PropTypes.number.isRequired,
 };
 
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

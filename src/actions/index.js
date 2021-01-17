@@ -4,9 +4,18 @@ const RECEIVED_QUESTIONS = 'RECEIVED_QUESTIONS';
 const FAILED_REQUEST = 'FAILED_REQUEST';
 const USER_NAME = 'USER_NAME';
 const GET_SCORE = 'GET_SCORE';
+const UPDATE_CORRECT_COUNT = 'UPDATE_CORRECT_COUNT';
+const GET_PICTURE = 'GET_PICTURE';
 
 export default {
-  USER_EMAIL, START_REQUEST, RECEIVED_QUESTIONS, FAILED_REQUEST, USER_NAME, GET_SCORE,
+  USER_EMAIL,
+  START_REQUEST,
+  RECEIVED_QUESTIONS,
+  FAILED_REQUEST,
+  USER_NAME,
+  GET_SCORE,
+  UPDATE_CORRECT_COUNT,
+  GET_PICTURE,
 };
 
 export const getEmail = (email) => ({
@@ -37,7 +46,7 @@ export function fetchQuestions() {
   return async (dispatch) => {
     dispatch(startRequest());
     try {
-      const { token } = JSON.parse(localStorage.getItem('token'));
+      const token = JSON.parse(localStorage.getItem('token'));
       const endpoint = `https://opentdb.com/api.php?amount=5&token=${token}`;
       const response = await fetch(endpoint);
       const data = await response.json();
@@ -51,4 +60,13 @@ export function fetchQuestions() {
 export const getScore = (score) => ({
   type: GET_SCORE,
   score,
+});
+
+export const updateCorrectCount = () => ({
+  type: UPDATE_CORRECT_COUNT,
+});
+
+export const getPicture = (picture) => ({
+  type: GET_PICTURE,
+  picture,
 });
