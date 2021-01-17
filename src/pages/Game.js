@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Timer from 'react-compound-timer';
@@ -8,10 +8,45 @@ import GridQuestions from '../components/GridQuestions';
 import Header from '../components/Header';
 import './Game.css';
 
-class Game extends Component {
+class Game extends React.Component {
+  constructor(props) {
+    super(props);
+    this.resetTimer = this.resetTimer.bind(this);
+    this.stopTimer = this.stopTimer.bind(this);
+    this.timerResetButton = React.createRef();
+    this.timerStartButton = React.createRef();
+    this.timerStopButton = React.createRef();
+  }
+
+  componentDidUpdate() {
+    const { timeReset, timeStop } = this.props;
+
+    if (timeReset === true) {
+      this.timerResetButton.current.click();
+      this.timerStartButton.current.click();
+    }
+
+    if (timeStop === true) {
+      this.timerStopButton.current.click();
+    }
+  }
+
+  resetTimer(reset) {
+    reset();
+  }
+
+  startTimer(start) {
+    start();
+  }
+
+  stopTimer(stop) {
+    stop();
+  }
+
   render() {
-    const { endTime, timeReset, timeStop } = this.props;
+    const { endTime } = this.props;
     const moreTime = 5000;
+
     return (
       <div className="game">
         <div className="header">
@@ -30,16 +65,37 @@ class Game extends Component {
                 callback: () => setTimeout(endTime(false), moreTime),
               },
             ] }
-            onStop={ () => console.log('onStop hook') }
-            onReset={ () => console.log('onReset hook') }
+            onStop={ () => console.log('onStop') }
+            onReset={ () => console.log('onReset') }
           >
-            { ({ stop, reset }) => (
+            {({ start, stop, reset }) => (
               <div>
                 <Timer.Seconds />
-                { timeStop ? stop : '' }
-                { timeReset ? reset : '' }
+                <button
+                  type="button"
+                  hidden
+                  ref={ this.timerResetButton }
+                  onClick={ () => this.resetTimer(reset) }
+                >
+                  Reset
+                </button>
+                <button
+                  type="button"
+                  hidden
+                  ref={ this.timerStartButton }
+                  onClick={ () => this.startTimer(start) }
+                >
+                  Start
+                </button>
+                <button
+                  type="button"
+                  hidden
+                  ref={ this.timerStopButton }
+                  onClick={ () => this.stopTimer(stop) }
+                >
+                  Stop
+                </button>
               </div>
-
             )}
           </Timer>
         </div>
@@ -64,3 +120,35 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);
+
+/* {({ start, stop, reset }) => (
+  <React.Fragment>
+    <div>
+      <Timer.Seconds />
+    </div>
+    <br />
+    <div>
+      <button
+        hidden
+        ref={this.timerResetButton}
+        onClick={() => this.resetTimer(reset)}
+      >
+        Reset
+      </button>
+      <button
+        hidden
+        ref={this.timerStartButton}
+        onClick={() => this.startTimer(start)}
+      >
+        Start
+      </button>
+      <button
+        hidden
+        ref={this.timerStopButton}
+        onClick={() => this.stopTimer(stop)}
+      >
+        Stop
+      </button>
+    </div>
+  </React.Fragment>
+)} */

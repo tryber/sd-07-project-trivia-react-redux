@@ -35,11 +35,13 @@ function question(state = INITIAL_STATE, action) {
   case ADD_RESET:
     return {
       ...state,
-      reset: true };
+      reset: true,
+      stop: false};
   case ADD_STOP:
     return {
       ...state,
-      stop: true };
+      stop: true,
+      reset: false };
   default:
     return state;
   }
