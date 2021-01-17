@@ -31,12 +31,12 @@ function user(state = INITIAL_STATE, action) {
       assertions: state.assertions + 1,
     };
     const { name, email, score, assertions } = newState;
-    const newLocal = JSON.stringify({
+    const newLocal = JSON.stringify({ player: {
       name,
       score,
       assertions,
       gravatarEmail: email,
-    });
+    } });
     localStorage.setItem('state', newLocal);
     return newState;
   }
