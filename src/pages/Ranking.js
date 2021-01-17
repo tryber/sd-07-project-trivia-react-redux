@@ -10,7 +10,7 @@ class Ranking extends React.Component {
 
   goHome() {
     const { history } = this.props;
-    history.push('./login');
+    history.push('./');
   }
 
   render() {

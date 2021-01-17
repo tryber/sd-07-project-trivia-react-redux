@@ -15,7 +15,7 @@ class Game extends React.Component {
     this.fetchAPI = this.fetchAPI.bind(this);
     this.disableButton = this.disableButton.bind(this);
     this.handleNext = this.handleNext.bind(this);
-    this.lendoPlayer = this.lendoPlayer.bind(this);
+    // this.lendoPlayer = this.lendoPlayer.bind(this);
   }
 
   componentDidMount() {
@@ -36,7 +36,7 @@ class Game extends React.Component {
   handleNext() {
     const { next } = this.state;
     let nextQuestion;
-    const maxQuestion = 4;
+    const maxQuestion = 5;
 
     if (next > maxQuestion) {
       nextQuestion = 0;
@@ -49,16 +49,15 @@ class Game extends React.Component {
     });
   }
 
-  lendoPlayer() {
-    // const player = JSON.parse(localStorage.getItem('state'));
-    // chave: player.player.name
-    console.log('vai ser utilizado na 12');
-  }
+  // lendoPlayer() {
+  //   // const player = JSON.parse(localStorage.getItem('state'));
+  //   // chave: player.player.name
+  //   console.log('vai ser utilizado na 12')
+  // }
 
   render() {
     const { next, disable } = this.state;
     const { history } = this.props;
-    this.lendoPlayer();
     return (
       <div>
         <Header />

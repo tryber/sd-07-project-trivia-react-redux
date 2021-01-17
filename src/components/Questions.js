@@ -31,7 +31,7 @@ class Questions extends Component {
 
   WinnerOrLoser() {
     const { history } = this.props;
-    history.push('/ranking');
+    history.push('/feedback');
   }
 
   randomChoice(results) {
@@ -86,6 +86,8 @@ class Questions extends Component {
       const seconds = Math.ceil((gap % (convertNumber * minuteSeconds)) / convertNumber);
       this.setState({
         timer: seconds,
+        green: '',
+        red: '',
       });
 
       if (gap <= 0) {
@@ -99,6 +101,8 @@ class Questions extends Component {
   }
 
   stopButtons() {
+    const { disableButton } = this.props;
+    disableButton();
     this.setState({
       disabled: true,
     });
@@ -134,7 +138,6 @@ class Questions extends Component {
       score += calculation;
       const newPlayer = { player: { name, assertions, score, email } };
       localStorage.setItem('state', JSON.stringify(newPlayer));
-      console.log('if', score);
     }
   }
 
@@ -176,7 +179,7 @@ class Questions extends Component {
             </div>
           </label>
           <div>
-            {shuffledAnswers[0].answers.map((answer, index) => {
+            {shuffledAnswers[next].answers.map((answer, index) => {
               if (answer.correct === true) {
                 return (
                   <button
