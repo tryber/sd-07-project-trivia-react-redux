@@ -23,12 +23,21 @@ class Header extends Component {
 
   saveUser() {
     const { name, email, updateScore } = this.props;
-    const ranking = [{
+    const getLocalStorage = JSON.parse(localStorage.getItem('ranking'));
+    const setLocalStorage = [];
+    const ranking = {
       name,
-      score: updateScore,
+      score: updateScore || 0,
       picture: this.convertEmail(email),
-    }];
-    localStorage.setItem('ranking', JSON.stringify(ranking));
+    };
+    if (getLocalStorage) {
+      getLocalStorage.push(ranking);
+      localStorage.removeItem('ranking');
+      localStorage.setItem('ranking', JSON.stringify(getLocalStorage));
+    } else {
+      setLocalStorage.push(ranking);
+      localStorage.setItem('ranking', JSON.stringify(setLocalStorage));
+    }
   }
 
   render() {
@@ -41,13 +50,13 @@ class Header extends Component {
             alt="userimage"
             data-testid="header-profile-picture"
           />
-          <p data-testid="header-player-name">
+          <p>
             Usuário:
-            <span>{ name }</span>
+            <span data-testid="header-player-name">{ name }</span>
           </p>
-          <p data-testid="header-score">
+          <p>
             Placar:
-            <span>{ updateScore || score }</span>
+            <span data-testid="header-score">{ updateScore || score }</span>
           </p>
         </header>
       </div>

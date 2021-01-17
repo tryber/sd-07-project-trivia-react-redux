@@ -552,7 +552,7 @@ describe('17 - [TELA DE RANKING] Crie a tela de _ranking_', () => {
   beforeEach(() => {
     cy.visit('http://localhost:3000/');
     cy.clearLocalStorage();
-    cy.get(INPUT_PLAYER_NAME_SELECTOR).type(name1);
+    cy.get(INPUT_PLAYER_NAME_SELECTOR).type(name1); //Nome da pessoa
     cy.get(INPUT_PLAYER_EMAIL_SELECTOR).type(email1);
     cy.get(BUTTON_PLAY_SELECTOR).click();
     cy.get(CORRECT_ALTERNATIVE_SELECTOR).click();
@@ -578,7 +578,7 @@ describe('17 - [TELA DE RANKING] Crie a tela de _ranking_', () => {
     cy.get(BUTTON_GO_HOME_SELECTOR).click();
     cy.get(INPUT_PLAYER_NAME_SELECTOR).clear();
     cy.get(INPUT_PLAYER_EMAIL_SELECTOR).clear();
-    cy.get(INPUT_PLAYER_NAME_SELECTOR).type(name2);
+    cy.get(INPUT_PLAYER_NAME_SELECTOR).type(name2); //Outra pessoa
     cy.get(INPUT_PLAYER_EMAIL_SELECTOR).type(email2);
     cy.get(BUTTON_PLAY_SELECTOR).click();
     cy.get(CORRECT_ALTERNATIVE_SELECTOR).click();
@@ -591,7 +591,7 @@ describe('17 - [TELA DE RANKING] Crie a tela de _ranking_', () => {
     cy.get(BUTTON_NEXT_QUESTION_SELECTOR).click();
     cy.get(CORRECT_ALTERNATIVE_SELECTOR).click();
     cy.get(BUTTON_NEXT_QUESTION_SELECTOR).click();
-    cy.get(BUTTON_RANKING_SELECTOR).click();
+    cy.get(BUTTON_RANKING_SELECTOR).click();//5 corretas
 
     cy.get(RANKING_PLAYERS_NAME_SELECTOR).should(($el) => {
       expect($el).to.have.lengthOf(2);
@@ -602,7 +602,7 @@ describe('17 - [TELA DE RANKING] Crie a tela de _ranking_', () => {
     cy.get(BUTTON_GO_HOME_SELECTOR).click();
     cy.get(INPUT_PLAYER_NAME_SELECTOR).clear();
     cy.get(INPUT_PLAYER_EMAIL_SELECTOR).clear();
-    cy.get(INPUT_PLAYER_NAME_SELECTOR).type(name2);
+    cy.get(INPUT_PLAYER_NAME_SELECTOR).type(name2); //Outra pessoa
     cy.get(INPUT_PLAYER_EMAIL_SELECTOR).type(email2);
     cy.get(BUTTON_PLAY_SELECTOR).click();
     cy.get(WRONG_ALTERNATIVES_SELECTOR).first().click();
@@ -615,12 +615,12 @@ describe('17 - [TELA DE RANKING] Crie a tela de _ranking_', () => {
     cy.get(BUTTON_NEXT_QUESTION_SELECTOR).click();
     cy.get(WRONG_ALTERNATIVES_SELECTOR).first().click();
     cy.get(BUTTON_NEXT_QUESTION_SELECTOR).click();
-    cy.get(BUTTON_RANKING_SELECTOR).click();
+    cy.get(BUTTON_RANKING_SELECTOR).click();//5 erradas = 0
 
     cy.get(BUTTON_GO_HOME_SELECTOR).click();
     cy.get(INPUT_PLAYER_NAME_SELECTOR).clear();
     cy.get(INPUT_PLAYER_EMAIL_SELECTOR).clear();
-    cy.get(INPUT_PLAYER_NAME_SELECTOR).type(name3);
+    cy.get(INPUT_PLAYER_NAME_SELECTOR).type(name3); //Mais uma pessoa
     cy.get(INPUT_PLAYER_EMAIL_SELECTOR).type(email3);
     cy.get(BUTTON_PLAY_SELECTOR).click();
     cy.get(CORRECT_ALTERNATIVE_SELECTOR).click();
@@ -633,7 +633,7 @@ describe('17 - [TELA DE RANKING] Crie a tela de _ranking_', () => {
     cy.get(BUTTON_NEXT_QUESTION_SELECTOR).click();
     cy.get(WRONG_ALTERNATIVES_SELECTOR).first().click();
     cy.get(BUTTON_NEXT_QUESTION_SELECTOR).click();
-    cy.get(BUTTON_RANKING_SELECTOR).click();
+    cy.get(BUTTON_RANKING_SELECTOR).click();// 1 certa 10
 
     const ranking = [name1, name3, name2];
 

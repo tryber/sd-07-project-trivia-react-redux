@@ -12,6 +12,20 @@ class Feedback extends Component {
   sendFeedback() {
     const { history } = this.props;
     history.push('/feedback');
+    this.goToRanking = this.goToRanking.bind(this);
+    this.goHome = this.goHome.bind(this);
+    this.state = {
+    };
+  }
+
+  goToRanking() {
+    const { history } = this.props;
+    history.push('./ranking');
+  }
+
+  goHome() {
+    const { history } = this.props;
+    history.push('./');
   }
 
   render() {
@@ -31,6 +45,20 @@ class Feedback extends Component {
             Próximo
           </button>
           <EndGame />
+          <button
+            data-testid="btn-ranking"
+            onClick={ this.goToRanking }
+            type="button"
+          >
+            Ver Ranking
+          </button>
+          <button
+            type="button"
+            data-testid="btn-play-again"
+            onClick={ this.goHome }
+          >
+            Jogar novamente
+          </button>
         </div>
       </div>
     );
@@ -38,7 +66,9 @@ class Feedback extends Component {
 }
 
 Feedback.propTypes = {
-  history: PropTypes.objectOf.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
 };
 
 export default Feedback;
