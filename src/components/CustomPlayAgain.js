@@ -1,17 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function CustomPlayAgain({ goHome }) {
+export default function CustomPlayAgain({ push }) {
   return (
     <button
       type="button"
       data-testid="btn-play-again"
-      onClick={ goHome }
+      onClick={ () => { push('/'); } }
     >
       Jogar novamente
     </button>
   );
 }
-CustomPlayAgain.propTypes = {
-  goHome: PropTypes.func.isRequired,
-};
+CustomPlayAgain.propTypes = { push: PropTypes.func.isRequired };

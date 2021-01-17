@@ -1,6 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-export default function PlayAgain({ history: push }) {
+export default function PlayAgain({ push }) {
   return (
     <button
       type="button"
@@ -12,7 +13,5 @@ export default function PlayAgain({ history: push }) {
   );
 }
 PlayAgain.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.function.isRequired,
-  }).isRequired,
+  push: PropTypes.func.isRequired,
 };
