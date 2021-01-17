@@ -14,8 +14,28 @@ class Ranking extends React.Component {
   }
 
   render() {
+    const getRanking = JSON.parse(localStorage.getItem('ranking'));
+
     return (
       <div>
+        <h1 data-testid="ranking-title">Ranking</h1>
+        { getRanking.map((player, index) => (
+          <tr
+            key={ `${player.name}-${index}` }
+          >
+            <td>{ player.picture }</td>
+            <td
+              data-testid={ `player-name-${index}` }
+            >
+              { player.name }
+            </td>
+            <td
+              data-testid={ `player-score-${index}` }
+            >
+              { player.score }
+            </td>
+          </tr>
+        ))}
         <button
           type="button"
           data-testid="btn-go-home"
