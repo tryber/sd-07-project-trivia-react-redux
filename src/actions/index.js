@@ -1,10 +1,13 @@
-import { thunkApiQuestions, getQuestion } from './question';
-import { thunkApiToken, setName, addGravatar } from './player';
+import { thunkApiQuestions, getQuestion, setTime } from './question';
+import { thunkApiToken, addPlayer, setScore, setAssertions, addRanking } from './player';
 
 export {
   thunkApiQuestions,
   thunkApiToken,
-  setName,
-  addGravatar,
+  addPlayer,
   getQuestion,
+  setTime,
+  setScore,
+  setAssertions,
+  addRanking,
 };

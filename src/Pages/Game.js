@@ -1,6 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import Header from '../components/Header';
 import Questions from '../components/Questions';
 
 class Game extends React.Component {
@@ -18,15 +16,7 @@ class Game extends React.Component {
   render() {
     return (
       <div>
-        <Header />
-        <button
-          type="button"
-          data-testid="btn-ranking"
-          onClick={ this.redirectRanking }
-        >
-          Ver Ranking
-        </button>
-        <Questions />
+        <Questions history={ this.props.history } />
       </div>
     );
   }

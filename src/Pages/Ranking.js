@@ -1,57 +1,29 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 class Ranking extends React.Component {
   render() {
-    /* README
-      Descomentar e salvar pela primeira vez, para ter os dados salvos no LocalStorage
-      Após ter os dados salvos comentar novamente as linhas da 8 até 36
-      const players = [
-        {
-            img:'bruno.png',
-            name:'Bruno',
-            score: 10,
-        },
-        {
-            img:'bela.png',
-            name:'Bela',
-            score: 20,
-        },
-        {
-            img:'mell.png',
-            name:'Mell',
-            score: 15,
-        },
-        {
-            img:'lauro.png',
-            name:'Lauro'
-            score: 5,
-        }
+    const playersList = JSON.parse(localStorage.getItem('ranking'));
+    console.log(playersList);
 
-     localStorage.setItem('players', JSON.stringify(players));
-      */
-    let playersList = [];
-    if (localStorage.getItem('players')) {
-      playersList = JSON.parse(localStorage.getItem('players'));
-    }
+    const playerListDescendingOrder = playersList.sort(
+      (a, b) => b.score - a.score
+    );
 
-    const playerListDescendingOrder = playersList.sort((a, b) => (b.score - a.score));
+    localStorage.setItem('ranking', JSON.stringify(playerListDescendingOrder));
 
     return (
       <div>
         <h2 data-testid="ranking-title">RANKING</h2>
-        {/* Índice inicia com 0 */}
-        { playerListDescendingOrder.map((player, indice) => (
+        {playerListDescendingOrder.map((player, indice) => (
           <p key={ player.name }>
-            <span>
-              { player.img }
-            </span>
-            <span
-              data-testid-player-name={ indice }
-            >
-              { player.name }
-            </span>
-            <span data-testid-score>{player.score}</span>
+            <img
+              alt="user avatar"
+              src={ player.picture }
+            />
+            <span data-testid={ `player-name-${indice}` }>{ player.name }</span>
+            <span data-testid={ `player-score-${indice}` }>{ player.score }</span>
           </p>
         ))}
         <Link to="/">
@@ -67,4 +39,9 @@ class Ranking extends React.Component {
   }
 }
 
-export default Ranking;
+const mapStateToProps = (state) => ({
+  questions: state.questions.results,
+  token: state.player.token,
+});
+
+export default connect(mapStateToProps)(Ranking);
