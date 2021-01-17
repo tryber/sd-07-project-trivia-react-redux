@@ -1,10 +1,12 @@
 import React from 'react';
+import GoRanking from '../Components/GoRanking';
 import Header from '../Components/Header';
+import PlayAgain from '../Components/PlayAgain';
 
 export default class Feedback extends React.Component {
   constructor() {
     super();
-    this.setState = {
+    this.state = {
       score: 0,
     };
     this.feedbackMessage = this.feedbackMessage.bind(this);
@@ -21,9 +23,10 @@ export default class Feedback extends React.Component {
   render() {
     return (
       <div>
-        <Header>
-          <p data-testid="feedback-text">{this.feedbackMessage()}</p>
-        </Header>
+        <Header />
+        <p data-testid="feedback-text">{this.feedbackMessage()}</p>
+        <PlayAgain { ...this.props } />
+        <GoRanking { ...this.props } />
       </div>
     );
   }

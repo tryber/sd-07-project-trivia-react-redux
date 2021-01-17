@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 
-class PlayAgain extends Component {
+class GoRanking extends Component {
   constructor() {
     super();
     this.click = this.click.bind(this);
@@ -9,7 +9,7 @@ class PlayAgain extends Component {
 
   click() {
     const { history } = this.props;
-    history.push('/');
+    history.push('/ranking');
   }
 
   render() {
@@ -17,19 +17,19 @@ class PlayAgain extends Component {
       <div>
         <button
           type="button"
-          data-testid="btn-play-again"
+          data-testid="btn-ranking"
           onClick={ this.click }
         >
-          Jogar novamente
+          Ver Ranking
         </button>
       </div>
     );
   }
 }
 
-PlayAgain.propTypes = {
+GoRanking.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired }).isRequired,
 };
 
-export default PlayAgain;
+export default GoRanking;
