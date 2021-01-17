@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import md5 from 'crypto-js/md5';
 import { connect } from 'react-redux';
+import md5 from 'crypto-js/md5';
+import { getPicture as takePicture } from '../actions';
 import '../css/Header.css';
 
 class GameHeader extends Component {
@@ -9,8 +10,9 @@ class GameHeader extends Component {
     super();
     this.fetchGravatar = this.fetchGravatar.bind(this);
     this.readLocalState = this.readLocalState.bind(this);
+    this.updateLocalState = this.updateLocalState.bind(this);
     this.readLocalRanking = this.readLocalRanking.bind(this);
-    this.updateLocalStorage = this.updateLocalStorage.bind(this);
+    this.updateLocalRanking = this.updateLocalRanking.bind(this);
   }
 
   componentDidMount() {
@@ -18,14 +20,15 @@ class GameHeader extends Component {
   }
 
   componentDidUpdate() {
-    this.updateLocalStorage();
+    this.updateLocalState();
+    this.updateLocalRanking();
   }
 
   fetchGravatar() {
-    const { getEmail } = this.props;
+    const { getEmail, sendPicture } = this.props;
     const hashEmail = md5(getEmail);
     const endPoint = `https://www.gravatar.com/avatar/${hashEmail}`;
-    return endPoint;
+    sendPicture(endPoint);
   }
 
   readLocalState() {
@@ -33,31 +36,45 @@ class GameHeader extends Component {
     return readState;
   }
 
+  updateLocalState() {
+    const { getName, getEmail, getScore, getAssertions } = this.props;
+    const currentState = this.readLocalState();
+    const newStateStorage = {
+      ...currentState,
+      player: {
+        name: getName,
+        gravatarEmail: getEmail,
+        score: getScore,
+        assertions: getAssertions,
+      },
+    };
+    localStorage.setItem('state', JSON.stringify(newStateStorage));
+  }
+
   readLocalRanking() {
     const readRanking = JSON.parse(localStorage.getItem('ranking'));
     return readRanking;
   }
 
-  updateLocalStorage() {
-    const { getScore } = this.props;
-    const currentState = this.readLocalState();
+  updateLocalRanking() {
+    const { getName, getScore, getPicture } = this.props;
     const currentRanking = this.readLocalRanking();
-    const newStateStorage = { ...currentState,
-      player: { ...currentState.player, score: getScore } };
-    localStorage.setItem('state', JSON.stringify(newStateStorage));
-
-    const newRankingStorage = { ...currentRanking,
-      score: getScore };
+    const newRankingStorage = currentRanking.map((user) => {
+      if (user.name === getName) {
+        return { name: getName, picture: getPicture, score: getScore };
+      }
+      return user;
+    });
     localStorage.setItem('ranking', JSON.stringify(newRankingStorage));
   }
 
   render() {
-    const { getName, getScore } = this.props;
+    const { getName, getScore, getPicture } = this.props;
     return (
       <header className="game-header-container">
         <img
           data-testid="header-profile-picture"
-          src={ this.fetchGravatar() }
+          src={ getPicture }
           alt={ getName }
         />
         <p data-testid="header-player-name">{ getName }</p>
@@ -68,15 +85,24 @@ class GameHeader extends Component {
 }
 
 const mapStateToProps = ({ userReducer, scoreReducer }) => ({
-  getEmail: userReducer.email,
   getName: userReducer.name,
+  getEmail: userReducer.email,
   getScore: scoreReducer.score,
+  getAssertions: scoreReducer.correctAnswers,
+  getPicture: userReducer.picture,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  sendPicture: (picture) => dispatch(takePicture(picture)),
 });
 
 GameHeader.propTypes = {
   getEmail: PropTypes.string.isRequired,
   getName: PropTypes.string.isRequired,
   getScore: PropTypes.number.isRequired,
+  getPicture: PropTypes.string.isRequired,
+  getAssertions: PropTypes.number.isRequired,
+  sendPicture: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps)(GameHeader);
+export default connect(mapStateToProps, mapDispatchToProps)(GameHeader);

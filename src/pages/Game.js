@@ -58,11 +58,10 @@ class Game extends Component {
       this.handleUserAnswer();
       this.setState((prevState) => ({
         ...prevState,
-        timer: 30,
+        timer: 'Acabou o Tempo',
         disableButton: true,
       }));
     }
-
     if (timer === initialSecondEnableButton) {
       this.setState({
         timer: 24,
@@ -100,6 +99,7 @@ class Game extends Component {
     const { questionIndex } = this.state;
     const questionsLength = questions.results.length - 1;
     // console.log(typeof history);
+    this.renderTime();
     if (questionIndex === questionsLength) return history.push('/feedback');
     this.setState((previous) => ({
       ...previous,
@@ -151,14 +151,14 @@ class Game extends Component {
         finalQuestion = newQuestion.join('');
       }
     });
-    console.log(question);
+    // console.log(question);
     return finalQuestion;
   }
 
   renderAllDataQuestion() {
     const { questionIndex } = this.state;
     const { questions } = this.props;
-    // console.log(questions);
+    console.log(questions);
 
     if (questions.results) {
       const correctAnswer = questions.results[questionIndex].correct_answer;
@@ -176,13 +176,17 @@ class Game extends Component {
 
   renderTime() {
     const secondTimerFunction = 1000;
-    const lastSecondDisableButton = 0;
-    const { timer } = this.state;
-    setInterval(() => {
-      if (timer > lastSecondDisableButton) {
+    const finishTimer = 'Acabou o Tempo';
+    const objTimer = setInterval(() => {
+      const { timer } = this.state;
+      if (timer !== finishTimer) {
         this.setState((prevState) => ({
           timer: prevState.timer - 1,
         }));
+        console.log(timer);
+      } else {
+        console.log('entrou');
+        this.stopTimer(objTimer);
       }
     }, secondTimerFunction);
   }
