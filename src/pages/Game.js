@@ -36,8 +36,8 @@ class Game extends Component {
             { ({ stop, reset }) => (
               <div>
                 <Timer.Seconds />
-                { timeStop ? stop : timeStop }
-                { timeReset ? reset : timeReset }
+                { timeStop ? stop : '' }
+                { timeReset ? reset : '' }
               </div>
 
             )}
