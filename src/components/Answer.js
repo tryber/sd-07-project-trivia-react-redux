@@ -36,7 +36,6 @@ class Answer extends React.Component {
     this.respond = this.respond.bind(this);
     this.reponseQuestion = this.reponseQuestion.bind(this);
     this.sumPoints = this.sumPoints.bind(this);
-    this.requestLogin = this.requestLogin.bind(this);
   }
 
   componentDidMount() {

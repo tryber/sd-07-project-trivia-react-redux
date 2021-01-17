@@ -21,6 +21,7 @@ class Ranking extends React.Component {
 
   render() {
     const { login } = this.state;
+    const rankMore = [];
 
     const players = JSON.parse(localStorage.getItem('state')).player;
 
@@ -35,7 +36,9 @@ class Ranking extends React.Component {
       picture: `https://www.gravatar.com/avatar/${md5(gravatarEmail)}`,
     };
 
-    const ranking = [...JSON.parse(localStorage.getItem('ranking')), rank];
+    const ranking = [...rankMore, rank];
+
+    console.log(ranking);
 
     localStorage.setItem('ranking', JSON.stringify(ranking));
 
