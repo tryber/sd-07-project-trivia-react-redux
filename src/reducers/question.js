@@ -1,4 +1,9 @@
-import { ADD_ANSWERS, ADD_QUESTIONS, ADD_CATEGORYS, ADD_TIME, ADD_RESET, ADD_STOP } from '../actions';
+import { ADD_ANSWERS,
+  ADD_QUESTIONS,
+  ADD_CATEGORYS,
+  ADD_TIME,
+  ADD_RESET,
+  ADD_STOP } from '../actions';
 
 const INITIAL_STATE = {
   responses: {},
