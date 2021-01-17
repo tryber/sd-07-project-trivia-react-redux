@@ -12,9 +12,24 @@ class Header extends Component {
       <header className="game-header">
         <img src={ logo } alt="Minha imagem de teste" className="image-logo-header" />
         <div className="player-header-information">
-          <img data-testid="header-profile-picture" alt="jogador" src={ hashLink } />
-          <h3 data-testid="header-player-name">{`Player: ${name}` }</h3>
-          <h2 data-testid="header-score">{ score }</h2>
+          <img
+            data-testid="header-profile-picture"
+            className="player-header-information-item"
+            alt="jogador"
+            src={ hashLink }
+          />
+          <h3
+            data-testid="header-player-name"
+            className="player-header-information-item"
+          >
+            {`Player: ${name}` }
+          </h3>
+          <h2
+            data-testid="header-score"
+            className="player-header-information-item"
+          >
+            { score }
+          </h2>
         </div>
       </header>
     );
