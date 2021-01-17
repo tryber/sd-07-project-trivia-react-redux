@@ -70,7 +70,13 @@
   border-radius: 10px;
 }
 
-.button-login:hover {background-color: gold;}
+.button-login:hover {
+  background-color: gold;
+}
+
+.feedback-header {
+  display: none;
+}
 
 .App-link {
   color: #61dafb;

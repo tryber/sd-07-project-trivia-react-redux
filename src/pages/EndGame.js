@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 class EndGame extends Component {
   constructor() {
     super();
-
     this.changeMessage = this.changeMessage.bind(this);
   }
 
