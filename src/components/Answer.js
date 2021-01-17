@@ -116,8 +116,8 @@ Answer.propTypes = {
   resCategory: PropTypes.func.isRequired,
   update: PropTypes.func.isRequired,
   endTime: PropTypes.bool.isRequired,
-  stopTime: PropTypes.bool.isRequired,
-  resetTime: PropTypes.bool.isRequired,
+  stopTime: PropTypes.func.isRequired,
+  resetTime: PropTypes.func.isRequired,
   tok: PropTypes.string.isRequired,
 
 };

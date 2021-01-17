@@ -63,6 +63,7 @@ class Game extends React.Component {
               {
                 time: 0,
                 callback: () => setTimeout(endTime(false), moreTime),
+                reset: () => this.resetTimer(),
               },
             ] }
             onStop={ () => console.log('onStop') }
@@ -70,7 +71,7 @@ class Game extends React.Component {
           >
             {({ start, stop, reset }) => (
               <div>
-                <Timer.Seconds />
+                <Timer.Seconds initialTime={ 30000 } />
                 <button
                   type="button"
                   hidden

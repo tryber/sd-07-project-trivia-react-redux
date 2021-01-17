@@ -31,17 +31,20 @@ function question(state = INITIAL_STATE, action) {
   case ADD_TIME:
     return {
       ...state,
-      timeEnd: false };
+      timeEnd: false,
+      reset: false };
   case ADD_RESET:
     return {
       ...state,
       reset: true,
-      stop: false};
+      stop: false,
+      timeEnd: true };
   case ADD_STOP:
     return {
       ...state,
       stop: true,
-      reset: false };
+      reset: false,
+      timeEnd: true };
   default:
     return state;
   }
