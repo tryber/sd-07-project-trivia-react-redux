@@ -27,7 +27,7 @@ class Header extends Component {
     const setLocalStorage = [];
     const ranking = {
       name,
-      score: updateScore,
+      score: updateScore || 0,
       picture: this.convertEmail(email),
     };
     if (getLocalStorage) {

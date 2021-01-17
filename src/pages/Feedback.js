@@ -6,6 +6,7 @@ class Feedback extends Component {
   constructor() {
     super();
     this.goToRanking = this.goToRanking.bind(this);
+    this.goHome = this.goHome.bind(this);
     this.state = {
     };
   }
@@ -13,6 +14,11 @@ class Feedback extends Component {
   goToRanking() {
     const { history } = this.props;
     history.push('./ranking');
+  }
+
+  goHome() {
+    const { history } = this.props;
+    history.push('./');
   }
 
   render() {
@@ -36,6 +42,13 @@ class Feedback extends Component {
             type="button"
           >
             Ver Ranking
+          </button>
+          <button
+            type="button"
+            data-testid="btn-play-again"
+            onClick={ this.goHome }
+          >
+            Jogar novamente
           </button>
         </div>
       </div>
