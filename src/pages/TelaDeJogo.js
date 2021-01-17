@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import md5 from 'crypto-js/md5';
+import Timer from './Timer';
 import '../css/Button.css';
 
 class TelaDeJogo extends Component {
@@ -12,6 +13,7 @@ class TelaDeJogo extends Component {
     this.handleQuestions = this.handleQuestions.bind(this);
     this.nextQuestion = this.nextQuestion.bind(this);
     this.handleToggle = this.handleToggle.bind(this);
+    this.failTime = this.failTime.bind(this);
   }
 
   handleQuestions() {
@@ -54,6 +56,10 @@ class TelaDeJogo extends Component {
     }));
   }
 
+  failTime() {
+    this.setState({ response: true });
+  }
+
   render() {
     const { email, name, score, questions } = this.props;
     const { next, response } = this.state;
@@ -92,10 +98,12 @@ class TelaDeJogo extends Component {
                   : 'incorrect') }
                 onClick={ () => this.handleToggle() }
                 data-testid={ option.dataTestid }
+                disabled={ response }
               >
                 { option.answer }
               </button>))
           }
+          <Timer failTime={ this.failTime } />
           <button type="button" onClick={ this.nextQuestion }> Next </button>
         </div>
       </div>
