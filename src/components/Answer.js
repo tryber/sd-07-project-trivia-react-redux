@@ -49,7 +49,10 @@ class Answer extends React.Component {
     resetTime();
   }
 
-  sumPoints() {
+  async sumPoints() {
+    const { fetchAnswers, tok, update } = this.props;
+    await fetchAnswers(tok);
+
     const { resAnswer, timeValue } = this.props;
     const { count } = this.state;
     const tres = 3;
@@ -60,18 +63,18 @@ class Answer extends React.Component {
     console.log(difficultys[count]);
     console.log(timeValue);
 
-    if (difficultys[count] === 'easy') return dez + (timeValue * 1);
+    if (difficultys[count] === 'easy') return update(dez + (timeValue * 1));
 
-    if (difficultys[count] === 'medium') return dez + (timeValue * 2);
+    if (difficultys[count] === 'medium') return update(dez + (timeValue * 2));
 
-    if (difficultys[count] === 'hard') return dez + (timeValue * tres);
+    if (difficultys[count] === 'hard') return update(dez + (timeValue * tres));
   }
 
   respond({ target: { name } }) {
-    const { update, stopTime } = this.props;
+    const { stopTime } = this.props;
     this.setState({ showAnswer: true });
     if (name === 'correct') {
-      update(this.sumPoints());
+      this.sumPoints();
     }
     stopTime();
   }
