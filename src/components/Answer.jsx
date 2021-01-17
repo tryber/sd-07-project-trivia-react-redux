@@ -22,6 +22,7 @@ class Answer extends Component {
       score: score + points,
       gravatarEmail: email,
     } };
+    if (points === 0) playerObject.player.assertions = assertions + 0;
     localStorage.setItem('state', JSON.stringify(playerObject));
   }
 
