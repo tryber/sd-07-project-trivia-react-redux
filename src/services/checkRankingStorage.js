@@ -1,12 +1,12 @@
 import { getStorage } from './localStorage';
 
-function sortRanking(old) {
+function sortReverseRanking(old) {
   return old.sort(({ score }, { score: nextScore }) => {
     const one = 1;
-    if (score > nextScore) return one;
-    if (nextScore > score) return -one;
+    if (score > nextScore) return -one;
+    if (nextScore > score) return one;
     return 0;
-  }).reverse();
+  });
 }
 
 export default function checkDuplicatesInStorage(userScore) {
@@ -20,9 +20,10 @@ export default function checkDuplicatesInStorage(userScore) {
         if (oldName === name && score <= oldScore) return true;
         return false;
       });
-    const biggerThenNewKey = oldRanking.find(({ name: oldName }) => oldName === name);
-    if (biggerThenNewKey) return ([...sortRanking(oldRanking)]);
-    return ([...sortRanking([userScore, ...oldRanking])]);
+    const biggerThenNewKey = oldRanking
+      .find(({ name: oldName }) => oldName === name);
+    if (biggerThenNewKey) return ([...sortReverseRanking(oldRanking)]);
+    return ([...sortReverseRanking([userScore, ...oldRanking])]);
   }
   return ([userScore]);
 }

@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { getStorage } from '../services';
+import { connect } from 'react-redux';
+import { reloadGame } from '../actions';
 
-export default class Ranking extends Component {
+class Ranking extends Component {
   constructor() {
     super();
     this.state = {
@@ -47,8 +49,15 @@ export default class Ranking extends Component {
   }
 }
 
+const mapDispatchToProps = (dispatch) => ({
+  dispatchReload: () => dispatch(reloadGame()),
+});
+
+export default connect(null, mapDispatchToProps)(Ranking);
+
 Ranking.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
+  dispatchReload: PropTypes.func.isRequired,
 };
