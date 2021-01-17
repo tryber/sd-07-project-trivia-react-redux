@@ -5,7 +5,10 @@ import { Link } from 'react-router-dom';
 
 export default function CustomLogin({ onInputChange, onHandleSubmit, validate }) {
   return (
-    <form size="large">
+    <form
+      className="login"
+      size="large"
+    >
       <input
         data-testid="input-player-name"
         maxLength="40"

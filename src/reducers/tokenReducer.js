@@ -1,4 +1,4 @@
-import { FAILED_REQUEST, RESULT_TOKEN, REQUEST_TOKEN } from '../actions/fetchToken';
+import { FAILED_REQUEST, RESULT_TOKEN, REQUEST_TOKEN } from '../actions';
 
 const INITIAL_STATE = {
   token: '',

@@ -1,15 +1,17 @@
-import { applyMiddleware, createStore, combineReducers } from 'redux';
+import { applyMiddleware, createStore, combineReducers, compose } from 'redux';
 import thunk from 'redux-thunk';
-import { loginReducer, triviaReducer, tokenReducer } from '../reducers';
+import { loginReducer, triviaReducer, tokenReducer, playerReducer } from '../reducers';
 
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const rootReducer = combineReducers({
   loginReducer,
   triviaReducer,
   tokenReducer,
+  playerReducer,
 });
 
 const store = createStore(
   rootReducer,
-  applyMiddleware(thunk),
+  composeEnhancers(applyMiddleware(thunk)),
 );
 export default store;

@@ -1,28 +1,20 @@
 import React, { Component } from 'react';
-import { countdown } from '../services';
+import PropTypes from 'prop-types';
 
-export default class Timer extends Component {
-  constructor() {
-    super();
-    this.state = {
-      time: 30,
-    };
-  }
-
+export default class CustomTimer extends Component {
   componentDidMount() {
-    this.timer();
-  }
-
-  timer() {
-    countdown((stop) => this.setState(({ time }) => (
-      time ? { time: time - 1 } : stop()
-    )));
+    const { timerInit } = this.props;
+    timerInit();
   }
 
   render() {
-    const { time } = this.state;
+    const { time } = this.props;
     return (
       <span>{time}</span>
     );
   }
 }
+CustomTimer.propTypes = {
+  timerInit: PropTypes.func.isRequired,
+  time: PropTypes.string.isRequired,
+};

@@ -18,16 +18,6 @@ class Login extends Component {
     this.validaInput = this.validaInput.bind(this);
   }
 
-  validaInput() {
-    const { email, nome } = this.state;
-    const number = 1;
-    if (email.match(/\S+@\S+\.\S+/) && nome.length > number) {
-      this.setState({ permitir: false });
-    } else {
-      this.setState({ permitir: true });
-    }
-  }
-
   async handleSubmit() {
     const { dispatchEmail, dispatchToken, dispatchNome, history } = this.props;
     const { email, nome } = this.state;
@@ -43,14 +33,28 @@ class Login extends Component {
     // ou seja , a cada momento que o onchange é modificado
   }
 
+  validaInput() {
+    const { email, nome } = this.state;
+    const number = 1;
+    if (email.match(/\S+@\S+\.\S+/) && nome.length > number) {
+      this.setState({ permitir: false });
+    } else {
+      this.setState({ permitir: true });
+    }
+  }
+
   render() {
     const { permitir } = this.state;
     return (
-      <CustomLogin
-        onInputChange={ this.handleInputChange }
-        onHandleSubmit={ this.handleSubmit }
-        validate={ permitir }
-      />
+      <div
+        className="margin-page"
+      >
+        <CustomLogin
+          onInputChange={ this.handleInputChange }
+          onHandleSubmit={ this.handleSubmit }
+          validate={ permitir }
+        />
+      </div>
     );
   }
 }
