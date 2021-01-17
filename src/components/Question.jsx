@@ -7,7 +7,7 @@ class Question extends Component {
       currentQuestion,
       onClickNext,
       onClickQuestion,
-      nextButtonVisible,
+      answered,
     } = this.props;
 
     const allAnswers = [
@@ -24,6 +24,7 @@ class Question extends Component {
           {
             allAnswers.map((answer, index) => (
               <button
+                className={ answered ? 'answered' : '' }
                 key={ answer }
                 type="button"
                 data-testid={
@@ -38,7 +39,7 @@ class Question extends Component {
             ))
           }
           {
-            nextButtonVisible && (
+            answered && (
               <button
                 type="button"
                 data-testid="btn-next"
@@ -63,7 +64,7 @@ Question.propTypes = {
   }).isRequired,
   onClickNext: PropTypes.func.isRequired,
   onClickQuestion: PropTypes.func.isRequired,
-  nextButtonVisible: PropTypes.bool.isRequired,
+  answered: PropTypes.bool.isRequired,
 };
 
 export default Question;
