@@ -1,46 +1,56 @@
 import {
-  REQUEST_PLAYER,
-  GET_AVATAR_PLAYER,
-  SET_NAME,
-  SET_ASSERTIONS,
+  REQUEST_NEW_PLAYER,
   SET_SCORE,
-  SET_GRAVATAR,
   FAILED_REQUEST,
   ADD_TOKEN,
+  SET_ASSERTIONS,
+  ADD_RANKING,
 } from '../actions/player';
 
 const initialState = {
-  name: '',
-  assertions: 0,
-  score: 0,
-  gravatar: '',
   token: '',
-  avatar: '',
-  isFetching: false,
+  gravatarEmail: '',
+  name: '',
+  score: 0,
+  count: 30,
+  assertions: 0,
+  ranking: [],
 };
 
 function player(state = initialState, action) {
-  const gravatarUrl = `https://www.gravatar.com/avatar/${action.payload}`;
   switch (action.type) {
-  case ADD_TOKEN:
-    localStorage.setItem('token', action.token);
-    return { ...state, token: action.token };
-  case REQUEST_PLAYER:
-    return { ...state, isFetching: true };
-  case GET_AVATAR_PLAYER:
-    return { ...state, avatar: action.payload, isFetching: false };
-  case SET_NAME:
-    return { ...state, name: action.payload };
-  case SET_ASSERTIONS:
-    return { ...state, assertions: action.payload.assertions };
-  case SET_SCORE:
-    return { ...state, score: action.payload.score };
-  case SET_GRAVATAR:
-    return { ...state, gravatar: gravatarUrl };
-  case FAILED_REQUEST:
-    return { ...state, error: action.payload, isFetching: false };
-  default:
-    return state;
+    case REQUEST_NEW_PLAYER:
+      const newPlayer = action.player;
+      const { name, gravatarEmail, score, assertions } = newPlayer.player;
+      return {
+        ...state,
+        name: name,
+        gravatarEmail: gravatarEmail,
+        score: score,
+        assertions: assertions,
+      };
+
+    case ADD_TOKEN:
+      const getTokenSaved = JSON.parse(localStorage.getItem('token'));
+      const tokenLocal = getTokenSaved === null ? [] : getTokenSaved;
+      tokenLocal.push(action.token);
+      localStorage.setItem('token', JSON.stringify(tokenLocal));
+      return { ...state, token: action.token };
+
+    case SET_SCORE:
+      return { ...state, score: action.score };
+
+    case SET_ASSERTIONS:
+      return { ...state, assertions: action.assertions };
+    
+    case ADD_RANKING:
+      return { ...state, ranking: [...state.ranking, action.ranking] };
+
+    case FAILED_REQUEST:
+      return state;
+
+    default:
+      return state;
   }
 }
 

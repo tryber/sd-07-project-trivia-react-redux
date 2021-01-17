@@ -1,7 +1,15 @@
+const GET_QUESTIONS = 'GET_QUESTIONS';
+const SET_TIME = 'SET_TIME';
+
 export const getQuestion = (payload) => ({
-  type: 'GET_QUESTIONS',
+  type: GET_QUESTIONS,
   payload,
 });
+
+export const setTime = (time) => ({
+  type: SET_TIME,
+  time,
+})
 
 export function thunkApiQuestions(token) {
   return async (dispatch) => {

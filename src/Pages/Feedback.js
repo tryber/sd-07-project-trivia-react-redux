@@ -25,25 +25,29 @@ class Feedback extends Component {
         <div>
           <h1>RESULTADO</h1>
           <p data-testid="feedback-text">
-            { assertions >= cutOff ? resultMessage.goodResult : resultMessage.badResult }
+            {assertions >= cutOff
+              ? resultMessage.goodResult
+              : resultMessage.badResult}
           </p>
           <h2>
             <h3>Pontuação Total: </h3>
             <span data-testid="feedback-total-score">
-              {score === undefined ? 0 : score }
+              {score === undefined ? 0 : score}
             </span>
           </h2>
           <h2>
             <h3>Total de Acertos:</h3>
             <span data-testid="feedback-total-question">
-              {assertions === undefined ? 0 : score }
+              {assertions === undefined ? 0 : assertions}
             </span>
           </h2>
-          <Link to="/">
-            <button
-              type="button"
-              data-testid="btn-play-again"
-            >
+          <Link to='/ranking'>
+            <button type="button" data-testid="btn-ranking">
+              Ver Ranking
+            </button>
+          </Link>
+          <Link to='/'>
+            <button type="button" data-testid="btn-play-again">
               Jogar novamente
             </button>
           </Link>
@@ -55,7 +59,7 @@ class Feedback extends Component {
 
 const mapStateToProps = (state) => ({
   score: state.player.score,
-  assertions: state.player.assertionsNumber,
+  assertions: state.player.assertions,
 });
 
 Feedback.propTypes = {

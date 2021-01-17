@@ -1,26 +1,34 @@
-export const REQUEST_PLAYER = 'REQUEST_PLAYER';
-export const GET_AVATAR_PLAYER = 'GET_AVATAR_PLAYER';
-export const SET_NAME = 'SET_NAME';
-export const SET_ASSERTIONS = 'SET_ASSERTIONS';
+export const REQUEST_NEW_PLAYER = 'REQUEST_NEW_PLAYER';
 export const SET_SCORE = 'SET_SCORE';
-export const SET_GRAVATAR = 'SET_GRAVATAR';
 export const FAILED_REQUEST = 'FAILED_REQUEST';
 export const ADD_TOKEN = 'ADD_TOKEN';
-
-export const setName = (payload) => ({
-  type: SET_NAME,
-  payload,
-});
+export const SET_ASSERTIONS = 'SET_ASSERTIONS';
+export const ADD_RANKING = 'ADD_RANKING';
 
 export const addToken = (token) => ({
   type: ADD_TOKEN,
   token,
 });
 
-export const addGravatar = (payload) => ({
-  type: SET_GRAVATAR,
-  payload,
+export const addPlayer = (player) => ({
+  type: REQUEST_NEW_PLAYER,
+  player,
 });
+
+export const setAssertions = (assertions) => ({
+  type: SET_ASSERTIONS,
+  assertions,
+});
+
+export const setScore = (score) => ({
+  type: SET_SCORE,
+  score,
+});
+
+export const addRanking = (ranking) => ({
+  type: ADD_RANKING,
+  ranking,
+})
 
 export function thunkApiToken() {
   return async (dispatch) => {

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import crypto from 'crypto-js';
-import { thunkApiToken, setName, addGravatar } from '../actions';
+import { thunkApiToken, addPlayer } from '../actions';
 
 class Login extends React.Component {
   constructor(props) {
@@ -15,7 +15,7 @@ class Login extends React.Component {
     this.enableButton = this.enableButton.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.verificationEmail = this.verificationEmail.bind(this);
-    this.routeChangeConfig = this.routeChangeConfig.bind(this);
+    this.routeChangeSettings = this.routeChangeSettings.bind(this);
     this.routeChangeGame = this.routeChangeGame.bind(this);
   }
 
@@ -32,18 +32,27 @@ class Login extends React.Component {
     });
   }
 
-  routeChangeConfig() {
+  routeChangeSettings() {
     const { history } = this.props;
-    history.push('/configuracoes');
+    history.push('/settings');
   }
 
-  routeChangeGame() {
-    const { history, sendName, addToken, setGravatar } = this.props;
+  async routeChangeGame() {
+    const { history, addToken, addNewPlayer } = this.props;
     const { name, email } = this.state;
     const emailMd5 = crypto.MD5(email).toString();
-    setGravatar(emailMd5);
-    addToken();
-    sendName(name);
+    const gravatarUrl = `https://www.gravatar.com/avatar/${emailMd5}`;
+    const player = {
+      player: {
+        name: name,
+        assertions: 0,
+        score: 0,
+        gravatarEmail: gravatarUrl,
+      },
+    };
+    localStorage.setItem('state', JSON.stringify(player));
+    addNewPlayer(player);
+    await addToken();
     history.push('/game');
   }
 
@@ -62,7 +71,7 @@ class Login extends React.Component {
         <button
           type="button"
           data-testid="btn-settings"
-          onClick={ this.routeChangeConfig }
+          onClick={ this.routeChangeSettings }
         >
           Configurações
         </button>
@@ -97,9 +106,8 @@ class Login extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
+  addNewPlayer: (player) => dispatch(addPlayer(player)),
   addToken: () => dispatch(thunkApiToken()),
-  sendName: (name) => dispatch(setName(name)),
-  setGravatar: (gravatar) => dispatch(addGravatar(gravatar)),
 });
 
 Login.propTypes = {
