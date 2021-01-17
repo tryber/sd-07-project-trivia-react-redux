@@ -7,10 +7,70 @@ export function login(object) {
   });
 }
 
-export function timer() {
+export function rightAnswer(number) {
+  return ({
+    type: 'CORRECT_ANSWER',
+    points: number,
+  });
+}
+
+function lessTime() {
+  return ({
+    type: 'TIME_RUNNING',
+  });
+}
+
+export function resetTimer() {
+  return ({
+    type: 'RESET',
+  });
+}
+
+export function countDown() {
+  return (dispatch, getState) => {
+    const second = 1000;
+    const clock = setInterval(() => {
+      const store = getState();
+      const { questions, timer } = store;
+      const { click } = questions;
+      const { time } = timer;
+      if (time === 0 || click !== '') return clearInterval(clock);
+      dispatch(lessTime());
+    }, second);
+    return clock;
+  };
+}
+
+export function enableQuestions() {
+  return ({
+    type: 'ENABLE',
+  });
+}
+
+export function timeOut() {
   return ({
     type: 'TIME_OUT',
   });
+}
+
+export function totalTime() {
+  return (dispatch, getState) => {
+    const questionTime = 30000;
+    const second = 1000;
+    const questionTimer = setTimeout(() => {
+      const store = getState();
+      const { questions } = store;
+      const { click } = questions;
+      if (click === '') return dispatch(timeOut());
+    }, questionTime);
+    setInterval(() => {
+      const store = getState();
+      const { questions } = store;
+      const { click } = questions;
+      if (click !== '') return clearTimeout(questionTimer);
+    }, second);
+    return questionTimer;
+  };
 }
 
 export function changeColor() {

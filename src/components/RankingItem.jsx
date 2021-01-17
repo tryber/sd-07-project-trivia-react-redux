@@ -3,10 +3,11 @@ import propTypes from 'prop-types';
 
 class RankingItem extends Component {
   render() {
-    const { imageSrc, name, score, index } = this.props;
+    const { player, index } = this.props;
+    const { picture, name, score } = player;
     return (
       <li>
-        <img src={ imageSrc } alt={ name } />
+        <img src={ picture } alt={ name } />
         <p data-testid={ `player-name-${index}` }>
           { name }
         </p>

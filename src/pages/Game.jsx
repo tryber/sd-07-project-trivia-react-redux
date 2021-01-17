@@ -32,6 +32,7 @@ class Game extends Component {
         <Header />
         <Timer />
         { questions[0] ? <Question item={ questions[0] } /> : null }
+        <br />
         <NextQuestionButton />
       </div>);
   }

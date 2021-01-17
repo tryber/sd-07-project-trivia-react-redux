@@ -10,6 +10,26 @@ class Feedback extends Component {
     super(props);
 
     this.renderMessage = this.renderMessage.bind(this);
+    this.setStorage = this.setStorage.bind(this);
+  }
+
+  setStorage() {
+    const { name, score, picture } = this.props;
+    let ranking = JSON.parse(localStorage.getItem('ranking'));
+    const player = {
+      name,
+      score,
+      picture,
+    };
+    if (ranking) {
+      const filteredRanking = ranking.filter((item) => item.picture !== player.picture);
+      filteredRanking.push(player);
+      filteredRanking.sort((item1, item2) => item2.score - item1.score);
+      return localStorage.setItem('ranking', JSON.stringify(filteredRanking));
+    }
+    ranking = [];
+    ranking.push(player);
+    localStorage.setItem('ranking', JSON.stringify(ranking));
   }
 
   renderMessage(assertions) {
@@ -23,16 +43,17 @@ class Feedback extends Component {
   render() {
     const { score, assertions, inFeedback } = this.props;
     inFeedback('inFeedback');
+    this.setStorage();
     return (
       <div>
         <Header />
         { this.renderMessage(assertions) }
         <div className="score-questions-container">
-          <h3 data-testid="feedback-total-quesiton">
-            { `Você acertou ${assertions} questões!` }
+          <h3 data-testid="feedback-total-question">
+            { assertions }
           </h3>
           <h3 data-testid="feedback-total-score">
-            { `Um total de ${score} pontos!` }
+            { score }
           </h3>
         </div>
         <div className="btn-container">
@@ -44,8 +65,13 @@ class Feedback extends Component {
               Ver Ranking
             </button>
           </Link>
-          <Link data-testid="btn-play-again" to="/">
-            Jogar novamente
+          <Link to="/">
+            <button
+              type="button"
+              data-testid="btn-play-again"
+            >
+              Jogar novamente!
+            </button>
           </Link>
         </div>
       </div>
@@ -60,6 +86,8 @@ const mapDispatchToProps = (dispatch) => ({
 const mapStateToProps = (state) => ({
   assertions: state.player.assertions,
   score: state.player.score,
+  name: state.player.name,
+  picture: state.player.imageSrc,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Feedback);
