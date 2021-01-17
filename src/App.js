@@ -5,6 +5,7 @@ import Settings from './pages/Settings';
 import './App.css';
 import Game from './pages/Game';
 import Score from './pages/Score';
+import Ranking from './pages/Ranking';
 
 export default function App() {
   return (
@@ -14,6 +15,7 @@ export default function App() {
         <Route exact path="/Game" component={ Game } />
         <Route exact path="/Score" component={ Score } />
         <Route exact path="/settings" component={ Settings } />
+        <Route exact path="/ranking" component={ Ranking } />
       </Switch>
     </div>
   );

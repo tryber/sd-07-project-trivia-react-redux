@@ -56,7 +56,7 @@ class Score extends Component {
           <div className="score-buttons">
             <button type="button" data-testid="btn-play-again" className="button">
               <Link to="/" className="btn">
-                Play Again
+                Jogar novamente
               </Link>
             </button>
             <button type="button" data-testid="btn-ranking" className="button">

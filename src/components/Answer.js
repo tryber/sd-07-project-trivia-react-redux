@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 import {
   fetchQuestionAnswers,
   resQuestionAction,
@@ -26,15 +26,17 @@ function createDataTestId([answer, isCorrect]) {
 class Answer extends React.Component {
   constructor(props) {
     super(props);
+    const { timeValue } = this.props;
     this.state = {
       count: 0,
       showAnswer: false,
-      goScore: false,
+      time: timeValue,
     };
     this.nextQuestion = this.nextQuestion.bind(this);
     this.respond = this.respond.bind(this);
     this.reponseQuestion = this.reponseQuestion.bind(this);
     this.sumPoints = this.sumPoints.bind(this);
+    this.requestLogin = this.requestLogin.bind(this);
   }
 
   componentDidMount() {
@@ -44,11 +46,6 @@ class Answer extends React.Component {
 
   nextQuestion() {
     const { resetTime } = this.props;
-    const { count } = this.state;
-    const lastQuestion = 4;
-    if (count === lastQuestion) {
-      this.setState({ goScore: true });
-    }
     this.setState((previous) => ({
       count: previous.count + 1,
       showAnswer: false,
@@ -57,18 +54,17 @@ class Answer extends React.Component {
   }
 
   async sumPoints() {
-    const { fetchAnswers, tok, update } = this.props;
-    await fetchAnswers(tok);
+    const { update } = this.props;
 
     const { resAnswer, timeValue } = this.props;
-    const { count } = this.state;
+    const { count, time } = this.state;
     const tres = 3;
     const dez = 10;
 
     const difficultys = Object.values(resAnswer).map(({ difficulty }) => difficulty);
 
     console.log(difficultys[count]);
-    console.log(timeValue);
+    console.log(time);
 
     if (difficultys[count] === 'easy') return update(dez + (timeValue * 1));
 
@@ -93,9 +89,10 @@ class Answer extends React.Component {
   }
 
   render() {
-    const { count, showAnswer, goScore } = this.state;
+    const { count, showAnswer } = this.state;
     const { resAnswer, resQuest, resCategory, endTime } = this.props;
-    console.log(resAnswer);
+    const four = 4;
+
     const categorys = Object.values(resAnswer).map(({ category: cat }) => cat);
 
     resCategory(categorys[count]);
@@ -116,7 +113,7 @@ class Answer extends React.Component {
 
     return (
       <div>
-        { goScore && <Redirect to="/score" /> }
+        { count > four ? <Redirect to="/score" /> : '' }
         {answers.map(([answer, testId, answerClass], index) => (
           <div key={ index }>
             <br />
@@ -132,7 +129,9 @@ class Answer extends React.Component {
             </button>
             <br />
           </div>
+
         ))}
+        {' '}
         { this.reponseQuestion(endTime) }
       </div>
     );

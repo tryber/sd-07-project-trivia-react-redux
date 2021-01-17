@@ -8,6 +8,11 @@
   pointer-events: none;
 }
 
+.imagem-ranking {
+  border-radius: 50%;
+  width: 80px;
+}
+
 @media ( prefers-reduced-motion : no-preference ) {
 
   .App-logo {
