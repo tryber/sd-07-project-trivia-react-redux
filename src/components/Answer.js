@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
   fetchQuestionAnswers,
@@ -28,6 +29,7 @@ class Answer extends React.Component {
     this.state = {
       count: 0,
       showAnswer: false,
+      goScore: false,
     };
     this.nextQuestion = this.nextQuestion.bind(this);
     this.respond = this.respond.bind(this);
@@ -42,6 +44,11 @@ class Answer extends React.Component {
 
   nextQuestion() {
     const { resetTime } = this.props;
+    const { count } = this.state;
+    const lastQuestion = 4;
+    if (count === lastQuestion) {
+      this.setState({ goScore: true });
+    }
     this.setState((previous) => ({
       count: previous.count + 1,
       showAnswer: false,
@@ -86,7 +93,7 @@ class Answer extends React.Component {
   }
 
   render() {
-    const { count, showAnswer } = this.state;
+    const { count, showAnswer, goScore } = this.state;
     const { resAnswer, resQuest, resCategory, endTime } = this.props;
     console.log(resAnswer);
     const categorys = Object.values(resAnswer).map(({ category: cat }) => cat);
@@ -109,6 +116,7 @@ class Answer extends React.Component {
 
     return (
       <div>
+        { goScore && <Redirect to="/score" /> }
         {answers.map(([answer, testId, answerClass], index) => (
           <div key={ index }>
             <br />
