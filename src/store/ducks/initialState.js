@@ -22,6 +22,15 @@ const INITIAL_STATE = {
     questions: [],
     isLoading: false,
   },
+  triviaSetting: {
+    categories: [],
+    isLoading: false,
+    filter: {
+      category: '',
+      difficulty: '',
+      type: '',
+    },
+  },
 };
 
 export default INITIAL_STATE;

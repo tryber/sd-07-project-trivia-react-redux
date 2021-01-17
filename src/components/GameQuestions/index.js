@@ -9,8 +9,8 @@ import './GameQuestions.css';
 import Timer from '../Timer';
 
 class GameQuestions extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       currentQuestion: 0,
@@ -23,7 +23,6 @@ class GameQuestions extends Component {
     this.clickNextQuestion = this.clickNextQuestion.bind(this);
 
     this.CORRECT_ANSWER_VALUE = 10;
-    this.TOTAL_QUESTIONS = 5;
     this.DIFFICULTY_LEVEL = {
       hard: 3,
       medium: 2,
@@ -32,8 +31,17 @@ class GameQuestions extends Component {
   }
 
   async componentDidMount() {
-    const { getTriviaQuestions } = this.props;
-    await getTriviaQuestions();
+    const { getTriviaQuestions, filter } = this.props;
+    await getTriviaQuestions(filter);
+  }
+
+  escapeHtml(unsafeText) {
+    return unsafeText
+      .replace(/&amp;/g, '&')
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&quot;/g, '"')
+      .replace(/&#039;/g, '\'');
   }
 
   timeOver() {
@@ -42,8 +50,8 @@ class GameQuestions extends Component {
 
   clickNextQuestion() {
     const { currentQuestion } = this.state;
-    const { history, player, addPlayerToRanking } = this.props;
-    if (currentQuestion < this.TOTAL_QUESTIONS - 1) {
+    const { history, player, addPlayerToRanking, questions } = this.props;
+    if (currentQuestion < questions.length - 1) {
       this.setState((state) => ({
         currentQuestion: state.currentQuestion + 1,
         revealAnswer: false,
@@ -81,13 +89,13 @@ class GameQuestions extends Component {
         <h3>
           Category:
           <span data-testid="question-category">
-            {questions.length && questions[currentQuestion].category}
+            {questions.length && this.escapeHtml(questions[currentQuestion].category)}
           </span>
         </h3>
         <h3>
           {`Question ${currentQuestion + 1}: `}
           <span data-testid="question-text">
-            {questions.length && questions[currentQuestion].question}
+            {questions.length && this.escapeHtml(questions[currentQuestion].question)}
           </span>
         </h3>
         <h3>
@@ -109,7 +117,7 @@ class GameQuestions extends Component {
                       questions[currentQuestion].difficulty,
                     ) }
                   >
-                    {answer.text}
+                    {this.escapeHtml(answer.text)}
                   </button>))
             }
           </span>
@@ -138,7 +146,13 @@ GameQuestions.propTypes = {
   addPlayerToRanking: PropTypes.func.isRequired,
   questions: PropTypes.arrayOf(PropTypes.object).isRequired,
   isLoading: PropTypes.bool.isRequired,
-  player: PropTypes.shape(PropTypes.object).isRequired,
+  player: PropTypes.shape().isRequired,
+  filter: PropTypes.shape({
+    amount: PropTypes.string.isRequired,
+    category: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+    difficulty: PropTypes.string.isRequired,
+  }).isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
@@ -148,10 +162,11 @@ const mapStateToProps = (state) => ({
   questions: state.triviaQuestions.questions,
   isLoading: state.triviaQuestions.isLoading,
   player: state.user.player,
+  filter: state.triviaSetting.filter,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getTriviaQuestions: () => dispatch(fetchTriviaQuestions()),
+  getTriviaQuestions: (filter) => dispatch(fetchTriviaQuestions(filter)),
   addScoreQuestion: (score) => dispatch(addScore(score)),
   addPlayerToRanking: (player) => dispatch(addPlayer(player)),
 });
