@@ -173,6 +173,7 @@ const mapDispatchToProps = (dispatch) => ({
 Play.propTypes = {
   apiFetchQuestions: PropTypes.func.isRequired,
   game: PropTypes.shape().isRequired,
+  timer: PropTypes.number.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Play);
