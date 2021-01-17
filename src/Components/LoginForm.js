@@ -15,6 +15,7 @@ class LoginForm extends Component {
 
     this.isDisabled = this.isDisabled.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.teste = this.teste.bind(this);
   }
 
   async handleSubmit() {
@@ -28,6 +29,10 @@ class LoginForm extends Component {
     const data = await fetchAPI.json();
     const tokenHash = data.token;
     localStorage.setItem('token', tokenHash);
+  }
+
+  async teste() {
+    await this.handleSubmit();
   }
 
   isDisabled() {
@@ -74,7 +79,7 @@ class LoginForm extends Component {
             type="submit"
             data-testid="btn-play"
             disabled={ !this.isDisabled() }
-            onClick={ this.handleSubmit }
+            onClick={ this.teste }
           >
             Jogar
           </button>

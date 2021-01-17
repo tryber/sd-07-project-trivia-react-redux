@@ -6,6 +6,7 @@ class Questions extends Component {
 
     this.state = {
       questions: [],
+      isLoading: true,
     };
 
     this.shuffleAnswers = this.shuffleAnswers.bind(this);
@@ -18,19 +19,22 @@ class Questions extends Component {
     this.updateLocalState();
   }
 
-  fetchTriviaQuestions() {
+  async fetchTriviaQuestions() {
     // const five = 5;
     const endpoint = 'https://opentdb.com/api.php?amount=5';
     const token = localStorage.getItem('token');
     console.log(token);
-    return fetch(`${endpoint}&token=${token}`)
-      .then((response) => response.json());
+    const getQuestions = await fetch(`${endpoint}&token=${token}`);
+    const response = await getQuestions.json();
+    return response;
   }
 
   async updateLocalState() {
     const responseAPI = await this.fetchTriviaQuestions();
-    this.setState({
-      questions: responseAPI.results,
+    const { results } = responseAPI;
+    await this.setState({
+      questions: results,
+      isLoading: false,
     });
   }
 
@@ -45,6 +49,7 @@ class Questions extends Component {
       <button
         type="button"
         data-testid="correct-answer"
+        key={ Math.random() }
       >
         {rightAnswer}
       </button>
@@ -60,27 +65,28 @@ class Questions extends Component {
   }
 
   render() {
-    const { questions } = this.state;
+    const { isLoading, questions } = this.state;
     console.log(questions);
-    if (questions.length > 0) {
-      return (
+    console.log(isLoading);
+    return isLoading ? <p>Loading</p>
+      : (
         <div>
-          <div data-testid="question-category">
-            {/* Categoria: */}
-            {questions[0].category}
-          </div>
-          <div data-testid="question-text">
-            {/* Pergunta: */}
-            { questions[0].question }
-          </div>
-          <div>
-            { this.renderTrivia(questions[0].correct_answer, questions[0]
-              .incorrect_answers) }
+          <div key={ Math.random() }>
+            <h3 data-testid="question-category">
+              Categoria:
+              {questions[0].category}
+            </h3>
+            <p data-testid="question-text">
+              Pergunta:
+              { questions[0].question }
+            </p>
+            <div>
+              { this.renderTrivia(questions[0].correct_answer, questions[0]
+                .incorrect_answers) }
+            </div>
           </div>
         </div>
       );
-    }
-    return <p>Loading... </p>;
   }
 }
 
