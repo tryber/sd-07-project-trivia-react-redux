@@ -13,7 +13,9 @@ export {
   addEmail,
   addName,
   updateGameDates,
+  reloadGame,
   ADD_EMAIL,
   ADD_NAME,
   ADD_GAMEDATES,
+  RELOAD_GAME,
 } from './actionUser';

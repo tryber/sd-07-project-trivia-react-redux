@@ -1,4 +1,4 @@
-import { ADD_EMAIL, ADD_GAMEDATES } from '../actions';
+import { ADD_EMAIL, ADD_GAMEDATES, RELOAD_GAME } from '../actions';
 import { getPicture } from '../services';
 
 const INITIAL_STATE = {
@@ -20,6 +20,12 @@ export default function playerReducer(state = INITIAL_STATE, action) {
       ...state,
       score: action.payload + score,
       assertions: assertions + 1,
+    };
+  case RELOAD_GAME:
+    return {
+      ...state,
+      score: 0,
+      assertions: 0,
     };
   default:
     return state;
