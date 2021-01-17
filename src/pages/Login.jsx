@@ -72,9 +72,9 @@ class Login extends Component {
               Jogar
             </button>
           </div>
-          <div className="gear-settings" data-testid="btn-settings">
+          <nav className="gear-settings" data-testid="btn-settings">
             <Link to="/settings"><img src={ gearIcon } alt="settings" /></Link>
-          </div>
+          </nav>
         </div>
       </header>
     );
