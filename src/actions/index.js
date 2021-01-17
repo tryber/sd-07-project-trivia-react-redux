@@ -23,3 +23,7 @@ export const getQuestions = () => async (dispatch) => {
   const result = data.results;
   dispatch(fetchQuestions(result));
 };
+
+export const stopTimer = () => ({ type: 'stop' });
+
+export const reloadingTimer = () => ({ type: 'reloading' });

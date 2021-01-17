@@ -1,25 +1,48 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import md5 from 'crypto-js/md5';
+import md5 from 'crypto-js/md5'
 
 class TelaDeJogo extends Component {
   constructor() {
     super();
     this.state = { 
       next: 0 ,
-      buttonNext: false,};
+      buttonNext: false,
+      timer: 30,
+      onDesable: false,
+    };
     this.handleQuestions = this.handleQuestions.bind(this);
     this.nextQuestion = this.nextQuestion.bind(this);
-    this.buttonNext = this.buttonNext.bind(this);
+    this.showBtnNext = this.showBtnNext.bind(this);
   }
 
+componentDidMount() {
+  this.countdonw()
+}
+componentWillUnmount() {
+  const { interval } = this.state;
+  clearInterval(interval);
+}
+  countdonw = () => {
+    const second = 1000;
+    const interval = setInterval(() => {
+      const { timer } = this.state;
+      if (timer > 0) {
+        this.setState({timer: timer -1})
+      } else {
+        clearInterval(interval);
+      }
+    }, second);
+    this.setState(
+      { interval },
+    );
+  }
 
-
-  buttonNext() {
+  showBtnNext() {
     const { buttonNext } = this.state;
     if (buttonNext) {
-      return (<button type="button" data-testid="btn-next" onClick={ this.nextQuestion }> Próxima </button>)
+      return (<button type="button" data-testid="btn-next" onClick={() => {this.nextQuestion()} }> Próxima </button>)
     }
   }
   handleQuestions() {
@@ -45,22 +68,21 @@ class TelaDeJogo extends Component {
         });
       });
     }
-
-    return randomResponses.sort((a, b) => a.randomIndex - b.randomIndex);
+    randomResponses.sort((a, b) => a.randomIndex - b.randomIndex);
+    return randomResponses;
   }
 
   nextQuestion() {
-    this.setState((state) => ({
-      next: state.next + 1,
-      buttonNext: false
-    }));
+    const {next, interval} = this.state;
+    clearInterval(interval);
+    this.setState({ next: next + 1, buttonNext: false, timer: 30});
+    this.countdonw();
   }
 
   render() {
     const { email, name, score, questions } = this.props;
-    const { next } = this.state;
+    const { next, timer } = this.state;
     const hash = md5(email);
-    console.log(name);
     return (
       <div>
         <header>
@@ -70,6 +92,7 @@ class TelaDeJogo extends Component {
             alt="User Profile"
             src={ `https://www.gravatar.com/avatar/${hash}` }
           />
+          <h2>{timer}</h2>
           <div>
             <p data-testid="header-player-name">{name}</p>
           </div>
@@ -90,12 +113,12 @@ class TelaDeJogo extends Component {
                 type="button"
                 key={ i }
                 data-testid={ option.dataTestid }
-                onClick={()=>this.setState({buttonNext: true})}
+                onClick={() => this.setState({buttonNext: true})}
               >
                 { option.answer }
               </button>))
           }
-          {this.buttonNext()}
+          {this.showBtnNext()}
         </div>
       </div>
     );
@@ -110,6 +133,8 @@ function mapStateToProps(state) {
     questions: state.questions.results,
   });
 }
+
+
 
 TelaDeJogo.propTypes = {
   email: PropTypes.string,
