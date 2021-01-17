@@ -1,19 +1,6 @@
 .correct-answer {
   background-color: black;
-  border:rgba(255, 255, 255, 0.863);
-  border-radius: 5px;
-  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.521);
-  color: white;
-  font-size: 1em;
-  font-weight: 600;
-  margin: 5px;
-  padding: 10px 20px; 
-  width: 70%;
-}
-
-.wrong-answer {
-  background-color: black;
-  border:rgba(255, 255, 255, 0.863);
+  border: rgba(255, 255, 255, 0.863);
   border-radius: 5px;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.521);
   color: white;
@@ -21,15 +8,28 @@
   font-weight: 600;
   margin: 5px;
   padding: 10px 20px;
-  width: 70%; 
+  width: 70%;
+}
+
+.wrong-answer {
+  background-color: black;
+  border: rgba(255, 255, 255, 0.863);
+  border-radius: 5px;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.521);
+  color: white;
+  font-size: 1em;
+  font-weight: 600;
+  margin: 5px;
+  padding: 10px 20px;
+  width: 70%;
 }
 
 .correct-answer:hover {
-  box-shadow: 3px 3px 5px rgb(0, 0, 0);
+  box-shadow: 3px 3px 5px black;
 }
 
 .wrong-answer:hover {
-  box-shadow: 3px 3px 5px rgb(0, 0, 0);
+  box-shadow: 3px 3px 5px black;
 }
 
 .correct-answer:disabled {
@@ -41,7 +41,7 @@
 }
 
 .questions-display {
-  background-color: rgba(255, 255, 255, 0.863);
+  background-color: rgba(255, 255, 255, 0.829);
   border-radius: 5px;
   color: rgb(46, 46, 46);
   display: flex;
@@ -100,7 +100,6 @@
 }
 
 .category-div {
-  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.521);
   margin-top: 30px;
   width: 93%;
 }
@@ -108,6 +107,7 @@
 .category-paragraph {
   background-color: rgb(46, 46, 46);
   border-radius: 5px;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.521);
   color: white;
   font-weight: 700;
   margin: 0 20px;
@@ -120,17 +120,17 @@
 .next-question-button {
   align-self: flex-end;
   background-color: rgb(3, 190, 10);
-  border:rgba(255, 255, 255, 0.863);
+  border: rgba(255, 255, 255, 0.863);
   border-radius: 5px;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.521);
   color: white;
   font-size: 1em;
   font-weight: 600;
   margin: 5px;
-  padding: 10px; 
+  padding: 10px;
   width: 20%;
 }
 
 .next-question-button:hover {
-  box-shadow: 3px 3px 5px rgb(0, 0, 0);
+  box-shadow: 3px 3px 5px black;
 }

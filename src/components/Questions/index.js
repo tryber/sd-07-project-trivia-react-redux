@@ -100,9 +100,7 @@ class Questions extends Component {
   }
 
   resetCounter() {
-    const milisegundos = 1000;
     this.setState({ counterInterval: 30, counter: 0 });
-    setInterval(this.countdown, milisegundos);
   }
 
   handleClick({ target }) {
