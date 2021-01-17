@@ -47,9 +47,6 @@ class GameBoard extends Component {
     if (questions.length > 0) {
       return (
         <div>
-          <h1>
-            Vamos Jogar!
-          </h1>
           <Question
             currentQuestion={ questions[currentQuestion] }
             onClickNext={ this.onClickNext }
