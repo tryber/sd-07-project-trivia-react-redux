@@ -42,6 +42,7 @@ class Header extends Component {
 
   render() {
     const { name, email, score, updateScore } = this.props;
+
     return (
       <div>
         <header>

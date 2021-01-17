@@ -14,8 +14,6 @@ class Feedback extends Component {
     history.push('/feedback');
     this.goToRanking = this.goToRanking.bind(this);
     this.goHome = this.goHome.bind(this);
-    this.state = {
-    };
   }
 
   goToRanking() {
@@ -30,10 +28,20 @@ class Feedback extends Component {
 
   render() {
     const getLocalStorage = JSON.parse(localStorage.getItem('state'));
-    const { player: { score } } = getLocalStorage;
+    const { player: { score, assertions } } = getLocalStorage;
+
     return (
       <div>
-        <Header updateScore={ score } />
+        <div className="feedback-header">
+          <Header updateScore={ score } />
+        </div>
+        <EndGame />
+        <div>
+          <h3>Placar final:</h3>
+          <span data-testid="feedback-total-score">{ score }</span>
+          <h3>Número de acertos:</h3>
+          <span data-testid="feedback-total-question">{ assertions }</span>
+        </div>
         <div>
           <span data-testid="feedback-text" />
           <button
@@ -44,7 +52,6 @@ class Feedback extends Component {
           >
             Próximo
           </button>
-          <EndGame />
           <button
             data-testid="btn-ranking"
             onClick={ this.goToRanking }

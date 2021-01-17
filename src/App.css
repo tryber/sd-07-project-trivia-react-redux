@@ -30,7 +30,52 @@
   flex-direction: column;
   font-size: calc(10px + 2vmin);
   justify-content: center;
+  min-height: 50vh;
+}
+
+.login-header {
+  align-items: center;
+  background-color: #282c34;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  font-size: calc(10px + 2vmin);
+  justify-content: center;
   min-height: 100vh;
+}
+
+.login-input {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  display: inline-block;
+  margin: 8px 0;
+  padding: 12px 20px;
+  width: 100%;
+}
+
+.button-login {
+  background-color: white;
+  border: 2px solid #e7e7e7;
+  border-radius: 10px;
+  color: black;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 16px;
+  margin-top: 15px;
+  padding: 16px 5px;
+  text-align: center;
+  text-decoration: none;
+  transition-duration: 0.4s;
+  width: 160px;
+}
+
+.button-login:hover {
+  background-color: gold;
+}
+
+.feedback-header {
+  display: none;
 }
 
 .App-link {
