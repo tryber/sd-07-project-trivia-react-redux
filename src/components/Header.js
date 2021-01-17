@@ -10,6 +10,10 @@ class Header extends Component {
     this.saveUser = this.saveUser.bind(this);
   }
 
+  componentDidUpdate() {
+    this.saveUser();
+  }
+
   // função que retorna o endereço da imagem do player lá do GRAVATAR
   convertEmail(email) {
     const user = md5(email);
@@ -18,19 +22,17 @@ class Header extends Component {
   }
 
   saveUser() {
-    const { name, email, score } = this.props;
+    const { name, email, updateScore } = this.props;
     const ranking = [{
       name,
-      score,
+      score: updateScore,
       picture: this.convertEmail(email),
     }];
     localStorage.setItem('ranking', JSON.stringify(ranking));
   }
 
   render() {
-    this.saveUser();
-
-    const { name, email, score } = this.props;
+    const { name, email, score, updateScore } = this.props;
     return (
       <div>
         <header>
@@ -39,17 +41,13 @@ class Header extends Component {
             alt="userimage"
             data-testid="header-profile-picture"
           />
-          <p
-            data-testid="header-player-name"
-          >
+          <p data-testid="header-player-name">
             Usuário:
             <span>{ name }</span>
           </p>
-          <p
-            data-testid="header-score"
-          >
+          <p data-testid="header-score">
             Placar:
-            <span>{ score }</span>
+            <span>{ updateScore || score }</span>
           </p>
         </header>
       </div>
@@ -66,6 +64,7 @@ const mapStateToProps = (state) => ({
 Header.propTypes = {
   name: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
+  updateScore: PropTypes.number.isRequired,
   score: PropTypes.number.isRequired,
 };
 

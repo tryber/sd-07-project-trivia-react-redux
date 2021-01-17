@@ -30,7 +30,8 @@ class Questions extends Component {
   }
 
   WinnerOrLoser() {
-    console.log('entrei aqui');
+    const { history } = this.props;
+    history.push('/feedback');
   }
 
   randomChoice(results) {
@@ -85,6 +86,8 @@ class Questions extends Component {
       const seconds = Math.ceil((gap % (convertNumber * minuteSeconds)) / convertNumber);
       this.setState({
         timer: seconds,
+        green: '',
+        red: '',
       });
 
       if (gap <= 0) {
@@ -98,6 +101,8 @@ class Questions extends Component {
   }
 
   stopButtons() {
+    const { disableButton } = this.props;
+    disableButton();
     this.setState({
       disabled: true,
     });
@@ -133,7 +138,6 @@ class Questions extends Component {
       score += calculation;
       const newPlayer = { player: { name, assertions, score, email } };
       localStorage.setItem('state', JSON.stringify(newPlayer));
-      console.log('if', score);
     }
   }
 
@@ -156,6 +160,7 @@ class Questions extends Component {
 
   render() {
     const { timer, shuffledAnswers, green, red, disabled } = this.state;
+    const { next } = this.props;
 
     if (shuffledAnswers) {
       return (
@@ -164,17 +169,17 @@ class Questions extends Component {
           <label htmlFor="div">
             Categoria:
             <div data-testid="question-category">
-              {shuffledAnswers[0].category}
+              {shuffledAnswers[next].category}
             </div>
           </label>
           <label htmlFor="div">
             Pergunta:
             <div data-testid="question-text">
-              {shuffledAnswers[0].question}
+              {shuffledAnswers[next].question}
             </div>
           </label>
           <div>
-            {shuffledAnswers[0].answers.map((answer, index) => {
+            {shuffledAnswers[next].answers.map((answer, index) => {
               if (answer.correct === true) {
                 return (
                   <button
@@ -182,7 +187,7 @@ class Questions extends Component {
                     key={ index }
                     className={ green }
                     data-testid="correct-answer"
-                    data-difficulty={ shuffledAnswers[0].difficulty }
+                    data-difficulty={ shuffledAnswers[next].difficulty }
                     disabled={ disabled }
                     onClick={ (event) => this.handleClick(event) }
                   >
@@ -196,7 +201,7 @@ class Questions extends Component {
                   key={ index }
                   className={ red }
                   data-testid={ `wrong-answer-${index}` }
-                  data-difficulty={ shuffledAnswers[0].difficulty }
+                  data-difficulty={ shuffledAnswers[next].difficulty }
                   disabled={ disabled }
                   onClick={ (event) => this.handleClick(event) }
                 >
@@ -216,6 +221,7 @@ Questions.propTypes = {
   questions: PropTypes.objectOf.isRequired,
   disableButton: PropTypes.func.isRequired,
   next: PropTypes.number.isRequired,
+  history: PropTypes.objectOf.isRequired,
 };
 
 const mapStateToProps = (state) => ({
