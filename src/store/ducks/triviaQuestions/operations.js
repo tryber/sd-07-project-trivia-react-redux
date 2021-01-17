@@ -32,17 +32,22 @@ const mapRandomAnswers = (results) => {
   return returnResults;
 };
 
-export default function fetchTriviaQuestions() {
+export default function fetchTriviaQuestions(filter) {
+  console.log('FILTER: ', filter);
   return async (dispatch, getState) => {
     dispatch(actions.request());
     try {
+      let setting = '';
+      Object.keys(filter).forEach((key) => {
+        setting += filter[key] ? `&${key}=${filter[key]}` : '';
+      });
       let { token } = getState().triviaToken;
-      let response = await fetch(`${ENDPOINT_GET_QUESTIONS}${token}`);
+      let response = await fetch(`${ENDPOINT_GET_QUESTIONS}${token}${setting}`);
       let result = await response.json();
       if (result.response_code !== 0) {
         await dispatch(fetchTriviaToken());
         token = getState().triviaToken.token;
-        response = await fetch(`${ENDPOINT_GET_QUESTIONS}${token}`);
+        response = await fetch(`${ENDPOINT_GET_QUESTIONS}${token}${setting}`);
         result = await response.json();
       }
       dispatch(actions.receiveSuccess(mapRandomAnswers(result.results)));

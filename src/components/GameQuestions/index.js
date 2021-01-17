@@ -9,8 +9,8 @@ import './GameQuestions.css';
 import Timer from '../Timer';
 
 class GameQuestions extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       currentQuestion: 0,
@@ -23,7 +23,6 @@ class GameQuestions extends Component {
     this.clickNextQuestion = this.clickNextQuestion.bind(this);
 
     this.CORRECT_ANSWER_VALUE = 10;
-    this.TOTAL_QUESTIONS = 5;
     this.DIFFICULTY_LEVEL = {
       hard: 3,
       medium: 2,
@@ -32,8 +31,9 @@ class GameQuestions extends Component {
   }
 
   async componentDidMount() {
-    const { getTriviaQuestions } = this.props;
-    await getTriviaQuestions();
+    const { getTriviaQuestions, filter } = this.props;
+    console.log('FILTER PROPS:', filter);
+    await getTriviaQuestions(filter);
   }
 
   escapeHtml(unsafeText) {
@@ -51,8 +51,8 @@ class GameQuestions extends Component {
 
   clickNextQuestion() {
     const { currentQuestion } = this.state;
-    const { history, player, addPlayerToRanking } = this.props;
-    if (currentQuestion < this.TOTAL_QUESTIONS - 1) {
+    const { history, player, addPlayerToRanking, questions } = this.props;
+    if (currentQuestion < questions.length - 1) {
       this.setState((state) => ({
         currentQuestion: state.currentQuestion + 1,
         revealAnswer: false,
@@ -148,6 +148,12 @@ GameQuestions.propTypes = {
   questions: PropTypes.arrayOf(PropTypes.object).isRequired,
   isLoading: PropTypes.bool.isRequired,
   player: PropTypes.shape().isRequired,
+  filter: PropTypes.shape({
+    amount: PropTypes.string.isRequired,
+    category: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+    difficulty: PropTypes.string.isRequired,
+  }).isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
@@ -157,10 +163,11 @@ const mapStateToProps = (state) => ({
   questions: state.triviaQuestions.questions,
   isLoading: state.triviaQuestions.isLoading,
   player: state.user.player,
+  filter: state.triviaSetting.filter,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getTriviaQuestions: () => dispatch(fetchTriviaQuestions()),
+  getTriviaQuestions: (filter) => dispatch(fetchTriviaQuestions(filter)),
   addScoreQuestion: (score) => dispatch(addScore(score)),
   addPlayerToRanking: (player) => dispatch(addPlayer(player)),
 });
