@@ -40,6 +40,8 @@ class Game extends React.Component {
 
     if (next > maxQuestion) {
       nextQuestion = 0;
+      const { history } = this.props;
+      history.push('/endgame');
     } else {
       nextQuestion = next + 1;
     }

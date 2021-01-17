@@ -1,10 +1,17 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Header } from '../components';
+import EndGame from './EndGame';
 
 class Feedback extends Component {
   constructor() {
     super();
+    this.sendFeedback = this.sendFeedback.bind(this);
+  }
+
+  sendFeedback() {
+    const { history } = this.props;
+    history.push('/feedback');
     this.goToRanking = this.goToRanking.bind(this);
     this.goHome = this.goHome.bind(this);
     this.state = {
@@ -39,9 +46,11 @@ class Feedback extends Component {
             className={ 'btn-visible' || 'btn-visible-hidden' }
             data-testid="btn-next"
             type="button"
+            onClick={ this.sendFeedback }
           >
             Próximo
           </button>
+          <EndGame />
           <button
             data-testid="btn-ranking"
             onClick={ this.goToRanking }

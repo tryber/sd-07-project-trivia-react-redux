@@ -1,6 +1,6 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { Game, Login, Ranking, Settings, Feedback } from './pages';
+import { Game, Login, Ranking, Settings, Feedback, EndGame } from './pages';
 import './App.css';
 
 export default function App() {
@@ -12,6 +12,7 @@ export default function App() {
         <Route path="/ranking" component={ Ranking } />
         <Route path="/feedback" component={ Feedback } />
         <Route path="/settings" component={ Settings } />
+        <Route path="/endgame" component={ EndGame } />
       </Switch>
     </div>
   );
