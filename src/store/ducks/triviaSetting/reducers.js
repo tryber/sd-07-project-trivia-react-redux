@@ -4,8 +4,6 @@ import initialState from '../initialState';
 const INITIAL_STATE = initialState.triviaSetting;
 
 const triviaSetting = (state = INITIAL_STATE, action) => {
-  console.log('RED INITIAL ACTION:', action);
-  console.log('RED INITIAL STATE:', state);
   switch (action.type) {
   case triviaSettingTypes.REQUEST:
     return {

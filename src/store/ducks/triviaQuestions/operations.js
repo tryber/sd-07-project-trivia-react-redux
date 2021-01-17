@@ -33,7 +33,6 @@ const mapRandomAnswers = (results) => {
 };
 
 export default function fetchTriviaQuestions(filter) {
-  console.log('FILTER: ', filter);
   return async (dispatch, getState) => {
     dispatch(actions.request());
     try {

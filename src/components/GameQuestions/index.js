@@ -32,7 +32,6 @@ class GameQuestions extends Component {
 
   async componentDidMount() {
     const { getTriviaQuestions, filter } = this.props;
-    console.log('FILTER PROPS:', filter);
     await getTriviaQuestions(filter);
   }
 
