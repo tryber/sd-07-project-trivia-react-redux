@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Timer from 'react-compound-timer';
 // https://www.npmjs.com/package/react-compound-timer
-import { endTimeAction } from '../actions';
+import { endTimeAction, resTimeAction } from '../actions';
 import GridQuestions from '../components/GridQuestions';
 import Header from '../components/Header';
 import './Game.css';
@@ -39,13 +39,16 @@ class Game extends React.Component {
     start();
   }
 
-  stopTimer(stop) {
+  stopTimer(stop, value) {
+    const { timeValue } = this.props;
     stop();
+    timeValue(value);
   }
 
   render() {
     const { endTime } = this.props;
     const moreTime = 5000;
+    const mil = 1000;
 
     return (
       <div className="game">
@@ -62,16 +65,16 @@ class Game extends React.Component {
             checkpoints={ [
               {
                 time: 0,
-                callback: () => setTimeout(endTime(false), moreTime),
+                callback: async () => setTimeout(await endTime(false), moreTime),
                 reset: () => this.resetTimer(),
               },
             ] }
             onStop={ () => console.log('onStop') }
             onReset={ () => console.log('onReset') }
           >
-            {({ start, stop, reset }) => (
+            {({ start, stop, reset, getTime }) => (
               <div>
-                <Timer.Seconds initialTime={ 30000 } />
+                <Timer.Seconds />
                 <button
                   type="button"
                   hidden
@@ -92,7 +95,7 @@ class Game extends React.Component {
                   type="button"
                   hidden
                   ref={ this.timerStopButton }
-                  onClick={ () => this.stopTimer(stop) }
+                  onClick={ () => this.stopTimer(stop, Math.round(getTime() / mil) - 1) }
                 >
                   Stop
                 </button>
@@ -109,6 +112,7 @@ Game.propTypes = {
   endTime: PropTypes.func.isRequired,
   timeReset: PropTypes.bool.isRequired,
   timeStop: PropTypes.bool.isRequired,
+  timeValue: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -118,38 +122,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   endTime: () => dispatch(endTimeAction()),
+  timeValue: (value) => dispatch(resTimeAction(value)),
+
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);
-
-/* {({ start, stop, reset }) => (
-  <React.Fragment>
-    <div>
-      <Timer.Seconds />
-    </div>
-    <br />
-    <div>
-      <button
-        hidden
-        ref={this.timerResetButton}
-        onClick={() => this.resetTimer(reset)}
-      >
-        Reset
-      </button>
-      <button
-        hidden
-        ref={this.timerStartButton}
-        onClick={() => this.startTimer(start)}
-      >
-        Start
-      </button>
-      <button
-        hidden
-        ref={this.timerStopButton}
-        onClick={() => this.stopTimer(stop)}
-      >
-        Stop
-      </button>
-    </div>
-  </React.Fragment>
-)} */

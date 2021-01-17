@@ -32,6 +32,7 @@ class Answer extends React.Component {
     this.nextQuestion = this.nextQuestion.bind(this);
     this.respond = this.respond.bind(this);
     this.reponseQuestion = this.reponseQuestion.bind(this);
+    this.sumPoints = this.sumPoints.bind(this);
   }
 
   componentDidMount() {
@@ -48,11 +49,29 @@ class Answer extends React.Component {
     resetTime();
   }
 
+  sumPoints() {
+    const { resAnswer, timeValue } = this.props;
+    const { count } = this.state;
+    const tres = 3;
+    const dez = 10;
+
+    const difficultys = Object.values(resAnswer).map(({ difficulty }) => difficulty);
+
+    console.log(difficultys[count]);
+    console.log(timeValue);
+
+    if (difficultys[count] === 'easy') return dez + (timeValue * 1);
+
+    if (difficultys[count] === 'medium') return dez + (timeValue * 2);
+
+    if (difficultys[count] === 'hard') return dez + (timeValue * tres);
+  }
+
   respond({ target: { name } }) {
     const { update, stopTime } = this.props;
     this.setState({ showAnswer: true });
     if (name === 'correct') {
-      update(100);
+      update(this.sumPoints());
     }
     stopTime();
   }
@@ -66,7 +85,7 @@ class Answer extends React.Component {
   render() {
     const { count, showAnswer } = this.state;
     const { resAnswer, resQuest, resCategory, endTime } = this.props;
-
+    console.log(resAnswer);
     const categorys = Object.values(resAnswer).map(({ category: cat }) => cat);
 
     resCategory(categorys[count]);
@@ -119,13 +138,14 @@ Answer.propTypes = {
   stopTime: PropTypes.func.isRequired,
   resetTime: PropTypes.func.isRequired,
   tok: PropTypes.string.isRequired,
-
+  timeValue: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   resAnswer: state.question.responses,
   endTime: state.question.timeEnd,
   tok: state.player.token,
+  timeValue: state.question.valueTime,
 
 });
 
