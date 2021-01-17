@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { getStorage } from '../services';
 import { connect } from 'react-redux';
+import { getStorage } from '../services';
 import { reloadGame } from '../actions';
 
 class Ranking extends Component {
@@ -22,7 +22,7 @@ class Ranking extends Component {
 
   render() {
     const { ranking } = this.state;
-    const { history: { push } } = this.props;
+    const { history: { push }, dispatchReload } = this.props;
     return (
       <div>
         <h1 data-testid="ranking-title">Textinho</h1>
@@ -41,7 +41,14 @@ class Ranking extends Component {
             </li>
           ))}
         </ol>
-        <button type="button" data-testid="btn-go-home" onClick={ () => { push('/'); } }>
+        <button
+          type="button"
+          data-testid="btn-go-home"
+          onClick={ () => {
+            dispatchReload();
+            push('/');
+          } }
+        >
           Jogar novamente
         </button>
       </div>
