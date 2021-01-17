@@ -45,9 +45,6 @@ class Timer extends Component {
 
   render() {
     const { currentTimer } = this.state;
-    /* if (currentTimer < 0) {
-      return !response;
-    } */
     return (
       <p>{ currentTimer }</p>
     );
