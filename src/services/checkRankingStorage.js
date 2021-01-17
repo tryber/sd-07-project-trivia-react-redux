@@ -1,24 +1,28 @@
 import { getStorage } from './localStorage';
 
 function sortRanking(old) {
-  return old.sort((a, b) => {
+  return old.sort(({ score }, { score: nextScore }) => {
     const one = 1;
-    if (a.score > b.score) return one;
-    if (b.score > a.score) return -one;
+    if (score > nextScore) return one;
+    if (nextScore > score) return -one;
     return 0;
   }).reverse();
 }
 
-export default function checkDuplicatesInStorage(userRanking) {
-  const { name, score } = userRanking;
-  const oldStorage = getStorage('ranking');
-  if (oldStorage) {
-    const oldRanking = oldStorage.filter(({
-      name: oldN, score: oldS,
-    }) => oldN !== name || score < oldS);
-    return oldRanking.find(({ name: oldN }) => oldN === name)
-      ? ([...sortRanking(oldRanking)])
-      : ([...sortRanking([userRanking, ...oldRanking])]);
+export default function checkDuplicatesInStorage(userScore) {
+  const { name, score } = userScore;
+  const oldStorageRanking = getStorage('ranking');
+
+  if (oldStorageRanking) {
+    const oldRanking = oldStorageRanking
+      .filter(({ name: oldName, score: oldScore }) => {
+        if (oldName !== name) return true;
+        if (oldName === name && score <= oldScore) return true;
+        return false;
+      });
+    const biggerThenNewKey = oldRanking.find(({ name: oldName }) => oldName === name);
+    if (biggerThenNewKey) return ([...sortRanking(oldRanking)]);
+    return ([...sortRanking([userScore, ...oldRanking])]);
   }
-  return ([userRanking]);
+  return ([userScore]);
 }
