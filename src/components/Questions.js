@@ -125,19 +125,27 @@ class Questions extends Component {
 
   saveScore({ target }) {
     const { timer } = this.state;
-    const getLocalStorage = JSON.parse(localStorage.getItem('state'));
+    const getLocalState = JSON.parse(localStorage.getItem('state'));
     const getTestId = target.getAttribute('data-testid');
     const getDifficulty = target.getAttribute('data-difficulty');
-    const { player: { name, email } } = getLocalStorage;
-    let { player: { assertions, score } } = getLocalStorage;
+    const { player: { name, email } } = getLocalState;
+    let { player: { assertions, score } } = getLocalState;
+    const currentPlayerRanking = JSON.parse(localStorage.getItem('ranking'));
+    const findPlayer = currentPlayerRanking.find((player) => player.name === name);
+    const findPlayerIndex = currentPlayerRanking.indexOf(findPlayer);
     if (getTestId === 'correct-answer') {
       const standardCalcNumber = 10;
       const getDifficultyPoints = this.calcDifficultyPoints(getDifficulty);
       const calculation = standardCalcNumber + (timer * getDifficultyPoints);
       assertions += 1;
-      score += calculation;
+      const sumScore = score + calculation;
+      score = sumScore;
+      findPlayer.score = sumScore;
+      currentPlayerRanking.splice(findPlayerIndex, 1);
+      currentPlayerRanking.splice(findPlayerIndex, 0, findPlayer);
       const newPlayer = { player: { name, assertions, score, email } };
       localStorage.setItem('state', JSON.stringify(newPlayer));
+      localStorage.setItem('ranking', JSON.stringify(currentPlayerRanking));
     }
   }
 

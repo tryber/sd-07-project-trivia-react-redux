@@ -42,6 +42,9 @@ class Header extends Component {
 
   render() {
     const { name, email, score, updateScore } = this.props;
+    /* const getLocalStorage = JSON.parse(localStorage.getItem('state'));
+    const { player: { name, assertions, score, email } } = getLocalStorage; */
+
     return (
       <div>
         <header>
