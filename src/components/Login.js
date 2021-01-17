@@ -18,7 +18,7 @@ class Login extends Component {
     this.isDisabled = this.isDisabled.bind(this);
     this.sendPlayerInfo = this.sendPlayerInfo.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.setStorage = this.setState.bind(this);
+    this.setStorage = this.setStorage.bind(this);
   }
 
   async handleSubmit(event) {
