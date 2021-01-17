@@ -45,29 +45,29 @@
 }
 
 .login-input {
-  width: 100%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  display: inline-block;
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
+  display: inline-block;
+  margin: 8px 0;
+  padding: 12px 20px;
+  width: 100%;
 }
 
 .button-login {
+  background-color: white;
+  border: 2px solid #e7e7e7;
+  border-radius: 10px;
+  color: black;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 16px;
+  margin-top: 15px;
   padding: 16px 5px;
   text-align: center;
   text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  width: 160px;
-  margin-top: 15px;
   transition-duration: 0.4s;
-  cursor: pointer;
-  background-color: white;
-  color: black;
-  border: 2px solid #e7e7e7;
-  border-radius: 10px;
+  width: 160px;
 }
 
 .button-login:hover {
