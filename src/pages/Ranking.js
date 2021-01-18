@@ -30,7 +30,7 @@ class Ranking extends Component {
                 </span>
                 {' '}
                 -
-                <span key={ playscor } data-testid={ `player-score-${index}` }>
+                <span key="playerScore" data-testid={ `player-score-${index}` }>
                   {player.score}
                   {' '}
                   pontos

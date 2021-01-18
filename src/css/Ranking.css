@@ -32,12 +32,13 @@
   padding: 10px;
 }
 
-.flex-box-ranking{
-  display: flex;
+.flex-box-ranking {
   align-items: center;
+  display: flex;
+  
 }
 
-.ranking-user-img{
-  width: 13%;
+.ranking-user-img {
   margin-right: 7px;
+  width: 13%;
 }

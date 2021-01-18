@@ -43,7 +43,6 @@ class Game extends Component {
     this.timer();
   }
 
-  
   handleClasses(type) {
     document.querySelectorAll('.btnAnswer').forEach((button) => {
       if (type === 'add') {
@@ -170,8 +169,9 @@ class Game extends Component {
         correctAnswer,
       });
 
-      const arrayAnswers = this.shuffle([...wrongAnswer, correctAnswer]);
-      return arrayAnswers;
+      // const arrayAnswers = this.shuffle([...wrongAnswer, correctAnswer]);
+      // return arrayAnswers;
+      return ([...wrongAnswer, correctAnswer]);
     }
   }
 
