@@ -75,8 +75,9 @@ class Game extends Component {
   }
 
   async handleApiRequisition() {
-    const token = getStorage();
-    const questionUrl = `https://opentdb.com/api.php?amount=5&token=${token}`;
+    const token = getStorage('token');
+    const config = getStorage('config');
+    const questionUrl = `${config.url}${token}`;
     const apiQuestionresult = await getApi(questionUrl);
     const { results } = apiQuestionresult;
     this.setState({ questions: results });

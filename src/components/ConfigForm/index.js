@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import md5 from 'crypto-js/md5';
 import { getStorage, setStorage } from '../../services';
 import './style.css';
 
@@ -13,15 +15,28 @@ class ConfigForm extends Component {
       url: 'https://opentdb.com/api.php?amount=5&token=',
     };
     this.handleChange = this.handleChange.bind(this);
-    this.customURL = this.customURL.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
-  handleChange({ name, value }) {
-    this.setState({ [name]: value });
-    this.customURL();
-  }
+  async handleClick() {
+    const state = await getStorage('state');
+    const { email } = state.player;
+    const token = await getStorage('token');
 
-  customURL() {
+    const gravatarHash = md5(email);
+
+    const ranking = {
+      name: state.player.name,
+      score: 0,
+      picture: `https://www.gravatar.com/avatar/${gravatarHash}`,
+    };
+
+    const config = await getStorage('config');
+
+    const oldRanking = getStorage('ranking');
+    const newRanking = [...oldRanking];
+    newRanking.push(ranking);
+
     const baseURL = 'https://opentdb.com/api.php?';
     const { amount, difficulty, category, type } = this.state;
     let dif = '';
@@ -32,9 +47,16 @@ class ConfigForm extends Component {
     if (type) (ty = `&type=${type}`);
     const endURL = '&token=';
     const custom = `${baseURL}amount=${amount}${cat}${dif}${ty}${endURL}`;
-    const config = getStorage('config');
     config.url = custom;
+
+    setStorage('state', state);
+    setStorage('token', token);
+    setStorage('ranking', newRanking);
     setStorage('config', config);
+  }
+
+  handleChange({ name, value }) {
+    this.setState({ [name]: value });
   }
 
   renderDificult() {
@@ -128,6 +150,23 @@ class ConfigForm extends Component {
     );
   }
 
+  renderPlay() {
+    return (
+      <div className="field">
+        <Link to="/game">
+          <button
+            type="submit"
+            data-testid="btn-play"
+            onClick={ this.handleClick }
+            onKeyPress={ this.handleClick }
+          >
+            Jogar
+          </button>
+        </Link>
+      </div>
+    );
+  }
+
   render() {
     return (
       <div className="config-form">
@@ -135,6 +174,7 @@ class ConfigForm extends Component {
         {this.renderDificult()}
         {this.renderType()}
         {this.renderQuantity()}
+        {this.renderPlay()}
       </div>
     );
   }
