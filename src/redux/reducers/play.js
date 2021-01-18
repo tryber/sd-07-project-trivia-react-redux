@@ -5,6 +5,7 @@ import {
   RESET_TIMER,
   SAVE_QUESTIONS,
   START_TIME,
+  FETICHING_QUESTIONS,
 } from '../actions';
 
 const PLAY_INITIAL_STATE = {
@@ -14,23 +15,29 @@ const PLAY_INITIAL_STATE = {
   status: '',
   timer: 30,
   setIntervalState: 0,
+  isFetching: false,
 };
 
 const play = (state = PLAY_INITIAL_STATE, action) => {
   switch (action.type) {
+  case FETICHING_QUESTIONS:
+    return {
+      ...state,
+      isFetching: true,
+    };
   case SAVE_QUESTIONS:
     return {
       ...state,
+      isFetching: false,
       questions: action.questions,
       currentQuestion: action.questions[state.indexQuestion],
-      indexQuestion: state.indexQuestion + 1,
       status: action.time,
     };
   case NEXT_QUESTION:
     return {
       ...state,
-      currentQuestion: state.questions[state.indexQuestion],
       indexQuestion: state.indexQuestion + 1,
+      currentQuestion: state.questions[state.indexQuestion],
       timer: 30,
     };
   case START_TIME:
@@ -42,7 +49,6 @@ const play = (state = PLAY_INITIAL_STATE, action) => {
     return {
       ...state,
       currentQuestion: state.questions[state.indexQuestion],
-      indexQuestion: state.indexQuestion + 1,
       timer: 30,
     };
   case COUNT_DOWN:

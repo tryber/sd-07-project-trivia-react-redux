@@ -2,15 +2,13 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { requestToken } from '../services/api';
-import { fetchQuestions, login } from '../redux/actions';
+import { login } from '../redux/actions';
 
 class Login extends Component {
   constructor(props) {
     super(props);
 
     this.verifyLogin = this.verifyLogin.bind(this);
-    this.getToken = this.getToken.bind(this);
 
     this.state = {
       name: '',
@@ -18,11 +16,16 @@ class Login extends Component {
     };
   }
 
-  async getToken() {
-    const { fetchTrivia } = this.props;
-    await requestToken();
-    console.log('oi')
-    fetchTrivia();
+  saveScoreLocalStorage(name, email) {
+    const state = {
+      player: {
+        name,
+        assertions: 0,
+        score: 0,
+        gravatarEmail: email,
+      },
+    };
+    localStorage.setItem('state', JSON.stringify(state));
   }
 
   verifyLogin() {
@@ -65,7 +68,7 @@ class Login extends Component {
               data-testid="btn-play"
               disabled={ this.verifyLogin() }
               onClick={ () => {
-                this.getToken();
+                this.saveScoreLocalStorage(name, email);
                 saveUserInfos(name, email);
               } }
             >
@@ -80,11 +83,9 @@ class Login extends Component {
 
 const mapDispatchToProps = (dispatch) => ({
   saveUserInfos: (name, email) => dispatch(login(name, email)),
-  fetchTrivia: () => dispatch(fetchQuestions()),
 });
 export default connect(null, mapDispatchToProps)(Login);
 
 Login.propTypes = {
   saveUserInfos: PropTypes.func.isRequired,
-  fetchTrivia: PropTypes.func.isRequired,
 };
