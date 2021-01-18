@@ -64,6 +64,10 @@ class LoginForm extends Component {
       picture: `https://www.gravatar.com/avatar/${gravatarHash}`,
     };
 
+    const config = {
+      url: 'https://opentdb.com/api.php?amount=5&token=',
+    };
+
     const oldRanking = getStorage('ranking');
     const newRanking = [...oldRanking];
     newRanking.push(ranking);
@@ -71,6 +75,7 @@ class LoginForm extends Component {
     setStorage('state', state);
     setStorage('token', token);
     setStorage('ranking', newRanking);
+    setStorage('config', config);
   }
 
   render() {
