@@ -1,0 +1,10 @@
+.wrong {
+  background-color: white;
+  border: 3px solid red;
+}
+
+.correct {
+  background-color: white;
+  border: 3px solid rgb(6, 240, 15);
+  color: black;
+}
