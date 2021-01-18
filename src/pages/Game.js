@@ -99,7 +99,7 @@ class Game extends Component {
     const { questionIndex } = this.state;
     const questionsLength = questions.results.length - 1;
     // console.log(typeof history);
-    this.renderTime();
+    // this.renderTime();
     if (questionIndex === questionsLength) return history.push('/feedback');
     this.setState((previous) => ({
       ...previous,

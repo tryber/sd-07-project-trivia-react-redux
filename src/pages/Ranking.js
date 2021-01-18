@@ -14,9 +14,30 @@ class Ranking extends Component {
   }
 
   render() {
+    const ranking = JSON.parse(localStorage.getItem('ranking'));
     return (
       <div className="ranking-container">
         <h1 data-testid="ranking-title">RANKING SCREEN</h1>
+        <ol>
+          {ranking.map((player, index) => (
+            <li key="li">
+              <div key={ player } className="flex-box-ranking">
+                <img keyclassName="ranking-user-img" src={ player.picture } alt="img" />
+                <span data-testid={ `player-name-${index}` }>
+                  {' '}
+                  {player.name}
+                </span>
+                {' '}
+                -
+                <span key="playerScore" data-testid={ `player-score-${index}` }>
+                  {player.score}
+                  {' '}
+                  pontos
+                </span>
+              </div>
+            </li>))}
+        </ol>
+
         <button
           type="button"
           data-testid="btn-go-home"

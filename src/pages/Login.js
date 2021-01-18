@@ -16,8 +16,6 @@ class Login extends React.Component {
 
     this.requestToken = this.requestToken.bind(this);
     this.createLocalState = this.createLocalState.bind(this);
-    this.readLocalRanking = this.readLocalRanking.bind(this);
-    this.createLocalRanking = this.createLocalRanking.bind(this);
     this.createLocalStorage = this.createLocalStorage.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -52,35 +50,9 @@ class Login extends React.Component {
     localStorage.setItem('state', JSON.stringify(newStateStorage));
   }
 
-  readLocalRanking() {
-    const readRanking = JSON.parse(localStorage.getItem('ranking'));
-    return readRanking;
-  }
-
-  createLocalRanking() {
-    const { name } = this.state;
-    const { getScore } = this.props;
-    const currentRanking = this.readLocalRanking();
-    let newRankingStorage = [];
-
-    if (currentRanking) {
-      // console.log('Já existe Jogadores');
-      newRankingStorage = [
-        ...currentRanking,
-        { name, picture: '', score: getScore },
-      ];
-      localStorage.setItem('ranking', JSON.stringify(newRankingStorage));
-    } else {
-      // console.log('Não existe jogadores antigos, vc é o Primeiro');
-      newRankingStorage = [{ name, picture: '', score: getScore }];
-      localStorage.setItem('ranking', JSON.stringify(newRankingStorage));
-    }
-  }
-
   createLocalStorage() {
     const { token } = this.state;
     this.createLocalState();
-    this.createLocalRanking();
     localStorage.setItem('token', JSON.stringify(token));
   }
 

@@ -12,7 +12,7 @@ class GameHeader extends Component {
     this.readLocalState = this.readLocalState.bind(this);
     this.updateLocalState = this.updateLocalState.bind(this);
     this.readLocalRanking = this.readLocalRanking.bind(this);
-    this.updateLocalRanking = this.updateLocalRanking.bind(this);
+    this.createLocalRanking = this.createLocalRanking.bind(this);
   }
 
   componentDidMount() {
@@ -21,7 +21,7 @@ class GameHeader extends Component {
 
   componentDidUpdate() {
     this.updateLocalState();
-    this.updateLocalRanking();
+    this.createLocalRanking();
   }
 
   fetchGravatar() {
@@ -56,6 +56,28 @@ class GameHeader extends Component {
     return readRanking;
   }
 
+  createLocalRanking() {
+    const { getName, getScore, getPicture } = this.props;
+    const currentRanking = this.readLocalRanking();
+    let newRankingStorage = [];
+
+    if (currentRanking) {
+      // console.log('Já existe Jogadores');
+      newRankingStorage = currentRanking.map((user) => {
+        if (user.name === getName) {
+          return { name: getName, picture: getPicture, score: getScore };
+        }
+        return user;
+      });
+      localStorage.setItem('ranking', JSON.stringify(newRankingStorage));
+    } else {
+      // console.log('Não existe jogadores antigos, vc é o Primeiro');
+      newRankingStorage = [{ name: getName, picture: getPicture, score: getScore }];
+      localStorage.setItem('ranking', JSON.stringify(newRankingStorage));
+    }
+  }
+
+/*   
   updateLocalRanking() {
     const { getName, getScore, getPicture } = this.props;
     const currentRanking = this.readLocalRanking();
@@ -65,8 +87,9 @@ class GameHeader extends Component {
       }
       return user;
     });
-    localStorage.setItem('ranking', JSON.stringify(newRankingStorage));
-  }
+    localStorage.setItem('ranking', JSON.stringify(newRankingStorage
+      .sort((a, b) => b.score - a.score)));
+  } */
 
   render() {
     const { getName, getScore, getPicture } = this.props;
