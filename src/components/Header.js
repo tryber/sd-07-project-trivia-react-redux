@@ -9,7 +9,6 @@ class Header extends Component {
     localStorage.setItem('state', JSON.stringify({
       player: {
         name,
-        assertions: 0,
         score: Score,
         gravatarEmail: email,
       } }));

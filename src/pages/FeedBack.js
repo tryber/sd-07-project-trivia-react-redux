@@ -39,7 +39,7 @@ class FeedBack extends Component {
         ) : (
           <p>Mandou bem!</p>
         )}
-        <p data-testid="feedback-total-score">{this.getScore}</p>
+        <p data-testid="feedback-total-score">{this.getScore()}</p>
         <p data-testid="feedback-total-question">{assertions}</p>
         <button
           type="button"
