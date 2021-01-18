@@ -13,7 +13,6 @@ const INITIAL_STATE = {
   score: 0,
   assertions: 0,
   isFetchingToken: false,
-  redirect: false,
 };
 
 function user(state = INITIAL_STATE, action) {
@@ -21,7 +20,7 @@ function user(state = INITIAL_STATE, action) {
   case REQUEST_TOKEN:
     return { ...state, isFetchingToken: true };
   case RECEIVE_TOKEN:
-    return { ...state, ...action.payload, isFetchingToken: false, redirect: true };
+    return { ...state, ...action.payload, isFetchingToken: false };
   case FAILED_REQUEST:
     return { ...state, isFetchingToken: false, error: action.error };
   case UPDATE_SCORE: {

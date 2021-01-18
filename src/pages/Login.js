@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Redirect, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { login } from '../actions';
 import './Login.css';
 
@@ -41,7 +41,7 @@ class Login extends Component {
 
   render() {
     const { email, name, disabled } = this.state;
-    const { signin, redirect } = this.props;
+    const { signin } = this.props;
     return (
       <div className="login">
         <main className="main">
@@ -72,16 +72,15 @@ class Login extends Component {
               type="button"
               disabled={ disabled }
               data-testid="btn-play"
-              onClick={ () => {
-                signin({ name, email });
+              onClick={ async () => {
+                const { history } = this.props;
+                await signin({ name, email });
+                history.push('/game');
               } }
             >
               Play
             </button>
           </div>
-          {redirect && (
-            <Redirect to="/game" />
-          )}
         </main>
         <footer className="footer">
           <Link className="settings" data-testid="btn-settings" to="/settings">
@@ -95,15 +94,13 @@ class Login extends Component {
 
 Login.propTypes = {
   signin: PropTypes.func.isRequired,
-  redirect: PropTypes.bool.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
-
-const mapStateToProps = (state) => ({
-  redirect: state.player.redirect,
-});
 
 const mapDispatchToProps = (dispatch) => ({
   signin: (value) => dispatch(login(value)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(null, mapDispatchToProps)(Login);
