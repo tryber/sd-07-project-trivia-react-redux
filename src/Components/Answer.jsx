@@ -3,16 +3,28 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 class Answer extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick() {
+    const { hasClicked } = this.props;
+
+    hasClicked();
+  }
+
   render() {
-    const { answer, status, index, isOver } = this.props;
+    const { answer, status, index, style, isDisabled, isOver } = this.props;
     const data = status === 'correct' ? `${status}-answer` : `${status}-answer-${index}`;
     return (
       <button
         id={ answer }
         type="button"
-        className="btn-actions"
+        disable={ isOver.timer === 0 ? 'true' : 'false' || isDisabled }
+        className={ style }
         data-testid={ data }
-        disable={ isOver.timer === 0 ? 'true' : 'false' }
+        onClick={ () => this.handleClick()
       >
         { answer }
       </button>
@@ -29,6 +41,10 @@ Answer.propTypes = {
   status: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired,
   isOver: PropTypes.objectOf.isRequired,
+  style: PropTypes.string.isRequired,
+  isDisabled: PropTypes.bool.isRequired,
+  hasClicked: PropTypes.func.isRequired,
+
 };
 
 export default connect(mapStateToProps, null)(Answer);

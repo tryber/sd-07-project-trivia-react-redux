@@ -14,6 +14,7 @@ class Play extends React.Component {
     this.setQuestions = this.setQuestions.bind(this);
     this.createArray = this.createArray.bind(this);
     this.shuffle = this.shuffle.bind(this);
+    this.setNextQuestion = this.setNextQuestion.bind(this);
     this.state = {
       currentLevel: 0,
       category: '',
@@ -48,6 +49,27 @@ class Play extends React.Component {
     this.setState(state);
   }
 
+  setNextQuestion() {
+    const { game } = this.props;
+    const { questions } = game;
+    const { currentLevel } = this.state;
+    const nextLevel = currentLevel + 1;
+    const maxLevel = 5;
+
+    if (nextLevel < maxLevel) {
+      const arrayOfAnswers = this.createArray(
+        questions[nextLevel].correct_answer,
+        questions[nextLevel].incorrect_answers,
+      );
+      this.setState({
+        currentLevel: nextLevel,
+        category: questions[nextLevel].category,
+        questionText: questions[nextLevel].question,
+        answers: arrayOfAnswers,
+      });
+    }
+  }
+
   async getQuestions() {
     const { apiFetchQuestions } = this.props;
     await apiFetchQuestions();
@@ -80,12 +102,16 @@ class Play extends React.Component {
     const correctValue = {
       answer: correct,
       status: 'correct',
+      className: 'btn-actions',
+      disabled: false,
     };
     newArray.push(correctValue);
     for (let i = 0; i < incorrect.length; i += 1) {
       const wrong = {
         answer: incorrect[i],
         status: 'wrong',
+        className: 'btn-actions',
+        disabled: false,
       };
       newArray.push(wrong);
     }
@@ -104,6 +130,7 @@ class Play extends React.Component {
             category={ category }
             questionText={ questionText }
             answer={ answers }
+            handleClickNextQuestion={ this.setNextQuestion }
           />
         </div>
         <div className="bottom-content">
