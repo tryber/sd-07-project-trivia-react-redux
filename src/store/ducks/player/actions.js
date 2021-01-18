@@ -17,6 +17,10 @@ export const addScore = (score, assertions) => ({
   assertions,
 });
 
+export const resetPlayer = () => ({
+  type: PlayerTypes.RESET_PLAYER,
+});
+
 export function getToken() {
   return async (dispatch) => {
     const response = await fetchToken();
@@ -27,7 +31,6 @@ export function getToken() {
 }
 
 export function setLocalStorage() {
-  console.log('chamou setLocalStorge');
   const { player } = this.props;
   const { name, gravatarEmail: email, score, assertions } = player;
   addScore(score, assertions);
