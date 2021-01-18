@@ -1,12 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter, Route } from 'react-router-dom';
+import { Provider } from 'react-redux';
 import './index.css';
 import App from './App';
-import * as serviceWorker from './serviceWorker';
+import Game from './pages/Game';
+import Settings from './pages/Settings';
+import store from './store';
+import Feedback from './pages/Feedback';
+import Ranking from './pages/Ranking';
 
-ReactDOM.render(<App />, document.getElementById('root'));
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+ReactDOM.render(
+  <BrowserRouter>
+    <Provider store={ store }>
+      <Route exact path="/" component={ App } />
+      <Route path="/game" component={ Game } />
+      <Route path="/settings" component={ Settings } />
+      <Route path="/feedback" component={ Feedback } />
+      <Route path="/ranking" component={ Ranking } />
+    </Provider>
+  </BrowserRouter>,
+  document.getElementById('root'),
+);
