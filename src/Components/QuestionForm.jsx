@@ -94,5 +94,4 @@ QuestionForm.propTypes = {
   handleClickNextQuestion: PropTypes.func.isRequired,
 };
 
-
 export default QuestionForm;

@@ -13,7 +13,7 @@ class Answer extends React.Component {
         type="button"
         className="btn-actions"
         data-testid={ data }
-        disabled={ isOver.timer === 0 ? 'true' : 'false' }
+        disabled={ isOver.timer === 0 ? 'true' : 'false' || 'false' }
       >
         { answer }
       </button>
