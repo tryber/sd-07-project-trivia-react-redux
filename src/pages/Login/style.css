@@ -9,12 +9,26 @@
   padding: 20px;
 }
 
+.outer-image {
+  position: absolute;
+  display: flex;
+  height: 40vmin;
+  width: 40vmin;
+}
+
+.inner-image {
+  position: absolute;
+  z-index: 1;
+}
+
 
 .App-logo {
   justify-content: center;
   align-items: center;
   height: 30vmin;
+  margin-left: 175px;
   pointer-events: none;
+  position: relative;
 }
 
 @media ( prefers-reduced-motion : no-preference ) {
