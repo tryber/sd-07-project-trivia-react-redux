@@ -1,5 +1,9 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { newGame } from '../actions';
+import Header from '../components/Header';
 // import './Score.css';
 
 class Score extends Component {
@@ -14,8 +18,8 @@ class Score extends Component {
     //   }});
     // localStorage.setItem('state',localStorageItem)
     // ----------------
-
-    const { name, score, picture, assertions } = JSON
+    const { playAgain } = this.props;
+    const { score, assertions } = JSON
       .parse(localStorage
         .getItem('state')).player;
     const limit = 3;
@@ -33,42 +37,44 @@ class Score extends Component {
     return (
 
       <div className="score-grid">
-        <div className="score-header">
-          <img src={ picture } data-testid="header-profile-picture" alt="gravatar" />
-          <p data-testid="header-player-name">
-            {`Nome: ${name}`}
+        <Header />
+        <div className="score-notice">
+          <p data-testid="feedback-text">
+            { assertionMessage }
           </p>
-          <p data-testid="header-score">
+          <p data-testid="feedback-total-score">
             { score }
           </p>
-
-          <div className="score-notice">
-            <p data-testid="feedback-text">
-              { assertionMessage }
-            </p>
-            <p data-testid="feedback-total-score">
-              { score }
-            </p>
-            <p data-testid="feedback-total-question">
-              { assertions }
-            </p>
-          </div>
-          <div className="score-buttons">
-            <button type="button" className="button">
-              <Link to="/" data-testid="btn-play-again" className="btn">
-                Jogar novamente
-              </Link>
-            </button>
-            <button type="button" data-testid="btn-ranking" className="button">
-              <Link to="/ranking" className="btn">
-                Ranking
-              </Link>
-            </button>
-          </div>
+          <p data-testid="feedback-total-question">
+            { assertions }
+          </p>
+        </div>
+        <div className="score-buttons">
+          <button type="button" className="button">
+            <Link
+              to="/"
+              data-testid="btn-play-again"
+              onClick={ playAgain }
+              className="btn"
+            >
+              Jogar novamente
+            </Link>
+          </button>
+          <button type="button" className="button">
+            <Link data-testid="btn-ranking" to="/ranking" className="btn">
+              Ranking
+            </Link>
+          </button>
         </div>
       </div>
     );
   }
 }
 
-export default Score;
+Score.propTypes = {
+  playAgain: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({ playAgain: () => dispatch(newGame()) });
+
+export default connect(null, mapDispatchToProps)(Score);

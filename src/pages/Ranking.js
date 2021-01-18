@@ -1,27 +1,29 @@
+import PropTypes from 'prop-types';
 import React from 'react';
-import { Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import md5 from 'crypto-js/md5';
+import { newGame } from '../actions';
 import logo from '../trivia.png';
 import '../App.css';
 
 class Ranking extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      login: false,
-    };
     this.handlerInit = this.handlerInit.bind(this);
   }
 
   handlerInit() {
-    this.setState({
-      login: true,
-    });
+    const { playAgain } = this.props;
+    playAgain();
   }
 
   render() {
-    const { login } = this.state;
-    const rankMore = [];
+    let rankMore = [];
+
+    if (JSON.parse(localStorage.getItem('ranking')) !== null) {
+      rankMore = JSON.parse(localStorage.getItem('ranking'));
+    }
 
     const players = JSON.parse(localStorage.getItem('state')).player;
 
@@ -38,15 +40,17 @@ class Ranking extends React.Component {
 
     const ranking = [...rankMore, rank];
 
-    console.log(ranking);
-
     localStorage.setItem('ranking', JSON.stringify(ranking));
 
     const requestRanking = JSON.parse(localStorage.getItem('ranking'));
 
-    const localRanking = requestRanking.sort((a, b) => a.score - b.score);
+    const localRanking = requestRanking.sort((a, b) => {
+      const descend = -1;
+      const ascend = 1;
+      if (a.score > b.score) return descend;
+      return ascend;
+    });
 
-    if (login) return <Redirect to="/" />;
     return (
       <div>
         <header className="App-header">
@@ -59,9 +63,11 @@ class Ranking extends React.Component {
               <div key={ nome }>
                 <img src={ picture } className="imagem-ranking" alt="ranking" />
                 {' '}
-                <span data-testid={ `player-name-${index}` }>
+                <span>
                   Nome:
                   {' '}
+                </span>
+                <span data-testid={ `player-name-${index}` }>
                   { name }
                 </span>
                 {' '}
@@ -77,10 +83,9 @@ class Ranking extends React.Component {
           <br />
           <button
             type="button"
-            data-testid="btn-go-home"
             onClick={ this.handlerInit }
           >
-            Home
+            <Link data-testid="btn-go-home" to="/">Home</Link>
           </button>
         </header>
       </div>
@@ -88,4 +93,10 @@ class Ranking extends React.Component {
   }
 }
 
-export default Ranking;
+Ranking.propTypes = {
+  playAgain: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({ playAgain: () => dispatch(newGame()) });
+
+export default connect(null, mapDispatchToProps)(Ranking);

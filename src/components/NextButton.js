@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 
 class NextButton extends React.Component {
   render() {
-    const { onclick } = this.props;
+    const { onclick, className } = this.props;
     return (
       <div>
         <br />
         <button
+          className={ className }
           type="button"
           data-testid="btn-next"
           onClick={ onclick }
@@ -21,6 +22,7 @@ class NextButton extends React.Component {
 
 NextButton.propTypes = {
   onclick: PropTypes.func.isRequired,
+  className: PropTypes.string.isRequired,
 };
 
 export default NextButton;

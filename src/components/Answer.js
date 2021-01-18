@@ -34,7 +34,6 @@ class Answer extends React.Component {
     };
     this.nextQuestion = this.nextQuestion.bind(this);
     this.respond = this.respond.bind(this);
-    this.reponseQuestion = this.reponseQuestion.bind(this);
     this.sumPoints = this.sumPoints.bind(this);
   }
 
@@ -81,12 +80,6 @@ class Answer extends React.Component {
     stopTime();
   }
 
-  reponseQuestion(endTime) {
-    const { showAnswer } = this.state;
-    if (!endTime
-      || showAnswer) return <NextButton onclick={ () => this.nextQuestion() } />;
-  }
-
   render() {
     const { count, showAnswer } = this.state;
     const { resAnswer, resQuest, resCategory, endTime } = this.props;
@@ -131,7 +124,10 @@ class Answer extends React.Component {
 
         ))}
         {' '}
-        { this.reponseQuestion(endTime) }
+        <NextButton
+          className={ (!endTime || showAnswer) ? 'visible' : 'hidden' }
+          onclick={ () => this.nextQuestion() }
+        />
       </div>
     );
   }

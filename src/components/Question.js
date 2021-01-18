@@ -10,7 +10,6 @@ class Question extends Component {
       <div className="questions">
         <p data-testid="question-category">{ category }</p>
         <p data-testid="question-text">{ question }</p>
-
       </div>
     );
   }

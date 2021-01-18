@@ -11,6 +11,7 @@ export const ADD_TIME = 'ADD_TIME';
 export const ADD_RESET = 'ADD_RESET';
 export const ADD_STOP = 'ADD_STOP';
 export const ADD_TIMEVALUE = 'ADD_TIMEVALUE';
+export const NEW_GAME = 'NEW_GAME';
 
 const requestToken = () => ({ type: REQUEST_TOKEN });
 const failedRequest = (error) => ({ type: FAILED_REQUEST, error });
@@ -55,6 +56,8 @@ export function fetchQuestionAnswers(tok) {
     return dispatch(questionUpdate(questionJson.results));
   };
 }
+
+export const newGame = () => ({ type: NEW_GAME });
 
 export const updateScore = (value) => ({ type: UPDATE_SCORE, value });
 

@@ -13,6 +13,15 @@
   width: 80px;
 }
 
+
+.visible {
+  display: visible;
+}
+
+.hidden {
+  display: none;
+}
+
 @media ( prefers-reduced-motion : no-preference ) {
 
   .App-logo {

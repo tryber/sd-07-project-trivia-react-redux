@@ -3,6 +3,7 @@ import {
   RECEIVE_TOKEN,
   FAILED_REQUEST,
   UPDATE_SCORE,
+  NEW_GAME,
 } from '../actions';
 
 const INITIAL_STATE = {
@@ -38,6 +39,12 @@ function user(state = INITIAL_STATE, action) {
     } });
     localStorage.setItem('state', newLocal);
     return newState;
+  }
+  case NEW_GAME: {
+    const newGame = JSON.stringify({ player: INITIAL_STATE });
+    localStorage.setItem('state', newGame);
+    localStorage.setItem('token', '');
+    return INITIAL_STATE;
   }
   default:
     return state;
