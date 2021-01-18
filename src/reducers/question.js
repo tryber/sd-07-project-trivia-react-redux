@@ -7,7 +7,10 @@ const QUESTION_INITIAL_STATE = {
 function questions(state = QUESTION_INITIAL_STATE, action) {
   switch (action.type) {
   case 'GET_QUESTIONS':
-    return { ...state, response_code: action.payload.response_code, results: action.payload.results };
+    return { ...state,
+      response_code: action.payload.response_code,
+      results: action.payload.results,
+    };
   case 'SET_TIME':
     return { ...state, time: action.time };
   default:

@@ -9,7 +9,7 @@ export const getQuestion = (payload) => ({
 export const setTime = (time) => ({
   type: SET_TIME,
   time,
-})
+});
 
 export function thunkApiQuestions(token) {
   return async (dispatch) => {

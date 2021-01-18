@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { thunkApiQuestions, setScore, setAssertions, addRanking } from '../actions';
-import Header from '../components/Header';
-import Timer from '../components/Timer';
+import Header from './Header';
+import Timer from './Timer';
 import ScoreCalc from '../helpers/ScoreCalc';
 
 class Questions extends React.Component {
@@ -24,12 +24,37 @@ class Questions extends React.Component {
     this.nextQuestion = this.nextQuestion.bind(this);
     this.stopTime = this.stopTime.bind(this);
     this.addPlayerToRank = this.addPlayerToRank.bind(this);
+    this.setCorrectClick = this.setCorrectClick.bind(this);
   }
 
   componentDidMount() {
     const { getQuestion } = this.props;
     const token = JSON.parse(localStorage.getItem('token'));
     getQuestion(token[token.length - 1]);
+  }
+
+  componentDidUpdate() {
+    this.setCorrectClick();
+  }
+
+  setCorrectClick() {
+    const { time, questions, addScore, addAssertions } = this.props;
+    const { counter, correctClick } = this.state;
+    if (time === 0) this.stopTime();
+    if (correctClick) {
+      const player = ScoreCalc(time, questions[counter].difficulty);
+      this.setState({ correctClick: false });
+      addScore(player.score);
+      addAssertions(player.assertions);
+    }
+  }
+
+  stopTime() {
+    this.setState({
+      buttonCorrect: 'correct',
+      buttonError: 'wrong-answer',
+      buttonDisable: true,
+    });
   }
 
   borderButton({ target }) {
@@ -43,33 +68,16 @@ class Questions extends React.Component {
         if (target.className === 'correct') {
           this.setState({ correctClick: true });
         }
-      }
+      },
     );
-  }
-
-  stopTime() {
-    this.setState({
-      buttonCorrect: 'correct',
-      buttonError: 'wrong-answer',
-      buttonDisable: true,
-    });
-  }
-
-  componentDidUpdate() {
-    const { time, questions, addScore, addAssertions } = this.props;
-    const { counter, correctClick } = this.state;
-    if (time === 0) this.stopTime();
-    if (correctClick) {
-      const player = ScoreCalc(time, questions[counter].difficulty);
-      this.setState({ correctClick: false });
-      addScore(player.score);
-      addAssertions(player.assertions);
-    }
   }
 
   addPlayerToRank() {
     const { player } = this.props;
-    const playerRank = { name: player.name, score: player.score, picture: player.gravatarEmail };
+    const playerRank = { name: player.name,
+      score: player.score,
+      picture: player.gravatarEmail,
+    };
     const ranking = JSON.parse(localStorage.getItem('ranking'));
     const value = ranking === null ? [] : ranking;
     value.push(playerRank);
@@ -77,7 +85,7 @@ class Questions extends React.Component {
   }
 
   nextQuestion() {
-    let { counter } = this.state;
+    const { counter } = this.state;
     const { history } = this.props;
     this.setState(
       {
@@ -88,11 +96,12 @@ class Questions extends React.Component {
       },
       () => {
         console.log(counter);
-        if (counter === 4) {
+        const four = 4;
+        if (counter === four) {
           this.addPlayerToRank();
           history.push('/feedback');
         }
-      }
+      },
     );
   }
 
@@ -104,27 +113,27 @@ class Questions extends React.Component {
         if (answer === question.correct_answer) {
           return (
             <button
-              key={answer}
+              key={ answer }
               type="button"
-              disabled={buttonDisable}
+              disabled={ buttonDisable }
               data-testid="correct-answer"
-              className={buttonCorrect}
-              onClick={this.borderButton}
+              className={ buttonCorrect }
+              onClick={ this.borderButton }
             >
-              {answer}
+              { answer }
             </button>
           );
         }
         return (
           <button
-            key={answer}
+            key={ answer }
             type="button"
-            disabled={buttonDisable}
-            data-testid={`wrong-answer-${index}`}
-            className={buttonError}
-            onClick={this.borderButton}
+            disabled={ buttonDisable }
+            data-testid={ `wrong-answer-${index}` }
+            className={ buttonError }
+            onClick={ this.borderButton }
           >
-            {answer}
+            { answer }
           </button>
         );
       })
@@ -136,21 +145,21 @@ class Questions extends React.Component {
     return (
       <div>
         <Header />
-        <div data-testid="question-category">{question.category}</div>
+        <div data-testid="question-category">{ question.category }</div>
         <div>
           Pergunta:
-          <div data-testid="question-text">{question.question}</div>
+          <div data-testid="question-text">{ question.question }</div>
         </div>
         <div>
           Alternativas:
-          {sortAnswers}
+          { sortAnswers }
         </div>
-        <Timer stop={this.state.buttonDisable} />
+        <Timer stop={ buttonDisable } />
         <button
           type="button"
-          onClick={this.nextQuestion}
+          onClick={ this.nextQuestion }
           data-testid="btn-next"
-          hidden={!buttonDisable}
+          hidden={ !buttonDisable }
         >
           Próxima Pergunta
         </button>
@@ -159,14 +168,16 @@ class Questions extends React.Component {
   }
 
   givesIfTrue(counter) {
-    if (counter > 4) return <div></div>
+    const four = 4;
+    if (counter > four) return <div> </div>;
     return <div>Carregando</div>;
   }
 
   render() {
     const { questions } = this.props;
     const { counter } = this.state;
-    return questions === undefined || questions.length === 0 || counter > 4
+    const four = 4;
+    return questions === undefined || questions.length === 0 || counter > four
       ? this.givesIfTrue(counter)
       : this.givesIfFalse(questions[counter]);
   }
@@ -188,7 +199,11 @@ const mapDispatchToProps = (dispatch) => ({
 Questions.propTypes = {
   getQuestion: PropTypes.func.isRequired,
   questions: PropTypes.instanceOf(Object).isRequired,
-  token: PropTypes.func.isRequired,
+  time: PropTypes.func.isRequired,
+  addScore: PropTypes.func.isRequired,
+  addAssertions: PropTypes.func.isRequired,
+  player: PropTypes.instanceOf(Object).isRequired,
+  history: PropTypes.instanceOf(Object).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Questions);
