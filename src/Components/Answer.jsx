@@ -23,6 +23,7 @@ class Answer extends React.Component {
 
 const mapStateToProps = (state) => ({
   isOver: state.timer,
+
 });
 
 Answer.propTypes = {
