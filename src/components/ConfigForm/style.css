@@ -33,7 +33,7 @@ select {
   align-items: center;
   appearance: none;
   border: 1px solid #333;
-  background: no-repeat center right #ff9914;
+  background: "../../images/arrow-down-sign-to-navigate\ \(1\).png" no-repeat center right #ff9914;
   border-radius: 10px;
   padding: 0 20px;
   font-size: 15px;

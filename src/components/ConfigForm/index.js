@@ -153,14 +153,14 @@ class ConfigForm extends Component {
   renderPlay() {
     return (
       <div className="field">
-        <Link to="/game">
+        <Link to="/">
           <button
             type="submit"
             data-testid="btn-play"
             onClick={ this.handleClick }
             onKeyPress={ this.handleClick }
           >
-            Jogar
+            Logar novamente!
           </button>
         </Link>
       </div>

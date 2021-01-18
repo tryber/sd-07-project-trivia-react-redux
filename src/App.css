@@ -2,11 +2,6 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
 .red-border {
   border: 1px solid red;
 }
@@ -14,6 +9,12 @@
 .green-border {
   border: 1px solid green;
 }
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
 
 @media ( prefers-reduced-motion : no-preference ) {
 

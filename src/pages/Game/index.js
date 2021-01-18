@@ -75,8 +75,8 @@ class Game extends Component {
   }
 
   async handleApiRequisition() {
-    const token = getStorage('token');
-    const config = getStorage('config');
+    const token = await getStorage('token');
+    const config = await getStorage('config');
     const questionUrl = `${config.url}${token}`;
     const apiQuestionresult = await getApi(questionUrl);
     const { results } = apiQuestionresult;
