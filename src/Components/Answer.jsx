@@ -6,14 +6,14 @@ class Answer extends React.Component {
   render() {
     const { answer, status, index, isOver } = this.props;
     const data = status === 'correct' ? `${status}-answer` : `${status}-answer-${index}`;
-    console.log(isOver);
+    console.log(answer);
     return (
       <button
         id={ answer }
         type="button"
         className="btn-actions"
         data-testid={ data }
-        disabled={ !isOver.timer === 0 ? 'true' : 'false' }
+        disabled={ isOver.timer === 0 ? 'true' : 'false' }
       >
         { answer }
       </button>
