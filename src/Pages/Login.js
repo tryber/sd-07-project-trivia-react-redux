@@ -44,7 +44,7 @@ class Login extends React.Component {
     const gravatarUrl = `https://www.gravatar.com/avatar/${emailMd5}`;
     const player = {
       player: {
-        name: name,
+        name,
         assertions: 0,
         score: 0,
         gravatarEmail: gravatarUrl,
@@ -114,9 +114,8 @@ Login.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
-  sendName: PropTypes.func.isRequired,
   addToken: PropTypes.func.isRequired,
-  setGravatar: PropTypes.func.isRequired,
+  addNewPlayer: PropTypes.func.isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(Login);

@@ -1,18 +1,19 @@
 export default function ScoreCalc(time, dificulties) {
   let dificulty;
+  const hard = 3;
   switch (dificulties) {
-    case 'easy':
-      dificulty = 1;
-      break;
-    case 'medium':
-      dificulty = 2;
-      break;
-    case 'hard':
-      dificulty = 3;
-      break;
-    default:
-      dificulty = 1;
-      break;
+  case 'easy':
+    dificulty = 1;
+    break;
+  case 'medium':
+    dificulty = 2;
+    break;
+  case 'hard':
+    dificulty = hard;
+    break;
+  default:
+    dificulty = 1;
+    break;
   }
 
   const player = JSON.parse(localStorage.getItem('state'));

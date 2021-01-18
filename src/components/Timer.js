@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { setTime } from '../actions';
 
@@ -9,59 +10,74 @@ class Timer extends React.Component {
     this.timer = 0;
     this.countDown = this.countDown.bind(this);
     this.sendTimeToState = this.sendTimeToState.bind(this);
+    this.setStopedTime = this.setStopedTime.bind(this);
+  }
+
+  componentDidUpdate() {
+    this.setStopedTime();
+  }
+
+  setStopedTime() {
+    const { time } = this.props;
+    const thirty = 30;
+    if (time !== thirty) {
+      this.setState({ stopedTime: time, seconds: thirty });
+      this.timer = 0;
+    }
   }
 
   countDown() {
-    let seconds = this.state.seconds - 1;
+    const { seconds } = this.state;
+    const { timeToStore } = this.props;
+    const secTime = seconds - 1;
     this.setState({
-      seconds: seconds,
+      seconds: secTime,
     });
-    if (seconds === 0) {
+    if (secTime === 0) {
       clearInterval(this.timer);
-      this.props.timeToStore(this.state.seconds);
+      timeToStore(secTime);
     }
   }
 
   sendTimeToState() {
     const { seconds } = this.state;
+    const { timeToStore } = this.props;
     clearInterval(this.timer);
-    this.props.timeToStore(seconds);
+    timeToStore(seconds);
   }
 
   startTimer() {
-    if (this.timer === 0 && this.state.seconds > 0) {
-      this.timer = setInterval(this.countDown, 1000);
-    }
-  }
-
-  componentDidUpdate() {
-    const { time } = this.props;
-    if (time !== 30) {
-      this.setState({ stopedTime: time, seconds: 30 });
-      this.timer = 0;
+    const thousand = 1000;
+    const { seconds } = this.state;
+    if (this.timer === 0 && seconds > 0) {
+      this.timer = setInterval(this.countDown, thousand);
     }
   }
 
   render() {
     const { stop } = this.props;
+    const { seconds, stopedTime } = this.state;
     if (!stop) {
       this.startTimer();
-      return <div>{ this.state.seconds }</div>;
+      return <div>{ seconds }</div>;
     }
-    else {
-      this.sendTimeToState();
-      return <div>{ this.state.stopedTime }</div>;
-    }
+    this.sendTimeToState();
+    return <div>{ stopedTime }</div>;
   }
 }
 
 const mapDispatchToProps = (dispatch) => ({
   timeToStore: (time) => dispatch(setTime(time)),
-})
+});
 
 const mapStateToProps = (state) => ({
   time: state.questions.time,
 });
 
+Timer.propTypes = {
+  time: PropTypes.func.isRequired,
+  timeToStore: PropTypes.func.isRequired,
+  stop: PropTypes.func.isRequired,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Timer);

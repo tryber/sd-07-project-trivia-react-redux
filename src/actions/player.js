@@ -28,7 +28,7 @@ export const setScore = (score) => ({
 export const addRanking = (ranking) => ({
   type: ADD_RANKING,
   ranking,
-})
+});
 
 export function thunkApiToken() {
   return async (dispatch) => {

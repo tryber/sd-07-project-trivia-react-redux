@@ -41,12 +41,12 @@ class Feedback extends Component {
               {assertions === undefined ? 0 : assertions}
             </span>
           </h2>
-          <Link to='/ranking'>
+          <Link to="/ranking">
             <button type="button" data-testid="btn-ranking">
               Ver Ranking
             </button>
           </Link>
-          <Link to='/'>
+          <Link to="/">
             <button type="button" data-testid="btn-play-again">
               Jogar novamente
             </button>

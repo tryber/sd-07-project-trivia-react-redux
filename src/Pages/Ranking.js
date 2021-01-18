@@ -8,7 +8,7 @@ class Ranking extends React.Component {
     console.log(playersList);
 
     const playerListDescendingOrder = playersList.sort(
-      (a, b) => b.score - a.score
+      (a, b) => b.score - a.score,
     );
 
     localStorage.setItem('ranking', JSON.stringify(playerListDescendingOrder));
