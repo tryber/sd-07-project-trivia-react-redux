@@ -1,0 +1,42 @@
+.game {
+  background-image: url('https://media.istockphoto.com/vectors/background-of-questions-mark-help-symbol-white-color-on-yellow-vector-id468123738');
+}
+
+.questions {
+  background-color: rgb(146, 105, 51);
+  border: 3px solid #c3c3c3;
+  color: whitesmoke;
+}
+
+.header {
+  align-items: center;
+  background-color: antiquewhite;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-right: 10%;
+  width: 100%;
+}
+
+.player {
+  display: flex;
+}
+
+.score {
+  display: flex;
+}
+
+.timer {
+  display: flex;
+  font-size: 30px;
+  justify-content: flex-end;
+  margin-right: 10%;
+}
+
+.perfil {
+  margin-left: 5px;
+}
+
+.gridQuestions {
+  height: 330px;
+}

@@ -1,18 +1,25 @@
 .App {
   text-align: center;
+  width: 100%;
 }
 
 .App-logo {
-  height: 40vmin;
+  height: 15vmin;
   pointer-events: none;
 }
 
-.red-border {
-  border: 1px solid red;
+.imagem-ranking {
+  border-radius: 50%;
+  width: 80px;
 }
 
-.green-border {
-  border: 1px solid green;
+
+.visible {
+  display: visible;
+}
+
+.hidden {
+  display: none;
 }
 
 @media ( prefers-reduced-motion : no-preference ) {
@@ -22,20 +29,6 @@
   }
 }
 
-.App-header {
-  align-items: center;
-  background-color: #282c34;
-  color: white;
-  display: flex;
-  flex-direction: column;
-  font-size: calc(10px + 2vmin);
-  justify-content: center;
-  min-height: 100vh;
-}
-
-.App-link {
-  color: #61dafb;
-}
 
 @keyframes shake {
 
