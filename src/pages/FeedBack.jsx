@@ -10,20 +10,32 @@ class FeedBack extends React.Component {
     return (
       <div>
         <Header />
-        {playerStorage.player.assertions >= three ? (
-          <div data-testid="feedback-text">Mandou bem!</div>
-        ) : (
-          <div data-testid="feedback-text">Podia ser melhor...</div>
-        )}
-        <div data-testid="feedback-total-score">
-          {playerStorage.player.score}
+        <div className="feedback-container">
+          {playerStorage.player.assertions >= three ? (
+            <div data-testid="feedback-text">
+              <h3>Mandou bem!</h3>
+            </div>
+          ) : (
+            <div data-testid="feedback-text">
+              <h2>Podia ser melhor...</h2>
+            </div>
+          )}
+          <div data-testid="feedback-total-score">
+            <h4>
+              Pontuação final:
+              {playerStorage.player.score}
+            </h4>
+          </div>
+          <div data-testid="feedback-total-question">
+            <h5>
+              Respostas corretas:
+              {playerStorage.player.assertions}
+            </h5>
+          </div>
+          <Link to="/" data-testid="btn-play-again" className="play-again-button">
+            Jogar novamente
+          </Link>
         </div>
-        <div data-testid="feedback-total-question">
-          {playerStorage.player.assertions}
-        </div>
-        <Link to="/" data-testid="btn-play-again">
-          Jogar novamente
-        </Link>
       </div>
     );
   }

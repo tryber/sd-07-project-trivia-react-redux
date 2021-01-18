@@ -125,51 +125,65 @@ const Game = (props) => {
   const { results } = dataGame.data;
 
   return (
-    <div>
+    <div className="game-page">
       <Header />
-      <div>
-        <h3 data-testid="question-category">{results[counter].category}</h3>
+      <div className="questions-container">
+        <div>
+          <h3 data-testid="question-category">{results[counter].category}</h3>
+        </div>
+        <div>
+          <p data-testid="question-text">{results[counter].question}</p>
+        </div>
       </div>
-      <div>
-        <p data-testid="question-text">{results[counter].question}</p>
+      <div className="page-container">
+        <div>
+          <div className="options-container">
+            <div>
+              <button
+                value="correct"
+                type="button"
+                data-testid="correct-answer"
+                className={ color.style1 }
+                onClick={ handleClickAnswer }
+                disabled={ isEnable }
+              >
+                {results[counter].correct_answer}
+              </button>
+            </div>
+            {results[counter].incorrect_answers.map((answer, index) => (
+              <div key={ answer }>
+                <button
+                  value="incorrect"
+                  type="button"
+                  data-testid={ `wrong-answer-${index}` }
+                  className={ color.style2 }
+                  onClick={ handleClickAnswer }
+                  disabled={ isEnable }
+                >
+                  {answer}
+                </button>
+              </div>
+            ))}
+          </div>
+          <div>
+            {showButton ? (
+              <button
+                className="border-neutral next-button"
+                type="button"
+                data-testid="btn-next"
+                onClick={ handleQuestion }
+              >
+                Próxima
+              </button>
+            ) : (
+              <Empty />
+            )}
+          </div>
+        </div>
+        <div className="timer">
+          <p className="timer-text">{ time }</p>
+        </div>
       </div>
-      <div>
-        <button
-          value="correct"
-          type="button"
-          data-testid="correct-answer"
-          className={ color.style1 }
-          onClick={ handleClickAnswer }
-          disabled={ isEnable }
-        >
-          {results[counter].correct_answer}
-        </button>
-      </div>
-      <div>
-        {results[counter].incorrect_answers.map((answer, index) => (
-          <button
-            value="incorrect"
-            key={ answer }
-            type="button"
-            data-testid={ `wrong-answer-${index}` }
-            className={ color.style2 }
-            onClick={ handleClickAnswer }
-            disabled={ isEnable }
-          >
-            {answer}
-          </button>
-        ))}
-      </div>
-      <div>
-        {showButton ? (
-          <button type="button" data-testid="btn-next" onClick={ handleQuestion }>
-            Próxima
-          </button>
-        ) : (
-          <Empty />
-        )}
-      </div>
-      <div>{time}</div>
     </div>
   );
 };
