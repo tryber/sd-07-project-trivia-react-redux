@@ -8,6 +8,7 @@ import Game from './pages/Game';
 import Settings from './pages/Settings';
 import store from './store';
 import Feedback from './pages/Feedback';
+import Ranking from './pages/Ranking';
 
 ReactDOM.render(
   <BrowserRouter>
@@ -16,6 +17,7 @@ ReactDOM.render(
       <Route path="/game" component={ Game } />
       <Route path="/settings" component={ Settings } />
       <Route path="/feedback" component={ Feedback } />
+      <Route path="/ranking" component={ Ranking } />
     </Provider>
   </BrowserRouter>,
   document.getElementById('root'),
