@@ -1,4 +1,4 @@
-import { Redirect } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -45,6 +45,14 @@ class Feedback extends Component {
               >
                 Jogar novamente
               </button>
+              <Link to="/ranking">
+                <button
+                  type="button"
+                  data-testid="btn-ranking"
+                >
+                  Ver Ranking
+                </button>
+              </Link>
             </div>
           )}
       </div>
