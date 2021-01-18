@@ -92,7 +92,7 @@ const Game = (props) => {
             score,
             email: user.email,
           },
-        })
+        }),
       );
     } else {
       setAssertion(false);
@@ -198,8 +198,8 @@ Game.propTypes = {
       results: PropTypes.arrayOf(
         PropTypes.shape({
           difficulty: PropTypes.string,
-        })
-      )
+        }),
+      ),
     }),
     score: PropTypes.number,
   }).isRequired,
