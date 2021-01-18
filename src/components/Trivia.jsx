@@ -1,39 +1,121 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { freezeTimeAction, nextQuestion, resetTimer } from '../redux/actions/index';
+import { Link } from 'react-router-dom';
+import {
+  CountDownAction,
+  freezeTimeAction,
+  nextQuestion,
+  resetTimer,
+  startTimeAction,
+} from '../redux/actions/index';
 import PlayTimer from './PlayTimer';
+import RandomAnswer from './RandomAnswer';
 
 class Trivia extends Component {
   constructor(props) {
     super(props);
+    this.saveScoreLocalStorage = this.saveScoreLocalStorage.bind(this);
+    this.feedbackOrNextQuestion = this.feedbackOrNextQuestion.bind(this);
+    this.disableBtns = this.disableBtns.bind(this);
     this.enableBtnsQuestions = this.enableBtnsQuestions.bind(this);
-    this.changeBorderColor = this.changeBorderColor.bind(this);
-    this.randomArrayQuestions = this.randomArrayQuestions.bind(this);
     this.nextQuestionComponent = this.nextQuestionComponent.bind(this);
-    this.showNextQuestionBtn = this.showNextQuestionBtn.bind(this);
+    this.cownDown = this.cownDown.bind(this);
   }
 
-  changeBorderColor() {
-    const correctAnswer = document.querySelector('.correct-answer');
-    const wrongAnswers = document.querySelectorAll('.wrong-answer');
+  setStateTimer() {
+    const { timer, freezeTime, countDown } = this.props;
 
-    correctAnswer.style.border = '3px solid rgb(6, 240, 15)';
-
-    for (let index = 0; index < wrongAnswers.length; index += 1) {
-      wrongAnswers[index].style.border = '3px solid rgb(255, 0, 0)';
+    if (timer === 0) {
+      freezeTime();
+      this.disableBtns();
+    } else {
+      countDown();
     }
   }
 
-  showNextQuestionBtn() {
-    const nextQuestionBtn = document.querySelector('.next-question');
-    nextQuestionBtn.style.display = 'block';
+  cownDown() {
+    const { startTimeDispatch } = this.props;
+    const numberToSetInterval = 1000;
+    const setIntervalState = setInterval(() => this.setStateTimer(), numberToSetInterval);
+    startTimeDispatch(setIntervalState);
   }
 
   nextQuestionComponent() {
-    const { nextQuestionDispatch, resetTimerDispatch } = this.props;
+    const {
+      nextQuestionDispatch,
+      resetTimerDispatch,
+      startTimeDispatch,
+      setIntervalToClear,
+    } = this.props;
+    const numberToSetInterval = 1000;
+    clearInterval(setIntervalToClear);
+    const setIntervalState = setInterval(() => this.setStateTimer(), numberToSetInterval);
+    startTimeDispatch(setIntervalState);
     nextQuestionDispatch();
     resetTimerDispatch();
+  }
+
+  saveScoreLocalStorage() {
+    const { score, name, gravatarEmail, assertions } = this.props;
+    const state = {
+      player: {
+        name,
+        assertions,
+        score,
+        gravatarEmail,
+      },
+    };
+    localStorage.setItem('state', JSON.stringify(state));
+  }
+
+  feedbackOrNextQuestion() {
+    const { indexQuestion, setIntervalToClear } = this.props;
+    const numberToComper = 4;
+    if (indexQuestion === numberToComper) {
+      clearInterval(setIntervalToClear);
+      return (
+        <Link to="/feedback">
+          <button
+            type="button"
+            onClick={ () => {
+              // this.saveScoreLocalStorage();
+              this.enableBtnsQuestions();
+            } }
+            className="next-question"
+            data-testid="btn-next"
+          >
+            Próxima
+          </button>
+        </Link>
+      );
+    }
+    return (
+      <button
+        type="button"
+        onClick={ () => {
+          this.saveScoreLocalStorage();
+          this.nextQuestionComponent();
+          this.enableBtnsQuestions();
+        } }
+        className="next-question"
+        data-testid="btn-next"
+      >
+        Próxima
+      </button>
+    );
+  }
+
+  disableBtns() {
+    const correctAnswer = document.querySelector('.correct-answer');
+    const wrongAnswers = document.querySelectorAll('.wrong-answer');
+
+    correctAnswer.disabled = 'true';
+    for (let index = 0; index < wrongAnswers.length; index += 1) {
+      wrongAnswers[index].disabled = 'true';
+    }
+    const nextQuestionBtn = document.querySelector('.next-question');
+    nextQuestionBtn.style.display = 'block';
   }
 
   enableBtnsQuestions() {
@@ -46,20 +128,9 @@ class Trivia extends Component {
     }
   }
 
-  randomArrayQuestions(string, array) {
-    const newArray = [...array, string];
-    for (let i = newArray.length - 1; i > 0; i -= 1) {
-      const j = Math.floor(Math.random() * i);
-      const temp = newArray[i];
-      newArray[i] = newArray[j];
-      newArray[j] = temp;
-    }
-    return newArray;
-  }
-
   render() {
-    const { questions, currentQuestion, nextQuestionDispatch, freezeTime } = this.props;
-
+    const { questions, currentQuestion } = this.props;
+    console.log(questions);
     return (
       <div>
         <span>TRIVIA</span>
@@ -69,43 +140,15 @@ class Trivia extends Component {
             <h1
               data-testid="question-category"
             >
-              { currentQuestion.category }
+              {currentQuestion.category}
             </h1>
             <h2
               data-testid="question-text"
             >
-              { currentQuestion.question }
+              {currentQuestion.question}
             </h2>
-            {this.randomArrayQuestions(currentQuestion
-              .correct_answer, currentQuestion.incorrect_answers)
-              .map((element, indice) => (
-                <button
-                  key={ indice }
-                  type="button"
-                  data-testid={ element === currentQuestion.correct_answer
-                    ? 'correct-answer' : `wrong-answer-${indice}` }
-                  className={ element === currentQuestion.correct_answer
-                    ? 'correct-answer'
-                    : 'wrong-answer' }
-                  onClick={ () => {
-                    this.changeBorderColor();
-                    this.showNextQuestionBtn();
-                    freezeTime();
-                  } }
-                >
-                  { element }
-                </button>))}
-            <button
-              type="button"
-              onClick={ () => {
-                nextQuestionDispatch();
-                this.enableBtnsQuestions();
-              } }
-              className="next-question"
-              data-testid="btn-next"
-            >
-              Próxima
-            </button>
+            <RandomAnswer currentQuestion={ currentQuestion } />
+            {this.feedbackOrNextQuestion()}
           </div>
         ) : (
           <h3>Loading</h3>
@@ -116,23 +159,41 @@ class Trivia extends Component {
 }
 
 const mapStateToProps = (state) => ({
+  setIntervalToClear: state.play.setIntervalState,
   questions: state.play.questions,
   currentQuestion: state.play.currentQuestion,
   status: state.play.status,
+  timer: state.play.timer,
+  indexQuestion: state.play.indexQuestion,
+  score: state.login.score,
+  name: state.login.name,
+  assertions: state.login.assertions,
+  gravatarEmail: state.login.email,
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  startTimeDispatch: (setIntervalState) => dispatch(startTimeAction(setIntervalState)),
   nextQuestionDispatch: () => dispatch(nextQuestion()),
   resetTimerDispatch: () => dispatch(resetTimer()),
   freezeTime: () => dispatch(freezeTimeAction()),
+  countDown: () => dispatch(CountDownAction()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Trivia);
 
 Trivia.propTypes = {
+  startTimeDispatch: PropTypes.func.isRequired,
   questions: PropTypes.arrayOf(PropTypes.object).isRequired,
   currentQuestion: PropTypes.objectOf(PropTypes.array).isRequired,
   nextQuestionDispatch: PropTypes.func.isRequired,
   resetTimerDispatch: PropTypes.func.isRequired,
   freezeTime: PropTypes.func.isRequired,
+  countDown: PropTypes.func.isRequired,
+  setIntervalToClear: PropTypes.number.isRequired,
+  score: PropTypes.number.isRequired,
+  assertions: PropTypes.number.isRequired,
+  indexQuestion: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  gravatarEmail: PropTypes.string.isRequired,
+  timer: PropTypes.number.isRequired,
 };
