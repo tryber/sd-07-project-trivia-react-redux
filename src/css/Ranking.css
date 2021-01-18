@@ -1,0 +1,44 @@
+.ranking-container {
+  align-items: center;
+  background-color: whitesmoke;
+  border: 2px solid black;
+  border-radius: 20px;
+  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.384);
+  display: flex;
+  flex-flow: column nowrap;
+  height: auto;
+  justify-content: center;
+  margin: auto;
+  padding: 30px;
+  width: clamp(20vw, 40rem, 60vw);
+}
+
+.ranking-container h1 {
+  font-weight: 700;
+  margin: 20px;
+}
+
+.ranking-container p {
+  font-weight: 700;
+  margin: 20px;
+}
+
+.ranking-container button {
+  background-color: rgb(1, 0, 85);
+  color: white;
+  font-size: 15px;
+  font-weight: 700;
+  margin: 10px;
+  padding: 10px;
+}
+
+.flex-box-ranking {
+  align-items: center;
+  display: flex;
+  
+}
+
+.ranking-user-img {
+  margin-right: 7px;
+  width: 13%;
+}

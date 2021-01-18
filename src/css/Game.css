@@ -1,0 +1,114 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.container-game {
+  align-items: center;
+  background-color: whitesmoke;
+  border: 2px solid black;
+  border-radius: 20px;
+  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.384);
+  flex-flow: row nowrap;
+  height: auto;
+  justify-content: center;
+  margin: auto;
+  width: clamp(40vw, 70rem, 70vw);
+}
+
+.container-header-game {
+  align-items: center;
+  background-color: darkblue;
+  border-radius: 17px 17px 0 0;
+  color: white;
+  display: flex;
+  flex-flow: row nowrap;
+  font-size: 20px;
+  height: 50px;
+  justify-content: space-around;
+  text-transform: uppercase;
+  width: 100%;
+}
+
+.container-questions-answers {
+  align-items: center;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+  padding: 50px;
+}
+
+.container-questions-answers h2 {
+  box-shadow: 5px 5px 10px black;
+  font-size: 30px;
+  font-weight: 700;
+  padding: 20px;
+  text-align: left;
+  width: 400px;
+}
+
+.container-buttons {
+  display: flex;
+  flex-flow: row wrap;
+  width: 200px;
+}
+
+.container-buttons div {
+  align-items: stretch;
+  display: flex;
+  justify-content: center;
+  margin: 5px 0;
+  width: 100%;
+}
+
+.container-buttons button {
+  background-color: rgb(1, 0, 85);
+  color: white;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 10px;
+  width: 100%;
+}
+
+button:disabled {
+  background: rgb(204, 204, 204);
+  color: whitesmoke;
+}
+
+.timer-nextQuestion-container button {
+  background-color: #b4000c;
+  color: white;
+  font-size: 20px;
+  font-weight: 700;
+  padding: 10px;
+}
+
+.container-buttons button:hover {
+  background-color: black;
+  cursor: pointer;
+}
+
+.timer-nextQuestion-container {
+  align-items: center;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+  margin: auto;
+  margin-top: 20px;
+  padding: 20px;
+  width: clamp(20vw, 40rem, 60vw);
+}
+
+.timer-nextQuestion-container p {
+  background-color: whitesmoke;
+  border-radius: 50%;
+  font-size: 20px;
+  font-weight: 700;
+  padding: 15px 20px;
+}
+
+.timer-nextQuestion-container button:hover {
+  background-color: black;
+  cursor: pointer;
+}
