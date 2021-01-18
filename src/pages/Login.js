@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getEmail, getName } from '../actions';
 import '../css/Login.css';
+import { readLocalRanking } from '../utils/utils';
 
 class Login extends React.Component {
   constructor(props) {
@@ -25,33 +26,6 @@ class Login extends React.Component {
     this.requestToken();
   }
 
-  createLocalStorage() {
-    const { name, email, token } = this.state;
-
-    const state = {
-      player: {
-        name,
-        assertions: 0,
-        score: 0,
-        gravatarEmail: email,
-      },
-    };
-    const ranking = { name, score: 10, picture: 'url-da-foto-no-gravatar' };
-    const tokenData = { token };
-    localStorage.setItem('state', JSON.stringify(state));
-    localStorage.setItem('ranking', JSON.stringify(ranking));
-    localStorage.setItem('token', JSON.stringify(tokenData));
-  }
-
-  async requestToken() {
-    const endpoint = 'https://opentdb.com/api_token.php?command=request';
-    const response = await fetch(endpoint);
-    const data = await response.json();
-    this.setState({
-      token: data.token,
-    });
-  }
-
   handleSubmit() {
     const { sendEmail, history, sendName } = this.props;
     const { email, name } = this.state;
@@ -66,15 +40,47 @@ class Login extends React.Component {
     this.setState({ [name]: value });
   }
 
+  handleSettingsButton() {
+    const { history } = this.props;
+    history.push('/settings');
+  }
+
   verifyEmailName() {
     const { email, name } = this.state;
     const re = /\S+@\S+\.\S+/;
     return re.test(email) && name.length;
   }
 
-  handleSettingsButton() {
-    const { history } = this.props;
-    history.push('/settings');
+  async requestToken() {
+    const endpoint = 'https://opentdb.com/api_token.php?command=request';
+    const response = await fetch(endpoint);
+    const data = await response.json();
+    this.setState({
+      token: data.token,
+    });
+  }
+
+  createLocalStorage() {
+    const { name, email, token } = this.state;
+    const rankingState = readLocalRanking();
+    const state = {
+      player: {
+        name,
+        assertions: 0,
+        score: 0,
+        gravatarEmail: email,
+      },
+    };
+
+    let ranking;
+    if (!rankingState) {
+      ranking = [];
+      localStorage.setItem('ranking', JSON.stringify(ranking));
+    }
+
+    const tokenData = { token };
+    localStorage.setItem('state', JSON.stringify(state));
+    localStorage.setItem('token', JSON.stringify(tokenData));
   }
 
   render() {

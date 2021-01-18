@@ -43,34 +43,7 @@ class Game extends Component {
     this.timer();
   }
 
-  savingShuffleAnswers() {
-    // console.log(this.renderAllDataQuestion());
-    this.setState({
-      shuffleAnswers: [...this.renderAllDataQuestion()],
-    });
-  }
-
-  timer() {
-    const { timer } = this.state;
-    const initialSecondEnableButton = 25;
-    const lastSecondDisableButton = 0;
-    if (timer === lastSecondDisableButton) {
-      this.handleUserAnswer();
-      this.setState((prevState) => ({
-        ...prevState,
-        timer: 30,
-        disableButton: true,
-      }));
-    }
-
-    if (timer === initialSecondEnableButton) {
-      this.setState({
-        timer: 24,
-        disableButton: false,
-      });
-    }
-  }
-
+  
   handleClasses(type) {
     document.querySelectorAll('.btnAnswer').forEach((button) => {
       if (type === 'add') {
@@ -95,11 +68,39 @@ class Game extends Component {
     }));
   }
 
+  timer() {
+    const { timer } = this.state;
+    const initialSecondEnableButton = 25;
+    const lastSecondDisableButton = 0;
+    if (timer === lastSecondDisableButton) {
+      this.handleUserAnswer();
+      this.setState((prevState) => ({
+        ...prevState,
+        timer: 30,
+        disableButton: true,
+      }));
+    }
+
+    if (timer === initialSecondEnableButton) {
+      this.setState({
+        timer: 24,
+        disableButton: false,
+      });
+    }
+  }
+
+  savingShuffleAnswers() {
+    // console.log(this.renderAllDataQuestion());
+    this.setState({
+      shuffleAnswers: [...this.renderAllDataQuestion()],
+    });
+  }
+
   nextQuestion() {
     const { questions, history } = this.props;
     const { questionIndex } = this.state;
     const questionsLength = questions.results.length - 1;
-    // console.log(typeof history);
+
     if (questionIndex === questionsLength) return history.push('/feedback');
     this.setState((previous) => ({
       ...previous,
@@ -196,6 +197,7 @@ class Game extends Component {
       disableButton,
       showBtn,
     } = this.state;
+
     const { questions, sendCorrectAnswers } = this.props;
     return questions.results ? (
       <div>

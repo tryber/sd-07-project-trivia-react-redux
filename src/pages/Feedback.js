@@ -3,12 +3,29 @@ import '../css/Feedback.css';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import GameHeader from '../components/GameHeader';
+import { readLocalState, fetchGravatar, readLocalRanking } from '../utils/utils';
 
 class Feedback extends Component {
   constructor() {
     super();
     this.goToLogin = this.goToLogin.bind(this);
-    this.goToRaking = this.goToRaking.bind(this);
+    this.goToRanking = this.goToRanking.bind(this);
+  }
+
+  componentDidMount() {
+    const rankingState = readLocalRanking();
+    const finalState = readLocalState();
+    if (finalState && rankingState) {
+      const srcImg = fetchGravatar(finalState.player.email);
+      const thisPlayerRanking = {
+        name: finalState.player.name,
+        score: finalState.player.score,
+        picture: srcImg,
+      };
+      rankingState.push(thisPlayerRanking);
+      localStorage.setItem('ranking', JSON.stringify(rankingState));
+      localStorage.setItem('state', JSON.stringify({}));
+    }
   }
 
   goToLogin() {
@@ -16,7 +33,7 @@ class Feedback extends Component {
     history.push('/');
   }
 
-  goToRaking() {
+  goToRanking() {
     const { history } = this.props;
     history.push('/ranking');
   }
@@ -41,7 +58,7 @@ class Feedback extends Component {
           <button
             type="button"
             data-testid="btn-ranking"
-            onClick={ this.goToRaking }
+            onClick={ this.goToRanking }
           >
             Ver ranking
           </button>

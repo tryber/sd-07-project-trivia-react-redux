@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import '../css/Ranking.css';
 import PropTypes from 'prop-types';
+import { readLocalRanking } from '../utils/utils';
 
 class Ranking extends Component {
   constructor() {
@@ -14,9 +15,30 @@ class Ranking extends Component {
   }
 
   render() {
+    const ranking = readLocalRanking();
     return (
       <div className="ranking-container">
         <h1 data-testid="ranking-title">RANKING SCREEN</h1>
+        <ol>
+          {ranking.map((player, index) => (
+            <li key="li">
+              <div key={ player } className="flex-box-ranking">
+                <img keyclassName="ranking-user-img" src={ player.picture } alt="img" />
+                <span data-testid={ `player-name-${index}` }>
+                  {' '}
+                  {player.name}
+                </span>
+                {' '}
+                -
+                <span key={ playscor } data-testid={ `player-score-${index}` }>
+                  {player.score}
+                  {' '}
+                  pontos
+                </span>
+              </div>
+            </li>))}
+        </ol>
+
         <button
           type="button"
           data-testid="btn-go-home"
