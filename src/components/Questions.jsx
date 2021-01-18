@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { questionCount } from '../store/reducer/user.action';
+import md5 from 'crypto-js/md5';
+import { questionCount, resetQuestionCount } from '../store/reducer/user.action';
 
 class Questions extends Component {
   constructor(props) {
@@ -12,6 +13,7 @@ class Questions extends Component {
     this.updateTime = this.updateTime.bind(this);
     this.handleButtonsState = this.handleButtonsState.bind(this);
     this.timeOut = this.timeOut.bind(this);
+    this.saveRankingLocalStorage = this.saveRankingLocalStorage.bind(this);
     this.state = {
       timer: 30,
       isDisabled: false,
@@ -35,9 +37,13 @@ class Questions extends Component {
     clearInterval(this.timerID);
   }
 
-  timeOut() {
-    clearInterval(this.timerID);
-    this.handleButtonsState();
+  getImageApi(hash) {
+    return `https://www.gravatar.com/avatar/${hash}`;
+  }
+
+  getLocalStorage() {
+    const { player } = JSON.parse(localStorage.getItem('state'));
+    return player;
   }
 
   startTimer() {
@@ -46,6 +52,11 @@ class Questions extends Component {
       () => this.updateTime(),
       TIMER_CLOCK,
     );
+  }
+
+  timeOut() {
+    clearInterval(this.timerID);
+    this.handleButtonsState();
   }
 
   handleButtonsState() {
@@ -70,9 +81,13 @@ class Questions extends Component {
   }
 
   handleNextButtonClick() {
-    const { dispatchQuestionCount, questionCounter } = this.props;
+    const { dispatchQuestionCount, questionCounter, resetQuestion } = this.props;
     const NEXT_QUESTIONS_LIMIT = 4;
-    if (questionCounter === NEXT_QUESTIONS_LIMIT) this.setState({ isRedirect: true });
+    if (questionCounter === NEXT_QUESTIONS_LIMIT) {
+      this.saveRankingLocalStorage();
+      this.setState({ isRedirect: true });
+      resetQuestion();
+    }
     dispatchQuestionCount();
     this.setState({
       timer: 30,
@@ -102,6 +117,21 @@ class Questions extends Component {
           assertions: player.assertions + ASSERTIONS_ADD,
         },
       }));
+  }
+
+  saveRankingLocalStorage() {
+    console.log('entrei');
+    const { name, score, gravatarEmail } = this.getLocalStorage();
+    const image = this.getImageApi(md5(gravatarEmail));
+
+    const objectRankingPlayer = {
+      name,
+      score,
+      image,
+    };
+
+    const ranking = [...JSON.parse(localStorage.getItem('ranking')), objectRankingPlayer];
+    localStorage.setItem('ranking', JSON.stringify(ranking));
   }
 
   render() {
@@ -171,12 +201,14 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   dispatchQuestionCount: () => dispatch(questionCount()),
+  resetQuestion: () => dispatch(resetQuestionCount()),
 });
 
 Questions.propTypes = {
   questions: PropTypes.arrayOf(PropTypes.string).isRequired,
   dispatchQuestionCount: PropTypes.func.isRequired,
   questionCounter: PropTypes.number.isRequired,
+  resetQuestion: PropTypes.number.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Questions);

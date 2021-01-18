@@ -49,6 +49,11 @@ class Login extends Component {
     };
     localStorage.setItem('token', token);
     localStorage.setItem('state', JSON.stringify(objectPlayer));
+    const ranking = JSON.parse(localStorage.getItem('ranking'));
+    if (!ranking) {
+      localStorage.setItem('ranking', JSON.stringify([]));
+    }
+
     this.setState({
       isRedirect: true,
     });
@@ -111,13 +116,4 @@ class Login extends Component {
   }
 }
 
-/* /* const mapStateToProps = (state) => ({
-
-}); */
-
-/* const mapDispatchToProps = (dispatch) => ({
-  dispatchTrivia: (token) => dispatch(getTriviaQuestions(token)),
-}); */
-
-/* export default connect(null, mapDispatchToProps)(Login) */
 export default Login;
