@@ -3,7 +3,7 @@
 }
 
 .App-logo {
-  height: 40vmin;
+  height: 50px;
   pointer-events: none;
 }
 
@@ -30,7 +30,7 @@
   flex-direction: column;
   font-size: calc(10px + 2vmin);
   justify-content: center;
-  min-height: 100vh;
+  min-height: 200px;
 }
 
 .App-link {
@@ -54,4 +54,17 @@
   40%, 60% {
     transform: translate3d(4px, 0, 0);
   }
+}
+
+.configuracoes {
+  height: 15px;
+  width: 15px;
+}
+
+.correct {
+  border: 3px solid rgb(6, 240, 15);
+}
+
+.wrong-answer {
+  border: 3px solid red;
 }
