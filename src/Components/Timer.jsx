@@ -18,7 +18,10 @@ class Timer extends React.Component {
     const { timer } = this.state;
     if (timer >= 0) {
       const interval = 1000;
-      setInterval(this.count, interval);
+      const preInterval = 5000;
+      setTimeout(() => {
+        setInterval(this.count, interval);
+      }, preInterval);
     }
   }
 
