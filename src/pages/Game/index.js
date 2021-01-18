@@ -23,6 +23,10 @@ class Game extends Component {
     localStorage.setItem('state', JSON.stringify(plyrObjct));
   }
 
+  componentWillUnmount() {
+    clearInterval(this.timer);
+  }
+
   startTimer() {
     const oneSecond = 1000;
     this.timer = setInterval(() => {

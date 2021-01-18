@@ -1,51 +1,28 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Header } from '../../components';
+import { Header, FeedbackMessage, HomeButton } from '../../components';
 
-class Feedback extends Component {
-  feedbackMessage() {
-    const { assertions, score } = this.props;
-    const minScore = 3;
-    if (assertions < minScore) {
-      return (
-        <>
-          <h2 data-testid="feedback-text">Podia ser melhor...</h2>
-          <span data-testid="feedback-total-score">{score}</span>
-          <h2 data-testid="feedback-total-question">{assertions}</h2>
-        </>
-      );
-    }
-    return (
-      <>
-        <h2 data-testid="feedback-text">Mandou bem!</h2>
-        <span data-testid="feedback-total-score">{score}</span>
-        <h2 data-testid="feedback-total-question">{assertions}</h2>
-      </>
-    );
-  }
+const Feedback = ({ score, assertions }) => (
+  <div>
+    <Header />
+    <h1>Tela de Feedback</h1>
+    <FeedbackMessage score={ score } assertions={ assertions } />
+    <HomeButton test="btn-play-again" />
+    <Link to="/ranking">
+      <button type="button" data-testid="btn-ranking">Ver Ranking</button>
+    </Link>
+  </div>
+);
 
-  render() {
-    return (
-      <div>
-        <header>
-          <Header />
-        </header>
-        <h1>Tela de Feedback</h1>
-        { this.feedbackMessage() }
-        <Link to="/">
-          <button type="button" data-testid="btn-play-again">Jogar novamente</button>
-        </Link>
-      </div>
-    );
-  }
-}
 const mapStateToProps = (state) => ({
   assertions: state.game.assertions,
   score: state.game.score,
 });
+
 export default connect(mapStateToProps)(Feedback);
+
 Feedback.propTypes = {
   assertions: PropTypes.number.isRequired,
   score: PropTypes.number.isRequired,
