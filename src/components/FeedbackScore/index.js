@@ -2,9 +2,21 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import * as PlayerActions from '../../store/ducks/player/actions';
+
 import './FeedbackScore.css';
 
 class FeedBackScore extends Component {
+  componentDidMount() {
+    const { rankingProps } = this.props;
+    localStorage.setItem('ranking', JSON.stringify(rankingProps));
+  }
+
+  componentWillUnmount() {
+    const { resetPlayerAction } = this.props;
+    resetPlayerAction();
+  }
+
   render() {
     const { assertionsProps, scoreProps } = this.props;
     const threeAssertions = 3;
@@ -55,11 +67,18 @@ class FeedBackScore extends Component {
 const mapStateToProps = (state) => ({
   scoreProps: state.player.score,
   assertionsProps: state.player.assertions,
+  rankingProps: state.ranking,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  resetPlayerAction: (() => dispatch(PlayerActions.resetPlayer())),
 });
 
 FeedBackScore.propTypes = {
   assertionsProps: PropTypes.number.isRequired,
   scoreProps: PropTypes.number.isRequired,
+  resetPlayerAction: PropTypes.func.isRequired,
+  rankingProps: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
-export default connect(mapStateToProps)(FeedBackScore);
+export default connect(mapStateToProps, mapDispatchToProps)(FeedBackScore);

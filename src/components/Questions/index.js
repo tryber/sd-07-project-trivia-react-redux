@@ -4,6 +4,7 @@ import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { fetchQuestionNAnswer } from '../../services';
 import { addScore } from '../../store/ducks/player/actions';
+import getCurrentPlayer from '../../store/ducks/ranking/actions';
 import './Questions.css';
 
 class Questions extends Component {
@@ -18,6 +19,7 @@ class Questions extends Component {
     this.calculateScore = this.calculateScore.bind(this);
     this.setLocalStorage = this.setLocalStorage.bind(this);
     this.getQuestionLevelScore = this.getQuestionLevelScore.bind(this);
+    this.getCurrentPlayerToState = this.getCurrentPlayerToState.bind(this);
 
     this.state = {
       questions: [],
@@ -65,6 +67,12 @@ class Questions extends Component {
     default:
       return levelScore;
     }
+  }
+
+  getCurrentPlayerToState() {
+    const { getCurrentPlayerAction } = this.props;
+    const { playerProps: { name, score, hash } } = this.props;
+    getCurrentPlayerAction(name, score, hash);
   }
 
   calculateScore() {
@@ -125,7 +133,10 @@ class Questions extends Component {
     if (isLoading) return <h1>Is Loading</h1>;
 
     const numberOfQuestions = 4;
-    if (questionIndex > numberOfQuestions) return <Redirect to="/feedback" />;
+    if (questionIndex > numberOfQuestions) {
+      this.getCurrentPlayerToState();
+      return <Redirect to="/feedback" />;
+    }
 
     const questionToLoad = questions[questionIndex];
 
@@ -193,15 +204,20 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   addScoreAction: (score, assertions) => dispatch(addScore(score, assertions)),
+  getCurrentPlayerAction:
+  (name, score, hash) => dispatch(getCurrentPlayer(name, score, hash)),
 });
 
 Questions.propTypes = {
   scoreProps: PropTypes.number.isRequired,
   assertionsProps: PropTypes.number.isRequired,
   addScoreAction: PropTypes.func.isRequired,
+  getCurrentPlayerAction: PropTypes.func.isRequired,
   playerProps: PropTypes.shape({
     name: PropTypes.string.isRequired,
     gravatarEmail: PropTypes.string.isRequired,
+    hash: PropTypes.string.isRequired,
+    score: PropTypes.number.isRequired,
   }).isRequired,
 };
 

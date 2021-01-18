@@ -17,6 +17,10 @@ const player = (state = INITIAL_STATE, action) => {
     const { score, assertions } = action;
     return { ...state, score, assertions };
   }
+  case PlayerTypes.RESET_PLAYER: {
+    const { name, gravatarEmail, token, hash, score, assertions } = INITIAL_STATE;
+    return { ...state, name, gravatarEmail, token, hash, score, assertions };
+  }
   default:
     return state;
   }
