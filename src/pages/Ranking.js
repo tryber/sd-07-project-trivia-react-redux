@@ -7,7 +7,6 @@ class Ranking extends Component {
   render() {
     const { history } = this.props;
     const ranking = getStorage('ranking');
-    //  https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
     const numberNegative = -1;
     ranking.sort((a, b) => {
       if (a.score > b.score) {
