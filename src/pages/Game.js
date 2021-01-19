@@ -79,6 +79,8 @@ class Game extends React.Component {
   }
 
   saveRanking() {
+    //  const { player: { assertions } } = getStorage('state');
+    // const { player: { assertions, score } } = getStorage('state');
     const ranking = getStorage('ranking');
     const { hash, name, assertions } = this.props;
     const src = `https://www.gravatar.com/avatar/${hash}`;
