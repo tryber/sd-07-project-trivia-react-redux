@@ -21,7 +21,7 @@ class Login extends React.Component {
   }
 
   saveLoginLocalStorage(name, email) {
-    const { resetAssertionsA } = this.props;
+    const { resetAssertionsAction } = this.props;
     const newPlayer = {
       player: {
         name,
@@ -31,7 +31,7 @@ class Login extends React.Component {
       },
     };
     setStorage('state', newPlayer);
-    resetAssertionsA();
+    resetAssertionsAction();
   }
 
   handleEmailChange({ target }) {
@@ -103,7 +103,7 @@ class Login extends React.Component {
 const mapDispatchToProps = (dispatch) => ({
   loginAction: (name, email) => dispatch(login(name, email)),
   tokenAction: (token) => dispatch(fetchToken(token)),
-  resetAssertionsA: () => dispatch(resetAssertions()),
+  resetAssertionsAction: () => dispatch(resetAssertions()),
 });
 
 const mapStateToProps = (state) => ({
@@ -115,6 +115,7 @@ Login.propTypes = {
   history: PropTypes.func.isRequired,
   tokenAction: PropTypes.func.isRequired,
   token: PropTypes.string.isRequired,
+  resetAssertionsAction: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
