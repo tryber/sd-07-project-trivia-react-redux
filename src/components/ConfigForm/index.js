@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import './style.css';
 
 class ConfigForm extends Component {
   renderDificult() {
+    const { change } = this.props;
     return (
       <div className="config-item">
         <div>
@@ -11,7 +13,7 @@ class ConfigForm extends Component {
         <div>
           <select
             name="difficulty"
-            onChange={ ({ target }) => this.handleChange(target) }
+            onChange={ (target) => change({ target }) }
           >
             <option value="">Qualquer Dificuldade</option>
             <option value="easy">Fácil</option>
@@ -24,12 +26,13 @@ class ConfigForm extends Component {
   }
 
   renderType() {
+    const { change } = this.props;
     return (
       <div className="config-item">
         <div>
           Tipo da questão
         </div>
-        <select name="type" onChange={ ({ target }) => this.handleChange(target) }>
+        <select name="type" onChange={ (target) => change({ target }) }>
           <option value="">Qualquer tipo</option>
           <option value="multiple">Multipla escolha</option>
           <option value="boolean">Verdadeiro ou Falso</option>
@@ -39,12 +42,13 @@ class ConfigForm extends Component {
   }
 
   renderQuantity() {
+    const { change } = this.props;
     return (
       <div className="config-item">
         <div>
           Quantidade de questões
         </div>
-        <select name="amount" onChange={ ({ target }) => this.handleChange(target) }>
+        <select name="amount" onChange={ (target) => change({ target }) }>
           <option value="5">5 Questões</option>
           <option value="10">10 Questões</option>
           <option value="20">20 Questões</option>
@@ -57,12 +61,13 @@ class ConfigForm extends Component {
   }
 
   renderCategory() {
+    const { change } = this.props;
     return (
       <div className="config-item">
         <div>
           Categoria
         </div>
-        <select name="category" onChange={ ({ target }) => this.handleChange(target) }>
+        <select name="category" onChange={ (target) => change({ target }) }>
           <option value="">Qualquer Categoria</option>
           <option value="9">Conhecimentos Gerais</option>
           <option value="10">Entretenimento: Livros</option>
@@ -104,5 +109,9 @@ class ConfigForm extends Component {
     );
   }
 }
+
+ConfigForm.propTypes = {
+  change: PropTypes.func.isRequired,
+};
 
 export default ConfigForm;

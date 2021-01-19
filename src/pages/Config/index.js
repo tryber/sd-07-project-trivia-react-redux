@@ -65,7 +65,7 @@ class Config extends Component {
       <div className="config-content-child config-main">
         <div className="config-flex-basis-center">
           <div className="config-content-main">
-            <ConfigForm />
+            <ConfigForm change={ this.handleChange } />
           </div>
         </div>
       </div>
@@ -74,7 +74,7 @@ class Config extends Component {
 
   renderPlay() {
     return (
-      <div className="field">
+      <div className="config-footer">
         <Link to="/">
           <button
             type="submit"
