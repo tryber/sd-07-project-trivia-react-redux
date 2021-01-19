@@ -7,7 +7,6 @@ import {
   ConfigButton,
   Next,
   Title,
-  // QuestionCategory,
 } from '../../components';
 import { getStorage, setStorage } from '../../services';
 import getApi from '../../services/api';
@@ -26,11 +25,13 @@ class Game extends Component {
       intervalID: 0,
       finishTime: '',
       questionAnsered: false,
+      answers: [],
     };
     this.handleApiRequisition = this.handleApiRequisition.bind(this);
     this.changeTimer = this.changeTimer.bind(this);
     this.handleClickNext = this.handleClickNext.bind(this);
     this.handleClickAnswer = this.handleClickAnswer.bind(this);
+    this.handleNewRandomAnswers = this.handleNewRandomAnswers.bind(this);
   }
 
   componentDidMount() {
@@ -50,20 +51,6 @@ class Game extends Component {
     const timeOut = 30000;
     setTimeout(() => {
       const { timer } = this.state;
-      // const curQuestion = questions[turn];
-      // let index = 1;
-      // if (curQuestion.correct_answer === 1) index += 1;
-
-      // this.handleClickAnswer(index);
-      // const { intervalID } = this.state;
-      // clearInterval(intervalID);
-      // this.setState({
-      //   visibility: '',
-      //   next: true,
-      //   questionAnsered: true,
-      // timer: 30,
-      // });
-
       clearInterval(ID);
       this.setState({
         next: true,
@@ -81,13 +68,18 @@ class Game extends Component {
     const apiQuestionresult = await getApi(questionUrl);
     const { results } = apiQuestionresult;
     this.setState({ questions: results });
-
     const ID = this.changeTimer();
     this.clearTimer(ID);
     this.setState({
       isFetching: false,
       intervalID: ID,
     });
+    const { questions, turn } = this.state;
+    const curQuestion = questions[turn];
+    let answers = [...curQuestion.incorrect_answers, curQuestion.correct_answer];
+    const randomNumberFormulaPattern = 0.5;
+    answers = answers.sort(() => Math.random() - randomNumberFormulaPattern);
+    this.setState({ answers });
   }
 
   contentHeader(currQuestion, timer) {
@@ -120,25 +112,16 @@ class Game extends Component {
       )
     );
   }
-  // state.player.score += this.handleCurrentScore();
 
   handleClickAnswer(index) {
-    const { questions, turn } = this.state;
+    const { questions, turn, answers } = this.state;
     const curQuestion = questions[turn];
-    const answers = [...curQuestion.incorrect_answers, curQuestion.correct_answer];
-
     if (answers[index] === curQuestion.correct_answer) {
-      console.log('clicou');
       const state = getStorage('state');
       state.player.assertions += 1;
-
-      // const { score } = state.player;
       state.player.score += this.handleCurrentScore();
-
       setStorage('state', state);
     }
-    // console.log('errrouu');
-
     const { intervalID } = this.state;
     clearInterval(intervalID);
     this.setState({
@@ -150,12 +133,13 @@ class Game extends Component {
   }
 
   contentButtons(curQuestion) {
-    const { finishTime, newQuestion, questionAnsered } = this.state;
+    const { answers, finishTime, newQuestion, questionAnsered } = this.state;
     return (
       <div className="game-content-child game-main">
         <div className="game-flex-basis-corners" />
         <div className="game-flex-basis-center">
           <Answer
+            answers={ answers }
             curQuestion={ curQuestion }
             click={ this.handleClickAnswer }
             borderWrong={ finishTime }
@@ -166,6 +150,16 @@ class Game extends Component {
         <div className="game-flex-basis-corners" />
       </div>
     );
+  }
+
+  handleNewRandomAnswers() {
+    const { turn, questions } = this.state;
+
+    const curQuestion = questions[turn + 1];
+    let answers = [...curQuestion.incorrect_answers, curQuestion.correct_answer];
+    const randomNumberFormulaPattern = 0.5;
+    answers = answers.sort(() => Math.random() - randomNumberFormulaPattern);
+    this.setState({ answers });
   }
 
   handleClickNext() {
@@ -186,13 +180,13 @@ class Game extends Component {
         this.setState({
           intervalID: ID,
         });
+        this.handleNewRandomAnswers();
       }
     } else {
       const ranking = getStorage('ranking');
       const state = getStorage('state');
       ranking[ranking.length - 1].score = state.player.score;
       setStorage('ranking', ranking);
-
       const { history } = this.props;
       history.push('/feedback');
     }
@@ -220,7 +214,6 @@ class Game extends Component {
   render() {
     const { questions, isFetching, turn } = this.state;
     const curQuestion = questions[turn];
-
     if (isFetching) {
       return (<h1>Loading</h1>);
     }
@@ -228,7 +221,6 @@ class Game extends Component {
     return (
       <div className="game-container">
         <Header />
-        {/* <QuestionCategory /> */}
         <div className="game-content">
           {this.contentHeader(curQuestion, timer)}
           {this.contentButtons(curQuestion)}
