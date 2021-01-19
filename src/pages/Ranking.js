@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { resetSettings } from '../actions'
 
 class Ranking extends React.Component {
   constructor(props) {
@@ -25,7 +26,7 @@ class Ranking extends React.Component {
   }
 
   render() {
-    const { history } = this.props;
+    const { history, reset } = this.props;
     const { ranking } = this.state;
     return (
       <div>
@@ -54,7 +55,10 @@ class Ranking extends React.Component {
         <button
           data-testid="btn-go-home"
           type="button"
-          onClick={ () => history.push('/') }
+          onClick={ () => {
+            reset();
+            history.push('/');
+          } }
         >
           Home
         </button>
@@ -69,8 +73,13 @@ const mapStateToProps = (state) => ({
   points: state.token.points,
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  reset: () => dispatch(resetSettings()),
+})
+
 Ranking.propTypes = {
   history: PropTypes.shape().isRequired,
+  reset: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps)(Ranking);
+export default connect(mapStateToProps, mapDispatchToProps)(Ranking);

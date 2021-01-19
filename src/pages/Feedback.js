@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { updateRanking } from '../actions/index';
+import { updateRanking, resetSettings } from '../actions/index';
 import Header from '../components';
 
 class FeedBack extends React.Component {
@@ -72,7 +72,7 @@ class FeedBack extends React.Component {
   }
 
   render() {
-    const { points, history } = this.props;
+    const { points, history, reset } = this.props;
     const { redirect } = this.state;
 
     return (
@@ -95,6 +95,7 @@ class FeedBack extends React.Component {
             data-testid="btn-play-again"
             type="button"
             onClick={ () => {
+              reset();
               this.setState({ redirect: <Redirect path="/play" /> });
             } }
           >
@@ -117,6 +118,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   addRank: (value) => dispatch(updateRanking(value)),
+  reset: () => dispatch(resetSettings()),
 });
 
 FeedBack.propTypes = {
@@ -127,6 +129,7 @@ FeedBack.propTypes = {
   addRank: PropTypes.func.isRequired,
   email: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
+  reset: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(FeedBack);
