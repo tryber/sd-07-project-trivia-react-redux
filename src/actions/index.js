@@ -43,3 +43,8 @@ export const saveTimer = (payload, onLoad) => ({
   payload,
   onLoad,
 });
+
+export const addAcerto = (payload) => ({
+  type: 'acerto',
+  payload,
+});
