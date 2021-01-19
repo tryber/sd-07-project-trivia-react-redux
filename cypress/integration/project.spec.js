@@ -31,7 +31,7 @@ const email3 = 'mais@pessoa.com';
 const LOCAL_STORAGE_RANKING_KEY = 'ranking';
 const BUTTON_RANKING_SELECTOR = '[data-testid="btn-ranking"]';
 const RANKING_TITLE_SELECTOR = '[data-testid="ranking-title"]';
-const RANKING_PLAYERS_NAME_SELECTOR = '[data-testid*="player-name"]';
+const RANKING_PLAYERS_NAME_SELECTOR = '[data-testid="player-name"]';
 const BUTTON_GO_HOME_SELECTOR = '[data-testid="btn-go-home"]';
 
 const FEEDBACK_TOTAL_SCORE_SELECTOR = '[data-testid="feedback-total-score"]';
