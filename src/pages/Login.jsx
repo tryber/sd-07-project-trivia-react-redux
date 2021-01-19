@@ -23,13 +23,17 @@ class Login extends React.Component {
     this.loadStateToLocalStorage = this.loadStateToLocalStorage.bind(this);
   }
 
+  componentDidMount() {
+    this.handleFetch();
+  }
+
   loadTokenToLocalStorage() {
     const { token } = this.props;
     const { tokenData } = token;
     if (Storage) {
       const getTokenSaved = JSON.parse(localStorage.getItem('token'));
       const value = (getTokenSaved === null ? [] : getTokenSaved);
-      console.log(tokenData);
+      // console.log(tokenData);
       value.push(tokenData);
       localStorage.setItem('token', JSON.stringify(value));
     }
@@ -66,12 +70,12 @@ class Login extends React.Component {
     localStorage.setItem('state', JSON.stringify(newPlayer));
   }
 
-  handleFetch() {
+  async handleFetch() {
     const { apiFetchToken, apiFetchGravatar } = this.props;
     const { email } = this.state;
     const hash = md5(email).toString().toLocaleLowerCase().trim(); // https://www.gravatar.com/avatar/b463ad6c517f53d7b179ece3079c23ed
-    apiFetchGravatar(hash);
-    apiFetchToken();
+    await apiFetchGravatar(hash);
+    await apiFetchToken();
     this.loadTokenToLocalStorage();
     this.loadRankingToLocalStorage();
     this.loadStateToLocalStorage();

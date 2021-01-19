@@ -30,15 +30,18 @@ class QuestionForm extends React.Component {
     this.setState({ answers: answer });
   }
 
-  handleAnswerClicked() {
-    const { answer } = this.props;
+  handleAnswerClicked(event) {
+    const { answer, scorePoint } = this.props;
     const newAnswers = [...answer];
-
     for (let i = 0; i < newAnswers.length; i += 1) {
       newAnswers[i].className = `btn-actions-${newAnswers[i].status}`;
       newAnswers[i].disabled = true;
+      if (newAnswers[i].status === 'correct') {
+        if (event.target.innerHTML === newAnswers[i].answer) {
+          scorePoint();
+        }
+      }
     }
-
     this.setState({ answers: newAnswers, disableNextQuestion: true });
   }
 
@@ -58,6 +61,7 @@ class QuestionForm extends React.Component {
   }
 
   render() {
+    // console.log(this.props)
     const { category, questionText } = this.props;
     const { answers, disableNextQuestion } = this.state;
     return (
@@ -91,6 +95,7 @@ QuestionForm.propTypes = {
   category: PropTypes.string.isRequired,
   questionText: PropTypes.string.isRequired,
   answer: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  scorePoint: PropTypes.func.isRequired,
   handleClickNextQuestion: PropTypes.func.isRequired,
 };
 

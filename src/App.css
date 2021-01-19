@@ -124,8 +124,30 @@
   width: 100%;
 }
 
-.logo .score .player .avatar {
+.logo, .score, .player, .avatar {
   flex: 1;
+}
+
+.score {
+  align-items: center;
+  display: flex;
+  font-size: 20pt;
+  justify-content: center;
+}
+
+.player {
+  align-items: center;
+  display: flex;
+  font-size: 20pt;
+  justify-content: center;
+}
+
+.avatar {
+  align-items: center;
+  display: flex;
+  font-size: 20pt;
+  justify-content: center;
+  margin-left: 20px;
 }
 
 .answer {
