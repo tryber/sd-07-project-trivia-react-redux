@@ -13,7 +13,7 @@ class ConfigForm extends Component {
         <div>
           <select
             name="difficulty"
-            onChange={ (target) => change({ target }) }
+            onChange={ (event) => { change(event.target); } }
           >
             <option value="">Qualquer Dificuldade</option>
             <option value="easy">Fácil</option>
@@ -32,7 +32,7 @@ class ConfigForm extends Component {
         <div>
           Tipo da questão
         </div>
-        <select name="type" onChange={ (target) => change({ target }) }>
+        <select name="type" onChange={ (event) => { change(event.target); } }>
           <option value="">Qualquer tipo</option>
           <option value="multiple">Multipla escolha</option>
           <option value="boolean">Verdadeiro ou Falso</option>
@@ -48,7 +48,7 @@ class ConfigForm extends Component {
         <div>
           Quantidade de questões
         </div>
-        <select name="amount" onChange={ (target) => change({ target }) }>
+        <select name="amount" onChange={ (event) => { change(event.target); } }>
           <option value="5">5 Questões</option>
           <option value="10">10 Questões</option>
           <option value="20">20 Questões</option>
@@ -67,7 +67,7 @@ class ConfigForm extends Component {
         <div>
           Categoria
         </div>
-        <select name="category" onChange={ (target) => change({ target }) }>
+        <select name="category" onChange={ (event) => { change(event.target); } }>
           <option value="">Qualquer Categoria</option>
           <option value="9">Conhecimentos Gerais</option>
           <option value="10">Entretenimento: Livros</option>
