@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
+import { connect } from 'react-redux';
+import actions from '../Actions';
 
 class PlayAgain extends Component {
   constructor() {
@@ -8,7 +10,14 @@ class PlayAgain extends Component {
   }
 
   click() {
-    const { history } = this.props;
+    const { history, resetScoreDispatch } = this.props;
+    resetScoreDispatch();
+    const playerObject = JSON.parse(localStorage.getItem('state'));
+    playerObject.player.assertions = 0;
+    playerObject.player.score = 0;
+    playerObject.player.name = '';
+    playerObject.player.gravatarEmail = '';
+    localStorage.setItem('state', JSON.stringify(playerObject));
     history.push('/');
   }
 
@@ -30,6 +39,11 @@ class PlayAgain extends Component {
 PlayAgain.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired }).isRequired,
+  resetScoreDispatch: PropTypes.func.isRequired,
 };
 
-export default PlayAgain;
+const mapDispatchToProps = {
+  resetScoreDispatch: () => actions.resetScoreAction(),
+};
+
+export default connect(null, mapDispatchToProps)(PlayAgain);

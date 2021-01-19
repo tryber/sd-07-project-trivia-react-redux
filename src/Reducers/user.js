@@ -11,16 +11,6 @@ function userReducer(state = INITIAL_STATE, action) {
       ...state,
       name: action.name,
     };
-  // case USER_IMAGE:
-  //   return {
-  //     ...state,
-  //     image: action.image,
-  //   };
-  // case USER_SCORE:
-  //   return {
-  //     ...state,
-  //     score: action.score,
-  //   };
   default:
     return state;
   }

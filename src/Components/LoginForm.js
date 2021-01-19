@@ -21,6 +21,12 @@ class LoginForm extends Component {
   async handleSubmit() {
     const { history, userNameDispatch, gravatarDispatch } = this.props;
     const { name, email } = this.state;
+    const player = {
+      name,
+      assertions: 0,
+      score: 0,
+      gravatarEmail: email,
+    };
     userNameDispatch(name);
     gravatarDispatch(email);
     const endpoint = 'https://opentdb.com/api_token.php?command=request';
@@ -28,6 +34,7 @@ class LoginForm extends Component {
     const data = await fetchAPI.json();
     const tokenHash = data.token;
     localStorage.setItem('token', tokenHash);
+    localStorage.setItem('state', JSON.stringify({ player }));
     history.push('/game');
   }
 

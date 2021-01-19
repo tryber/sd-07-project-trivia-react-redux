@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 import '../Pages/PlayGame.css';
+import actions from '../Actions';
 
 class Questions extends Component {
   constructor() {
@@ -25,6 +27,8 @@ class Questions extends Component {
     this.changeBtnColor = this.changeBtnColor.bind(this);
     this.counter = this.counter.bind(this);
     this.btnNext = this.btnNext.bind(this);
+    this.updateScore = this.updateScore.bind(this);
+    this.correctAnswer = this.correctAnswer.bind(this);
   }
 
   componentDidMount() {
@@ -63,7 +67,6 @@ class Questions extends Component {
     // const five = 5;
     const endpoint = 'https://opentdb.com/api.php?amount=5';
     const token = localStorage.getItem('token');
-    console.log(token);
     const getQuestions = await fetch(`${endpoint}&token=${token}`);
     const response = await getQuestions.json();
     return response;
@@ -92,6 +95,37 @@ class Questions extends Component {
     });
   }
 
+  updateScore() {
+    const { questions, timer, questionIndex } = this.state;
+    const { updateScoreDispatch, score, correctAnswers } = this.props;
+    const { question } = questions[questionIndex];
+    const hardMode = 3;
+    const mediumMode = 2;
+    let difficultyScore = 0;
+    if (question.difficulty === 'hard') {
+      difficultyScore = hardMode;
+    } else if (question.difficulty === 'medium') {
+      difficultyScore = mediumMode;
+    } else {
+      difficultyScore = 1;
+    }
+    const ten = 10;
+    const questionScore = ten + score + (timer * difficultyScore);
+    const Assertions = correctAnswers + 1;
+    updateScoreDispatch(questionScore);
+    const playerObject = JSON.parse(localStorage.getItem('state'));
+    playerObject.player.assertions = Assertions;
+    playerObject.player.score = questionScore;
+    localStorage.setItem('state', JSON.stringify(playerObject));
+    // localStorage.setItem('score', questionScore);
+    // localStorage.setItem('TotalCorrectAnswers', Assertions);
+  }
+
+  correctAnswer() {
+    this.changeBtnColor();
+    this.updateScore();
+  }
+
   renderTrivia(rightAnswer, wrongAnswers) {
     const { incorrectAnswer, correctAnswer, btnDisable } = this.state;
     const wrong = [];
@@ -101,7 +135,9 @@ class Questions extends Component {
         type="button"
         data-testid="correct-answer"
         key={ Math.random() }
-        onClick={ this.changeBtnColor }
+        onClick={
+          this.correctAnswer
+        }
         disabled={ btnDisable }
       >
         {rightAnswer}
@@ -131,8 +167,6 @@ class Questions extends Component {
       questionIndex,
       btnDisable,
       redirect } = this.state;
-    console.log(questions);
-    console.log(isLoading);
     return isLoading ? <p>Loading</p>
       : (
         <div>
@@ -168,9 +202,21 @@ class Questions extends Component {
   }
 }
 
+const mapDispatchToProps = {
+  updateScoreDispatch: (updatedScore) => actions.updateScoreAction(updatedScore),
+};
+
+const mapStateToProps = (state) => ({
+  score: state.score.score,
+  correctAnswers: state.score.correctAnswers,
+});
+
 Questions.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired }).isRequired,
+  updateScoreDispatch: PropTypes.func.isRequired,
+  correctAnswers: PropTypes.number.isRequired,
+  score: PropTypes.number.isRequired,
 };
 
-export default Questions;
+export default connect(mapStateToProps, mapDispatchToProps)(Questions);
