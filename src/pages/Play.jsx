@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-// import Header from '../Components/Header';
+import Header from '../Components/Header';
 
 import { fetchQuestions } from '../actions';
 import '../App.css';
@@ -16,6 +16,7 @@ class Play extends React.Component {
     this.shuffle = this.shuffle.bind(this);
     this.scorePoint = this.scorePoint.bind(this);
     this.setScore = this.setScore.bind(this);
+    this.setNextQuestion = this.setNextQuestion.bind(this);
     this.state = {
       currentLevel: 0,
       category: '',
@@ -50,26 +51,47 @@ class Play extends React.Component {
     this.setState(state);
   }
 
+  setNextQuestion() {
+    const { game } = this.props;
+    const { questions } = game;
+    const { currentLevel } = this.state;
+    const nextLevel = currentLevel + 1;
+    const maxLevel = 5;
+
+    if (nextLevel < maxLevel) {
+      const arrayOfAnswers = this.createArray(
+        questions[nextLevel].correct_answer,
+        questions[nextLevel].incorrect_answers,
+      );
+      this.setState({
+        currentLevel: nextLevel,
+        category: questions[nextLevel].category,
+        questionText: questions[nextLevel].question,
+        answers: arrayOfAnswers,
+      });
+    }
+  }
+
   async getQuestions() {
     const { apiFetchQuestions } = this.props;
     await apiFetchQuestions();
   }
 
   setScore(getRankingSaved) {
-    const { game } = this.props;
+    const { game, timer } = this.props;
     const { questions } = game;
-    function calc(difficultyLevel, origin) {
+    const timerN = timer;
+    function calc(difficultyLevel, origin, valueTimer) {
       let result = 0;
       const one = 1;
       const two = 2;
       const three = 3;
       const ten = 10;
       let levelPoint = 1;
-      const { timer } = this.props;
       if (difficultyLevel === 'easy') levelPoint = one;
       if (difficultyLevel === 'medium') levelPoint = two;
       if (difficultyLevel === 'hard') levelPoint = three;
-      result = origin.score + (ten + (timer * levelPoint));
+      result = origin.score + (ten + (valueTimer * levelPoint));
       const getStateSaved = JSON.parse(localStorage.getItem('state'));
       getStateSaved.player.score = result;
       localStorage.setItem('state', JSON.stringify(getStateSaved));
@@ -80,7 +102,7 @@ class Play extends React.Component {
       if (getRankingSaved.length !== 0) {
         getRankingSaved.forEach((list, index) => {
           if (index === getRankingSaved.length - 1) {
-            list.score = calc(difficultyLevel, list);
+            list.score = calc(difficultyLevel, list, timerN);
           }
         });
         localStorage.setItem('ranking', JSON.stringify(getRankingSaved));
@@ -143,15 +165,17 @@ class Play extends React.Component {
 
   render() {
     const { category, questionText, answers } = this.state;
-    console.log(category);
+    // console.log(category);
     return (
       <div className="container-fluid">
+        <Header />
         <div className="container-form">
           <QuestionForm
             category={ category }
             questionText={ questionText }
             answer={ answers }
             scorePoint={ this.scorePoint }
+            handleClickNextQuestion={ this.setNextQuestion }
           />
         </div>
         <div className="bottom-content">
@@ -164,6 +188,7 @@ class Play extends React.Component {
 
 const mapStateToProps = (state) => ({
   game: state.data,
+  timer: state.timer.timer,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -173,7 +198,7 @@ const mapDispatchToProps = (dispatch) => ({
 Play.propTypes = {
   apiFetchQuestions: PropTypes.func.isRequired,
   game: PropTypes.shape().isRequired,
-  timer: PropTypes.number.isRequired,
+  timer: PropTypes.objectOf.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Play);

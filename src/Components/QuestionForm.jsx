@@ -10,8 +10,10 @@ class QuestionForm extends React.Component {
     super(props);
     this.handleAnswerClicked = this.handleAnswerClicked.bind(this);
     this.setAnswerInState = this.setAnswersInState.bind(this);
+    this.renderNextButton = this.renderNextButton.bind(this);
     this.state = {
       answers: [],
+      disableNextQuestion: false,
     };
   }
 
@@ -28,23 +30,40 @@ class QuestionForm extends React.Component {
     this.setState({ answers: answer });
   }
 
-  handleAnswerClicked() {
+  handleAnswerClicked(event) {
     const { answer, scorePoint } = this.props;
     const newAnswers = [...answer];
-
     for (let i = 0; i < newAnswers.length; i += 1) {
       newAnswers[i].className = `btn-actions-${newAnswers[i].status}`;
       newAnswers[i].disabled = true;
-      scorePoint();
+      if (newAnswers[i].status === 'correct') {
+        if (event.target.innerHTML === newAnswers[i].answer) {
+          scorePoint();
+        }
+      }
     }
+    this.setState({ answers: newAnswers, disableNextQuestion: true });
+  }
 
-    this.setState({ answers: newAnswers });
+  renderNextButton() {
+    const { handleClickNextQuestion } = this.props;
+    const button = (
+      <button
+        type="button"
+        className="btn-actions"
+        data-testid="btn-next"
+        onClick={ () => handleClickNextQuestion() }
+      >
+        Próxima
+      </button>);
+
+    return button;
   }
 
   render() {
     // console.log(this.props)
     const { category, questionText } = this.props;
-    const { answers } = this.state;
+    const { answers, disableNextQuestion } = this.state;
     return (
       <div className="form-login">
         <span className="category" data-testid="question-category">
@@ -62,8 +81,10 @@ class QuestionForm extends React.Component {
             hasClicked={ this.handleAnswerClicked }
             isDisabled={ acc.disabled }
           />))}
-        <hr />
-        <button type="button" className="btn-actions">Próxima</button>
+        {
+          disableNextQuestion
+            && this.renderNextButton()
+        }
         <Timer />
       </div>
     );
@@ -75,6 +96,7 @@ QuestionForm.propTypes = {
   questionText: PropTypes.string.isRequired,
   answer: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   scorePoint: PropTypes.func.isRequired,
+  handleClickNextQuestion: PropTypes.func.isRequired,
 };
 
 export default QuestionForm;

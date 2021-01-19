@@ -3,6 +3,7 @@ import thunk from 'redux-thunk';
 import asyncReducer from '../reducers/asyncReducer';
 import asyncToken from '../reducers/asyncToken';
 import asyncGravatar from '../reducers/asyncGravatar';
+import game from '../reducers/game';
 
 const composeEnhancer = (
   typeof window !== 'undefined'
@@ -12,6 +13,7 @@ const reducers = combineReducers({
   data: asyncReducer,
   token: asyncToken,
   gravatar: asyncGravatar,
+  timer: game,
 });
 
 function storeConfig() {
