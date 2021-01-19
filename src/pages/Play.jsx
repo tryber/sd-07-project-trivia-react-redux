@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-// import Header from '../Components/Header';
+import Header from '../Components/Header';
 
 import { fetchQuestions } from '../actions';
 import '../App.css';
@@ -125,6 +125,7 @@ class Play extends React.Component {
     const { category, questionText, answers } = this.state;
     return (
       <div className="container-fluid">
+        <Header />
         <div className="container-form">
           <QuestionForm
             category={ category }
