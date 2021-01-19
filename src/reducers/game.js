@@ -4,6 +4,7 @@ import {
   FETCH_QUESTIONS_SUCCESS,
   EMAIL_HASH,
   UPDATE_ASSERTIONS,
+  RESET_ASSERTIONS,
 } from '../actions';
 
 const INITIAL_STATE = {
@@ -33,6 +34,10 @@ const gameReducer = (state = INITIAL_STATE, action) => {
   case UPDATE_ASSERTIONS:
     return { ...state,
       assertions: state.assertions + 1,
+    };
+  case RESET_ASSERTIONS:
+    return { ...state,
+      assertions: 0,
     };
   default:
     return state;

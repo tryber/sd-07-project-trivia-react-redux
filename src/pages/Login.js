@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { login, fetchToken } from '../actions/index';
+import { login, fetchToken, resetAssertions } from '../actions/index';
 import { setStorage } from '../services';
 
 class Login extends React.Component {
@@ -21,6 +21,7 @@ class Login extends React.Component {
   }
 
   saveLoginLocalStorage(name, email) {
+    const { resetAssertionsA } = this.props;
     const newPlayer = {
       player: {
         name,
@@ -30,6 +31,7 @@ class Login extends React.Component {
       },
     };
     setStorage('state', newPlayer);
+    resetAssertionsA();
   }
 
   handleEmailChange({ target }) {
@@ -101,6 +103,7 @@ class Login extends React.Component {
 const mapDispatchToProps = (dispatch) => ({
   loginAction: (name, email) => dispatch(login(name, email)),
   tokenAction: (token) => dispatch(fetchToken(token)),
+  resetAssertionsA: () => dispatch(resetAssertions()),
 });
 
 const mapStateToProps = (state) => ({
