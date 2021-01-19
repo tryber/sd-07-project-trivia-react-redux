@@ -9,24 +9,33 @@
   padding: 20px;
 }
 
-.outer-image {
+.img-master {
+  margin: 0;
   position: absolute;
+  top: 30%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+}
+
+.App-circle {
   display: flex;
-  height: 40vmin;
-  width: 40vmin;
+  flex-shrink: 1;
+  position: relative;
+  height: 300px;
 }
-
-.inner-image {
-  position: absolute;
-  z-index: 1;
-}
-
 
 .App-logo {
+  align-items:center;
+  display: flex;
+  flex-shrink: 1;
+  height: 200px;
+  margin: 0;
+  position: relative;
+  top: -250px;
+  left: 33%;
+  margin-right: -50%;
   justify-content: center;
-  align-items: center;
-  height: 30vmin;
-  margin-left: 175px;
   pointer-events: none;
   position: relative;
 }
@@ -36,21 +45,6 @@
   .App-logo {
     animation: shake infinite 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
   }
-}
-
-.App-header {
-  align-items: center;
-  background-color: #282c34;
-  color: white;
-  display: flex;
-  flex-direction: column;
-  font-size: calc(10px + 2vmin);
-  justify-content: center;
-  min-height: 100vh;
-}
-
-.App-link {
-  color: #61dafb;
 }
 
 @keyframes shake {
@@ -64,10 +58,29 @@
   }
 
   30%, 50%, 70% {
-    transform: translate3d(-4px, 0, 0);
+    transform: translate3d(0, -3px, 0);
   }
 
   40%, 60% {
-    transform: translate3d(4px, 0, 0);
+    transform: translate3d(0, 2px, 0);
+  }
+}
+
+
+@media ( prefers-reduced-motion : no-preference ) {
+
+  .App-circle {
+    animation: App-circle-spin infinite 10s linear;
+  }
+}
+
+@keyframes App-circle-spin {
+
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
   }
 }

@@ -9,13 +9,9 @@ class Login extends Component {
     return (
       <div className="loginPage-container">
         <div style={ { visibility: 'hidden' } }>a</div>
-        <div>
-          <div className="outer-image">
-            <img src={ longway } className="" alt="its a long way to the top" />
-            <div className="inner-image">
-              <img src={ angus } className="App-logo" alt="angus young" />
-            </div>
-          </div>
+        <div className="img-master">
+          <img src={ longway } className="App-circle" alt="its a long way to the top" />
+          <img src={ angus } className="App-logo" alt="angus young" />
         </div>
         <LoginForm />
         <ConfigButton />

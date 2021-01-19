@@ -6,6 +6,7 @@
 .config-item {
   align-items: center;
   background-color: rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
   border-radius: 15px;
   color: white;
   font-size: 28px;
@@ -17,7 +18,7 @@
   padding: 0 20px;
   margin: 20px 0;
 }
-
+/* 
 .config-selection {
   -webkit-appearance: none;
   padding: 15px 15px;
@@ -27,7 +28,7 @@
   height: 34px;
   overflow: hidden;
   border: 1px solid #ccc;
-}
+} */
 
 select {
   align-items: center;
