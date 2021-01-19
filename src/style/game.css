@@ -1,0 +1,11 @@
+.rightGreen {
+  border: 3px solid rgb(6, 240, 15);
+}
+
+.wrongRed {
+  border: 3px solid red;
+}
+
+.hidden {
+  border: 1px solid black;
+}
