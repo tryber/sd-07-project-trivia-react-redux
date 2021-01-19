@@ -28,7 +28,6 @@ export const fetchQuestionsSuccess = (payload) => (
 export const UPDATE_ASSERTIONS = 'UPDATE_ASSERTIONS';
 export const updateAssertions = () => ({ type: UPDATE_ASSERTIONS });
 
-
 export const RESET_ASSERTIONS = 'RESET_ASSERTIONS';
 export const resetAssertions = () => ({ type: RESET_ASSERTIONS });
 
