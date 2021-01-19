@@ -6,13 +6,17 @@ import PropTypes from 'prop-types';
 class Question extends Component {
   constructor(props) {
     super(props);
+    const { questions, questionSelected } = props;
+    const question = questions[questionSelected];
     this.state = {
       btnDisabled: false,
       markAnswers: false,
       counter: 30,
+      question,
     };
     this.timeQuestion = this.timeQuestion.bind(this);
     this.disableButton = this.disableButton.bind(this);
+    this.answerQuestion = this.answerQuestion.bind(this);
   }
 
   componentDidMount() {
@@ -55,6 +59,33 @@ class Question extends Component {
     return array;
   }
 
+  answerQuestion(bool) {
+    const { counter, question } = this.state;
+    this.setState({ markAnswers: true });
+    if (bool) {
+      let difficulty = 0;
+      const mnum = 3;
+      switch (question.difficulty) {
+      case 'medium':
+        difficulty = 2;
+        break;
+      case 'easy':
+        difficulty = 1;
+        break;
+      case 'hard':
+        difficulty = mnum;
+        break;
+      default:
+        break;
+      }
+      const mn = 10;
+      const gottenState = JSON.parse(localStorage.getItem('state'));
+      localStorage.setItem('state', JSON.stringify({ player:
+        { score: gottenState.player.score + mn + (counter * difficulty),
+          ...gottenState.store } }));
+    }
+  }
+
   render() {
     const { btnDisabled, markAnswers, counter } = this.state;
     const { questions, questionSelected } = this.props;
@@ -66,7 +97,7 @@ class Question extends Component {
         key={ answer }
         className={ markAnswers && 'wrong-answer' }
         data-testid={ `wrong-answer-${index}` }
-        onClick={ () => { this.setState({ markAnswers: true }); } }
+        onClick={ () => { this.answerQuestion(false); } }
       >
         { answer }
       </button>));
@@ -77,7 +108,7 @@ class Question extends Component {
         key={ question.correct_answer }
         className={ markAnswers && 'correct-answer' }
         data-testid="correct-answer"
-        onClick={ () => { this.setState({ markAnswers: true }); } }
+        onClick={ () => { this.answerQuestion(true); } }
       >
         {question.correct_answer}
       </button>));
