@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { saveTimer } from '../redux/actions';
+import './Timer.css';
 
 class Timer extends Component {
   constructor() {
@@ -48,8 +49,9 @@ class Timer extends Component {
   render() {
     const { timer } = this.state;
     return (
-      <div>
-        Tempo restante:
+      <div className="timer">
+        Remaining time:
+        {' '}
         {timer}
       </div>
     );

@@ -1,0 +1,18 @@
+.ranking-item {
+  padding: 3rem 6rem;
+  display: flex;
+  flex-direction: row;
+  border: 3px solid black;
+  margin: 1rem;
+  place-content: space-between;
+  gap: 3rem;
+  background-color: rgba(255, 255, 255, 0.397);
+  font-size: 1.6rem;
+  justify-content: center;
+  align-content: center;
+}
+
+.picture-ranking {
+  margin-top: 20%;
+  margin-bottom: auto;
+}

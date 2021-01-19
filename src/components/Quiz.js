@@ -86,7 +86,7 @@ class Quiz extends Component {
     const { results, nextQuestion, updateScore } = this.props;
     const { correct_answer: correctAnswer } = results;
     const { incorrect_answers: incorrectAnswers } = results;
-    const { question, category, difficulty } = results;
+    const { question, category } = results;
     const allQuestions = [correctAnswer, ...incorrectAnswers];
     const magicNumber = 0.5;
     const test = this.scoreCalculator();
@@ -99,7 +99,7 @@ class Quiz extends Component {
       if (questionToRender === correctAnswer) {
         return (
           <button
-            className={ colorCorrect }
+            className={ ` alternative-button ${colorCorrect}` }
             key={ number }
             data-testid="correct-answer"
             type="button"
@@ -114,7 +114,7 @@ class Quiz extends Component {
       }
       return (
         <button
-          className={ colorIncorrect }
+          className={ ` alternative-button ${colorIncorrect}` }
           key={ number }
           data-testid={ `wrong-answer-${number}` }
           type="button"
@@ -125,27 +125,43 @@ class Quiz extends Component {
         </button>);
     };
     return (
-      <div>
-        <div>
-          <p data-testid="question-text">{ question }</p>
-          <p>{ difficulty }</p>
-          <p data-testid="question-category">{ category }</p>
-          {shuffledArray.map((oneQuestion, index) => renderQuestions(oneQuestion, index))}
-          <button
-            type="button"
-            onClick={ () => { this.nextButton(); nextQuestion(); } }
-            hidden={ !answered }
-            data-testid="btn-next"
-          >
-            Próxima
-          </button>
+      <div className="page-quiz">
+        <div className="column">
+          <div className="container-quiz">
+            <div className="left">
+              <div className="container-question-timer">
+                <p data-testid="question-text" className="question-text">{ question }</p>
+                <p data-testid="question-category">
+                  { category }
+                </p>
+                <div className="container-timer">
+                  <Timer
+                    answerColor={ this.answerColor }
+                    nextButton={ this.nextButton }
+                    resetTimer={ resetTimer }
+                    restoreTimer={ this.restoreTimer }
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="right">
+              <div className="container-answers">
+                {shuffledArray.map((oneQuestion, index) => renderQuestions(oneQuestion, index))}
+              </div>
+            </div>
+          </div>
+          <div className="btn-next-container">
+            <button
+              type="button"
+              className="btn-next"
+              onClick={ () => { this.nextButton(); nextQuestion(); } }
+              hidden={ !answered }
+              data-testid="btn-next"
+            >
+              NEXT
+            </button>
+          </div>
         </div>
-        <Timer
-          answerColor={ this.answerColor }
-          nextButton={ this.nextButton }
-          resetTimer={ resetTimer }
-          restoreTimer={ this.restoreTimer }
-        />
       </div>
     );
   }

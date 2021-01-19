@@ -3,6 +3,7 @@ import md5 from 'crypto-js/md5';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { savePicture } from '../redux/actions';
+import './Header.css';
 
 class Header extends Component {
   constructor() {
@@ -22,11 +23,22 @@ class Header extends Component {
     savePic(urlPicture);
 
     return (
-      <div>
-        <p data-testid="header-player-name">{ name }</p>
-        <p data-testid="header-score">{ score }</p>
-        <img data-testid="header-profile-picture" src={ urlPicture } alt="Avatar" />
+      <div className="header">
+        {/* <div className="name-and-pic"> */}
+        <img
+          data-testid="header-profile-picture"
+          src={ urlPicture }
+          className="profile-picture"
+          height="100%"
+          alt="Avatar"
+        />
+        <p data-testid="header-player-name" className="header-player-name">{ name }</p>
+        {/* </div> */}
+        <p data-testid="header-score" className="header-score">
+          { score }
+        </p>
       </div>
+
     );
   }
 }

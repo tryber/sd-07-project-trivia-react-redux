@@ -1,0 +1,23 @@
+.header {
+  display: flex;
+  flex-direction: row;
+  place-items: center;
+  place-content: center;
+  gap: 6rem;
+  width: 100%;
+  height: 10rem;
+  background-color: #CAFDBE;
+  color: black;
+  font-size: 1.8rem;
+}
+
+.profile-picture {
+  border-radius: 50%;
+  height: 6rem;
+}
+
+.name-and-pic {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem
+}

@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import apiTriviaToken from '../services/apiTriviaToken';
 import { fetchApiTrivia, requestTokenSuccess, sendLoginInfo } from '../redux/actions';
 import logo from '../trivia.png';
+import './Login.css';
 
 class Login extends Component {
   constructor() {
@@ -53,17 +54,16 @@ class Login extends Component {
   render() {
     const { name, email } = this.state;
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={ logo } className="App-logo" alt="logo" />
-          <p>
-            SUA VEZ
-          </p>
-          <form>
+      <div className="login-page">
+        <img src={ logo } className="App-logo" alt="logo" />
+        <div className="flex-parent">
+          <form className="input-container">
             <input
               type="text"
               name="name"
+              className="login-input"
               value={ name }
+              autoComplete="off"
               placeholder="Nome"
               data-testid="input-player-name"
               onChange={ this.handleChange }
@@ -72,20 +72,24 @@ class Login extends Component {
             <input
               type="email"
               name="email"
+              autoComplete="off"
+              className="login-input"
               value={ email }
               placeholder="E-mail"
               data-testid="input-gravatar-email"
               onChange={ this.handleChange }
             />
-
+          </form>
+          <div className="links-container">
             <Link to="/game">
               <button
                 type="button"
+                className="login-buttons"
                 disabled={ this.isValid() }
                 data-testid="btn-play"
                 onClick={ this.handleClick }
               >
-                Jogar
+                Play
               </button>
             </Link>
 
@@ -93,20 +97,26 @@ class Login extends Component {
               <button
                 type="button"
                 data-testid="btn-settings"
+                className="login-buttons"
+
               >
-                Configurações
+                Settings
               </button>
             </Link>
             <Link to="/ranking">
               <button
                 type="button"
                 data-testid="btn-ranking"
+                className="login-buttons"
+
               >
-                Ver Ranking
+                Ranking
               </button>
             </Link>
-          </form>
-        </header>
+
+          </div>
+        </div>
+
       </div>
     );
   }

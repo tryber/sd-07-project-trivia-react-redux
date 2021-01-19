@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import * as components from '../components';
 import rankingLocalStorage from '../services/localStorageFunctions';
+import './Ranking.css';
 
 class Ranking extends Component {
   render() {
@@ -15,9 +16,9 @@ class Ranking extends Component {
       || ranking !== null
     ) {
       return (
-        <div>
+        <div className="ranking-page">
           <h1 data-testid="ranking-title">Ranking</h1>
-          <ul>
+          <ul className="ranking-list">
             {ranking
               .sort((first, second) => second.score - first.score)
               .map((player, index) => (

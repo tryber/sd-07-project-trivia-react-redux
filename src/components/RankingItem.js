@@ -1,19 +1,29 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import './RankingItem.css';
 
 class RankingItem extends Component {
   render() {
     const { player, index } = this.props;
     const { name, score, picture } = player;
     return (
-      <li key={ index }>
-        <img src={ picture } alt="player" />
-        <p data-testid={ `player-name-${index}` }>{name}</p>
-        <p data-testid={ `player-score-${index}` }>
-          {score}
-          {' '}
-          pontos
-        </p>
+      <li key={ index } className="ranking-item">
+        <div>
+          <img
+            src={ picture }
+            alt="player"
+            className="profile-picture picture-ranking"
+          />
+        </div>
+        <div>
+          <p data-testid={ `player-name-${index}` }>{name}</p>
+          <p data-testid={ `player-score-${index}` }>
+            {score}
+            {' '}
+            pontos
+          </p>
+        </div>
+
       </li>
     );
   }

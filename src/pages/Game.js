@@ -45,7 +45,7 @@ class Game extends Component {
     const { key } = this.state;
     const { results, isLoading } = this.props;
     if (isLoading || results === undefined) {
-      return <p>Carregando</p>;
+      return <p className="loader" />;
     }
 
     return (

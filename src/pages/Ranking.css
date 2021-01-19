@@ -1,0 +1,15 @@
+.ranking-page {
+  background-image: var(--background);
+  display: flex;
+  flex-direction: column;
+  place-content: center;
+  place-items: center;
+  height: 100vh;
+  text-align: center;
+}
+
+.ranking-list {
+  list-style: none;
+  text-align: center;
+  padding: 0
+}

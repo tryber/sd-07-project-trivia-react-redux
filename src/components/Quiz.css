@@ -1,9 +1,123 @@
-.answer-correct {
-  border: 3px solid #06f00f;
-  color: #06f00f;
+.page-quiz {
+  display: flex;
+  place-items: center;
+  place-content: center;
+  background-image: var(--background);
+  width: 100vw;
+  min-height: 100vh;
 }
 
+.column {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  margin-bottom: auto;
+}
+
+.answer-correct {
+  border: 3px solid #3daa73;
+  background-color: #ffafbd;
+}
+
+/* 
 .answer-wrong {
   border: 3px solid red;
   color: red;
+} */
+
+.container-quiz {
+  display: flex;
+  flex-direction: row;
+  color: black;
+  place-content: center;
+  place-items: center;
+  width: 100%;
+  margin-top: 5%;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  word-wrap: break-word
+}
+
+.container-question {
+  display: flex;
+  flex-direction: column;
+  place-items: center;
+}
+/* 
+.container-timer {
+  text-align: center;
+  margin: 2rem;
+} */
+
+.question-text {
+  width: 100%;
+  text-align: center;
+  font-size: 3rem;
+  color: black
+}
+
+.container-answers {
+  display: flex;
+  flex-direction: column;
+  margin-top: 2rem;
+}
+
+.left {
+  place-items: center;
+  place-content: center;
+  text-align: center;
+  width: 50%;
+}
+
+.right {
+  width: 50%;
+}
+
+.alternative-button {
+  display: inline-block;
+  padding: 1rem;
+  text-align: center;
+  margin: 0.3rem 0.3rem 0.3rem 0;
+  border-radius: 0.12rem;
+  /* background-color: #3daa73; */
+  /* border: 1px solid black; */
+  box-sizing: border-box;
+  text-decoration: none;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 1.5rem;
+  text-align: center;
+  transition: all 0.2s;
+  color: black;
+  width: 16rem;
+  height: fit-content;
+  margin-left: 50%;
+}
+
+.alternative-button:hover {
+  opacity: 0.8;
+  cursor: pointer
+}
+
+.btn-next:hover {
+  cursor: pointer
+}
+
+.btn-next-container {
+  text-align: center;
+}
+
+.btn-next {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 2rem;
+  background-color: #222;
+  color: white;
+  border: none;
+  margin-top: 2rem;
+  /* margin: 0.3em 0.3em 0.3em 0; */
+  border-radius: 0.12rem;
+  padding: 1rem 2.5rem;
+  position: fixed;
+  bottom: 10%
 }

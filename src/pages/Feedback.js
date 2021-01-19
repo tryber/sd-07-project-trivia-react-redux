@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import rankingLocalStorage from '../services/localStorageFunctions';
+import './Feedback.css';
 
 class Feedback extends Component {
   componentDidMount() {
@@ -19,31 +20,47 @@ class Feedback extends Component {
     const minAssertions = 3;
     const { assertions, score } = this.props;
     return (
-      <div>
-        <Header />
-        <p data-testid="feedback-text">
+      <div className="feedback-page">
+        <p data-testid="feedback-text" className="feedback-text">
           {
             assertions >= minAssertions
-              ? 'Mandou bem!'
-              : 'Podia ser melhor...'
+              ? 'Well done!'
+              : 'Try again'
           }
         </p>
-        <h4>Placar Final</h4>
-        <p data-testid="feedback-total-score">{score}</p>
-        <h4>Perguntas Acertadas</h4>
-        <p data-testid="feedback-total-question">{assertions}</p>
+        <div className="score-container">
+          <p>
+            Final Score:
+            {' '}
+            <span data-testid="feedback-total-score" className="final-score">{score}</span>
+          </p>
+          <p>
+            Correct Answers:
+            {' '}
+            <span data-testid="feedback-total-question" className="correct-answers">{assertions}</span>
+          </p>
+        </div>
+        <div className="links-container">
+          <Link to="/">
+            <button
+              data-testid="btn-play-again"
+              type="button"
+              className="feedback-buttons"
+            >
+              Play Again
+            </button>
+          </Link>
 
-        <Link to="/">
-          <button data-testid="btn-play-again" type="button">
-            Jogar Novamente
-          </button>
-        </Link>
-
-        <Link to="/ranking">
-          <button data-testid="btn-ranking" type="button">
-            Ranking
-          </button>
-        </Link>
+          <Link to="/ranking">
+            <button
+              data-testid="btn-ranking"
+              type="button"
+              className="feedback-buttons"
+            >
+              Ranking
+            </button>
+          </Link>
+        </div>
       </div>
     );
   }
