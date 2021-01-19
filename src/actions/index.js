@@ -5,6 +5,7 @@ const ADD_POINT = 'ADD_POINT';
 const SET_COUNTER = 'SET_COUNTER';
 const RESET_COUNTER = 'RESET_COUNTER';
 const UPDATE_RANKING = 'UPDATE_RANKING';
+const RESET_SETTINGS = 'RESET_SETTINGS';
 
 export const addEmailAction = (email) => ({
   type: ADD_EMAIL,
@@ -34,4 +35,8 @@ export const resetCounter = () => ({
 export const updateRanking = (value) => ({
   type: UPDATE_RANKING,
   value,
+});
+
+export const resetSettings = () => ({
+  type: RESET_SETTINGS,
 });
