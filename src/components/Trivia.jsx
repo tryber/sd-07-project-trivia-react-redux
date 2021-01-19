@@ -130,7 +130,7 @@ class Trivia extends Component {
 
   render() {
     const { questions, currentQuestion } = this.props;
-    console.log(questions);
+
     return (
       <div>
         <span>TRIVIA</span>

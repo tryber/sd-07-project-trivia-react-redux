@@ -1,6 +1,7 @@
 // import { requestQuestions } from '../../services/api';
 
 export const LOGIN_EMAIL = 'LOGIN_EMAIL';
+export const AVATAR_URL = 'AVATAR_URL';
 export const SAVE_QUESTIONS = 'SAVE_QUESTIONS';
 export const NEXT_QUESTION = 'NEXT_QUESTION';
 export const RESET_TIMER = 'RESET_TIMER';
@@ -9,6 +10,7 @@ export const FREEZE_TIME = 'FREEZE_TIME';
 export const START_TIME = 'START_TIME';
 export const FETICHING_QUESTIONS = 'FETICHING_QUESTIONS';
 export const CORRECLY_ANSWER_SUM = 'CORRECLY_ANSWER_SUM';
+export const INITIAL_INDEX = 'INITIAL_INDEX';
 
 export const login = (name, email) => ({
   type: LOGIN_EMAIL,
@@ -16,6 +18,11 @@ export const login = (name, email) => ({
     name,
     email,
   },
+});
+
+export const avatarURL = (url) => ({
+  type: AVATAR_URL,
+  url,
 });
 
 export const nextQuestion = () => ({
@@ -78,3 +85,7 @@ export function freezeTimeAction() {
     type: FREEZE_TIME,
   };
 }
+
+export const indexInitial = () => ({
+  type: INITIAL_INDEX,
+});

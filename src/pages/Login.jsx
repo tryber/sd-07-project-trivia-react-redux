@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { login } from '../redux/actions';
+import { saveArrayRanking } from '../services/api';
 
 class Login extends Component {
   constructor(props) {
@@ -26,6 +27,8 @@ class Login extends Component {
       },
     };
     localStorage.setItem('state', JSON.stringify(state));
+
+    saveArrayRanking();
   }
 
   verifyLogin() {
@@ -40,6 +43,7 @@ class Login extends Component {
   render() {
     const { name, email } = this.state;
     const { saveUserInfos } = this.props;
+
     return (
       <div>
         <Link to="/settings">
@@ -84,6 +88,7 @@ class Login extends Component {
 const mapDispatchToProps = (dispatch) => ({
   saveUserInfos: (name, email) => dispatch(login(name, email)),
 });
+
 export default connect(null, mapDispatchToProps)(Login);
 
 Login.propTypes = {

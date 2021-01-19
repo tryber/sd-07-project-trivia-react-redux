@@ -6,6 +6,7 @@ import {
   SAVE_QUESTIONS,
   START_TIME,
   FETICHING_QUESTIONS,
+  INITIAL_INDEX,
 } from '../actions';
 
 const PLAY_INITIAL_STATE = {
@@ -60,6 +61,11 @@ const play = (state = PLAY_INITIAL_STATE, action) => {
     return {
       ...state,
       timer: state.timer,
+    };
+  case INITIAL_INDEX:
+    return {
+      ...state,
+      indexQuestion: 0,
     };
   default:
     return state;
