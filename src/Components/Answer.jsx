@@ -13,7 +13,7 @@ class Answer extends React.Component {
         className={ style }
         data-testid={ data }
         disabled={ onLoading }
-        onClick={ () => hasClicked() }
+        onClick={ (event) => hasClicked(event) }
       >
         { answer }
       </button>

@@ -14,6 +14,8 @@ class Play extends React.Component {
     this.setQuestions = this.setQuestions.bind(this);
     this.createArray = this.createArray.bind(this);
     this.shuffle = this.shuffle.bind(this);
+    this.scorePoint = this.scorePoint.bind(this);
+    this.setScore = this.setScore.bind(this);
     this.setNextQuestion = this.setNextQuestion.bind(this);
     this.state = {
       currentLevel: 0,
@@ -75,26 +77,37 @@ class Play extends React.Component {
     await apiFetchQuestions();
   }
 
-  // An implementation of Fisher-Yates (aka Knuth) Shuffle algorithm
-  // https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
-  shuffle(array) {
-    // console.log(array);
-    let currentIndex = array.length; let temporaryValue; let
-      randomIndex;
-
-    // While there remain elements to shuffle...
-    while (currentIndex !== 0) {
-      // Pick a remaining element...
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex -= 1;
-
-      // And swap it with the current element.
-      temporaryValue = array[currentIndex];
-      array[currentIndex] = array[randomIndex];
-      array[randomIndex] = temporaryValue;
+  setScore(getRankingSaved) {
+    const { game, timer } = this.props;
+    const { questions } = game;
+    const timerN = timer;
+    function calc(difficultyLevel, origin, valueTimer) {
+      let result = 0;
+      const one = 1;
+      const two = 2;
+      const three = 3;
+      const ten = 10;
+      let levelPoint = 1;
+      if (difficultyLevel === 'easy') levelPoint = one;
+      if (difficultyLevel === 'medium') levelPoint = two;
+      if (difficultyLevel === 'hard') levelPoint = three;
+      result = origin.score + (ten + (valueTimer * levelPoint));
+      const getStateSaved = JSON.parse(localStorage.getItem('state'));
+      getStateSaved.player.score = result;
+      localStorage.setItem('state', JSON.stringify(getStateSaved));
+      return result;
     }
-    // console.log(array);
-    return array;
+    questions.forEach((question) => {
+      const difficultyLevel = question.difficulty;
+      if (getRankingSaved.length !== 0) {
+        getRankingSaved.forEach((list, index) => {
+          if (index === getRankingSaved.length - 1) {
+            list.score = calc(difficultyLevel, list, timerN);
+          }
+        });
+        localStorage.setItem('ranking', JSON.stringify(getRankingSaved));
+      }
+    });
   }
 
   createArray(correct, incorrect) {
@@ -121,8 +134,38 @@ class Play extends React.Component {
     return shuffledArray;
   }
 
+  // An implementation of Fisher-Yates (aka Knuth) Shuffle algorithm
+  // https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
+
+  shuffle(array) {
+    // console.log(array);
+    let currentIndex = array.length;
+    let temporaryValue;
+    let randomIndex;
+
+    // While there remain elements to shuffle...
+    while (currentIndex !== 0) {
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+
+      // And swap it with the current element.
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+    // console.log(array);
+    return array;
+  }
+
+  scorePoint() {
+    const getRankingSaved = JSON.parse(localStorage.getItem('ranking'));
+    this.setScore(getRankingSaved);
+  }
+
   render() {
     const { category, questionText, answers } = this.state;
+    // console.log(category);
     return (
       <div className="container-fluid">
         <Header />
@@ -131,6 +174,7 @@ class Play extends React.Component {
             category={ category }
             questionText={ questionText }
             answer={ answers }
+            scorePoint={ this.scorePoint }
             handleClickNextQuestion={ this.setNextQuestion }
           />
         </div>
@@ -144,6 +188,7 @@ class Play extends React.Component {
 
 const mapStateToProps = (state) => ({
   game: state.data,
+  timer: state.timer.timer,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -153,6 +198,7 @@ const mapDispatchToProps = (dispatch) => ({
 Play.propTypes = {
   apiFetchQuestions: PropTypes.func.isRequired,
   game: PropTypes.shape().isRequired,
+  timer: PropTypes.objectOf.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Play);
