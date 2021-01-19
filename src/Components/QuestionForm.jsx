@@ -33,7 +33,7 @@ class QuestionForm extends React.Component {
   handleAnswerClicked() {
     const { answer } = this.props;
     const newAnswers = [...answer];
-
+    console.log('clickou');
     for (let i = 0; i < newAnswers.length; i += 1) {
       newAnswers[i].className = `btn-actions-${newAnswers[i].status}`;
       newAnswers[i].disabled = true;
