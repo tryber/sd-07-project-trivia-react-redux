@@ -1,23 +1,22 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import GoRanking from '../Components/GoRanking';
 import Header from '../Components/Header';
 import PlayAgain from '../Components/PlayAgain';
 
-export default class Feedback extends React.Component {
+class Feedback extends React.Component {
   constructor() {
     super();
-    this.state = {
-      score: 0,
-    };
     this.feedbackMessage = this.feedbackMessage.bind(this);
   }
 
   feedbackMessage() {
-    const { score } = this.state;
+    const { correctAnswers } = this.props;
     const message1 = 'Podia ser melhor...';
     const message2 = 'Mandou bem!';
     const minScore = 3;
-    return (score >= minScore) ? message2 : message1;
+    return (correctAnswers >= minScore) ? message2 : message1;
   }
 
   render() {
@@ -31,3 +30,16 @@ export default class Feedback extends React.Component {
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  correctAnswers: state.score.correctAnswers,
+});
+
+Feedback.propTypes = {
+  correctAnswers: PropTypes.number.isRequired,
+};
+
+export default connect(mapStateToProps, null)(Feedback);
+
+// const playerObject = JSON.parse(localStorage.getItem('state'));
+// const score = playerObject.player.score
