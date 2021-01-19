@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { login, fetchToken } from '../actions/index';
+import { login, fetchToken, resetAssertions } from '../actions/index';
+import { setStorage } from '../services';
 
 class Login extends React.Component {
   constructor() {
@@ -16,6 +17,21 @@ class Login extends React.Component {
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.saveLoginLocalStorage = this.saveLoginLocalStorage.bind(this);
+  }
+
+  saveLoginLocalStorage(name, email) {
+    const { resetAssertionsAction } = this.props;
+    const newPlayer = {
+      player: {
+        name,
+        email,
+        score: 0,
+        assertions: 0,
+      },
+    };
+    setStorage('state', newPlayer);
+    resetAssertionsAction();
   }
 
   handleEmailChange({ target }) {
@@ -66,6 +82,7 @@ class Login extends React.Component {
           onClick={ () => {
             loginAction(name, email);
             this.handleClick();
+            this.saveLoginLocalStorage(name, email);
           } }
         >
           Jogar
@@ -85,6 +102,7 @@ class Login extends React.Component {
 const mapDispatchToProps = (dispatch) => ({
   loginAction: (name, email) => dispatch(login(name, email)),
   tokenAction: (token) => dispatch(fetchToken(token)),
+  resetAssertionsAction: () => dispatch(resetAssertions()),
 });
 
 const mapStateToProps = (state) => ({
@@ -96,6 +114,7 @@ Login.propTypes = {
   history: PropTypes.func.isRequired,
   tokenAction: PropTypes.func.isRequired,
   token: PropTypes.string.isRequired,
+  resetAssertionsAction: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
