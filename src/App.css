@@ -127,6 +127,7 @@
 .logo, .score, .player, .avatar {
   flex: 1;
 }
+
 .score {
   align-items: center;
   display: flex;
@@ -148,6 +149,7 @@
   justify-content: center;
   margin-left: 20px;
 }
+
 .answer {
   display: block;
   font-size: 13pt;
