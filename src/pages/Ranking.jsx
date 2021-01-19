@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Header from '../Components/Header';
 
 class Ranking extends React.Component {
   render() {
@@ -15,6 +16,8 @@ class Ranking extends React.Component {
     getRankingSaved.sort(toOrdenate);
     return (
       <div>
+        <Header />
+        <p data-testid="feedback-text" />
         <h1 data-testid="ranking-title">Ranking</h1>
         {getRankingSaved.map((element, index) => {
           const { name, score, picture } = element;

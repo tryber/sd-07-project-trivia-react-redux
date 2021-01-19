@@ -69,6 +69,9 @@ class Play extends React.Component {
         questionText: questions[nextLevel].question,
         answers: arrayOfAnswers,
       });
+    } else {
+      const { history } = this.props;
+      history.push('/ranking');
     }
   }
 
@@ -199,6 +202,7 @@ Play.propTypes = {
   apiFetchQuestions: PropTypes.func.isRequired,
   game: PropTypes.shape().isRequired,
   timer: PropTypes.objectOf.isRequired,
+  history: PropTypes.shape().isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Play);
