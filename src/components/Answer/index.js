@@ -8,7 +8,6 @@ class Answer extends React.Component {
     super();
     this.state = {
       ansersStyle: ['green', 'pink', 'orange', 'purple'],
-      // questionAnsered: false,
     };
     this.handleAnswerStyle = this.handleAnswerStyle.bind(this);
     this.handleDataTestId = this.handleDataTestId.bind(this);
@@ -17,13 +16,10 @@ class Answer extends React.Component {
   handleAnswerStyle(index) {
     const { ansersStyle } = this.state;
     const { questionAnsered } = this.props;
-    const { curQuestion } = this.props;
-    const answers = [...curQuestion.incorrect_answers, curQuestion.correct_answer];
-
+    const { answers, curQuestion } = this.props;
     if (!questionAnsered) {
       return (`answer-box ${ansersStyle[index]}`);
     }
-
     if (answers[index] === curQuestion.correct_answer) {
       return (`answer-box ${ansersStyle[index]} right`);
     }
@@ -31,40 +27,30 @@ class Answer extends React.Component {
   }
 
   handleDataTestId(index) {
-    const { curQuestion } = this.props;
+    const { curQuestion, answers } = this.props;
     const incorrectAnswers = [...curQuestion.incorrect_answers];
-    const answers = [...curQuestion.incorrect_answers, curQuestion.correct_answer];
-
     return ((answers[index] === curQuestion.correct_answer)
       ? ('correct-answer')
       : (`wrong-answer ${incorrectAnswers.indexOf(answers[index])}`));
   }
 
   render() {
-    const { curQuestion, click, borderWrong, questionAnsered } = this.props;
-    const answers = [...curQuestion.incorrect_answers, curQuestion.correct_answer];
-
-    // if (newQuestion) this.setState({ questionAnsered: false });
-
+    const { answers, click, borderWrong, questionAnsered } = this.props;
     return (
       <section className="answer-section">
         {answers.map((question, index) => (
           <button
             type="button"
-            // role="button"
             tabIndex={ 0 }
             key={ index }
             className={ `${borderWrong} ${this.handleAnswerStyle(index)}` }
-            // className={ this.handleAnswerStyle(index) }
             data-testid={ this.handleDataTestId(index) }
             disabled={ questionAnsered }
             onClick={ () => {
               click(index);
-              // this.setState({ questionAnsered: true });
             } }
             onKeyDown={ () => {
               click(index);
-              // this.setState({ questionAnsered: true });
             } }
           >
             <p className="message">{ answers[index] }</p>
@@ -82,6 +68,7 @@ Answer.propTypes = {
   click: PropTypes.func.isRequired,
   borderWrong: PropTypes.string,
   questionAnsered: PropTypes.bool.isRequired,
+  answers: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 Answer.defaultProps = {
