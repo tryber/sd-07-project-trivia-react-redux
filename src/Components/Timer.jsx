@@ -8,10 +8,12 @@ class Timer extends React.Component {
     super();
     this.state = {
       timer: 30,
+      onLoad: false,
     };
 
     this.count = this.count.bind(this);
     this.shareTimer = this.shareTimer.bind(this);
+    this.isTimer = this.isTimer.bind(this);
   }
 
   componentDidMount() {
@@ -25,6 +27,16 @@ class Timer extends React.Component {
     }
   }
 
+  isTimer() {
+    const { timer } = this.props;
+    if (timer === 0) {
+      this.setState({
+        onLoad: true,
+      });
+      this.shareTimer();
+    }
+  }
+
   count() {
     const { timer } = this.state;
     if (timer > 0) {
@@ -34,6 +46,7 @@ class Timer extends React.Component {
       this.shareTimer();
     } else {
       // Function color answer here
+      this.isTimer();
       this.setState({
         timer: 0,
       });
@@ -41,9 +54,9 @@ class Timer extends React.Component {
   }
 
   shareTimer() {
-    const { timer } = this.state;
+    const { timer, onLoad } = this.state;
     const { saveTime } = this.props;
-    saveTime(timer);
+    saveTime(timer, onLoad);
   }
 
   render() {
@@ -57,11 +70,16 @@ class Timer extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  saveTime: (times) => dispatch(saveTimer(times)),
+  saveTime: (times, onLoad) => dispatch(saveTimer(times, onLoad)),
+});
+
+const mapStateToProps = (state) => ({
+  timer: state.timer.timer,
 });
 
 Timer.propTypes = {
   saveTime: PropTypes.func.isRequired,
+  timer: PropTypes.objectOf.isRequired,
 };
 
-export default connect(null, mapDispatchToProps)(Timer);
+export default connect(mapStateToProps, mapDispatchToProps)(Timer);

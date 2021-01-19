@@ -38,7 +38,8 @@ export const fetchGravatar = (value) => async (dispatch) => {
   dispatch(getGravatar(requestGravatar.url));
 };
 
-export const saveTimer = (payload) => ({
+export const saveTimer = (payload, onLoad) => ({
   type: 'saveTime',
   payload,
+  onLoad,
 });
