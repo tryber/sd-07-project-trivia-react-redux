@@ -5,6 +5,12 @@ import {
   ERROR,
   fetchGravatar,
 } from './gravatar';
+import {
+  UPDATE_SCORE,
+  RESET_SCORE,
+  updateScoreAction,
+  resetScoreAction,
+} from './score';
 
 export default {
   userNameAction,
@@ -13,4 +19,8 @@ export default {
   SUCCESS,
   ERROR,
   fetchGravatar,
+  UPDATE_SCORE,
+  RESET_SCORE,
+  updateScoreAction,
+  resetScoreAction,
 };
