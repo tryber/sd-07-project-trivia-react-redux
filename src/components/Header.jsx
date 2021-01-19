@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import md5 from 'crypto-js/md5';
 import PropTypes from 'prop-types';
+import { avatarURL } from '../redux/actions';
 
 class Header extends Component {
   constructor() {
@@ -22,7 +23,10 @@ class Header extends Component {
   }
 
   fetchAvatar(avatarUrl) {
+    const { saveAvatar } = this.props;
+
     this.setState({ avatar: avatarUrl });
+    saveAvatar(avatarUrl);
   }
 
   render() {
@@ -48,10 +52,15 @@ const mapStateToProps = (state) => ({
   score: state.login.score,
 });
 
-export default connect(mapStateToProps)(Header);
+const mapDispatchToProps = (dispatch) => ({
+  saveAvatar: (url) => dispatch(avatarURL(url)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
 
 Header.propTypes = {
   email: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   score: PropTypes.number.isRequired,
+  saveAvatar: PropTypes.func.isRequired,
 };

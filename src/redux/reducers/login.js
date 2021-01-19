@@ -1,4 +1,4 @@
-import { CORRECLY_ANSWER_SUM, LOGIN_EMAIL } from '../actions';
+import { CORRECLY_ANSWER_SUM, LOGIN_EMAIL, AVATAR_URL } from '../actions';
 
 const LOGIN_INITIAL_STATE = {
   name: '',
@@ -26,6 +26,8 @@ const login = (state = LOGIN_INITIAL_STATE, action) => {
       ...state,
       email: action.user.email,
       name: action.user.name,
+      score: 0,
+      assertions: 0,
     };
   case CORRECLY_ANSWER_SUM:
     saveScoreLocalStorage(
@@ -38,6 +40,11 @@ const login = (state = LOGIN_INITIAL_STATE, action) => {
       ...state,
       score: state.score + action.score,
       assertions: state.assertions + 1,
+    };
+  case AVATAR_URL:
+    return {
+      ...state,
+      avatar: action.url,
     };
   default:
     return state;

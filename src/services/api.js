@@ -20,3 +20,9 @@ export const requestQuestions = async () => {
     console.alert(error);
   }
 };
+
+export const saveArrayRanking = () => {
+  const array = JSON.parse(localStorage.getItem('ranking'));
+
+  if (array === null) localStorage.setItem('ranking', JSON.stringify([]));
+};
