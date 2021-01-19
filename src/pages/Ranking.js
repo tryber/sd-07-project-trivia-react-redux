@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { resetSettings } from '../actions'
+import { resetSettings } from '../actions';
 
 class Ranking extends React.Component {
   constructor(props) {
@@ -75,7 +75,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   reset: () => dispatch(resetSettings()),
-})
+});
 
 Ranking.propTypes = {
   history: PropTypes.shape().isRequired,
