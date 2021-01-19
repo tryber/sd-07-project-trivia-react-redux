@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import '../css/Button.css';
+import '../css/Buttons.css';
 import questionsAPI from '../services/questionAPI';
 import { addScoreboard } from '../actions';
 import Header from '../components/Header';
