@@ -1,10 +1,13 @@
 import { combineReducers } from 'redux';
-import player from './player';
-import questions from './questions';
+import login from './login';
+import question from './question';
+import score from './score';
+import assertions from './assertions';
 
-const rootReducers = combineReducers({
-  player,
-  questions,
+const rootReducer = combineReducers({
+  login,
+  question,
+  score,
+  assertions,
 });
-
-export default rootReducers;
+export default rootReducer;

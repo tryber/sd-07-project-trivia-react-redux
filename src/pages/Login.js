@@ -1,95 +1,112 @@
-import React from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
-import { PropTypes } from 'prop-types';
-import { getAPIToken, getQuestions, login } from '../actions';
+import { loginAction, questionsThunk } from '../actions';
+import tokenAPI from '../services/tokenAPI';
 
-class Login extends React.Component {
+class Login extends Component {
   constructor() {
     super();
+
     this.state = {
-      name: '',
       email: '',
-      subimitDisabled: true,
+      username: '',
+      disabled: true,
     };
-    this.handleChange = this.handleChange.bind(this);
+
     this.verifyLogin = this.verifyLogin.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
-  handleChange({ target: { name, value } }) {
-    this.setState({ [name]: value }, () => this.verifyLogin());
+  verifyLogin({ target }) {
+    const { name, value } = target;
+    this.setState({
+      [name]: value,
+    }, () => {
+      const { email, username } = this.state;
+      if (email.length > 0 && username.length > 0) {
+        return this.setState({ disabled: false });
+      }
+      return this.setState({ disabled: true });
+    });
   }
 
-  verifyLogin() {
-    const { name, email } = this.state;
-    if (name.length > 0 && email.length > 0) {
-      this.setState({ subimitDisabled: false });
-    }
-  }
-
-  async handleSubmit() {
-    const { getToken, getAPIQuestions, history, logiName } = this.props;
-    const { name } = this.state;
-    await getToken();
-    await getAPIQuestions();
-    logiName(name);
-    history.push('/telaDeJogo');
+  async handleClick() {
+    const { email, username } = this.state;
+    const { login, questions } = this.props;
+    const token = await tokenAPI();
+    localStorage.setItem('token', token);
+    login(email, username);
+    questions();
   }
 
   render() {
-    const { subimitDisabled, name, email } = this.state;
-
+    const { email, username, disabled } = this.state;
     return (
       <div>
-        <form>
-          <input
-            onChange={ (event) => this.handleChange(event) }
-            type="text"
-            value={ name }
-            name="name"
-            data-testid="input-player-name"
-          />
-          <input
-            type="text"
-            onChange={ (event) => this.handleChange(event) }
-            value={ email }
-            name="email"
-            data-testid="input-gravatar-email"
-          />
-          <button
-            onClick={ this.handleSubmit }
-            disabled={ subimitDisabled }
-            type="button"
-            data-testid="btn-play"
+        <br />
+        <div>
+          <Link
+            to="/settings"
           >
-            Jogar
-          </button>
-          <Link to="/telaDeConfiguracoes">
-            <button type="button" data-testid="btn-settings">
+            <button
+              type="button"
+              data-testid="btn-settings"
+            >
               Configurações
             </button>
           </Link>
-        </form>
+          <br />
+          <input
+            name="email"
+            id="email"
+            type="email"
+            placeholder="Email"
+            data-testid="input-gravatar-email"
+            value={ email }
+            onChange={ this.verifyLogin }
+            required
+          />
+          <br />
+          <input
+            name="username"
+            id="username"
+            type="username"
+            data-testid="input-player-name"
+            placeholder="Jogador"
+            value={ username }
+            onChange={ this.verifyLogin }
+            required
+          />
+          <br />
+          <Link
+            to="/gamepage"
+          >
+            <button
+              id="button"
+              type="button"
+              disabled={ disabled }
+              data-testid="btn-play"
+              onClick={ () => this.handleClick() }
+            >
+              JOGAR!
+            </button>
+          </Link>
+        </div>
       </div>
     );
   }
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  getAPIQuestions: () => dispatch(getQuestions()),
-  getToken: () => dispatch(getAPIToken()),
-  logiName: (name) => dispatch(login(name)),
+  questions: () => dispatch(questionsThunk()),
+  login: (email, username) => dispatch(loginAction(email, username)),
 });
 
-Login.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
-  getToken: PropTypes.func.isRequired,
-  getAPIQuestions: PropTypes.func.isRequired,
-  logiName: PropTypes.func.isRequired,
-};
+export default connect(null, mapDispatchToProps)(Login);
 
-export default withRouter(connect(null, mapDispatchToProps)(Login));
+Login.propTypes = {
+  login: PropTypes.func.isRequired,
+  questions: PropTypes.func.isRequired,
+};
