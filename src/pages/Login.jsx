@@ -13,6 +13,7 @@ class Login extends React.Component {
       email: '',
       doneEmail: false,
       doneName: false,
+      score: 0,
     };
     this.testEmail = this.testEmail.bind(this);
     this.testName = this.testName.bind(this);
@@ -72,14 +73,14 @@ class Login extends React.Component {
 
   async handleFetch() {
     const { apiFetchToken, apiFetchGravatar, globalName } = this.props;
-    const { email, name } = this.state;
+    const { email, name, score } = this.state;
     const hash = md5(email).toString().toLocaleLowerCase().trim(); // https://www.gravatar.com/avatar/b463ad6c517f53d7b179ece3079c23ed
     await apiFetchGravatar(hash);
     await apiFetchToken();
     await this.loadTokenToLocalStorage();
     await this.loadRankingToLocalStorage();
     await this.loadStateToLocalStorage();
-    await globalName(name);
+    globalName(name, score);
   }
 
   handleChange(event) {
@@ -149,13 +150,15 @@ class Login extends React.Component {
 const mapStateToProps = (state) => ({
   token: state.token,
   gravatar: state.gravatar,
-  player: state.player,
+  // name: state.name,
+  // score: state.score,
+//  player: state.player,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   apiFetchToken: () => dispatch(fetchToken()),
   apiFetchGravatar: (value) => dispatch(fetchGravatar(value)),
-  globalName: (player) => dispatch(saveName(player)),
+  globalName: (name, score) => dispatch(saveName(name, score)),
 });
 
 Login.propTypes = {

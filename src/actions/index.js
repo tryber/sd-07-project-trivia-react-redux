@@ -38,13 +38,14 @@ export const fetchGravatar = (value) => async (dispatch) => {
   dispatch(getGravatar(requestGravatar.url));
 };
 
-export const getPlayer = (player) => ({
+export const getPlayer = (name, score) => ({
   type: 'savePlayer',
-  payload: player,
+  payload: name,
+  score,
 });
 
-export const saveName = (name) => async (dispatch) => {
-  dispatch(getPlayer(name));
+export const saveName = (name, score) => (dispatch) => {
+  dispatch(getPlayer(name, score));
 };
 
 export const saveTimer = (payload, onLoad) => ({
