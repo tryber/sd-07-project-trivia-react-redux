@@ -2,6 +2,7 @@ const initialState = {
   questionIndex: 0,
   questions: [],
   score: 0,
+  wins: 0,
 };
 
 const user = (state = initialState, action) => {
@@ -11,7 +12,7 @@ const user = (state = initialState, action) => {
   case 'NEXT_TRIVIA':
     return { ...state, questionIndex: state.questionIndex + 1 };
   case 'CHANGE_SCORE':
-    return { ...state, score: action.payload };
+    return { ...state, score: action.payload, wins: state.wins + 1 };
   default:
     return state;
   }
