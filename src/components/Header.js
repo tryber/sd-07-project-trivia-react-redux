@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import md5 from 'crypto-js/md5';
 import PropTypes from 'prop-types';
+import Logo from '../trivia.png';
 
 class Header extends React.Component {
   render() {
@@ -10,6 +11,11 @@ class Header extends React.Component {
 
     return (
       <header className="header">
+        <img
+          alt="logo"
+          src={ Logo }
+          className="header-logo"
+        />
         <div className="gamer-stats">
           <img
             className="gamer-avatar"

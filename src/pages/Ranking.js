@@ -29,12 +29,15 @@ class Ranking extends React.Component {
     const { history, reset } = this.props;
     const { ranking } = this.state;
     return (
-      <div>
+      <div className="rank-container">
         <h2 data-testid="ranking-title">Ranking</h2>
         {ranking.map((element, index) => {
           const { name, score, picture } = element;
           return (
-            <div key={ index }>
+            <div
+              className="rank-element"
+              key={ index }
+            >
               <div>
                 <img
                   className="gamer-avatar"

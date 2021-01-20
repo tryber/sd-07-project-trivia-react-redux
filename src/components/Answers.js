@@ -90,7 +90,7 @@ class Answers extends React.Component {
     console.log(correct);
 
     return (
-      <div>
+      <div className="answer-container">
         <div>
           <h3
             key={ `category${index}` }
@@ -101,7 +101,7 @@ class Answers extends React.Component {
           <h2 key={ `question${index}` } data-testid="question-text">{ question }</h2>
         </div>
         <div>
-          <div>
+          <div className="answer-btn">
             { sortedAnswers.map((element, set) => {
               if (element.id) {
                 return (
@@ -143,7 +143,6 @@ class Answers extends React.Component {
     return (
       <div>
         <Header />
-        <h1>Joguinho</h1>
         { this.mountAnswers() }
         <Counter
           key={ newCounter === maxCounter ? setCounter : newCounter }
