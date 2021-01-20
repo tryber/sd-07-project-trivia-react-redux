@@ -6,6 +6,15 @@ import './App.css';
 import Login from './components/login';
 
 class App extends React.Component {
+  componentDidMount() {
+    localStorage.setItem('state', JSON.stringify({ player: {
+      name: '',
+      assertions: 0,
+      score: 0,
+      gravatarEmail: '',
+    } }));
+  }
+
   render() {
     const { history } = this.props;
     return (

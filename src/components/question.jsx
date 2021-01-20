@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import './question.css';
 import PropTypes from 'prop-types';
-import { nextTrivia } from '../actions';
+import { nextTrivia, changeScore } from '../actions';
 
 class Question extends Component {
   constructor(props) {
@@ -98,6 +98,7 @@ class Question extends Component {
 
   answerQuestion(bool) {
     const { counter, question } = this.state;
+    const { addScore } = this.props;
     this.setState({ markAnswers: true });
     if (bool) {
       let difficulty = 0;
@@ -120,6 +121,7 @@ class Question extends Component {
       localStorage.setItem('state', JSON.stringify({ player:
         { score: gottenState.player.score + mn + (counter * difficulty),
           ...gottenState.store } }));
+      addScore(JSON.parse(localStorage.getItem('state')).player.score);
     }
   }
 
@@ -184,6 +186,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   pressNextTrivia: () => dispatch(nextTrivia()),
+  addScore: (data) => dispatch(changeScore(data)),
 });
 
 Question.propTypes = {
@@ -191,6 +194,7 @@ Question.propTypes = {
   questionSelected: PropTypes.number.isRequired,
   pressNextTrivia: PropTypes.func.isRequired,
   history: PropTypes.objectOf.isRequired,
+  addScore: PropTypes.func.isRequired,
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Question));
