@@ -58,7 +58,7 @@ class Game extends React.Component {
 
     if (questions.length === 0) return <p>Carregando...</p>;
     return (
-      <div>
+      <div className="game-container">
         <Header />
         <Answers
           index={ index }

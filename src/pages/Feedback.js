@@ -76,7 +76,7 @@ class FeedBack extends React.Component {
     const { redirect } = this.state;
 
     return (
-      <div>
+      <div className="feedback-container">
         <Header />
         <main>
           {this.handleAssertions()}
@@ -84,23 +84,25 @@ class FeedBack extends React.Component {
           <h2 data-testid="feedback-total-score">
             {points}
           </h2>
-          <button
-            data-testid="btn-ranking"
-            type="button"
-            onClick={ () => history.push('/ranking') }
-          >
-            Ver ranking
-          </button>
-          <button
-            data-testid="btn-play-again"
-            type="button"
-            onClick={ () => {
-              reset();
-              this.setState({ redirect: <Redirect path="/play" /> });
-            } }
-          >
-            Jogar novamente
-          </button>
+          <div className="feedback-btn">
+            <button
+              data-testid="btn-ranking"
+              type="button"
+              onClick={ () => history.push('/ranking') }
+            >
+              Ver ranking
+            </button>
+            <button
+              data-testid="btn-play-again"
+              type="button"
+              onClick={ () => {
+                reset();
+                this.setState({ redirect: <Redirect path="/play" /> });
+              } }
+            >
+              Jogar novamente
+            </button>
+          </div>
           { redirect }
         </main>
       </div>
