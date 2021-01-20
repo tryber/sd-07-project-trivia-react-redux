@@ -199,6 +199,7 @@ Game.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,
+  savePlayer: PropTypes.func.isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(Game);
