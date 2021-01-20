@@ -4,6 +4,7 @@ import asyncReducer from '../reducers/asyncReducer';
 import asyncToken from '../reducers/asyncToken';
 import asyncGravatar from '../reducers/asyncGravatar';
 import game from '../reducers/game';
+import player from '../reducers/player';
 
 const composeEnhancer = (
   typeof window !== 'undefined'
@@ -14,6 +15,7 @@ const reducers = combineReducers({
   token: asyncToken,
   gravatar: asyncGravatar,
   timer: game,
+  player,
 });
 
 function storeConfig() {

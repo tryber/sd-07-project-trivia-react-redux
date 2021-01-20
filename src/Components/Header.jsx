@@ -5,10 +5,11 @@ import '../App.css';
 
 class Header extends React.Component {
   render() {
-    const { gravatar } = this.props;
+    const { gravatar, player } = this.props;
+    const { name } = player;
     const { hashData } = gravatar;
     const getStateSaved = JSON.parse(localStorage.getItem('state'));
-    const { score, name } = getStateSaved.player;
+    const { score } = getStateSaved.player;
     return (
       <div className="header">
         <h1><img src={ Image } alt="logo" className="logo" /></h1>
@@ -28,11 +29,15 @@ class Header extends React.Component {
 
 const mapStateToProps = (state) => ({
   gravatar: state.gravatar,
+  player: state.player,
 });
 
 Header.propTypes = {
   gravatar: PropTypes.shape({
     hashData: PropTypes.string.isRequired,
+  }).isRequired,
+  player: PropTypes.shape({
+    name: PropTypes.string.isRequired,
   }).isRequired,
 };
 

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import md5 from 'crypto-js/md5';
-import { fetchToken, fetchGravatar } from '../actions';
+import { fetchToken, fetchGravatar, saveName } from '../actions';
 
 class Login extends React.Component {
   constructor(props) {
@@ -71,14 +71,15 @@ class Login extends React.Component {
   }
 
   async handleFetch() {
-    const { apiFetchToken, apiFetchGravatar } = this.props;
-    const { email } = this.state;
+    const { apiFetchToken, apiFetchGravatar, globalName } = this.props;
+    const { email, name } = this.state;
     const hash = md5(email).toString().toLocaleLowerCase().trim(); // https://www.gravatar.com/avatar/b463ad6c517f53d7b179ece3079c23ed
     await apiFetchGravatar(hash);
     await apiFetchToken();
-    this.loadTokenToLocalStorage();
-    this.loadRankingToLocalStorage();
-    this.loadStateToLocalStorage();
+    await this.loadTokenToLocalStorage();
+    await this.loadRankingToLocalStorage();
+    await this.loadStateToLocalStorage();
+    await globalName(name);
   }
 
   handleChange(event) {
@@ -148,17 +149,20 @@ class Login extends React.Component {
 const mapStateToProps = (state) => ({
   token: state.token,
   gravatar: state.gravatar,
+  player: state.player,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   apiFetchToken: () => dispatch(fetchToken()),
   apiFetchGravatar: (value) => dispatch(fetchGravatar(value)),
+  globalName: (player) => dispatch(saveName(player)),
 });
 
 Login.propTypes = {
   token: PropTypes.shape().isRequired,
   apiFetchToken: PropTypes.func.isRequired,
   apiFetchGravatar: PropTypes.func.isRequired,
+  globalName: PropTypes.func.isRequired,
   gravatar: PropTypes.objectOf.isRequired,
   history: PropTypes.objectOf.isRequired,
 };
