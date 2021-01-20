@@ -46,12 +46,12 @@ class Ranking extends React.Component {
     return (
       <div>
         <Header />
-        <p data-testid="feedback-text">{ message }</p>
-        <p data-testid="feedback-total-score">
+        <p data-testid="">{ message }</p>
+        <p data-testid="">
           <span>Sua pontuacao: </span>
           {scoreLogado}
         </p>
-        <p data-testid="feedback-total-question">
+        <p data-testid="">
           <span>Número de Acertos: </span>
           { totalAcertos }
         </p>

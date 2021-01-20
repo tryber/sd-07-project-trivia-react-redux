@@ -34,6 +34,7 @@ class QuestionForm extends React.Component {
 
   handleAnswerClicked(event) {
     const { answer, scorePoint } = this.props;
+    let assertionLocal = 0;
     const newAnswers = [...answer];
     for (let i = 0; i < newAnswers.length; i += 1) {
       newAnswers[i].className = `btn-actions-${newAnswers[i].status}`;
@@ -43,6 +44,10 @@ class QuestionForm extends React.Component {
           const { addScore } = this.props;
           scorePoint();
           addScore();
+          assertionLocal += 1;
+          const getStateSaved = JSON.parse(localStorage.getItem('state'));
+          getStateSaved.player.assertions += assertionLocal;
+          localStorage.setItem('state', JSON.stringify(getStateSaved));
         }
       }
     }
