@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from '../Components/Header';
-
 import { fetchQuestions } from '../actions';
 import '../App.css';
 import QuestionForm from '../Components/QuestionForm';
@@ -56,7 +55,7 @@ class Play extends React.Component {
     const { questions } = game;
     const { currentLevel } = this.state;
     const nextLevel = currentLevel + 1;
-    const maxLevel = 5;
+    const maxLevel = 4;
 
     if (nextLevel < maxLevel) {
       const arrayOfAnswers = this.createArray(
@@ -71,7 +70,7 @@ class Play extends React.Component {
       });
     } else {
       const { history } = this.props;
-      history.push('/ranking');
+      history.push('/feedback');
     }
   }
 

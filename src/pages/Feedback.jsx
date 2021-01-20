@@ -20,6 +20,7 @@ class Feedback extends React.Component {
 
   render() {
     const { assertions, score, history } = this.props;
+    console.log(score);
     return (
       <div>
         <Header />
@@ -28,7 +29,7 @@ class Feedback extends React.Component {
         <p data-testid="feedback-total-score">{score}</p>
         <h5>Pergutas acertadas:</h5>
         <p data-testid="feedback-total-question">{assertions}</p>
-        <button type="submit" data-testid="btn-play-again" onClick={ history.push('/') }>
+        <button type="submit" data-testid="btn-play-again">
           Jogar novamente
         </button>
         <div>
@@ -48,7 +49,7 @@ Feedback.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  assertions: state.player.assertions,
+  assertions: state.timer.acertos,
   score: state.player.score,
 });
 
