@@ -40,8 +40,8 @@ class Ranking extends React.Component {
     };
     console.log(this.props);
     getRankingSaved.sort(toOrdenate);
-    const getStateSaved = JSON.parse(localStorage.getItem('state'));
-    const { score } = getStateSaved.player;
+    // const getStateSaved = JSON.parse(localStorage.getItem('state'));
+    const { score } = this.props;
     const scoreLogado = score;
     return (
       <div>
@@ -86,10 +86,12 @@ class Ranking extends React.Component {
 
 const mapStateToProps = (state) => ({
   nroAcertos: state.timer.acertos,
+  score: state.player.score,
 });
 
 Ranking.propTypes = {
   nroAcertos: PropTypes.number.isRequired,
+  score: PropTypes.number.isRequired,
 };
 
 export default connect(mapStateToProps, null)(Ranking);

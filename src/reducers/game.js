@@ -6,6 +6,7 @@ const INITIAL_STATE = {
 
 const game = (state = INITIAL_STATE, action) => {
   const { type, payload, onLoad } = action;
+  console.log(action);
   switch (type) {
   case 'saveTime':
     return ({

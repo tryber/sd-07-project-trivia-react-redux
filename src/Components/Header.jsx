@@ -6,10 +6,10 @@ import '../App.css';
 class Header extends React.Component {
   render() {
     const { gravatar, player } = this.props;
-    const { name } = player;
     const { hashData } = gravatar;
-    const getStateSaved = JSON.parse(localStorage.getItem('state'));
-    const { score } = getStateSaved.player;
+    const { name, score } = player;
+    // const getStateSaved = JSON.parse(localStorage.getItem('state'));
+    // const { score } = getStateSaved.player;
     return (
       <div className="header">
         <h1><img src={ Image } alt="logo" className="logo" /></h1>
@@ -38,6 +38,7 @@ Header.propTypes = {
   }).isRequired,
   player: PropTypes.shape({
     name: PropTypes.string.isRequired,
+    score: PropTypes.number.isRequired,
   }).isRequired,
 };
 

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from '../Components/Header';
-import { fetchQuestions } from '../actions';
+import { fetchQuestions, saveName } from '../actions';
 import '../App.css';
 import QuestionForm from '../Components/QuestionForm';
 
@@ -55,7 +55,7 @@ class Play extends React.Component {
     const { questions } = game;
     const { currentLevel } = this.state;
     const nextLevel = currentLevel + 1;
-    const maxLevel = 4;
+    const maxLevel = 5;
 
     if (nextLevel < maxLevel) {
       const arrayOfAnswers = this.createArray(
@@ -80,7 +80,7 @@ class Play extends React.Component {
   }
 
   setScore(getRankingSaved) {
-    const { game, timer } = this.props;
+    const { game, timer, saveScore, name } = this.props;
     const { questions } = game;
     const timerN = timer;
     function calc(difficultyLevel, origin, valueTimer) {
@@ -94,6 +94,7 @@ class Play extends React.Component {
       if (difficultyLevel === 'medium') levelPoint = two;
       if (difficultyLevel === 'hard') levelPoint = three;
       result = origin.score + (ten + (valueTimer * levelPoint));
+      saveScore(name, result);
       const getStateSaved = JSON.parse(localStorage.getItem('state'));
       getStateSaved.player.score = result;
       localStorage.setItem('state', JSON.stringify(getStateSaved));
@@ -191,10 +192,13 @@ class Play extends React.Component {
 const mapStateToProps = (state) => ({
   game: state.data,
   timer: state.timer.timer,
+  score: state.player.score,
+  name: state.player.name,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   apiFetchQuestions: () => dispatch(fetchQuestions()),
+  saveScore: (name, score) => dispatch(saveName(name, score)),
 });
 
 Play.propTypes = {
@@ -202,6 +206,8 @@ Play.propTypes = {
   game: PropTypes.shape().isRequired,
   timer: PropTypes.objectOf.isRequired,
   history: PropTypes.shape().isRequired,
+  saveScore: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Play);
