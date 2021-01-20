@@ -26,10 +26,3 @@ export const getQuestions = (token) => async (dispatch) => {
   const questions = await getTriviaQuestions(token);
   dispatch(saveQuestions(questions));
 };
-
-export const RESET_TIMER = 'RESET_TIMER';
-
-export const resetTimerAction = (data) => ({
-  type: RESET_TIMER,
-  resetTimer: data,
-});

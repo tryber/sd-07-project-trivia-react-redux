@@ -1,25 +1,40 @@
 import React, { useState, useEffect } from 'react';
-import { connect, useSelector } from 'react-redux';
-import { resetTimerAction } from '../Redux/actions';
+import PropTypes from 'prop-types';
 
-function Timer() {
-  const trinta = 30;
-  const mil = 1000;
-  const [count, setCount] = useState(trinta);
-  const { resetCount } = useSelector((state) => state.gameReducer.resetCount);
+function Timer({ answered, setAnswered }) {
+  const time = 30;
+  const second = 1000;
+
+  const [count, setCount] = useState(time);
+
   useEffect(() => {
-    const timer = count > 0 && setInterval(() => setCount(count - 1), mil);
-    if (resetCount) {
-      setCount(trinta);
+    let timerResetCode;
+
+    if (!answered && count > 0) {
+      timerResetCode = setInterval(() => setCount(count - 1), second);
     }
-    return () => clearInterval(timer);
-  }, [count]);
+
+    if (!answered && count === 0) {
+      setAnswered(true);
+    }
+
+    if (answered) {
+      setCount(time);
+    }
+
+    return () => clearInterval(timerResetCode);
+  }, [count, answered, setAnswered]);
   return (
     <div>
-      <h2>Tempo restante</h2>
-      <h1>{count}</h1>
+      <h2>Tempo restante:</h2>
+      <span>{count}</span>
     </div>
   );
 }
+
+Timer.propTypes = {
+  answered: PropTypes.bool.isRequired,
+  setAnswered: PropTypes.bool.isRequired,
+};
 
 export default Timer;

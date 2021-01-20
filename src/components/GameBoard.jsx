@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { getQuestions, resetTimerAction } from '../Redux/actions';
+import { getQuestions } from '../Redux/actions';
 
 import Question from './Question';
 import Timer from './Timer';
@@ -17,6 +17,7 @@ class GameBoard extends Component {
 
     this.onClickQuestion = this.onClickQuestion.bind(this);
     this.onClickNext = this.onClickNext.bind(this);
+    this.setAnswered = this.setAnswered.bind(this);
   }
 
   componentDidMount() {
@@ -25,20 +26,24 @@ class GameBoard extends Component {
   }
 
   onClickQuestion() {
-    this.setState({
-      answered: true,
-    });
+    this.setAnswered();
   }
 
   onClickNext() {
-    const { questions, resetCount } = this.props;
+    const { questions } = this.props;
     const { currentQuestion } = this.state;
+
     if (currentQuestion < questions.length - 1) {
       this.setState((state) => ({
         currentQuestion: state.currentQuestion + 1,
-      }), () => this.setState({ answered: false }));
+      }), () => {
+        this.setState({ answered: false });
+      });
     }
-    resetCount(true);
+  }
+
+  setAnswered() {
+    this.setState({ answered: true });
   }
 
   render() {
@@ -48,7 +53,10 @@ class GameBoard extends Component {
     if (questions.length > 0) {
       return (
         <div>
-          <Timer />
+          <Timer
+            answered={ answered }
+            setAnswered={ this.setAnswered }
+          />
           <Question
             currentQuestion={ questions[currentQuestion] }
             onClickNext={ this.onClickNext }
@@ -70,7 +78,6 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getQuestionsDispatch: (token) => dispatch(getQuestions(token)),
-  resetCount: (bool) => dispatch(resetTimerAction(bool)),
 });
 
 GameBoard.propTypes = {
