@@ -11,6 +11,11 @@ export const signIn = (name, email) => ({
   email,
 });
 
+export const urlGravatar = (url) => ({
+  type: 'GRAVATAR_USER',
+  url,
+});
+
 //--------------------------------------------------------
 
 const gameData = (token, data) => ({

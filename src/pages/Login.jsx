@@ -108,6 +108,7 @@ Login.propTypes = {
 const mapDispatchToProps = {
   signIn: Actions.signIn,
   fetchApi: Actions.fetchApi,
+  gameScore: Actions.gameScore,
 };
 
 const mapStateToProps = (state) => ({
