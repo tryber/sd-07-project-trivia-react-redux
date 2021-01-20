@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { getQuestions } from '../Redux/actions';
 
 import Question from './Question';
+import Timer from './Timer';
 
 class GameBoard extends Component {
   constructor(props) {
@@ -16,6 +17,7 @@ class GameBoard extends Component {
 
     this.onClickQuestion = this.onClickQuestion.bind(this);
     this.onClickNext = this.onClickNext.bind(this);
+    this.setAnswered = this.setAnswered.bind(this);
   }
 
   componentDidMount() {
@@ -24,9 +26,7 @@ class GameBoard extends Component {
   }
 
   onClickQuestion() {
-    this.setState({
-      answered: true,
-    });
+    this.setAnswered();
   }
 
   onClickNext() {
@@ -36,8 +36,14 @@ class GameBoard extends Component {
     if (currentQuestion < questions.length - 1) {
       this.setState((state) => ({
         currentQuestion: state.currentQuestion + 1,
-      }), () => this.setState({ answered: false }));
+      }), () => {
+        this.setState({ answered: false });
+      });
     }
+  }
+
+  setAnswered() {
+    this.setState({ answered: true });
   }
 
   render() {
@@ -47,6 +53,10 @@ class GameBoard extends Component {
     if (questions.length > 0) {
       return (
         <div>
+          <Timer
+            answered={ answered }
+            setAnswered={ this.setAnswered }
+          />
           <Question
             currentQuestion={ questions[currentQuestion] }
             onClickNext={ this.onClickNext }
