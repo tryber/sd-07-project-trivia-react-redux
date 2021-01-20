@@ -10,9 +10,18 @@ export const saveApiTrivia = (perguntas) => ({
   payload: perguntas,
 });
 
+export const changeScore = (data) => ({
+  type: 'CHANGE_SCORE',
+  payload: data,
+});
+
 export const saveAvatar = (data) => ({
   type: 'SAVE_AVATAR',
   payload: data,
+});
+
+export const nextTrivia = () => ({
+  type: 'NEXT_TRIVIA',
 });
 
 export const getApiTrivia = () => async (dispatch) => {
