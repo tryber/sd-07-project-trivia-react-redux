@@ -17,6 +17,12 @@ body {
   font-family: 'Source Sans Pro', sans-serif;  
 }
 
+.page-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 3rem;
+  letter-spacing: 0.3rem;
+}
+
 .App-logo {
   height: 20vmin;
   pointer-events: none;

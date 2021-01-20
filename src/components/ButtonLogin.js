@@ -5,7 +5,11 @@ class ButtonLogin extends Component {
   render() {
     return (
       <Link to="/">
-        <button type="button" data-testid="btn-go-home" className="login-buttons">
+        <button
+          type="button"
+          data-testid="btn-go-home"
+          className="login-buttons button-home"
+        >
           Home
         </button>
       </Link>

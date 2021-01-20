@@ -21,3 +21,7 @@
   flex-direction: row;
   gap: 2rem
 }
+
+.header-score, .header-player-name {
+  font-weight: 800;
+}

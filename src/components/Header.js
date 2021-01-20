@@ -36,6 +36,8 @@ class Header extends Component {
         {/* </div> */}
         <p data-testid="header-score" className="header-score">
           { score }
+          {' '}
+          points
         </p>
       </div>
 

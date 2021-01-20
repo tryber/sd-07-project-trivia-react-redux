@@ -12,12 +12,12 @@ class Ranking extends Component {
 
     if (
       ranking.length !== compareNumber
-      || ranking !== undefined
-      || ranking !== null
+      // || ranking !== undefined
+      // || ranking !== null
     ) {
       return (
         <div className="ranking-page">
-          <h1 data-testid="ranking-title">Ranking</h1>
+          <h1 data-testid="ranking-title" className="page-title">Ranking</h1>
           <ul className="ranking-list">
             {ranking
               .sort((first, second) => second.score - first.score)
@@ -34,8 +34,9 @@ class Ranking extends Component {
       );
     }
     return (
-      <div>
-        <h1 data-testid="ranking-title">Ranking</h1>
+      <div className="ranking-page-empty">
+        <h1 data-testid="ranking-title" className="page-title">Ranking</h1>
+        <p className="empty-message">Nothing yet!</p>
         <components.ButtonLogin />
       </div>
     );

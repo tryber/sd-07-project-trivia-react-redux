@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import Header from '../components/Header';
 import rankingLocalStorage from '../services/localStorageFunctions';
 import './Feedback.css';
 
@@ -32,15 +31,25 @@ class Feedback extends Component {
           <p>
             Final Score:
             {' '}
-            <span data-testid="feedback-total-score" className="final-score">{score}</span>
+            <span
+              data-testid="feedback-total-score"
+              className="final-score"
+            >
+              {score}
+            </span>
           </p>
           <p>
             Correct Answers:
             {' '}
-            <span data-testid="feedback-total-question" className="correct-answers">{assertions}</span>
+            <span
+              data-testid="feedback-total-question"
+              className="correct-answers"
+            >
+              {assertions}
+            </span>
           </p>
         </div>
-        <div className="links-container">
+        <div className="feedback-links-container">
           <Link to="/">
             <button
               data-testid="btn-play-again"

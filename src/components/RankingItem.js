@@ -16,11 +16,11 @@ class RankingItem extends Component {
           />
         </div>
         <div>
-          <p data-testid={ `player-name-${index}` }>{name}</p>
+          <p data-testid={ `player-name-${index}` } className="player-name">{name}</p>
           <p data-testid={ `player-score-${index}` }>
             {score}
             {' '}
-            pontos
+            points
           </p>
         </div>
 

@@ -80,7 +80,7 @@ class Login extends Component {
               onChange={ this.handleChange }
             />
           </form>
-          <div className="links-container">
+          <div className="login-links-container">
             <Link to="/game">
               <button
                 type="button"

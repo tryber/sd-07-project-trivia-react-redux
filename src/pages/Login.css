@@ -3,17 +3,17 @@
   text-align: center;
   width: 100vw;
   height: 100vh;
-  background-image: var(--background)
+  background-image: var(--background);
 }
 
 .flex-parent {
   display: flex;
   flex-direction: row;
   place-content: center;
-  margin-top: 50px;
+  margin-top: 5%;
 }
 
-.links-container {
+.login-links-container {
   display: flex;
   flex-direction: column;
   margin-left:1rem
