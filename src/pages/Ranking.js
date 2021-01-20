@@ -1,20 +1,70 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { updateScoreAction } from '../actions/index';
 
 class Ranking extends Component {
+  constructor() {
+    super();
+    this.resetStorage = this.resetStorage.bind(this);
+  }
+
+  resetStorage() {
+    const { updateScore } = this.props;
+    const { history } = this.props;
+    const playerStorage = localStorage.getItem('state');
+    const playerStorageJson = JSON.parse(playerStorage);
+    const { name, gravatarEmail } = playerStorageJson.player;
+    const newPlayer = {
+      player: {
+        name,
+        gravatarEmail,
+        assertions: 0,
+        score: 0,
+      },
+    };
+    localStorage.setItem('state', JSON.stringify(newPlayer));
+    updateScore();
+    history.push('/');
+  }
+
   render() {
-    const { name, score, hash } = this.props;
+    const rankingJson = localStorage.getItem('ranking');
+    const ranking = JSON.parse(rankingJson);
     return (
       <div>
-        <h2 data-testid="ranking-title">Ranking</h2>
-        <p data-testid={ `player-name-${0}` }>{name}</p>
-        <p data-testid={ `player-score-${1}` }>{score}</p>
-        <img src={ `https://www.gravatar.com/avatar/${hash}` } alt={ name } />
-        <Link to="/">
-          <button data-testid="btn-go-home" type="button">Início</button>
-        </Link>
+        <h1 data-testid="ranking-title">Ranking</h1>
+        <ul>
+          {ranking
+            .sort((first, second) => second.player.score - first.player.score)
+            .map(({ player }, index) => (
+              <li key={ index }>
+                <img
+                  src={ player.gravatarEmail }
+                  alt="player"
+                />
+                <p
+                  data-testid={ `player-name-${index}` }
+                >
+                  {player.name}
+                </p>
+                <p
+                  data-testid={ `player-score-${player.score}` }
+                >
+                  { player.score }
+                  {' '}
+                  pontos
+                </p>
+              </li>
+            ))}
+        </ul>
+        <button
+          data-testid="btn-go-home"
+          type="button"
+          onClick={ this.resetStorage }
+        >
+          Início
+        </button>
       </div>
     );
   }
@@ -25,10 +75,15 @@ const mapStateToProps = (state) => ({
   hash: state.hashReducer.hash,
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  updateScore: () => dispatch(
+    updateScoreAction(0, 0),
+  ),
+});
+
 Ranking.propTypes = {
-  score: PropTypes.number.isRequired,
-  hash: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
+  updateScore: PropTypes.func.isRequired,
+  history: PropTypes.objectOf.isRequired,
 };
 
-export default connect(mapStateToProps)(Ranking);
+export default connect(mapStateToProps, mapDispatchToProps)(Ranking);

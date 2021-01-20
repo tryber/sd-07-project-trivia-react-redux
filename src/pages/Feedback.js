@@ -1,15 +1,52 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import Header from '../Components/Header';
 
 class Feedback extends Component {
   constructor() {
     super();
     this.resetStorage = this.resetStorage.bind(this);
+    this.generateRanking = this.generateRanking.bind(this);
+  }
+
+  generateRanking() {
+    const { history } = this.props;
+
+    const localStorageRanking = localStorage.getItem('ranking');
+    if (!localStorageRanking) {
+      const array = [];
+      const playerJson = localStorage.getItem('state');
+      const player = JSON.parse(playerJson);
+      array.push(player);
+      localStorage.setItem('ranking', JSON.stringify(array));
+    } else {
+      const arrayConverted = JSON.parse(localStorageRanking);
+      const playerJson = localStorage.getItem('state');
+      const player = JSON.parse(playerJson);
+      arrayConverted.push(player);
+      localStorage.setItem('ranking', JSON.stringify(arrayConverted));
+    }
+    history.push('/ranking');
   }
 
   resetStorage() {
+    const localStorageRanking = localStorage.getItem('ranking');
+    if (!localStorageRanking) {
+      const array = [];
+      const playerJson = localStorage.getItem('state');
+      const player = JSON.parse(playerJson);
+      array.push(player);
+      localStorage.setItem('ranking', JSON.stringify(array));
+    } else {
+      const arrayConverted = JSON.parse(localStorageRanking);
+      const playerJson = localStorage.getItem('state');
+      const player = JSON.parse(playerJson);
+      arrayConverted.push(player);
+      localStorage.setItem('ranking', JSON.stringify(arrayConverted));
+    }
+
     const { history } = this.props;
     const playerStorage = localStorage.getItem('state');
     const playerStorageJson = JSON.parse(playerStorage);
@@ -22,13 +59,12 @@ class Feedback extends Component {
         score: 0,
       },
     };
-    localStorage.clear();
     localStorage.setItem('state', JSON.stringify(newPlayer));
     history.push('/');
   }
 
   render() {
-    const { assertions, score, history } = this.props;
+    const { assertions, score } = this.props;
     const goodMessage = <p data-testid="feedback-text">Mandou bem!</p>;
     const badMessage = <p data-testid="feedback-text">Podia ser melhor...</p>;
     const three = 3;
@@ -38,20 +74,21 @@ class Feedback extends Component {
         <h1>FeedBack</h1>
         <Header />
         <h2 data-testid="feedback-total-score">
-          { score }
+          {score}
         </h2>
         <h2 data-testid="feedback-total-question">
-          { assertions }
+          {assertions}
         </h2>
-        { assertions < three ? badMessage : goodMessage }
-        <button
-          type="button"
-          data-testid="btn-ranking"
-          onClick={ () => history.push('/ranking') }
-        >
-          Ver Ranking
-        </button>
-
+        { assertions < three ? badMessage : goodMessage}
+        <Link to="/ranking">
+          <button
+            type="button"
+            data-testid="btn-ranking"
+            onClick={ this.generateRanking }
+          >
+            Ver Ranking
+          </button>
+        </Link>
         <button
           type="button"
           data-testid="btn-play-again"
