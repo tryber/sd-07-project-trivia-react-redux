@@ -1,6 +1,6 @@
-import { SAVE_QUESTIONS } from '../actions';
+import { SAVE_QUESTIONS, RESET_TIMER } from '../actions';
 
-const INITIAL_STATE = { questions: [] };
+const INITIAL_STATE = { questions: [], resetTimer: false };
 
 export default function gameReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
@@ -8,6 +8,11 @@ export default function gameReducer(state = INITIAL_STATE, action) {
     return {
       ...state,
       questions: action.questions,
+    };
+  case RESET_TIMER:
+    return {
+      ...state,
+      resetTimer: action.resetTimer,
     };
   default:
     return state;
