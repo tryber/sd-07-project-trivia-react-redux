@@ -6,11 +6,24 @@ class Ranking extends Component {
   constructor() {
     super();
     this.goToLogin = this.goToLogin.bind(this);
+    this.sortRanking = this.sortRanking.bind(this);
+    this.state = {
+      sorted: [],
+    };
   }
 
   componentDidMount() {
     const { ranking } = this.props;
     localStorage.getItem('ranking', ranking);
+    this.sortRanking();
+  }
+
+  sortRanking() {
+    const { ranking } = this.props;
+    const sorted = ranking.sort((a, b) => b.score - a.score);
+    this.setState({
+      sorted,
+    });
   }
 
   goToLogin() {
@@ -19,14 +32,14 @@ class Ranking extends Component {
   }
 
   render() {
-    const { ranking } = this.props;
+    const { sorted } = this.state;
 
     return (
       <div>
         <h1 data-testid="ranking-title">Ranking</h1>
         <div>
-          {ranking.length > 0
-          && ranking.map((player, index) => (
+          {sorted.length > 0
+          && sorted.map((player, index) => (
             <div key={ index }>
               <div
                 key={ index }
