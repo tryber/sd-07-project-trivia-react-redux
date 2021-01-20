@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import questionsRequest from '../services/QuestionsRequest';
 import Header from '../components/Header';
 import Questions from './Questions';
+import { savePlayerData } from '../actions';
 
 class Game extends Component {
   constructor() {
@@ -114,11 +116,12 @@ class Game extends Component {
 
   nextQuestion() {
     const lastQuestion = 4;
-    const { currentQuestion, questionsArray } = this.state;
+    const { currentQuestion, questionsArray, score } = this.state;
     console.log('next-question-function');
     console.log(questionsArray);
-    const { history } = this.props;
+    const { history, savePlayer } = this.props;
     if (currentQuestion === lastQuestion) {
+      savePlayer(score);
       console.log('last question');
       history.push('/feedback');
     } else {
@@ -188,10 +191,15 @@ class Game extends Component {
   }
 }
 
+const mapDispatchToProps = (dispatch) => ({
+  savePlayer: (score) => dispatch(savePlayerData(score)),
+});
+
 Game.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,
+  savePlayer: PropTypes.func.isRequired,
 };
 
-export default Game;
+export default connect(null, mapDispatchToProps)(Game);
