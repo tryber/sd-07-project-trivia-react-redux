@@ -12,7 +12,7 @@ class GameBoard extends Component {
     super(props);
     this.state = {
       currentQuestion: 0,
-      nextButton: false,
+      answered: false,
     };
 
     this.onClickQuestion = this.onClickQuestion.bind(this);
@@ -26,7 +26,7 @@ class GameBoard extends Component {
 
   onClickQuestion() {
     this.setState({
-      nextButton: true,
+      answered: true,
     });
   }
 
@@ -36,27 +36,24 @@ class GameBoard extends Component {
     if (currentQuestion < questions.length - 1) {
       this.setState((state) => ({
         currentQuestion: state.currentQuestion + 1,
-      }), () => this.setState({ nextButton: false }));
+      }), () => this.setState({ answered: false }));
     }
     resetCount(true);
   }
 
   render() {
     const { questions } = this.props;
-    const { currentQuestion, nextButton } = this.state;
+    const { currentQuestion, answered } = this.state;
 
     if (questions.length > 0) {
       return (
         <div>
           <Timer />
-          <h1>
-            Vamos Jogar!
-          </h1>
           <Question
             currentQuestion={ questions[currentQuestion] }
             onClickNext={ this.onClickNext }
             onClickQuestion={ this.onClickQuestion }
-            nextButtonVisible={ nextButton }
+            answered={ answered }
           />
         </div>
       );

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -7,6 +7,7 @@ import { login } from '../Redux/actions';
 import isLoginOk from '../helpers/isLoginOk';
 
 import logo from '../trivia.png';
+import gearIcon from '../gear.png';
 
 class Login extends Component {
   constructor(props) {
@@ -15,12 +16,10 @@ class Login extends Component {
     this.state = {
       email: '',
       userName: '',
-      settings: false,
     };
 
     this.onChangeHandler = this.onChangeHandler.bind(this);
     this.onClickJogar = this.onClickJogar.bind(this);
-    this.onClickSettings = this.onClickSettings.bind(this);
   }
 
   onChangeHandler(event) {
@@ -33,16 +32,11 @@ class Login extends Component {
     loginDispatch(email, username);
   }
 
-  onClickSettings() {
-    this.setState({ settings: true });
-  }
-
   render() {
-    const { email, userName, settings } = this.state;
+    const { email, userName } = this.state;
     const { logged } = this.props;
 
     if (logged) return <Redirect to="/playgame" />;
-    if (settings) return <Redirect to="/settings" />;
 
     return (
       <header>
@@ -78,16 +72,9 @@ class Login extends Component {
               Jogar
             </button>
           </div>
-          <div>
-            <button
-              type="submit"
-              className="btn-settings"
-              data-testid="btn-settings"
-              onClick={ this.onClickSettings }
-            >
-              Configurações
-            </button>
-          </div>
+          <nav className="gear-settings" data-testid="btn-settings">
+            <Link to="/settings"><img src={ gearIcon } alt="settings" /></Link>
+          </nav>
         </div>
       </header>
     );

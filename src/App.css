@@ -9,9 +9,17 @@ body {
   display: flex;
   flex-direction: column;
   font-size: calc(10px + 2vmin);
-  height: 500px;
+  height: 210px;
   padding-left: 10px;
   padding-top: 10px;
+}
+
+.answered {
+  border: 3px solid red;
+}
+
+.answered[ data-testid = 'correct-answer' ] {
+  border: 3px solid rgb(6, 240, 15);
 }
 
 img {
@@ -40,8 +48,13 @@ span {
   height: 50px;
 }
 
-.btn-settings {
-  margin-top: 100px;
+.gear-settings {
+  margin-left: 350px;
+  width: 70px;
+}
+
+button {
+  margin-right: 5px;
 }
 
 .imputs {
@@ -52,9 +65,9 @@ span {
   display: flex;
   flex-direction: column;
   font-size: calc(10px + 2vmin);
-  height: 400px;
+  height: 300px;
   justify-content: center;
   margin-left: 400px;
   margin-top: 100px;
-  width: 500px;
+  width: 400px;
 }
