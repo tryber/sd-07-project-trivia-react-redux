@@ -15,6 +15,10 @@ export const saveAvatar = (data) => ({
   payload: data,
 });
 
+export const nextTrivia = () => ({
+  type: 'NEXT_TRIVIA',
+});
+
 export const getApiTrivia = () => async (dispatch) => {
   const localStorageTrivia = localStorage.getItem('token');
   const endpoint = await fetch(`https://opentdb.com/api.php?amount=5&token=${localStorageTrivia}`);
