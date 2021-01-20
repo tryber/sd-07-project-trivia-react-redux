@@ -168,7 +168,7 @@ class Play extends React.Component {
 
   render() {
     const { category, questionText, answers } = this.state;
-    // console.log(category);
+
     return (
       <div className="container-fluid">
         <Header />

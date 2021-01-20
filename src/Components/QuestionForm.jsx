@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import '../App.css';
+import { connect } from 'react-redux';
 import Question from './Question';
 import Timer from './Timer';
 import Answer from './Answer';
+import { addAcerto } from '../actions';
 
 class QuestionForm extends React.Component {
   constructor(props) {
@@ -38,7 +40,9 @@ class QuestionForm extends React.Component {
       newAnswers[i].disabled = true;
       if (newAnswers[i].status === 'correct') {
         if (event.target.innerHTML === newAnswers[i].answer) {
+          const { addScore } = this.props;
           scorePoint();
+          addScore();
         }
       }
     }
@@ -91,12 +95,17 @@ class QuestionForm extends React.Component {
   }
 }
 
+const mapDispatchToProps = (dispatch) => ({
+  addScore: () => dispatch(addAcerto()),
+});
+
 QuestionForm.propTypes = {
   category: PropTypes.string.isRequired,
   questionText: PropTypes.string.isRequired,
   answer: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   scorePoint: PropTypes.func.isRequired,
   handleClickNextQuestion: PropTypes.func.isRequired,
+  addScore: PropTypes.func.isRequired,
 };
 
-export default QuestionForm;
+export default connect(null, mapDispatchToProps)(QuestionForm);
