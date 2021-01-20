@@ -120,6 +120,7 @@ class Question extends Component {
       const gottenState = JSON.parse(localStorage.getItem('state'));
       localStorage.setItem('state', JSON.stringify({ player:
         { score: gottenState.player.score + mn + (counter * difficulty),
+          assertions: gottenState.player.assertions + 1,
           ...gottenState.store } }));
       addScore(JSON.parse(localStorage.getItem('state')).player.score);
     }

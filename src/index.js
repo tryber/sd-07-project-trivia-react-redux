@@ -7,6 +7,7 @@ import App from './App';
 import Game from './pages/Game';
 import Config from './pages/Config';
 import Feedback from './pages/Feedback';
+import Ranking from './pages/Ranking';
 import * as serviceWorker from './serviceWorker';
 import store from './storage';
 
@@ -18,6 +19,7 @@ ReactDOM.render(
         <Route path="/game" component={ Game } />
         <Route path="/config" component={ Config } />
         <Route path="/feedback" component={ Feedback } />
+        <Route path="/ranking" component={ Ranking } />
       </Switch>
     </BrowserRouter>
   </Provider>,
