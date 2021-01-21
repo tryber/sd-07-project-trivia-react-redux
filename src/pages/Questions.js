@@ -17,27 +17,6 @@ export default class Questions extends Component {
     // this.shuffleAnswers();
   }
 
-  // shuffleAnswers() {
-  //   const { question } = this.props;
-  //   // define keys to new array
-  //   console.log('shuffle')
-  //   console.log(question)
-  //   const correctAnswer = question.correct_answer;
-  //   const incorrectAnswer = question.incorrect_answers;
-  //   const concatAnswersArr = [correctAnswer, ...incorrectAnswer];
-  //   // lint purpose - magic number
-  //   const magic = 0.5;
-  //   // sort concataned array to shuffle answers
-  //   const sortedArr = concatAnswersArr.sort(() => Math.random() - magic);
-  //   console.log('sorted')
-  //   console.log(sortedArr)
-
-  //   this.setState({
-  //     // shuffled: true,
-  //     shuffledAnswers: sortedArr,
-  //   });
-  // }
-
   render() {
     const {
       question,
