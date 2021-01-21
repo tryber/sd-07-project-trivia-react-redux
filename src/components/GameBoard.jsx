@@ -13,11 +13,13 @@ class GameBoard extends Component {
     this.state = {
       currentQuestion: 0,
       answered: false,
+      time: 30,
     };
 
     this.onClickQuestion = this.onClickQuestion.bind(this);
     this.onClickNext = this.onClickNext.bind(this);
     this.setAnswered = this.setAnswered.bind(this);
+    this.onChangeTime = this.onChangeTime.bind(this);
   }
 
   componentDidMount() {
@@ -25,8 +27,24 @@ class GameBoard extends Component {
     getQuestionsDispatch(token);
   }
 
-  onClickQuestion() {
+  onChangeTime(time) {
+    this.setState({ time });
+  }
+
+  onClickQuestion({ difficulty }, event) {
+    const { time } = this.state;
+
+    // console.log(difficulty);
+
     this.setAnswered();
+    // const { testid } = event.target.dataset;
+    // const fourten = 14;
+    // const answer = testid.substring(0, fourten);
+    // if (answer.includes('wrong-answer')) {
+    //   console.log('ERROU');
+    // } else {
+    //   console.log('ACERTOU');
+    // }
   }
 
   onClickNext() {
@@ -48,7 +66,7 @@ class GameBoard extends Component {
 
   render() {
     const { questions } = this.props;
-    const { currentQuestion, answered } = this.state;
+    const { currentQuestion, answered, time } = this.state;
 
     if (questions.length > 0) {
       return (
@@ -56,6 +74,8 @@ class GameBoard extends Component {
           <Timer
             answered={ answered }
             setAnswered={ this.setAnswered }
+            time={ time }
+            onChangeTime={ this.onChangeTime }
           />
           <Question
             currentQuestion={ questions[currentQuestion] }

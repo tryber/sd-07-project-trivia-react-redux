@@ -1,40 +1,40 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-function Timer({ answered, setAnswered }) {
-  const time = 30;
+function Timer({ time, answered, setAnswered, onChangeTime }) {
+  const resetTime = 30;
   const second = 1000;
-
-  const [count, setCount] = useState(time);
 
   useEffect(() => {
     let timerResetCode;
 
-    if (!answered && count > 0) {
-      timerResetCode = setInterval(() => setCount(count - 1), second);
+    if (!answered && time > 0) {
+      timerResetCode = setInterval(() => onChangeTime(time - 1), second);
     }
 
-    if (!answered && count === 0) {
+    if (!answered && time === 0) {
       setAnswered(true);
     }
 
     if (answered) {
-      setCount(time);
+      onChangeTime(resetTime);
     }
 
     return () => clearInterval(timerResetCode);
-  }, [count, answered, setAnswered]);
+  }, [time, answered, setAnswered, onChangeTime]);
   return (
     <div>
       <h2>Tempo restante:</h2>
-      <span>{count}</span>
+      <span>{time}</span>
     </div>
   );
 }
 
 Timer.propTypes = {
   answered: PropTypes.bool.isRequired,
-  setAnswered: PropTypes.bool.isRequired,
+  setAnswered: PropTypes.func.isRequired,
+  time: PropTypes.number.isRequired,
+  onChangeTime: PropTypes.func.isRequired,
 };
 
 export default Timer;
