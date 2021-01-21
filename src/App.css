@@ -3,7 +3,7 @@
 }
 
 .App-logo {
-  height: 40vmin;
+  height: 30vmin;
   pointer-events: none;
 }
 
@@ -13,6 +13,27 @@
 
 .green-border {
   border: 1px solid green;
+}
+
+.settings {
+  max-width: 20px;
+  position: relative;
+  z-index: 2;
+}
+
+.btn {
+  background-color: white;
+  border-radius: 5px;
+  color: black;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 900;
+  padding: 3px 5px 2px;
+  transition: 1s;
+}
+
+.btn:hover {
+  background-color: #525853;
 }
 
 @media ( prefers-reduced-motion : no-preference ) {

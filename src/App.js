@@ -1,16 +1,27 @@
 import React from 'react';
-import logo from './trivia.png';
-import './App.css';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import Login from './Pages/Login';
+import Settings from './Pages/Settings';
+import PlayGame from './Pages/PlayGame';
+import Store from './Store';
+import Feedback from './Pages/Feedback';
+import Ranking from './Pages/Ranking';
 
 export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={ logo } className="App-logo" alt="logo" />
-        <p>
-          SUA VEZ
-        </p>
-      </header>
+    <div>
+      <BrowserRouter>
+        <Provider store={ Store }>
+          <Switch>
+            <Route exact path="/" component={ Login } />
+            <Route path="/settings" component={ Settings } />
+            <Route path="/game" component={ PlayGame } />
+            <Route path="/feedback" component={ Feedback } />
+            <Route path="/ranking" component={ Ranking } />
+          </Switch>
+        </Provider>
+      </BrowserRouter>
     </div>
   );
 }
