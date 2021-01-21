@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 import getScore from '../helpers/getScore';
 import { getQuestions } from '../Redux/actions';
 
@@ -54,7 +55,11 @@ class GameBoard extends Component {
   onClickNext() {
     const { questions } = this.props;
     const { currentQuestion } = this.state;
-
+    if (currentQuestion === questions.length - 1) {
+      this.setState({
+        shouldRedirect: true,
+      });
+    }
     if (currentQuestion < questions.length - 1) {
       this.setState((state) => ({
         currentQuestion: state.currentQuestion + 1,
@@ -86,7 +91,10 @@ class GameBoard extends Component {
 
   render() {
     const { questions } = this.props;
-    const { currentQuestion, answered, time } = this.state;
+    const { currentQuestion, answered, time, shouldRedirect } = this.state;
+    if (shouldRedirect) {
+      return <Redirect to="/feedback" />;
+    }
     if (questions.length > 0) {
       return (
         <div>
