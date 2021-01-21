@@ -33,7 +33,7 @@ class Question extends Component {
                     ? 'correct-answer'
                     : `wrong-answer-${index}`
                 }
-                onClick={ onClickQuestion }
+                onClick={ (event) => onClickQuestion(currentQuestion, event) }
               >
                 {answer}
               </button>
