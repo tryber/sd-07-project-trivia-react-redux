@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-
+import getScore from '../helpers/getScore';
 import { getQuestions } from '../Redux/actions';
 
 import Question from './Question';
@@ -13,6 +13,10 @@ class GameBoard extends Component {
     this.state = {
       currentQuestion: 0,
       answered: false,
+      name: '',
+      assertions: 0,
+      score: 0,
+      gravatarEmail: '',
       time: 30,
     };
 
@@ -20,11 +24,14 @@ class GameBoard extends Component {
     this.onClickNext = this.onClickNext.bind(this);
     this.setAnswered = this.setAnswered.bind(this);
     this.onChangeTime = this.onChangeTime.bind(this);
+    this.setScore = this.setScore.bind(this);
+    this.saveLocaStorageData = this.saveLocaStorageData.bind(this);
   }
 
   componentDidMount() {
     const { token, getQuestionsDispatch } = this.props;
     getQuestionsDispatch(token);
+    this.saveLocaStorageData();
   }
 
   onChangeTime(time) {
@@ -33,18 +40,15 @@ class GameBoard extends Component {
 
   onClickQuestion({ difficulty }, event) {
     const { time } = this.state;
-
-    // console.log(difficulty);
-
+    const { testid } = event.target.dataset;
+    if (testid === 'correct-answer') {
+      this.setState((state) => ({
+        assertions: Number(state.assertions) + 1,
+      }));
+    }
+    const score = getScore(difficulty, time, testid);
+    this.setScore(score);
     this.setAnswered();
-    // const { testid } = event.target.dataset;
-    // const fourten = 14;
-    // const answer = testid.substring(0, fourten);
-    // if (answer.includes('wrong-answer')) {
-    //   console.log('ERROU');
-    // } else {
-    //   console.log('ACERTOU');
-    // }
   }
 
   onClickNext() {
@@ -64,10 +68,25 @@ class GameBoard extends Component {
     this.setState({ answered: true });
   }
 
+  setScore(score) {
+    this.setState((state) => ({
+      score: state.score + score,
+    }), () => {
+      const { name, assertions, score: toScore, gravatarEmail } = this.state;
+      const player = { name, assertions, score: toScore, gravatarEmail };
+      localStorage.setItem('state', JSON.stringify({ player }));
+    });
+  }
+
+  saveLocaStorageData() {
+    const { name, assertions, score: toScore, gravatarEmail } = this.state;
+    const player = { name, assertions, score: toScore, gravatarEmail };
+    localStorage.setItem('state', JSON.stringify({ player }));
+  }
+
   render() {
     const { questions } = this.props;
     const { currentQuestion, answered, time } = this.state;
-
     if (questions.length > 0) {
       return (
         <div>
@@ -93,6 +112,8 @@ class GameBoard extends Component {
 
 const mapStateToProps = (state) => ({
   token: state.userReducer.user.token,
+  gravatarEmail: state.userReducer.user.email,
+  name: state.userReducer.user.username,
   questions: state.gameReducer.questions,
 });
 
