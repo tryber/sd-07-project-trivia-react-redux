@@ -13,19 +13,33 @@ class Feedback extends React.Component {
 
   feedbackMessage() {
     const { correctAnswers } = this.props;
+    const message0 = 'Não acertou nenhuma pergunta';
     const message1 = 'Podia ser melhor...';
     const message2 = 'Mandou bem!';
     const minScore = 3;
-    return (correctAnswers >= minScore) ? message2 : message1;
+    if (correctAnswers === 0) {
+      return message0;
+    }
+    if (correctAnswers >= minScore) {
+      return message2;
+    }
+    return message1;
   }
 
   render() {
+    const { correctAnswers, score } = this.props;
     return (
       <div>
         <Header />
         <p data-testid="feedback-text">{this.feedbackMessage()}</p>
         <PlayAgain { ...this.props } />
         <GoRanking { ...this.props } />
+        <p>Total de acertos:</p>
+        <p data-testid="feedback-total-question">
+          {correctAnswers}
+        </p>
+        <p>Total de pontos:</p>
+        <p data-testid="feedback-total-score">{score}</p>
       </div>
     );
   }
@@ -33,13 +47,15 @@ class Feedback extends React.Component {
 
 const mapStateToProps = (state) => ({
   correctAnswers: state.score.correctAnswers,
+  score: state.score.score,
 });
 
 Feedback.propTypes = {
   correctAnswers: PropTypes.number.isRequired,
+  score: PropTypes.number.isRequired,
 };
 
-export default connect(mapStateToProps, null)(Feedback);
+export default connect(mapStateToProps)(Feedback);
 
 // const playerObject = JSON.parse(localStorage.getItem('state'));
 // const score = playerObject.player.score
