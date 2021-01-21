@@ -118,8 +118,15 @@ const Game = (props) => {
       // return clearInterval(intervalId);
     }
 
-    return () => clearInterval(intervalId);
+    return () => {
+      clearInterval(intervalId);
+    };
   }, [time]);
+
+  useEffect(() => () => {
+    score = 0;
+    sum = 0;
+  }, []);
 
   const dataGame = useSelector((state) => state.game);
   const { results } = dataGame.data;

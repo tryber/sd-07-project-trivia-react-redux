@@ -5,8 +5,8 @@ import Header from '../components/Header';
 class FeedBack extends React.Component {
   render() {
     const playerStorage = JSON.parse(localStorage.getItem('state'));
-    console.log(playerStorage);
     const three = 3;
+
     return (
       <div>
         <Header />
@@ -23,6 +23,9 @@ class FeedBack extends React.Component {
         </div>
         <Link to="/" data-testid="btn-play-again">
           Jogar novamente
+        </Link>
+        <Link to="/ranking" data-testid="btn-ranking">
+          Ver Ranking
         </Link>
       </div>
     );

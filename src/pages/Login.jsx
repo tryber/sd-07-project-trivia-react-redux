@@ -38,10 +38,10 @@ class Login extends React.Component {
       'state',
       JSON.stringify({
         player: {
-          name: '',
+          name: nome,
           assertions: 0,
           score: 0,
-          email: '',
+          email,
         },
       }),
     );
@@ -108,6 +108,7 @@ Login.propTypes = {
 const mapDispatchToProps = {
   signIn: Actions.signIn,
   fetchApi: Actions.fetchApi,
+  gameScore: Actions.gameScore,
 };
 
 const mapStateToProps = (state) => ({
