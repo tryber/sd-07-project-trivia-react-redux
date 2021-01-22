@@ -13,12 +13,13 @@ class Feedback extends Component {
   }
 
   render() {
-    const { score, username, gravatarImg } = this.props;
+    const { score, username, gravatarImg, assertions } = this.props;
 
     return (
       <div>
         { this.feedbackMessage() }
-        <h1 data-testid="feedback-text">feedback</h1>
+        <p data-testid="feedback-total-score">{ score }</p>
+        <p data-testid="feedback-total-question">{ assertions }</p>
         <img data-testid="header-profile-picture" src={ gravatarImg } alt="profile" />
         <h2 data-testid="header-player-name">{username}</h2>
         <p data-testid="header-score">{score}</p>
