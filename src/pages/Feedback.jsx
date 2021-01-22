@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 class Feedback extends Component {
   feedbackMessage() {
@@ -23,6 +24,12 @@ class Feedback extends Component {
         <img data-testid="header-profile-picture" src={ gravatarImg } alt="profile" />
         <h2 data-testid="header-player-name">{username}</h2>
         <p data-testid="header-score">{score}</p>
+        <Link
+          to="/ranking"
+          data-testid="btn-ranking"
+        >
+          Ver Ranking
+        </Link>
       </div>
     );
   }
