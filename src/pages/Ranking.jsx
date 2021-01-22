@@ -18,8 +18,6 @@ class Ranking extends Component {
     const rankingData = localStorage.getItem('ranking');
     const parsedRankingData = JSON.parse(rankingData);
 
-    console.log(parsedRankingData);
-
     if (parsedRankingData) {
       this.setState({ rankingList: parsedRankingData });
     }
