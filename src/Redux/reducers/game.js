@@ -1,6 +1,10 @@
-import { SAVE_QUESTIONS } from '../actions';
+import { SAVE_QUESTIONS, SAVE_GAME_DATA } from '../actions';
 
-const INITIAL_STATE = { questions: [] };
+const INITIAL_STATE = {
+  questions: [],
+  score: 0,
+  assertions: 0,
+};
 
 export default function gameReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
@@ -8,6 +12,12 @@ export default function gameReducer(state = INITIAL_STATE, action) {
     return {
       ...state,
       questions: action.questions,
+    };
+  case SAVE_GAME_DATA:
+    return {
+      ...state,
+      score: action.score,
+      assertions: action.assertions,
     };
   default:
     return state;

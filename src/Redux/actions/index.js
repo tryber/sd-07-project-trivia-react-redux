@@ -4,6 +4,7 @@ import getTriviaQuestions from '../../services/getTriviaQuestions';
 
 export const SAVE_QUESTIONS = 'SAVE_QUESTIONS';
 export const SAVE_USER_DATA = 'SAVE_USER_DATA';
+export const SAVE_GAME_DATA = 'SAVE_GAME_DATA';
 
 export const saveUserData = (data) => ({
   type: SAVE_USER_DATA,
@@ -26,3 +27,9 @@ export const getQuestions = (token) => async (dispatch) => {
   const questions = await getTriviaQuestions(token);
   dispatch(saveQuestions(questions));
 };
+
+export const saveGameData = (score, assertions) => ({
+  type: SAVE_GAME_DATA,
+  score,
+  assertions,
+});
