@@ -5,10 +5,16 @@ import getTriviaQuestions from '../../services/getTriviaQuestions';
 export const SAVE_QUESTIONS = 'SAVE_QUESTIONS';
 export const SAVE_USER_DATA = 'SAVE_USER_DATA';
 export const SAVE_GAME_DATA = 'SAVE_GAME_DATA';
+export const AUTHENTICATION = 'AUTHENTICATION';
 
 export const saveUserData = (data) => ({
   type: SAVE_USER_DATA,
   data,
+});
+
+export const authentication = (auth) => ({
+  type: AUTHENTICATION,
+  auth,
 });
 
 export const login = (email, username) => async (dispatch) => {
@@ -16,6 +22,7 @@ export const login = (email, username) => async (dispatch) => {
   const gravatarImg = getGravatarImg(email);
   localStorage.setItem('token', token);
   dispatch(saveUserData({ email, username, token, gravatarImg }));
+  dispatch(authentication(true));
 };
 
 export const saveQuestions = (questions) => ({
