@@ -1,4 +1,4 @@
-import { SAVE_USER_DATA } from '../actions/index';
+import { SAVE_USER_DATA, AUTHENTICATION } from '../actions/index';
 
 const INITIAL_STATE = {
   user: {},
@@ -11,7 +11,11 @@ export default function userReducer(state = INITIAL_STATE, action) {
     return {
       ...state,
       user: action.data,
-      logged: true,
+    };
+  case AUTHENTICATION:
+    return {
+      ...state,
+      logged: action.auth,
     };
   default:
     return state;
