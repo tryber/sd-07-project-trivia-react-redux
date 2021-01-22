@@ -141,6 +141,7 @@ GameBoard.propTypes = {
   token: PropTypes.string.isRequired,
   getQuestionsDispatch: PropTypes.func.isRequired,
   questions: PropTypes.arrayOf(PropTypes.object).isRequired,
+  saveGamaDataDispatch: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(GameBoard);
