@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import getScore from '../helpers/getScore';
-import { getQuestions } from '../Redux/actions';
+import { getQuestions, saveGameData } from '../Redux/actions';
 
 import Question from './Question';
 import Timer from './Timer';
@@ -77,16 +77,23 @@ class GameBoard extends Component {
     this.setState((state) => ({
       score: state.score + score,
     }), () => {
-      const { name, assertions, score: toScore, gravatarEmail } = this.state;
-      const player = { name, assertions, score: toScore, gravatarEmail };
-      localStorage.setItem('state', JSON.stringify({ player }));
+      this.saveLocaStorageData();
     });
   }
 
   saveLocaStorageData() {
     const { name, assertions, score: toScore, gravatarEmail } = this.state;
-    const player = { name, assertions, score: toScore, gravatarEmail };
+    const { saveGamaDataDispatch } = this.props;
+
+    const player = {
+      name,
+      assertions,
+      score: toScore,
+      gravatarEmail,
+    };
+
     localStorage.setItem('state', JSON.stringify({ player }));
+    saveGamaDataDispatch(toScore, assertions);
   }
 
   render() {
@@ -127,6 +134,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getQuestionsDispatch: (token) => dispatch(getQuestions(token)),
+  saveGamaDataDispatch: (score, assertions) => dispatch(saveGameData(score, assertions)),
 });
 
 GameBoard.propTypes = {
