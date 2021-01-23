@@ -6,8 +6,8 @@
 }
 
 .login-content {
-  background: linear-gradient(0deg ,
-  rgba(111, 102, 102, 0.37) 0%, 
+  background: linear-gradient(0deg,
+  rgba(111, 102, 102, 0.37) 0%,
   rgba(111, 102, 102, 0.616) 30%
 );
   border-radius: 2rem;
@@ -28,7 +28,7 @@
 .btn-play {
   background: none;
   border: none;
-  font-family: DM Sans, sans-serif;
+  font-family: DM Sans , sans-serif;
   font-size: 4em;
 }
 
@@ -129,11 +129,14 @@
 @media only screen and ( min-width : 600px ) {
 
   .login-content { width: 20vw; }
+
   .container {
     background-position: center;
     background-size: cover;
   }
+
   .sound-btn-container { justify-content: center; }
+
   .header-content {
     justify-content: flex-start;
     width: 100%;

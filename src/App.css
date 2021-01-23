@@ -1,8 +1,8 @@
 body {
   backdrop-filter: blur(2px);
   background-image: url('/images/background-desktop.jpg');
-  background-size: 350%;
   background-position: center;
+  background-size: 350%;
 }
 
 .correct-answer {
