@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
+import GetIcon from '../components/Icons';
+import '../styles/Login.css';
 import { getToken } from '../services/API';
 
 class Login extends Component {
@@ -71,46 +73,55 @@ class Login extends Component {
       return <Redirect to="/game" />;
     }
     return (
-      <div>
-        <form>
-          <label htmlFor="input-player-name">
-            Nome:
-            <input
-              id="input-player-name"
-              name="name"
-              value={ name }
-              data-testid="input-player-name"
-              onChange={ (event) => handleChange(event) }
-            />
-          </label>
+      <div className="login-container">
+        <div className="login-content">
+          <div className="settings-icon-content">
+            <Link to="/settings">
+              <button
+                type="button"
+                className="btn-settings"
+                data-testid="btn-settings"
+              >
+                <GetIcon name="gearFillIcon" className="icon-settings" />
+              </button>
+            </Link>
+          </div>
+          <form className="login-input-field">
+            <img src="/images/logo.png" alt="Triva logo" />
+            <label htmlFor="input-player-name">
+              <input
+                className="login-inputs"
+                id="input-player-name"
+                placeholder="Name"
+                name="name"
+                value={ name }
+                data-testid="input-player-name"
+                onChange={ (event) => handleChange(event) }
+              />
+            </label>
 
-          <label htmlFor="input-gravatar-email">
-            Email:
-            <input
-              id="input-gravatar-email"
-              name="email"
-              value={ email }
-              data-testid="input-gravatar-email"
-              onChange={ (event) => handleChange(event) }
-            />
-          </label>
-          <button
-            type="button"
-            disabled={ isDisabled }
-            data-testid="btn-play"
-            onClick={ () => this.handleAPIRequest() }
-          >
-            Jogar
-          </button>
-        </form>
-        <Link to="/settings">
-          <button
-            type="button"
-            data-testid="btn-settings"
-          >
-            Configurações
-          </button>
-        </Link>
+            <label htmlFor="input-gravatar-email">
+              <input
+                className="login-inputs"
+                id="input-gravatar-email"
+                placeholder="email@email.com"
+                name="email"
+                value={ email }
+                data-testid="input-gravatar-email"
+                onChange={ (event) => handleChange(event) }
+              />
+            </label>
+            <button
+              type="button"
+              className="btn-play"
+              disabled={ isDisabled }
+              data-testid="btn-play"
+              onClick={ () => this.handleAPIRequest() }
+            >
+              Jogar
+            </button>
+          </form>
+        </div>
       </div>
     );
   }

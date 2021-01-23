@@ -1,3 +1,10 @@
+body {
+  background-image: url('/images/background-desktop.jpg');
+  background-size: 350%;
+  background-position: center;
+  backdrop-filter: blur(2px);
+}
+
 .correct-answer {
   border: 3px solid rgb(6, 240, 15);
 }
