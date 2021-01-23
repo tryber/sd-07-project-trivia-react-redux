@@ -1,22 +1,22 @@
 .login-container {
   align-items: center;
   display: flex;
-  justify-content: center;
   height: 100vh;
+  justify-content: center;
 }
 
 .login-content {
-  background: linear-gradient(0deg,
-  rgba(111, 102, 102, 0.37) 0%,
+  background: linear-gradient(0deg ,
+  rgba(111, 102, 102, 0.37) 0%, 
   rgba(111, 102, 102, 0.616) 30%
-  );
+);
   border-radius: 2rem;
   box-shadow: 0 3px 4px rgba(0, 0, 0, 0.433);
   display: flex;
   flex-direction: column;
   height: 55vh;
-  text-align: center;
   padding: 1.1rem;
+  text-align: center;
   width: 70vw;
 }
 
@@ -28,7 +28,7 @@
 .btn-play {
   background: none;
   border: none;
-  font-family: 'DM Sans', sans-serif;
+  font-family: DM Sans, sans-serif;
   font-size: 4em;
 }
 
@@ -51,6 +51,7 @@
 }
 
 @keyframes spin {
+
   to {
     transform: rotate(360deg);
   }
@@ -71,8 +72,8 @@
   border-radius: 1.5rem;
   font-size: 1.1em;
   height: 2.5rem;
-  text-align: center;
   margin-bottom: 1rem;
+  text-align: center;
 }
 
 .login-inputs:focus {
@@ -101,8 +102,8 @@
 
 .header-user {
   display: flex;
-  font-size: larger;
   flex-direction: column;
+  font-size: larger;
 }
 
 .header-player-name {
@@ -112,8 +113,8 @@
 }
 
 .sound-field {
-  margin-left: 5.5rem;
   display: flex;
+  margin-left: 5.5rem;
   width: 30%;
 }
 
@@ -125,8 +126,9 @@
   padding: 1.5rem;
 }
 
-@media only screen and (min-width: 600px) {
-  .login-content { width: 20vw }
+@media only screen and ( min-width : 600px ) {
+
+  .login-content { width: 20vw; }
   .container {
     background-position: center;
     background-size: cover;
