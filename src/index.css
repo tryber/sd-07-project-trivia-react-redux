@@ -5,9 +5,22 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.btnColorRed {
+  border: 3px solid rgb(255, 0, 0)
+
+
+
+}
+
+.btnColorGreen {
+ border: 3px solid rgb(6, 240, 15);
+
 }
