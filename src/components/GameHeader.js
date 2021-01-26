@@ -58,14 +58,27 @@ class GameHeader extends Component {
 
   updateLocalRanking() {
     const { getName, getScore, getPicture } = this.props;
-    const currentRanking = this.readLocalRanking();
-    const newRankingStorage = currentRanking.map((user) => {
+    let newRankingStorage = this.readLocalRanking();
+    const repeatedUser = newRankingStorage.some((user, index) => {
       if (user.name === getName) {
-        return { name: getName, picture: getPicture, score: getScore };
+        newRankingStorage[index] = {
+          name: getName,
+          picture: getPicture,
+          score: getScore,
+        };
       }
-      return user;
+      return user.name === getName;
     });
-    localStorage.setItem('ranking', JSON.stringify(newRankingStorage));
+    if (!repeatedUser) {
+      console.log('entrou');
+      newRankingStorage = [
+        ...newRankingStorage,
+        { name: getName, picture: getPicture, score: getScore },
+      ];
+    }
+
+    localStorage.setItem('ranking', JSON.stringify(newRankingStorage
+      .sort((a, b) => b.score - a.score)));
   }
 
   render() {

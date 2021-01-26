@@ -63,15 +63,7 @@ class Login extends React.Component {
     const currentRanking = this.readLocalRanking();
     let newRankingStorage = [];
 
-    if (currentRanking) {
-      // console.log('Já existe Jogadores');
-      newRankingStorage = [
-        ...currentRanking,
-        { name, picture: '', score: getScore },
-      ];
-      localStorage.setItem('ranking', JSON.stringify(newRankingStorage));
-    } else {
-      // console.log('Não existe jogadores antigos, vc é o Primeiro');
+    if (!currentRanking) {
       newRankingStorage = [{ name, picture: '', score: getScore }];
       localStorage.setItem('ranking', JSON.stringify(newRankingStorage));
     }

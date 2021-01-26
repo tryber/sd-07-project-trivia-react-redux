@@ -25,6 +25,7 @@ class Game extends Component {
     this.state = {
       questionIndex: 0,
       timer: 30,
+      runingTimer: '',
       disableButton: true,
       shuffleAnswers: [],
       correctAnswer: '',
@@ -86,6 +87,8 @@ class Game extends Component {
   }
 
   handleUserAnswer() {
+    const { runingTimer } = this.state;
+    this.stopTimer(runingTimer);
     this.handleClasses('add');
     this.setState((prevState) => ({
       ...prevState,
@@ -158,7 +161,7 @@ class Game extends Component {
   renderAllDataQuestion() {
     const { questionIndex } = this.state;
     const { questions } = this.props;
-    console.log(questions);
+    // console.log(questions);
 
     if (questions.results) {
       const correctAnswer = questions.results[questionIndex].correct_answer;
@@ -178,17 +181,21 @@ class Game extends Component {
     const secondTimerFunction = 1000;
     const finishTimer = 'Acabou o Tempo';
     const objTimer = setInterval(() => {
-      const { timer } = this.state;
+      const { timer, runingTimer } = this.state;
       if (timer !== finishTimer) {
+        // console.log(timer);
         this.setState((prevState) => ({
           timer: prevState.timer - 1,
         }));
-        console.log(timer);
       } else {
-        console.log('entrou');
-        this.stopTimer(objTimer);
+        // console.log('entrou');
+        this.stopTimer(runingTimer);
       }
     }, secondTimerFunction);
+
+    this.setState({
+      runingTimer: objTimer,
+    });
   }
 
   render() {
@@ -299,7 +306,7 @@ Game.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
-  sendCorrectAnswers: PropTypes.number.isRequired,
+  sendCorrectAnswers: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);
